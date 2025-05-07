@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "pnpm --filter @mc-plus/playground dev",
+    "docs:dev": "pnpm --filter @mc-plus/docs dev",
+    "docs:build": "pnpm --filter @mc-plus/docs build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
