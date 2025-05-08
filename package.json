@@ -7,7 +7,7 @@
     "dev": "pnpm --filter @mc-plus/playground dev",
     "docs:dev": "pnpm --filter @mc-plus/docs dev",
     "docs:build": "pnpm --filter @mc-plus/docs build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "pnpm --filter @mc-plus/components test"
   },
   "keywords": [],
   "author": "",
