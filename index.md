@@ -47,5 +47,3 @@ pnpm add -D vitepress@1.0.0-rc.44 --filter @mc-plus/docs
 # prod
 pnpm add @popperjs/core@^2.11.8 async-validator@^4.2.5 --filter @mc-plus/components
 ```
-
-## tsconfig

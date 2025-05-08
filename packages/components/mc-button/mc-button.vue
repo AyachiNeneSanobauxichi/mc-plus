@@ -1,7 +1,6 @@
 <template>
   <component
     :is="tag"
-    :autofocus="autofocus"
     ref="_ref"
     class="mc-button"
     :type="tag === 'button' ? nativeType : void 0"
@@ -9,9 +8,6 @@
     :class="{
       [`mc-button--${type}`]: type,
       [`mc-button--${size}`]: size,
-      'is-plain': plain,
-      'is-circle': circle,
-      'is-round': round,
       'is-loading': loading,
       'is-disabled': disabled,
     }"
@@ -34,11 +30,13 @@ defineOptions({
 // props
 const props = withDefaults(defineProps<ButtonProps>(), {
   tag: "button",
+  type: "primary",
   nativeType: "button",
+  size: "medium",
   useThrottle: true,
   throttleDuration: 500,
 });
-const { throttleDuration } = toRefs(props);
+const { loading, disabled, throttleDuration } = toRefs(props);
 
 // emits
 const emit = defineEmits<ButtonEmits>();
@@ -50,7 +48,10 @@ const slots = defineSlots();
 const _ref = ref<HTMLButtonElement>();
 
 // click event
-const handleBtnClick = (e: MouseEvent) => emit("click", e);
+const handleBtnClick = (e: MouseEvent) => {
+  if (loading.value || disabled.value) return;
+  emit("click", e);
+};
 // click event throttle
 const handleBtnClickThrottle = throttle(handleBtnClick, throttleDuration.value);
 
@@ -60,4 +61,6 @@ defineExpose<ButtonInstance>({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+@use "./index.scss";
+</style>

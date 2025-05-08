@@ -1,8 +1,10 @@
 import type { Meta, StoryObj, ArgTypes } from "@storybook/vue3";
-import { fn } from "@storybook/test";
 import { McButton } from "mc-plus";
+import type { ButtonProps } from "mc-plus";
 
-type Story = StoryObj<typeof McButton> & { argTypes: ArgTypes };
+type Story = StoryObj<typeof McButton> & {
+  argTypes: ArgTypes<typeof McButton>;
+};
 
 const meta: Meta<typeof McButton> = {
   title: "Button",
@@ -12,6 +14,17 @@ const meta: Meta<typeof McButton> = {
     type: {
       control: { type: "select" },
       options: ["primary", "success", "warning", "danger", "info"],
+      defaultValue: "primary",
+    },
+    nativeType: {
+      control: { type: "select" },
+      options: ["button", "submit", "reset"],
+      defaultValue: "button",
+    },
+    size: {
+      control: { type: "select" },
+      options: ["medium", "large", "small"],
+      defaultValue: "medium",
     },
     disabled: {
       control: "boolean",
@@ -38,7 +51,7 @@ export const Default: Story & { args: { content: string } } = {
     type: "primary",
     content: "MC Button",
   },
-  render: (args: { type: string; content: string }) => ({
+  render: (args: ButtonProps) => ({
     components: { McButton },
     setup() {
       return { args };

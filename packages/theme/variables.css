@@ -1,0 +1,51 @@
+:root {
+  /* core color palette */
+  /* purple */
+  --mc-purple-900: #211050;
+  --mc-purple-500: #301a6d; /* core */
+  --mc-purple-300: #462999;
+  --mc-purple-200: #654cad;
+  --mc-purple-100: #a695d7;
+  --mc-purple-50: #e6ddff;
+  /* teal */
+  --mc-teal-900: #399e9a; /* hover state */
+  --mc-teal-500: #3fb9b5; /* core default */
+  --mc-teal-300: #45d4cf;
+  --mc-teal-200: #aae1df;
+  --mc-teal-100: #bcf0ee;
+  --mc-teal-50: #dafafa;
+  /* black */
+  --mc-black: #000000;
+  /* gray */
+  --mc-gray-800: #222222;
+  --mc-gray-700: #333333;
+  --mc-gray-600: #4d4d4d;
+  --mc-gray-500: #808080;
+  --mc-gray-400: #b0b0b0; /* disabled text */
+  --mc-gray-300: #d4d4d4; /* disabled component */
+  --mc-gray-200: #e7e7e7;
+  --mc-gray-100: #f7f7f7;
+  --mc-camp-background: #f9f7ff;
+  /* white */
+  --mc-white: #ffffff;
+
+  /* alerts & notifications */
+  --mc-success: #23b12f;
+  --mc-warning: #ffba30;
+  --mc-info: #4b82f1;
+  --mc-error: #f53d3d;
+  --mc-success-background: #def4e0;
+  --mc-warning-background: #fff5e0;
+  --mc-info-background: #e4edfd;
+  --mc-error-background: #fee2e2;
+  --mc-success-light-background: #eff9ef;
+  --mc-warning-light-background: #fffaef;
+  --mc-info-light-background: #f1f6fe;
+  --mc-error-light-background: #fff1f1;
+
+  /* common */
+  --mc-gap: 4px;
+  --mc-radius: 4px;
+  --mc-transition-duration: 0.3s;
+  --mc-transform-distance: 2px;
+}
