@@ -1,6 +1,7 @@
 <template>
   <component
-    :is="props.tag"
+    :is="tag"
+    :autofocus="autofocus"
     ref="_ref"
     class="mc-button"
     :type="tag === 'button' ? nativeType : void 0"
