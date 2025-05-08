@@ -1,5 +1,5 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import McPlus from "mc-plus";
+import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
 
-createApp(App).use(McPlus).mount("#app");
+createApp(App).mount('#app')

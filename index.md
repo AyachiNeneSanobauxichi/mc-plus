@@ -1,6 +1,22 @@
 # MC plus
 
-## 1.dependencies
+## dependencies
+
+init shell
+
+```zsh
+cd packages
+mkdir -p components core docs hooks theme utils
+
+# init pnpm
+for dir in components core docs hooks theme utils; do
+	cd $dir
+	pnpm init
+	cd ..
+done
+
+echo "init succeed!"
+```
 
 ### workspace:
 
@@ -32,4 +48,4 @@ pnpm add -D vitepress@1.0.0-rc.44 --filter @mc-plus/docs
 pnpm add @popperjs/core@^2.11.8 async-validator@^4.2.5 --filter @mc-plus/components
 ```
 
-## 2.tsconfig
+## tsconfig
