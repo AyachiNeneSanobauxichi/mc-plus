@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter @mc-plus/playground dev",
+    "story": "pnpm --filter @mc-plus/playground storybook",
     "docs:dev": "pnpm --filter @mc-plus/docs dev",
     "docs:build": "pnpm --filter @mc-plus/docs build",
     "test": "pnpm --filter @mc-plus/components test"

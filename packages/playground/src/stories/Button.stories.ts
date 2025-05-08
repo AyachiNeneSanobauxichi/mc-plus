@@ -1,56 +1,52 @@
-import { fn } from '@storybook/test';
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryObj, ArgTypes } from "@storybook/vue3";
+import { fn } from "@storybook/test";
+import { McButton } from "mc-plus";
 
-import Button from './Button.vue';
+type Story = StoryObj<typeof McButton> & { argTypes: ArgTypes };
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
-const meta = {
-  title: 'Example/Button',
-  component: Button,
-  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ['autodocs'],
+const meta: Meta<typeof McButton> = {
+  title: "Button",
+  component: McButton,
+  tags: ["autodocs"],
   argTypes: {
-    size: { control: 'select', options: ['small', 'medium', 'large'] },
-    backgroundColor: { control: 'color' },
+    type: {
+      control: { type: "select" },
+      options: ["primary", "success", "warning", "danger", "info"],
+    },
+    disabled: {
+      control: "boolean",
+    },
+    loading: {
+      control: "boolean",
+    },
+  },
+};
+
+const container = (val: string) => `
+  <div style="margin: 8px">
+    ${val}
+  </div>
+`;
+
+export const Default: Story & { args: { content: string } } = {
+  argTypes: {
+    content: {
+      control: { type: "text" },
+    },
   },
   args: {
-    primary: false,
-    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-    onClick: fn(),
+    type: "primary",
+    content: "MC Button",
   },
-} satisfies Meta<typeof Button>;
+  render: (args: { type: string; content: string }) => ({
+    components: { McButton },
+    setup() {
+      return { args };
+    },
+    template: container(
+      `<mc-button v-bind="args">{{ args.content }}</mc-button>`
+    ),
+  }),
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
-/*
- *👇 Render functions are a framework specific feature to allow you control on how the component renders.
- * See https://storybook.js.org/docs/api/csf
- * to learn how to use render functions.
- */
-export const Primary: Story = {
-  args: {
-    primary: true,
-    label: 'Button',
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    primary: false,
-    label: 'Button',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    label: 'Button',
-    size: 'large',
-  },
-};
-
-export const Small: Story = {
-  args: {
-    label: 'Button',
-    size: 'small',
-  },
-};
