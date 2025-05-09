@@ -13,7 +13,7 @@ const meta: Meta<typeof McButton> = {
   argTypes: {
     type: {
       control: { type: "select" },
-      options: ["primary", "success", "warning", "danger", "info"],
+      options: ["primary", "plain", "link"],
       defaultValue: "primary",
     },
     nativeType: {

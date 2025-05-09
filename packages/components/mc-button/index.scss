@@ -68,14 +68,35 @@ $small_height: 34px;
     }
   }
 
+  /* plain */
+  &.mc-button--plain {
+    border: 1px solid $primary_color;
+    color: $primary_color;
+    &:hover {
+      border: 1px solid $primary_color_hover;
+      color: $primary_color_hover;
+    }
+  }
+
+  /* link */
+  &.mc-button--link {
+    color: $primary_color;
+    &:hover {
+      color: $primary_color_hover;
+    }
+  }
+
   /* disabled */
   &.is-disabled {
     background-color: $disabled_color;
     color: $text_disabled;
+    border: none;
     cursor: not-allowed;
     &:hover {
       background-color: $disabled_color;
+      color: $text_disabled;
       transform: translateY(0);
+      border: none;
     }
   }
 }
