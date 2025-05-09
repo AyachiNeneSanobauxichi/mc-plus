@@ -74,7 +74,11 @@ const handleBtnClick = (e: MouseEvent) => {
   emit("click", e);
 };
 // click event throttle
-const handleBtnClickThrottle = throttle(handleBtnClick, throttleDuration.value);
+const handleBtnClickThrottle = throttle(
+  handleBtnClick,
+  throttleDuration.value,
+  { trailing: false }
+);
 
 // expose
 defineExpose<ButtonInstance>({
