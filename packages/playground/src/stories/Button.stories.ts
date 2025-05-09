@@ -46,7 +46,7 @@ const meta: Meta<typeof McButton> = {
     },
   },
   args: {
-    content: "MC Button",
+    content: "Mc Button",
   },
 };
 
