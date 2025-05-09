@@ -32,7 +32,7 @@
 import type { ButtonProps, ButtonEmits, ButtonInstance } from "./types";
 import { computed, ref, toRefs, toValue, useAttrs } from "vue";
 import { throttle } from "lodash-es";
-import { McIcon } from "mc-plus";
+import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
 defineOptions({

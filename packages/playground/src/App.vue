@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { McButton } from "mc-plus";
 
 const loading = ref<boolean>(false);
 const handleClick = () => {
