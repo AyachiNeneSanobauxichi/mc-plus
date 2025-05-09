@@ -1,7 +1,7 @@
 import type { StoryObj, Meta } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { McButton } from "mc-plus";
-import { iconOptions } from "./args-type/options";
+import { ICON_OPTIONS } from "./args-type/options";
 
 const meta: Meta<typeof McButton> = {
   title: "Button",
@@ -38,11 +38,11 @@ const meta: Meta<typeof McButton> = {
     },
     leftIcon: {
       control: { type: "select" },
-      options: iconOptions,
+      options: ICON_OPTIONS,
     },
     rightIcon: {
       control: { type: "select" },
-      options: iconOptions,
+      options: ICON_OPTIONS,
     },
   },
   args: {

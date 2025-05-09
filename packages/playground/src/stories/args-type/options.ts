@@ -1,6 +1,6 @@
 import type { IconType } from "mc-plus";
 
-export const iconOptions: IconType[] = [
+export const ICON_OPTIONS: IconType[] = [
   "envelope",
   "setting",
   "upload",
@@ -26,4 +26,4 @@ export const iconOptions: IconType[] = [
   "edit",
   "delete",
   "success",
-];
+] as const;

@@ -1,6 +1,7 @@
 import type { StoryObj, Meta } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { McIcon } from "mc-plus";
+import { ICON_OPTIONS } from "./args-type/options";
 
 const meta: Meta<typeof McIcon> = {
   title: "Icon",
@@ -9,33 +10,7 @@ const meta: Meta<typeof McIcon> = {
   argTypes: {
     name: {
       control: { type: "select" },
-      options: [
-        "envelope",
-        "setting",
-        "upload",
-        "clock",
-        "switch",
-        "loading-dot",
-        "fork",
-        "square",
-        "triangle-up",
-        "loading",
-        "application",
-        "warning",
-        "info",
-        "add",
-        "arrow-right",
-        "arrow-left",
-        "download",
-        "attachment",
-        "document",
-        "copy",
-        "refresh",
-        "mandatory",
-        "edit",
-        "delete",
-        "success",
-      ],
+      options: ICON_OPTIONS,
     },
   },
 };
