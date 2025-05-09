@@ -14,16 +14,16 @@
     @click="(e: MouseEvent) => useThrottle ? handleBtnClickThrottle(e) : handleBtnClick(e)"
   >
     <template v-if="leftIcon && !loading">
-      <mc-icon :name="leftIcon" />
+      <i class="mc-iconfont" :class="`mc-icon--${leftIcon}`"></i>
     </template>
     <template v-if="loading">
       <span class="loading-icon">
-        <mc-icon name="loading-dot" />
+        <i class="mc-iconfont" :class="`mc-icon--loading-dot`"></i>
       </span>
     </template>
     <slot></slot>
     <template v-if="rightIcon">
-      <mc-icon :name="rightIcon" />
+      <i class="mc-iconfont" :class="`mc-icon--${rightIcon}`"></i>
     </template>
   </button>
 </template>
@@ -32,7 +32,6 @@
 import type { ButtonProps, ButtonEmits, ButtonInstance } from "./types";
 import { computed, ref, toRefs, toValue, useAttrs } from "vue";
 import { throttle } from "lodash-es";
-import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
 defineOptions({

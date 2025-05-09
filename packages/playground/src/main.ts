@@ -1,5 +1,5 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-// import { McButton } from "mc-plus";
+import "mc-plus/dist/index.css";
 
 createApp(App).mount("#app");

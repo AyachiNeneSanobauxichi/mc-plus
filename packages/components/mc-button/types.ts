@@ -1,5 +1,5 @@
 import type { Ref } from "vue";
-import type { IconType } from "mc-plus";
+import type { IconType } from "../mc-icon/types";
 
 export type ButtonType = "primary" | "plain" | "link";
 export type NativeType = "button" | "submit" | "reset";

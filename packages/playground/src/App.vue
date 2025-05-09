@@ -1,26 +1,28 @@
 <template>
   <div>
-    <mc-button
+    <!-- <mc-button
       rightIcon="arrow-right"
       @click="handleClick"
       :loading="loading"
       :throttleDuration="1000"
     >
       Next Step
-    </mc-button>
+    </mc-button> -->
+    <mc-icon name="arrow-right" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { McButton } from "mc-plus";
+// import { ref } from "vue";
+// import { McButton } from "mc-plus";
+import { McIcon } from "mc-plus";
 
-const loading = ref<boolean>(false);
-const handleClick = () => {
-  console.log("Next Step Clicked");
-  // loading.value = true;
-  // setTimeout(() => {
-  //   loading.value = false;
-  // }, 2000);
-};
+// const loading = ref<boolean>(false);
+// const handleClick = () => {
+//   console.log("Next Step Clicked");
+//   // loading.value = true;
+//   // setTimeout(() => {
+//   //   loading.value = false;
+//   // }, 2000);
+// };
 </script>

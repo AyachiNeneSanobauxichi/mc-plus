@@ -14,6 +14,8 @@ export default defineConfig({
     }) as PluginOption,
   ],
   build: {
+    // minify: false,
+    // sourcemap: true,
     outDir: "dist/es",
     lib: {
       entry: resolve(__dirname, "./index.ts"),
