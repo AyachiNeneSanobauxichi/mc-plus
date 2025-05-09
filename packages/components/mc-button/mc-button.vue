@@ -1,9 +1,8 @@
 <template>
-  <component
-    :is="tag"
+  <button
     ref="_ref"
     class="mc-button"
-    :type="tag === 'button' ? nativeType : void 0"
+    :type="nativeType"
     :disabled="disabled || loading ? true : void 0"
     :class="{
       [`mc-button--${type}`]: type,
@@ -14,7 +13,7 @@
     @click="(e: MouseEvent) => useThrottle ? handleBtnClickThrottle(e) : handleBtnClick(e)"
   >
     <slot></slot>
-  </component>
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -29,7 +28,6 @@ defineOptions({
 
 // props
 const props = withDefaults(defineProps<ButtonProps>(), {
-  tag: "button",
   type: "primary",
   nativeType: "button",
   size: "medium",
@@ -40,9 +38,6 @@ const { loading, disabled, throttleDuration } = toRefs(props);
 
 // emits
 const emit = defineEmits<ButtonEmits>();
-
-// slots
-const slots = defineSlots();
 
 // ref
 const _ref = ref<HTMLButtonElement>();

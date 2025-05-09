@@ -5,7 +5,6 @@ export type NativeType = "button" | "submit" | "reset";
 export type ButtonSize = "medium" | "large" | "small";
 
 export interface ButtonProps {
-  tag?: string;
   type?: ButtonType;
   nativeType?: NativeType;
   size?: ButtonSize;
