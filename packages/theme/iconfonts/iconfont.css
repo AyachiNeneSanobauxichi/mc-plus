@@ -1,0 +1,117 @@
+@font-face {
+  font-family: "mc-iconfont";
+  src: url('@mc-plus/theme/iconfonts/iconfont.woff2?t=1746773526802') format('woff2');
+}
+
+.mc-iconfont {
+  font-family: "mc-iconfont" !important;
+  font-size: inherit;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* .mc-icon--envelope-large:before {
+  content: "\e629";
+} */
+
+.mc-icon--envelope:before {
+  content: "\e857";
+}
+
+.mc-icon--setting:before {
+  content: "\e851";
+}
+
+.mc-icon--upload:before {
+  content: "\e632";
+}
+
+.mc-icon--clock:before {
+  content: "\e628";
+}
+
+.mc-icon--switch:before {
+  content: "\e74a";
+}
+
+.mc-icon--loading-dot:before {
+  content: "\e7f1";
+}
+
+.mc-icon--fork:before {
+  content: "\e61b";
+}
+
+.mc-icon--square:before {
+  content: "\e604";
+}
+
+.mc-icon--triangle-up:before {
+  content: "\e749";
+}
+
+.mc-icon--loading:before {
+  content: "\e6cd";
+}
+
+.mc-icon--application:before {
+  content: "\e600";
+}
+
+.mc-icon--warning:before {
+  content: "\e601";
+}
+
+.mc-icon--info:before {
+  content: "\e649";
+}
+
+.mc-icon--add:before {
+  content: "\e68f";
+}
+
+.mc-icon--arrow-right:before {
+  content: "\e624";
+}
+
+.mc-icon--arrow-left:before {
+  content: "\e625";
+}
+
+.mc-icon--download:before {
+  content: "\e627";
+}
+
+.mc-icon--attachment:before {
+  content: "\e620";
+}
+
+.mc-icon--document:before {
+  content: "\e64f";
+}
+
+.mc-icon--copy:before {
+  content: "\e67e";
+}
+
+.mc-icon--refresh:before {
+  content: "\e635";
+}
+
+.mc-icon--mandatory:before {
+  content: "\e602";
+}
+
+.mc-icon--edit:before {
+  content: "\e614";
+}
+
+.mc-icon--delete:before {
+  content: "\e603";
+}
+
+.mc-icon--success:before {
+  content: "\e64c";
+}
+

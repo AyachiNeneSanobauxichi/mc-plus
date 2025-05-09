@@ -8,7 +8,34 @@ const meta: Meta<typeof McIcon> = {
   tags: ["autodocs"],
   argTypes: {
     name: {
-      control: { type: "text" },
+      control: { type: "select" },
+      options: [
+        "envelope",
+        "setting",
+        "upload",
+        "clock",
+        "switch",
+        "loading-dot",
+        "fork",
+        "square",
+        "triangle-up",
+        "loading",
+        "application",
+        "warning",
+        "info",
+        "add",
+        "arrow-right",
+        "arrow-left",
+        "download",
+        "attachment",
+        "document",
+        "copy",
+        "refresh",
+        "mandatory",
+        "edit",
+        "delete",
+        "success",
+      ],
     },
   },
 };
@@ -17,7 +44,7 @@ export default meta;
 
 export const Demo: StoryObj<typeof McIcon> = {
   args: {
-    name: "github",
+    name: "setting",
   },
   render: (args) => ({
     components: {

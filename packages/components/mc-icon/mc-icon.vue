@@ -2,10 +2,9 @@
   <i
     ref="_ref"
     class="mc-iconfont"
-    :class="`icon-${name}`"
+    :class="`mc-icon--${name}`"
     @click="(e: MouseEvent) => handleIconClick(e)"
-    >ICON</i
-  >
+  ></i>
 </template>
 
 <script setup lang="ts">
