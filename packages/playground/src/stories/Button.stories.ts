@@ -29,6 +29,13 @@ const meta: StorybookMeta<typeof McButton, { content: string }> = {
     loading: {
       control: "boolean",
     },
+    useThrottle: {
+      control: "boolean",
+    },
+    throttleDuration: {
+      control: { type: "select" },
+      options: [300, 500, 1000, 2000],
+    },
   },
   args: {
     content: "MC Button",
@@ -44,6 +51,8 @@ export const Primary: StoryObj<typeof McButton> = {
     loading: false,
     useThrottle: true,
     throttleDuration: 500,
+    nativeType: "button",
+    size: "medium",
   },
   render: (args) => ({
     components: { McButton },

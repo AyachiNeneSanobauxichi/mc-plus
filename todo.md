@@ -2,7 +2,7 @@
 
 ## mc button
 
-- use scss replace css
-- mc button demo
-- import icon font
-- story book docs
+~~use scss replace css~~
+~~mc button demo~~
+import icon font
+~~story book docs~~
