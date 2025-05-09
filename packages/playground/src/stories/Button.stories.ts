@@ -44,7 +44,7 @@ const meta: StorybookMeta<typeof McButton, { content: string }> = {
 
 export default meta;
 
-export const Primary: StoryObj<typeof McButton> = {
+export const Demo: StoryObj<typeof McButton> = {
   args: {
     type: "primary",
     disabled: false,

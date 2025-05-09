@@ -19,5 +19,5 @@ export interface ButtonEmits {
 }
 
 export interface ButtonInstance {
-  ref: Ref<HTMLElement | void>;
+  ref: Ref<HTMLButtonElement | void>;
 }
