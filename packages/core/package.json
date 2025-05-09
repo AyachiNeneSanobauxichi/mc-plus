@@ -1,7 +1,7 @@
 {
   "name": "mc-plus",
   "version": "1.0.0",
-  "description": "pnpm entry",
+  "description": "Components library for Vue 3.X by Meta Compass",
   "type": "module",
   "main": "index.js",
   "scripts": {

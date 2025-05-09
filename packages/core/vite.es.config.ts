@@ -22,7 +22,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", "@popperjs/core", "async-validator"],
       output: {
         assetFileNames: (assetInfo) => {
           if (assetInfo.name === "style.css") return "index.css";
