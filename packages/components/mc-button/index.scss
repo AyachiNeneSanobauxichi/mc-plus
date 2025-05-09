@@ -12,6 +12,16 @@ $large_height: 64px;
 $medium_height: 40px;
 $small_height: 34px;
 
+/* loading animation */
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .mc-button {
   /* reset */
   border: none;
@@ -83,6 +93,13 @@ $small_height: 34px;
     color: $primary_color;
     &:hover {
       color: $primary_color_hover;
+    }
+  }
+
+  /* loading */
+  &.is-loading {
+    .loading-icon {
+      animation: loading 1s linear infinite;
     }
   }
 

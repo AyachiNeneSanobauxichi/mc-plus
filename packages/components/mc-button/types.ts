@@ -1,4 +1,5 @@
 import type { Ref } from "vue";
+import type { IconType } from "mc-plus";
 
 export type ButtonType = "primary" | "plain" | "link";
 export type NativeType = "button" | "submit" | "reset";
@@ -12,6 +13,9 @@ export interface ButtonProps {
   loading?: boolean;
   useThrottle?: boolean;
   throttleDuration?: number;
+  leftIcon?: IconType;
+  rightIcon?: IconType;
+  content?: string;
 }
 
 export interface ButtonEmits {

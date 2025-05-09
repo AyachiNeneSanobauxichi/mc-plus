@@ -1,9 +1,9 @@
-import type { StoryObj } from "@storybook/vue3";
-import type { StorybookMeta } from "./types";
+import type { StoryObj, Meta } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { McButton } from "mc-plus";
+import { iconOptions } from "./args-type/options";
 
-const meta: StorybookMeta<typeof McButton, { content: string }> = {
+const meta: Meta<typeof McButton> = {
   title: "Button",
   component: McButton,
   tags: ["autodocs"],
@@ -35,6 +35,14 @@ const meta: StorybookMeta<typeof McButton, { content: string }> = {
     throttleDuration: {
       control: { type: "select" },
       options: [300, 500, 1000, 2000],
+    },
+    leftIcon: {
+      control: { type: "select" },
+      options: iconOptions,
+    },
+    rightIcon: {
+      control: { type: "select" },
+      options: iconOptions,
     },
   },
   args: {

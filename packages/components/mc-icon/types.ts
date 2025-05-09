@@ -1,6 +1,6 @@
 import type { Ref } from "vue";
 
-type IconType =
+export type IconType =
   | "envelope"
   | "setting"
   | "upload"
