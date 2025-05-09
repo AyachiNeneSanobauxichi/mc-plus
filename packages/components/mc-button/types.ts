@@ -16,6 +16,8 @@ export interface ButtonProps {
   leftIcon?: IconType;
   rightIcon?: IconType;
   content?: string;
+  height?: string;
+  width?: string;
 }
 
 export interface ButtonEmits {

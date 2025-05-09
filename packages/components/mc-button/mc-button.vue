@@ -1,6 +1,7 @@
 <template>
   <button
     ref="_ref"
+    :style="style"
     class="mc-button"
     :type="nativeType"
     :disabled="disabled || loading ? true : void 0"
@@ -29,7 +30,7 @@
 
 <script setup lang="ts">
 import type { ButtonProps, ButtonEmits, ButtonInstance } from "./types";
-import { ref, toRefs } from "vue";
+import { computed, ref, toRefs, toValue, useAttrs } from "vue";
 import { throttle } from "lodash-es";
 import { McIcon } from "mc-plus";
 
@@ -46,13 +47,26 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   useThrottle: true,
   throttleDuration: 500,
 });
-const { loading, disabled, throttleDuration } = toRefs(props);
+const { loading, disabled, throttleDuration, height, width } = toRefs(props);
 
 // emits
 const emit = defineEmits<ButtonEmits>();
 
 // ref
 const _ref = ref<HTMLButtonElement>();
+
+// attrs
+const attrs = toRefs(useAttrs());
+// style
+const style = computed(() => {
+  return {
+    ...toValue(attrs).style,
+    ...{
+      width: width.value ? width.value : void 0,
+      height: height.value ? height.value : void 0,
+    },
+  };
+});
 
 // click event
 const handleBtnClick = (e: MouseEvent) => {
