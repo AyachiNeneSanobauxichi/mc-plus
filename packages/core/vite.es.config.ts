@@ -2,8 +2,7 @@ import { defineConfig, type PluginOption } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 import { resolve } from "path";
-
-const COMP_NAMES = ["mc-button", "mc-icon"] as const;
+import { getDirectoriesSync } from "../utils/build";
 
 export default defineConfig({
   plugins: [
@@ -43,7 +42,7 @@ export default defineConfig({
           if (id.includes("/packages/utils")) {
             return "utils";
           }
-          for (const comp of COMP_NAMES) {
+          for (const comp of getDirectoriesSync("../components")) {
             if (id.includes(`/packages/components/${comp}`)) {
               return comp;
             }

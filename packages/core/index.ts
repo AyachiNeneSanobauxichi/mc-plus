@@ -4,5 +4,5 @@ import "@mc-plus/theme/index.css";
 
 const installer = makeInstaller(components);
 
-export * from "@mc-plus/components";
+export * from "../components";
 export default installer;
