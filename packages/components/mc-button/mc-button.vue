@@ -13,18 +13,20 @@
     }"
     @click="(e: MouseEvent) => useThrottle ? handleBtnClickThrottle(e) : handleBtnClick(e)"
   >
-    <template v-if="leftIcon && !loading">
-      <i class="mc-iconfont" :class="`mc-icon--${leftIcon}`"></i>
-    </template>
-    <template v-if="loading">
-      <span class="loading-icon">
-        <i class="mc-iconfont" :class="`mc-icon--loading-dot`"></i>
-      </span>
-    </template>
+    <i
+      v-if="leftIcon && !loading"
+      class="mc-iconfont"
+      :class="`mc-icon--${leftIcon}`"
+    ></i>
+    <span class="loading-icon" v-if="loading">
+      <i class="mc-iconfont" :class="`mc-icon--loading-dot`"></i>
+    </span>
     <slot></slot>
-    <template v-if="rightIcon">
-      <i class="mc-iconfont" :class="`mc-icon--${rightIcon}`"></i>
-    </template>
+    <i
+      v-if="rightIcon"
+      class="mc-iconfont"
+      :class="`mc-icon--${rightIcon}`"
+    ></i>
   </button>
 </template>
 

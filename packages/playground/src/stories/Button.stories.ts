@@ -44,6 +44,12 @@ const meta: Meta<typeof McButton> = {
       control: { type: "select" },
       options: ICON_OPTIONS,
     },
+    height: {
+      control: { type: "text" },
+    },
+    width: {
+      control: { type: "text" },
+    },
   },
   args: {
     content: "Mc Button",
