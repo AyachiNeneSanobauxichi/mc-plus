@@ -12,7 +12,7 @@
     "build": "pnpm --filter mc-plus build"
   },
   "keywords": [],
-  "author": "",
+  "author": "Hirasawa Yui <ayachinenesanobauxichi@gmail.com>",
   "license": "ISC",
   "packageManager": "pnpm@10.6.2",
   "devDependencies": {

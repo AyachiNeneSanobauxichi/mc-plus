@@ -10,3 +10,5 @@
 vitest coverage
 story book test
 packaged ts hint
+install nrm
+release npm package
