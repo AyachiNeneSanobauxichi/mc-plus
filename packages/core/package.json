@@ -31,10 +31,7 @@
     "build:es": "vite build --config vite.es.config.ts",
     "move-style": "move-file dist/es/index.css dist/index.css",
     "clean": "rimraf dist",
-    "release": "release-it"
-  },
-  "dependencies": {
-    "@mc-plus/components": "workspace:*"
+    "release": "pnpm build && release-it"
   },
   "keywords": [],
   "author": "Hirasawa Yui <ayachinenesanobauxichi@gmail.com>",
@@ -42,5 +39,8 @@
   "packageManager": "pnpm@10.6.2",
   "devDependencies": {
     "vite-plugin-dts": "^4.5.3"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.19"
   }
 }
