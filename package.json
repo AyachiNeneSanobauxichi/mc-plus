@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --filter @mc-plus/playground dev",
-    "story": "pnpm --filter @mc-plus/playground storybook",
-    "docs:dev": "pnpm --filter @mc-plus/docs dev",
-    "docs:build": "pnpm --filter @mc-plus/docs build",
+    "build": "pnpm --filter mc-plus build",
+    "dev": "pnpm build && pnpm --filter @mc-plus/playground dev",
+    "story": "pnpm build && pnpm --filter @mc-plus/playground storybook",
     "test": "pnpm --filter @mc-plus/components test",
-    "build": "pnpm --filter mc-plus build"
+    "release": "pnpm --filter mc-plus release",
+    "docs:dev": "pnpm --filter @mc-plus/docs dev",
+    "docs:build": "pnpm --filter @mc-plus/docs build"
   },
   "keywords": [],
   "author": "Hirasawa Yui <ayachinenesanobauxichi@gmail.com>",
