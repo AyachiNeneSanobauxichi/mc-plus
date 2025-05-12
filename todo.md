@@ -9,9 +9,10 @@
 ~~component circular dependencies~~
 vitest coverage
 story book test
-packaged ts hint
+~~packaged ts hint~~
 ~~install nrm~~
 ~~release npm package~~
-test in admin project
+~~test in admin project~~
 ~~fix loading icon~~
 ~~upgrade mc button disable style~~
+divide style package
