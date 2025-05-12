@@ -13,5 +13,5 @@ packaged ts hint
 ~~install nrm~~
 ~~release npm package~~
 test in admin project
-fix loading icon
+~~fix loading icon~~
 ~~upgrade mc button disable style~~
