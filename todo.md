@@ -16,3 +16,4 @@ story book test
 ~~fix loading icon~~
 ~~upgrade mc button disable style~~
 divide style package
+divide component package
