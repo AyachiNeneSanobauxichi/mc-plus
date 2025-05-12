@@ -76,6 +76,11 @@ $small_height: 34px;
     &:hover {
       background-color: $primary_color_hover;
     }
+    &.is-disabled:hover {
+      background-color: $disabled_color;
+      color: $text_disabled;
+      border: none;
+    }
   }
 
   /* plain */
@@ -86,6 +91,11 @@ $small_height: 34px;
       border: 1px solid $primary_color_hover;
       color: $primary_color_hover;
     }
+    &.is-disabled {
+      border: 1px solid $disabled_color;
+      color: $disabled_color;
+      background: none;
+    }
   }
 
   /* link */
@@ -93,6 +103,10 @@ $small_height: 34px;
     color: $primary_color;
     &:hover {
       color: $primary_color_hover;
+    }
+    &.is-disabled {
+      color: $disabled_color;
+      background: none;
     }
   }
 
@@ -110,10 +124,7 @@ $small_height: 34px;
     border: none;
     cursor: not-allowed;
     &:hover {
-      background-color: $disabled_color;
-      color: $text_disabled;
       transform: translateY(0);
-      border: none;
     }
   }
 }

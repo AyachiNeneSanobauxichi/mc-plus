@@ -16,7 +16,7 @@
     <template v-if="leftIcon && !loading">
       <mc-icon :name="leftIcon"></mc-icon>
     </template>
-    <span class="loading-icon" v-if="loading">
+    <span class="loading-icon" v-if="loading && !disabled">
       <mc-icon name="loading-dot"></mc-icon>
     </span>
     <slot></slot>
