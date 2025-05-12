@@ -36,9 +36,12 @@
     "@mc-plus/hooks": "workspace:*",
     "@mc-plus/theme": "workspace:*",
     "@mc-plus/utils": "workspace:*",
+    "@mc-plus/components": "workspace:*",
     "@mc-plus/workspace": "link:",
     "lodash-es": "^4.17.21",
     "mc-plus": "workspace:*",
-    "vue": "^3.4.19"
+    "vue": "^3.4.19",
+    "@popperjs/core": "^2.11.8",
+    "async-validator": "^4.2.5"
   }
 }
