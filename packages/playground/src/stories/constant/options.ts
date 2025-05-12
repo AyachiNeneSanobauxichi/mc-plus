@@ -1,4 +1,4 @@
-import type { IconType } from "mc-plus";
+import type { IconType } from "@mc-plus/components/mc-icon/types";
 
 export const ICON_OPTIONS: IconType[] = [
   "envelope",

@@ -1,7 +1,7 @@
 import type { StoryObj, Meta } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { McButton } from "mc-plus";
-import { ICON_OPTIONS } from "./args-type/options";
+import { ICON_OPTIONS } from "./constant/options";
 
 const meta: Meta<typeof McButton> = {
   title: "Button",

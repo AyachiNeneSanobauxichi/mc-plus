@@ -15,16 +15,16 @@ defineOptions({
 });
 
 // props
-const { accorrdion, modelValue } = defineProps<CollapseProps>();
+const { accordion, modelValue } = defineProps<CollapseProps>();
 const activeNames = ref(modelValue);
 
 // emit
 const emit = defineEmits<CollapseEmits>();
 
 // accordion mode
-if (accorrdion && modelValue.length > 1) {
+if (accordion && modelValue.length > 1) {
   console.warn(
-    "[mc-collapse]: accorrdion is true, modelValue should be a single value."
+    "[mc-collapse]: accordion is true, modelValue should be a single value."
   );
 }
 
@@ -45,7 +45,7 @@ const updateActiveNames = (newNames: CollapseItemName[]) => {
 const handleItemClick = (item: CollapseItemName) => {
   let _activeNames = [...activeNames.value];
 
-  if (accorrdion) {
+  if (accordion) {
     // accordion mode
     _activeNames = [_activeNames[0] === item ? item : ""];
     updateActiveNames(_activeNames);

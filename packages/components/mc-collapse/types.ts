@@ -4,7 +4,7 @@ export type CollapseItemName = string | number;
 
 export interface CollapseProps {
   modelValue: CollapseItemName[];
-  accorrdion?: boolean;
+  accordion?: boolean;
 }
 
 export interface CollapseItemProps {
