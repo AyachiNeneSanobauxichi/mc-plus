@@ -1,6 +1,7 @@
 import { defineConfig, type PluginOption } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
+import { includes } from "lodash-es";
 import { resolve } from "path";
 import { getDirectoriesSync } from "../utils/build";
 
@@ -30,20 +31,20 @@ export default defineConfig({
           return assetInfo.name as string;
         },
         manualChunks: (id) => {
-          if (id.includes("plugin-vue:export-helper")) {
-            return "main";
-          }
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-          if (id.includes("/packages/hooks")) {
-            return "hooks";
-          }
-          if (id.includes("/packages/utils")) {
+          if (
+            includes(id, "plugin-vue:export-helper") ||
+            includes(id, "/packages/utils")
+          ) {
             return "utils";
           }
+          if (includes(id, "node_modules")) {
+            return "vendor";
+          }
+          if (includes(id, "/packages/hooks")) {
+            return "hooks";
+          }
           for (const comp of getDirectoriesSync("../components")) {
-            if (id.includes(`/packages/components/${comp}`)) {
+            if (includes(id, `/packages/components/${comp}`)) {
               return comp;
             }
           }
