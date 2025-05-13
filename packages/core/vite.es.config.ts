@@ -1,9 +1,23 @@
 import { defineConfig, type PluginOption } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
-import { includes } from "lodash-es";
+import { delay, includes } from "lodash-es";
 import { resolve } from "path";
 import { getDirectoriesSync } from "../utils/build";
+import { readFileSync } from "fs";
+import shell from "shelljs";
+import hooks from "./hooksPlugin";
+
+const TRY_MOCE_STYLES_DELAY = 800 as const;
+
+function moveStyles() {
+  try {
+    readFileSync("./dist/umd/index.css.gz");
+    shell.cp("./dist/umd/index.css", "./dist/index.css");
+  } catch (error) {
+    delay(moveStyles, TRY_MOCE_STYLES_DELAY);
+  }
+}
 
 export default defineConfig({
   plugins: [
@@ -12,6 +26,12 @@ export default defineConfig({
       tsconfigPath: "../../tsconfig.build.json",
       outDir: "dist/types",
     }) as PluginOption,
+    hooks({
+      rmFiles: ["./dist/es", "./dist/theme", "./dist/types"],
+      afterBuild: () => {
+        moveStyles();
+      },
+    }),
   ],
   build: {
     minify: false,
