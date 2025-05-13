@@ -17,5 +17,6 @@ story book test
 ~~upgrade mc button disable style~~
 divide style package
 divide component package
-adjuset type export
+adjust type export
 scss use hint
+adjust move style plugin
