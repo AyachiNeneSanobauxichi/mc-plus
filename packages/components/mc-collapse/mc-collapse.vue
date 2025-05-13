@@ -7,11 +7,12 @@
 <script setup lang="ts">
 import type { CollapseProps, CollapseEmits, CollapseItemName } from "./types";
 import { ref, provide, watch, watchEffect } from "vue";
-import { COLLAPSE_CONTEXT_KEY } from "./constant";
+import { COLLAPSE_CONTEXT_KEY, COMPONENT_NAME } from "./constant";
+import { debugWarning } from "@mc-plus/utils";
 
 // options
 defineOptions({
-  name: "McCollapse",
+  name: COMPONENT_NAME,
 });
 
 // props
@@ -24,8 +25,9 @@ const emit = defineEmits<CollapseEmits>();
 // check accordion mode
 watchEffect(() => {
   if (accordion && modelValue.length > 1) {
-    console.warn(
-      "[mc-collapse]: accordion is true, modelValue should be a single value."
+    debugWarning(
+      COMPONENT_NAME,
+      "accordion is true, modelValue should be a single value."
     );
   }
 });
