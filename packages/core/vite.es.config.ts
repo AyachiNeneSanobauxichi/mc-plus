@@ -14,9 +14,10 @@ export default defineConfig({
     }) as PluginOption,
   ],
   build: {
-    // minify: false,
+    minify: false,
     // sourcemap: true,
     outDir: "dist/es",
+    cssCodeSplit: true,
     lib: {
       entry: resolve(__dirname, "./index.ts"),
       name: "McPlus",
@@ -27,7 +28,16 @@ export default defineConfig({
       external: ["vue", "@popperjs/core", "async-validator"],
       output: {
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === "style.css") return "index.css";
+          if (assetInfo.name === "style.css") {
+            return "index.css";
+          }
+          if (
+            assetInfo.type === "asset" &&
+            /\.css$/i.test(assetInfo.name as string)
+          ) {
+            return "theme/[name].[ext]";
+          }
+
           return assetInfo.name as string;
         },
         manualChunks: (id) => {
