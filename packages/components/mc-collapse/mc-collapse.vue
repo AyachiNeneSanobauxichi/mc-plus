@@ -47,7 +47,8 @@ const handleItemClick = (item: CollapseItemName) => {
 
   if (accordion) {
     // accordion mode
-    _activeNames = [_activeNames[0] === item ? item : ""];
+    _activeNames = [_activeNames[0] === item ? "" : item];
+    console.log(_activeNames);
     updateActiveNames(_activeNames);
   } else {
     const idx = _activeNames.indexOf(item);
