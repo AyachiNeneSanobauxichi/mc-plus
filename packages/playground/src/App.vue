@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McCollapse, McCollapseItem } from "@mc-plus/components";
+import { McCollapse, McCollapseItem } from "mc-plus";
 
 const modelValue = ref(["Yui"]);
 </script>
