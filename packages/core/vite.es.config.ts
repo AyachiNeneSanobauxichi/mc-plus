@@ -1,28 +1,15 @@
 import { defineConfig, type PluginOption } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
-import { delay, includes } from "lodash-es";
+import { includes } from "lodash-es";
 import { resolve } from "path";
-import { getDirectoriesSync } from "../utils/build";
-import { readFileSync } from "fs";
-import shell from "shelljs";
+import {
+  getDirectoriesSync,
+  removeDistPlugin,
+  moveStyles,
+  ENV,
+} from "../utils/build";
 import terser from "@rollup/plugin-terser";
-import hooks from "./hooksPlugin";
-
-const TRY_MOCE_STYLES_DELAY = 800 as const;
-
-const isProd = process.env.NODE_ENV === "production";
-const isDev = process.env.NODE_ENV === "development";
-const isTest = process.env.NODE_ENV === "test";
-
-function moveStyles() {
-  try {
-    readFileSync("./dist/umd/index.css.gz");
-    shell.cp("./dist/umd/index.css", "./dist/index.css");
-  } catch (error) {
-    delay(moveStyles, TRY_MOCE_STYLES_DELAY);
-  }
-}
 
 export default defineConfig({
   plugins: [
@@ -31,7 +18,7 @@ export default defineConfig({
       tsconfigPath: "../../tsconfig.build.json",
       outDir: "dist/types",
     }) as PluginOption,
-    hooks({
+    removeDistPlugin({
       rmFiles: ["./dist/es", "./dist/theme", "./dist/types"],
       afterBuild: () => {
         moveStyles();
@@ -39,29 +26,29 @@ export default defineConfig({
     }),
     terser({
       compress: {
-        sequences: isProd,
-        arguments: isProd,
-        drop_console: isProd && ["log"],
-        drop_debugger: isProd,
-        passes: isProd ? 4 : 1,
+        sequences: ENV.isProd,
+        arguments: ENV.isProd,
+        drop_console: ENV.isProd && ["log"],
+        drop_debugger: ENV.isProd,
+        passes: ENV.isProd ? 4 : 1,
         global_defs: {
-          "@PROD": JSON.stringify(isProd),
-          "@DEV": JSON.stringify(isDev),
-          "@TEST": JSON.stringify(isTest),
+          "@PROD": JSON.stringify(ENV.isProd),
+          "@DEV": JSON.stringify(ENV.isDev),
+          "@TEST": JSON.stringify(ENV.isTest),
         },
       },
       format: {
         semicolons: false,
-        shorthand: isProd,
-        braces: !isProd,
-        beautify: !isProd,
-        comments: !isProd,
+        shorthand: ENV.isProd,
+        braces: !ENV.isProd,
+        beautify: !ENV.isProd,
+        comments: !ENV.isProd,
       },
       mangle: {
-        toplevel: isProd,
-        eval: isProd,
-        keep_classnames: isDev,
-        keep_fnames: isDev,
+        toplevel: ENV.isProd,
+        eval: ENV.isProd,
+        keep_classnames: ENV.isDev,
+        keep_fnames: ENV.isDev,
       },
     }),
   ],

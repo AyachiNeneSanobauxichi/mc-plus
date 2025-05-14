@@ -1,4 +1,4 @@
-export default function () {
+export function printLogo() {
   if (PROD) {
     console.info("contact us with ayachinenesanobauxichi@gmai.com");
   } else if (DEV) {

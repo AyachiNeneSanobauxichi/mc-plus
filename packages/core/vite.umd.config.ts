@@ -2,26 +2,8 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { compression } from "vite-plugin-compression2";
 import { resolve } from "path";
-import { readFileSync } from "fs";
-import shell from "shelljs";
-import { delay } from "lodash-es";
 import terser from "@rollup/plugin-terser";
-import hooks from "./hooksPlugin";
-
-const TRY_MOCE_STYLES_DELAY = 800 as const;
-
-const isProd = process.env.NODE_ENV === "production";
-const isDev = process.env.NODE_ENV === "development";
-const isTest = process.env.NODE_ENV === "test";
-
-function moveStyles() {
-  try {
-    readFileSync("./dist/umd/index.css.gz");
-    shell.cp("./dist/umd/index.css", "./dist/index.css");
-  } catch (error) {
-    delay(moveStyles, TRY_MOCE_STYLES_DELAY);
-  }
-}
+import { removeDistPlugin, moveStyles, ENV } from "../utils/build";
 
 export default defineConfig({
   plugins: [
@@ -29,7 +11,7 @@ export default defineConfig({
     compression({
       include: /.(cjs|css)$/i,
     }),
-    hooks({
+    removeDistPlugin({
       rmFiles: ["./dist/umd", "./dist/index.css"],
       afterBuild: () => {
         moveStyles();
@@ -37,29 +19,29 @@ export default defineConfig({
     }),
     terser({
       compress: {
-        sequences: isProd,
-        arguments: isProd,
-        drop_console: isProd && ["log"],
-        drop_debugger: isProd,
-        passes: isProd ? 4 : 1,
+        sequences: ENV.isProd,
+        arguments: ENV.isProd,
+        drop_console: ENV.isProd && ["log"],
+        drop_debugger: ENV.isProd,
+        passes: ENV.isProd ? 4 : 1,
         global_defs: {
-          "@PROD": JSON.stringify(isProd),
-          "@DEV": JSON.stringify(isDev),
-          "@TEST": JSON.stringify(isTest),
+          "@PROD": JSON.stringify(ENV.isProd),
+          "@DEV": JSON.stringify(ENV.isDev),
+          "@TEST": JSON.stringify(ENV.isTest),
         },
       },
       format: {
         semicolons: false,
-        shorthand: isProd,
-        braces: !isProd,
-        beautify: !isProd,
-        comments: !isProd,
+        shorthand: ENV.isProd,
+        braces: !ENV.isProd,
+        beautify: !ENV.isProd,
+        comments: !ENV.isProd,
       },
       mangle: {
-        toplevel: isProd,
-        eval: isProd,
-        keep_classnames: isDev,
-        keep_fnames: isDev,
+        toplevel: ENV.isProd,
+        eval: ENV.isProd,
+        keep_classnames: ENV.isDev,
+        keep_fnames: ENV.isDev,
       },
     }),
   ],
