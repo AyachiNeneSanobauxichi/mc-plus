@@ -1,7 +1,15 @@
+import type { ButtonType } from "./types";
 import { describe, it, expect, vi, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import McButton from "./mc-button.vue";
-import type { ButtonType } from "./types";
+import { McButton as _McButton } from ".";
+
+describe("mc-icon installer", () => {
+  test("icon installer", () => {
+    expect(_McButton.name).toBe("McButton");
+    expect(_McButton).toHaveProperty("install");
+  });
+});
 
 describe("mc-button", () => {
   // button basic
