@@ -28,6 +28,8 @@
   --mc-camp-background: #f9f7ff;
   /* white */
   --mc-white: #ffffff;
+  /* background */
+  --mc-camp-bg: #f9f7ff;
 
   /* alerts & notifications */
   --mc-success: #23b12f;
