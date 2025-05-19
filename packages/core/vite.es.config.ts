@@ -54,9 +54,10 @@ export default defineConfig({
   ],
   build: {
     minify: false,
-    // sourcemap: true,
+    sourcemap: !ENV.isProd,
     outDir: "dist/es",
     cssCodeSplit: true,
+    cssMinify: ENV.isProd,
     lib: {
       entry: resolve(__dirname, "./index.ts"),
       name: "McPlus",

@@ -21,4 +21,4 @@ story book test
 scss use hint
 ~~adjust move style plugin~~
 import style by component
-minify style
+~~minify style~~
