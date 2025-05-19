@@ -16,3 +16,16 @@
   $shadow-color: var(--mc-gray-200);
   box-shadow: 0 4px 8px $shadow-color;
 }
+
+/* title */
+@mixin title($direction: to right) {
+  background: linear-gradient(
+    $direction,
+    var(--mc-purple-200),
+    var(--mc-teal-900)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block; // 确保渐变效果生效
+}

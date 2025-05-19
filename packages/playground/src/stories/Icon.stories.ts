@@ -19,7 +19,7 @@ export default meta;
 
 export const Demo: StoryObj<typeof McIcon> = {
   args: {
-    name: "setting",
+    name: "Accept",
   },
   render: (args) => ({
     components: {
