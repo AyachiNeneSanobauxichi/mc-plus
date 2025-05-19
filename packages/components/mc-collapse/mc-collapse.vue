@@ -6,12 +6,13 @@
 
 <script setup lang="ts">
 import type { CollapseProps, CollapseEmits, CollapseItemName } from "./types";
-import { ref, provide, watch } from "vue";
-import { COLLAPSE_CONTEXT_KEY } from "./constant";
+import { ref, provide, watch, watchEffect } from "vue";
+import { COLLAPSE_CONTEXT_KEY, COMPONENT_NAME } from "./constant";
+import { debugWarning } from "@mc-plus/utils";
 
 // options
 defineOptions({
-  name: "McCollapse",
+  name: COMPONENT_NAME,
 });
 
 // props
@@ -21,12 +22,15 @@ const activeNames = ref(modelValue);
 // emit
 const emit = defineEmits<CollapseEmits>();
 
-// accordion mode
-if (accordion && modelValue.length > 1) {
-  console.warn(
-    "[mc-collapse]: accordion is true, modelValue should be a single value."
-  );
-}
+// check accordion mode
+watchEffect(() => {
+  if (accordion && modelValue.length > 1) {
+    debugWarning(
+      COMPONENT_NAME,
+      "accordion is true, modelValue should be a single value."
+    );
+  }
+});
 
 // active names watcher
 watch(
@@ -47,7 +51,8 @@ const handleItemClick = (item: CollapseItemName) => {
 
   if (accordion) {
     // accordion mode
-    _activeNames = [_activeNames[0] === item ? item : ""];
+    _activeNames = [_activeNames[0] === item ? "" : item];
+    console.log(_activeNames);
     updateActiveNames(_activeNames);
   } else {
     const idx = _activeNames.indexOf(item);

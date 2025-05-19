@@ -1,0 +1,46 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$height: var(--mc-base-height);
+$line_color: var(--mc-gray-200);
+$transition_duration: var(--mc-transition-duration);
+$gap: 24px;
+$border_size: 1px;
+
+.mc-collapse-item {
+  width: 100%;
+  position: relative;
+  &::after {
+    content: "";
+    width: 100%;
+    border-top: $border_size solid $line_color;
+    position: absolute;
+    bottom: -$border_size;
+  }
+  .mc-collapse-item-header {
+    width: 100%;
+    height: $height;
+    box-sizing: border-box;
+    @include mixin.flex-center(row, space-between);
+    cursor: pointer;
+    .triangle-icon {
+      width: 16px;
+      height: 16px;
+      transform: rotate(180deg);
+      transform-origin: center;
+      @include mixin.flex-center();
+      transition: transform $transition_duration ease-in-out;
+    }
+  }
+
+  &.mc-collapse-item--active {
+    .triangle-icon {
+      transform: rotate(0deg);
+    }
+  }
+
+  .mc-collapse-item-wapper {
+    padding: $gap 0;
+    .mc-collapse-item-content {
+    }
+  }
+}

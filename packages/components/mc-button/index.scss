@@ -9,7 +9,7 @@ $radius: var(--mc-radius);
 $transition_duration: var(--mc-transition-duration);
 $transform_distance: var(--mc-transform-distance);
 $large_height: 64px;
-$medium_height: 40px;
+$medium_height: var(--mc-base-height);
 $small_height: 34px;
 
 /* loading animation */

@@ -1,10 +1,16 @@
 <template>
-  <div class="mc-collapse-item">
-    <div class="mc-collapse-item-header" @click="handleClick">
+  <div
+    class="mc-collapse-item"
+    :class="{ 'mc-collapse-item--active': isActive }"
+    @click="handleClick"
+  >
+    <div class="mc-collapse-item-header">
       <span class="mc-collapse-item-title">
         <slot name="title">{{ title }}</slot>
       </span>
-      <mc-icon name="triangle-up" />
+      <span class="triangle-icon">
+        <mc-icon name="triangle-up" />
+      </span>
     </div>
     <div class="mc-collapse-item-wapper" v-show="isActive">
       <div class="mc-collapse-item-content">
