@@ -14,7 +14,7 @@ describe("mc-icon installer", () => {
 describe("mc-icon", () => {
   // icon name
   it("should has the correct name class when name is set", () => {
-    const iconNames: IconType[] = ["arrow-left", "arrow-right"];
+    const iconNames: IconType[] = ["Corner_Arrow_Left", "Corner_Arrow_Right"];
     iconNames.forEach((icon) => {
       const wrapper = mount(() => <McIcon name={icon} />);
       expect(wrapper.classes()).toContain(`mc-iconfont`);
@@ -25,7 +25,7 @@ describe("mc-icon", () => {
   // icon click
   test("icon click", async () => {
     const onClick = vi.fn();
-    const wrapper = mount(() => <McIcon name="arrow-left" {...{ onClick }} />);
+    const wrapper = mount(() => <McIcon name="Rotate" {...{ onClick }} />);
     await wrapper.get("i").trigger("click");
     expect(onClick).toHaveBeenCalledOnce();
   });

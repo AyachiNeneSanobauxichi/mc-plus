@@ -63,7 +63,7 @@ describe("mc-button", () => {
     // attrs
     expect(wrapper.get("button").attributes("disabled")).toBeDefined();
     // icon
-    expect(wrapper.find(".mc-icon--loading-dot").exists()).toBe(true);
+    expect(wrapper.find(".mc-icon--Loading").exists()).toBe(true);
     // events
     await wrapper.get("button").trigger("click");
     expect(onClick).not.toHaveBeenCalled();
@@ -89,19 +89,19 @@ describe("mc-button", () => {
   // button icon
   test("button icon", () => {
     const previousButton = mount(() => (
-      <McButton type="primary" leftIcon="arrow-left">
+      <McButton type="primary" leftIcon="Corner_Arrow_Left">
         previous step
       </McButton>
     ));
     const nextButton = mount(() => (
-      <McButton type="primary" rightIcon="arrow-right">
+      <McButton type="primary" rightIcon="Corner_Arrow_Right">
         next step
       </McButton>
     ));
 
     // icon
-    expect(previousButton.find(".mc-icon--arrow-left").exists()).toBe(true);
-    expect(nextButton.find(".mc-icon--arrow-right").exists()).toBe(true);
+    expect(previousButton.find(".mc-icon--Corner_Arrow_Left").exists()).toBe(true);
+    expect(nextButton.find(".mc-icon--Corner_Arrow_Right").exists()).toBe(true);
   });
 
   // button style

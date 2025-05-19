@@ -9,7 +9,7 @@
         <slot name="title">{{ title }}</slot>
       </span>
       <span class="triangle-icon">
-        <mc-icon name="triangle-up" />
+        <mc-icon name="Down-Chevron" />
       </span>
     </div>
     <div class="mc-collapse-item-wapper" v-show="isActive">
