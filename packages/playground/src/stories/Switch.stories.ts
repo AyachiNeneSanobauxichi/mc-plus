@@ -1,5 +1,4 @@
 import type { StoryObj, Meta } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
 import { McSwitch } from "mc-plus";
 import { ref } from "vue";
 
@@ -45,7 +44,7 @@ export const Default: StoryObj<typeof McSwitch> = {
   render: (args: SwitchArgs) => ({
     components: { McSwitch },
     setup() {
-      const value = ref(args.modelValue ?? false);
+      const value = ref(false);
       return { args, value };
     },
     template: `<mc-switch v-model="value" v-bind="args" />`,
