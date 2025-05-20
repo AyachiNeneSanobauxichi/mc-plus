@@ -23,7 +23,7 @@
 import { computed, onMounted, ref, toRefs, toValue, useAttrs } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import type { IconType } from "../mc-icon/types";
-import type { MessageEmits, MessageInstance, MessageProps } from "./types";
+import type { MessageComponentExposed, MessageEmits, MessageInstance, MessageProps } from "./types";
 
 // options
 defineOptions({
@@ -81,8 +81,9 @@ onMounted(() => {
 });
 
 // expose
-defineExpose<MessageInstance>({
+defineExpose<MessageInstance & MessageComponentExposed>({
   ref: _ref,
+  handleClose,
 });
 </script>
 

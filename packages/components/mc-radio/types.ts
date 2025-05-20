@@ -32,7 +32,7 @@ export interface RadioEmits {
 }
 
 export interface RadioInstance {
-  ref: Ref<HTMLElement | void>;
+  ref: Ref<HTMLElement | undefined>;
 }
 
 export interface RadioGroupProps {
@@ -48,5 +48,5 @@ export interface RadioGroupEmits {
 }
 
 export interface RadioGroupInstance {
-  ref: Ref<HTMLElement | void>;
+  ref: Ref<HTMLElement | undefined>;
 }

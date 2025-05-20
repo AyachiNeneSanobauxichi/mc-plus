@@ -23,8 +23,12 @@ export interface MessageEmits {
   (e: "close"): void;
 }
 
+export interface MessageComponentExposed {
+  handleClose: () => void;
+}
+
 export interface MessageInstance {
-  ref: Ref<HTMLDivElement | void>;
+  ref: Ref<HTMLDivElement | undefined>;
 }
 
 export interface MessageOptions extends MessageProps {

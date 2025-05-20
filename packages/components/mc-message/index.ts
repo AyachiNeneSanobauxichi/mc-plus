@@ -2,24 +2,30 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 15:28:46
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-20 17:49:13
+ * @LastEditTime: 2025-05-20 17:56:14
  */
 import { withInstall } from "@mc-plus/utils";
 import { createVNode, render, type App, type VNode } from "vue";
 import "./index.scss"; // 确保样式被导入
 import _McMessage from "./mc-message.vue";
-import type { MessageOptions, MessageService, MessageType } from "./types";
+import type { MessageComponentExposed, MessageOptions, MessageService, MessageType } from "./types";
 
 export * from "./types";
 export const McMessage = withInstall(_McMessage);
 
 let seed = 1;
-const instances: { vm: VNode; id: string; wrapper: HTMLDivElement }[] = [];
+interface MessageInstanceRecord {
+  vm: VNode;
+  id: string;
+  wrapper: HTMLDivElement;
+}
+
+const instances: MessageInstanceRecord[] = [];
 const MAX_INSTANCES = 20;
 
 // 创建或获取消息容器
-const getMessageContainer = () => {
-  let container = document.getElementById("mc-message-container");
+const getMessageContainer = (): HTMLDivElement => {
+  let container = document.getElementById("mc-message-container") as HTMLDivElement | null;
   if (!container) {
     container = document.createElement("div");
     container.id = "mc-message-container";
@@ -38,7 +44,8 @@ const Message: MessageService = {
     // 复制数组，避免在迭代过程中修改原数组导致的问题
     const instancesCopy = [...instances];
     instancesCopy.forEach((instance) => {
-      (instance.vm.component?.exposed as any)?.handleClose();
+      const exposed = instance.vm.component?.exposed as MessageComponentExposed | undefined;
+      exposed?.handleClose?.();
     });
   },
 };
@@ -95,7 +102,7 @@ function createMessage(options: MessageOptions | string, type: MessageType) {
   };
 }
 
-function closeMessage(id: string) {
+function closeMessage(id: string): void {
   const index = instances.findIndex((instance) => instance.id === id);
 
   if (index === -1) return;
@@ -124,7 +131,7 @@ function closeMessage(id: string) {
 }
 
 // Install function
-const install = (app: App) => {
+const install = (app: App): void => {
   app.config.globalProperties.$message = Message;
 };
 
