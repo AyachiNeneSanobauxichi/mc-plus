@@ -17,7 +17,7 @@
         :value="modelValue"
         @change="toggleSwitch"
       />
-      <span class="mc-switch-core">
+      <span class="mc-switch-core" :style="{ width: width }">
         <span v-if="onText || offText" class="mc-switch-text">
           {{ modelValue ? onText : offText }}
         </span>
@@ -39,10 +39,7 @@ defineOptions({ name: "McSwitch" });
 // props
 const props = withDefaults(defineProps<SwitchProps>(), {
   modelValue: false,
-  label: "",
   disabled: false,
-  onText: "",
-  offText: "",
 });
 
 // emits

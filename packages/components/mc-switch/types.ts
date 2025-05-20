@@ -2,6 +2,7 @@ import type { Ref } from "vue";
 
 export interface SwitchProps {
   modelValue?: boolean;
+  width?: string;
   label?: string;
   disabled?: boolean;
   onText?: string;
@@ -14,4 +15,4 @@ export interface SwitchEmits {
 
 export interface SwitchInstance {
   ref: Ref<HTMLLabelElement | void>;
-} 
+}

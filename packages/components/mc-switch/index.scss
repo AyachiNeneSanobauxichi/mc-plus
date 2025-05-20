@@ -1,7 +1,7 @@
 /* variables */
 $primary_color: var(--mc-teal-500);
-$disabled_color: var(--mc-gray-300);
-$unactive_color: var(--mc-gray-200);
+$disabled_color: var(--mc-gray-200);
+$unactive_color: var(--mc-gray-400);
 $text_color: var(--mc-gray-700);
 $text_white: var(--mc-white);
 $text_disabled: var(--mc-gray-400);
@@ -23,11 +23,6 @@ $height: 25px;
   cursor: pointer;
 }
 
-.mc-switch.is-disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
 .mc-switch-input {
   position: absolute;
   width: 0;
@@ -37,6 +32,9 @@ $height: 25px;
 }
 
 .mc-switch-core {
+  box-sizing: border-box;
+  padding: 0 24px;
+  width: 72px;
   position: relative;
   height: $height;
   border-radius: $height;
@@ -45,10 +43,6 @@ $height: 25px;
   justify-content: center;
   background-color: $unactive_color;
   transition: all $transition_duration cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:has(.mc-switch-text) {
-    width: 72px;
-  }
 
   &::after {
     content: "";
@@ -106,16 +100,21 @@ $height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
-.mc-switch.is-active .mc-switch-text {
-  opacity: 1;
-}
-
+.mc-switch.is-active .mc-switch-text,
 .mc-switch:not(.is-active) .mc-switch-text {
   opacity: 1;
 }
 
 .mc-switch:not(.is-disabled):hover .mc-switch-core {
   opacity: 0.85;
+}
+
+.mc-switch.is-disabled {
+  cursor: not-allowed;
+  .mc-switch-core {
+    background-color: $disabled_color;
+  }
 }
