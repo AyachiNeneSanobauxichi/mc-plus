@@ -1,11 +1,15 @@
 <template>
   <div class="container">
-    <mc-button type="plain">McButton</mc-button>
+    <mc-switch v-model="value" off-text="OFF" on-text="ON" disabled
+      >Switch</mc-switch
+    >
   </div>
 </template>
 
 <script setup lang="ts">
-import { McButton } from "mc-plus";
+import McSwitch from "@mc-plus/components/mc-switch/mc-switch.vue";
+import { ref } from "vue";
+const value = ref<boolean>(true);
 </script>
 
 <style lang="scss" scoped>
