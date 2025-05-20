@@ -1,5 +1,5 @@
 import type { StoryObj, Meta } from "@storybook/vue3";
-import { McSwitch } from "mc-plus";
+import { McSwitch, type SwitchProps } from "mc-plus";
 import { ref } from "vue";
 
 const meta: Meta<typeof McSwitch> = {
@@ -30,18 +30,9 @@ const meta: Meta<typeof McSwitch> = {
 
 export default meta;
 
-type SwitchArgs = {
-  modelValue?: boolean;
-  disabled?: boolean;
-  width?: string;
-  label?: string;
-  onText?: string;
-  offText?: string;
-};
-
 export const Default: StoryObj<typeof McSwitch> = {
   args: {},
-  render: (args: SwitchArgs) => ({
+  render: (args: SwitchProps) => ({
     components: { McSwitch },
     setup() {
       const value = ref(false);
