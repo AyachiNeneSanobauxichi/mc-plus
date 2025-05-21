@@ -2,7 +2,7 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 15:28:13
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-20 17:46:20
+ * @LastEditTime: 2025-05-21 09:29:00
 -->
 <template>
   <transition name="mc-message-fade">
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<MessageProps>(), {
   description: "",
   duration: 3000,
   showIcon: true,
-  closable: true,
+  closable: false,
 });
 
 // emits

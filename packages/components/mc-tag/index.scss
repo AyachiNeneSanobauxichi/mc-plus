@@ -1,0 +1,120 @@
+/* variables */
+$primary_color: var(--mc-teal-500);
+$primary_color_hover: var(--mc-teal-900);
+$disabled_color: var(--mc-gray-300);
+$text_white: var(--mc-white);
+$text_disabled: var(--mc-gray-400);
+$gap: var(--mc-gap);
+$radius: var(--mc-radius);
+$transition_duration: var(--mc-transition-duration);
+$transform_distance: var(--mc-transform-distance);
+$medium_height: 36px;
+$small_height: 28px;
+$large_height: 48px;
+$dark_bg: var(--mc-black);
+
+.mc-tag {
+  /* reset */
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  box-sizing: border-box;
+
+  /* common */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+  font-weight: 500;
+  border-radius: $radius;
+  transition: all $transition_duration;
+  cursor: pointer;
+  position: relative;
+
+  /* medium */
+  &.mc-tag--medium {
+    height: $medium_height;
+    padding: 6px 12px;
+  }
+  /* small */
+  &.mc-tag--small {
+    height: $small_height;
+    padding: 4px 10px;
+  }
+  /* large */
+  &.mc-tag--large {
+    height: $large_height;
+    padding: 12px 16px;
+  }
+
+  /* primary */
+  &.mc-tag--primary {
+    background-color: $primary_color;
+    color: $text_white;
+    &:hover {
+      background-color: $primary_color_hover;
+    }
+    &.is-disabled {
+      background-color: $disabled_color;
+      color: $text_disabled;
+    }
+    &.is-selected {
+      background-color: $primary_color_hover;
+    }
+  }
+
+  /* plain */
+  &.mc-tag--plain {
+    background-color: $text_white;
+    border: 1px solid $primary_color;
+    color: $primary_color;
+    &:hover {
+      border: 1px solid $primary_color_hover;
+      color: $primary_color_hover;
+    }
+    &.is-disabled {
+      border: 1px solid $disabled_color;
+      color: $disabled_color;
+    }
+    &.is-selected {
+      border: 1px solid $primary_color_hover;
+      color: $primary_color_hover;
+    }
+  }
+
+  /* dark */
+  &.mc-tag--dark {
+    background-color: $dark_bg;
+    color: $text_white;
+    &:hover {
+      opacity: 0.8;
+    }
+    &.is-disabled {
+      background-color: $disabled_color;
+      color: $text_disabled;
+    }
+    &.is-selected {
+      opacity: 0.8;
+    }
+  }
+
+  /* close button */
+  .close-icon {
+    font-size: 12px;
+    margin-left: 4px;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  /* disabled */
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
