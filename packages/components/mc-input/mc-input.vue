@@ -1,6 +1,8 @@
 <template>
   <div class="mc-input" :class="{ 'mc-input--disabled': disabled }">
-    <span class="mc-input-icon" v-if="search"><mc-icon name="Search" /></span>
+    <slot name="pre">
+      <span class="mc-input-icon" v-if="search"><mc-icon name="Search" /></span>
+    </slot>
     <input
       class="mc-input__inner"
       :type="isHidden && password ? 'password' : 'text'"
@@ -11,12 +13,14 @@
       @focus.stop="(e) => emit('focus', e)"
       @blur.stop="(e) => emit('blur', e)"
     />
-    <span class="mc-input-icon mc-input-icon-eye" v-if="password">
-      <mc-icon
-        :name="!isHidden ? 'Review' : 'Review-Hidden'"
-        @click="isHidden = !isHidden"
-      />
-    </span>
+    <slot class="post">
+      <span class="mc-input-icon mc-input-icon-eye" v-if="password">
+        <mc-icon
+          :name="!isHidden ? 'Review' : 'Review-Hidden'"
+          @click="isHidden = !isHidden"
+        />
+      </span>
+    </slot>
   </div>
 </template>
 

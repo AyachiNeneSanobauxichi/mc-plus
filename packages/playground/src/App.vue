@@ -8,6 +8,8 @@
       <mc-input
         :disabled="disabled"
         v-model="inputValue"
+        search
+        password
         @change="handleChange"
         @input="handleInput"
         @focus="handleFocus"
