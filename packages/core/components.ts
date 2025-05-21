@@ -5,6 +5,14 @@ import {
   McCollapse,
   McSwitch,
   McTooltip,
+  McInput,
 } from "@mc-plus/components";
 
-export default [McButton, McIcon, McCollapse, McSwitch, McTooltip] as Plugin[];
+export default [
+  McButton,
+  McIcon,
+  McCollapse,
+  McSwitch,
+  McTooltip,
+  McInput,
+] as Plugin[];

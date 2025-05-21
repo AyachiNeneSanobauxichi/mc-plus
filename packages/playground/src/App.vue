@@ -1,23 +1,22 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <span>Trigger: {{ trigger }}</span>
       <span>Disabled: {{ disabled }}</span>
+      <span>Input Value: {{ inputValue }}</span>
     </div>
-    <mc-tooltip :trigger="trigger" :disabled="disabled">
-      <template #default>McTooltip</template>
-      <template #content>
-        <div class="content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-          consectetur facilis vel officia ratione voluptatibus velit perferendis
-          debitis? Sunt fugit dolor nulla rerum. Aperiam vitae repellat
-          consectetur deleniti autem asperiores.
-        </div>
-      </template>
-    </mc-tooltip>
+    <div>
+      <mc-input
+        :disabled="disabled"
+        v-model="inputValue"
+        @change="handleChange"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+      />
+    </div>
     <div class="tool-bar">
-      <mc-button @click="changeTrigger">Change Trigger</mc-button>
       <mc-button @click="changeDisabled">Change disabled</mc-button>
+      <mc-button @click="handleSetValue">Set Value</mc-button>
     </div>
   </div>
 </template>
@@ -25,16 +24,33 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { McButton } from "mc-plus";
-import McTooltip from "@mc-plus/components/mc-tooltip/mc-tooltip.vue";
+import McInput from "@mc-plus/components/mc-input/mc-input.vue";
 
-const trigger = ref<"hover" | "click">("hover");
-const changeTrigger = () => {
-  trigger.value = trigger.value === "hover" ? "click" : "hover";
-};
+const inputValue = ref<string>("");
 
 const disabled = ref<boolean>(false);
 const changeDisabled = () => {
   disabled.value = !disabled.value;
+};
+
+const handleSetValue = () => {
+  inputValue.value = "Hello World";
+};
+
+const handleChange = () => {
+  console.log("Change: ", inputValue.value);
+};
+
+const handleInput = () => {
+  console.log("Input: ", inputValue.value);
+};
+
+const handleFocus = () => {
+  console.log("Handle Focus");
+};
+
+const handleBlur = () => {
+  console.log("Handle Blur");
 };
 </script>
 
