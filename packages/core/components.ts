@@ -1,4 +1,10 @@
 import type { Plugin } from "vue";
-import { McButton, McIcon, McCollapse, McSwitch } from "@mc-plus/components";
+import {
+  McButton,
+  McIcon,
+  McCollapse,
+  McSwitch,
+  McTooltip,
+} from "@mc-plus/components";
 
-export default [McButton, McIcon, McCollapse, McSwitch] as Plugin[];
+export default [McButton, McIcon, McCollapse, McSwitch, McTooltip] as Plugin[];
