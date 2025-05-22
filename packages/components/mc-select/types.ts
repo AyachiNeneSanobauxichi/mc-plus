@@ -7,6 +7,11 @@ export interface SelectOptionProps {
   label: string;
 }
 
+export interface SelectOptionInstance {
+  isShow: boolean;
+  ref: Ref<HTMLLIElement | undefined>;
+}
+
 export interface SelectProps {
   modelValue?: string | string[];
   placeholder?: string;

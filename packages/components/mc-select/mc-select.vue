@@ -18,11 +18,13 @@
         <mc-icon name="Down-Chevron" />
       </div>
     </div>
-    <div class="mc-select-dropdown-wrapper" v-if="isExpand">
-      <ul class="mc-select-dropdown">
-        <slot></slot>
-      </ul>
-    </div>
+    <transition name="mc-select-dropdown-transition">
+      <div class="mc-select-dropdown-wrapper" v-if="isExpand">
+        <ul class="mc-select-dropdown">
+          <slot></slot>
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 

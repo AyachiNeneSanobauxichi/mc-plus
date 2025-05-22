@@ -5,11 +5,11 @@
     </div>
     <div>
       <mc-select v-model="selectValue">
-        <mc-select-option value="1" label="Option 1" />
-        <mc-select-option value="2" label="Option 2" />
-        <mc-select-option value="3" label="Option 3" />
-        <mc-select-option value="4" label="Option 4" />
-        <mc-select-option value="5" label="Option 5" />
+        <mc-select-option value="Yui" label="Option Yui 18" />
+        <mc-select-option value="Mio" label="Option Mio 18" />
+        <mc-select-option value="Azusa" label="Option Azusa 17" />
+        <mc-select-option value="Ritsu" label="Option Ritsu 18" />
+        <mc-select-option value="Mugi" label="Option Mugi 18" />
       </mc-select>
     </div>
     <div class="tool-bar">

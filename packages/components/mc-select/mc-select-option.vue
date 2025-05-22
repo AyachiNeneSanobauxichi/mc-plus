@@ -4,6 +4,7 @@
     class="mc-select-dropdown-item mc-select-option"
     :class="{ 'mc-select-option-icon-active': isActive }"
     @click="handleClick"
+    ref="_ref"
   >
     <div class="mc-select-option-content">
       <slot>{{ label }}</slot>
@@ -15,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import type { SelectOptionProps } from "./types";
+import type { SelectOptionInstance, SelectOptionProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { computed, inject } from "vue";
+import { computed, inject, ref } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { isNil } from "lodash-es";
 
@@ -25,6 +26,9 @@ import { isNil } from "lodash-es";
 defineOptions({
   name: "McSelectOption",
 });
+
+// ref
+const _ref = ref<HTMLLIElement>();
 
 // props
 const props = defineProps<SelectOptionProps>();
@@ -48,6 +52,12 @@ const isShow = computed(() => {
 const handleClick = () => {
   ctx?.handleSelect(props);
 };
+
+// expose
+defineExpose<SelectOptionInstance>({
+  isShow: isShow.value,
+  ref: _ref,
+});
 </script>
 
 <style scoped lang="scss">
