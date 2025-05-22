@@ -1,4 +1,3 @@
-/* variables */
 $primary_color: var(--mc-teal-500);
 $primary_color_hover: var(--mc-teal-900);
 $disabled_color: var(--mc-gray-300);
@@ -8,21 +7,14 @@ $gap: var(--mc-gap);
 $radius: var(--mc-radius);
 $transition_duration: var(--mc-transition-duration);
 $transform_distance: var(--mc-transform-distance);
-$large_height: 24px;
-$medium_height: 20px;
-$small_height: 16px;
+$large_height: 24px; // 固定尺寸
 
 .mc-radio {
-  /* reset */
   box-sizing: border-box;
   cursor: pointer;
-  outline: none;
-
-  /* common */
   display: inline-flex;
   align-items: center;
   gap: $gap;
-  color: inherit;
   position: relative;
   transition: transform $transition_duration;
 
@@ -30,100 +22,79 @@ $small_height: 16px;
     transform: translateY($transform_distance);
   }
 
-  &.mc-radio--large {
-    .mc-radio__inner {
-      width: $large_height;
-      height: $large_height;
-    }
-  }
-
-  /* input */
-  .mc-radio__input {
+  &__input {
     display: inline-flex;
     align-items: center;
     position: relative;
-    white-space: nowrap;
-    outline: none;
   }
 
-  /* inner */
-  .mc-radio__inner {
+  &__inner {
     display: inline-block;
-    position: relative;
+    width: $large_height;
+    height: $large_height;
     border: 1px solid $primary_color;
     border-radius: 50%;
-    box-sizing: border-box;
+    background: $text_white;
     transition: all $transition_duration;
-    background-color: $text_white;
 
     &::after {
       content: "";
-      width: 50%;
-      height: 50%;
-      border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 50%;
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+      background: $text_white;
       transform: translate(-50%, -50%) scale(0);
-      transition: transform $transition_duration;
-      background-color: $text_white;
+      transition: all $transition_duration;
     }
   }
 
-  /* original input */
-  .mc-radio__original {
+  &__original {
     opacity: 0;
-    outline: none;
     position: absolute;
-    z-index: -1;
     width: 0;
     height: 0;
     margin: 0;
+    z-index: -1;
   }
 
-  /* label */
-  .mc-radio__label {
+  &__label {
     padding-left: 8px;
     font-size: 14px;
-    line-height: 1;
+    user-select: none;
+    font-weight: 400;
+    color: var(--mc-black);
+    line-height: 20px;
   }
 
-  /* hover */
-  &:hover:not(.is-disabled) {
-    .mc-radio__inner {
-      border-color: $primary_color_hover;
-    }
+  &:hover:not(.is-disabled) &__inner {
+    border-color: $primary_color_hover;
   }
 
-  /* checked */
   &.is-checked {
     .mc-radio__inner {
-      border-color: $primary_color;
-      background-color: $primary_color;
-
+      background: $primary_color;
       &::after {
         transform: translate(-50%, -50%) scale(1);
       }
     }
 
-    &:hover:not(.is-disabled) {
-      .mc-radio__inner {
-        border-color: $primary_color_hover;
-        background-color: $primary_color_hover;
-      }
+    &:hover:not(.is-disabled) .mc-radio__inner {
+      background: $primary_color_hover;
+      border-color: $primary_color_hover;
     }
   }
 
-  /* disabled */
   &.is-disabled {
     cursor: not-allowed;
-
     &:active {
-      transform: translateY(0);
+      transform: none;
     }
 
     .mc-radio__inner {
-      background-color: $disabled_color;
+      background: $disabled_color;
       border-color: $text_disabled;
     }
 
@@ -131,16 +102,8 @@ $small_height: 16px;
       color: $text_disabled;
     }
 
-    &.is-checked {
-      .mc-radio__inner {
-        background-color: $disabled_color;
-        border-color: $text_disabled;
-
-        &::after {
-          background-color: $text_white;
-          transform: translate(-50%, -50%) scale(1);
-        }
-      }
+    &.is-checked .mc-radio__inner::after {
+      background: $text_white;
     }
   }
 }

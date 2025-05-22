@@ -2,7 +2,7 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 08:55:24
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-20 09:55:32
+ * @LastEditTime: 2025-05-22 10:46:36
 -->
 <template>
   <div ref="_ref" class="mc-radio-group" :class="{ 'is-disabled': disabled }">
