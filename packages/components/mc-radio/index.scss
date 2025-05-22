@@ -30,21 +30,6 @@ $small_height: 16px;
     transform: translateY($transform_distance);
   }
 
-  /* size */
-  &.mc-radio--medium {
-    .mc-radio__inner {
-      width: $medium_height;
-      height: $medium_height;
-    }
-  }
-
-  &.mc-radio--small {
-    .mc-radio__inner {
-      width: $small_height;
-      height: $small_height;
-    }
-  }
-
   &.mc-radio--large {
     .mc-radio__inner {
       width: $large_height;
