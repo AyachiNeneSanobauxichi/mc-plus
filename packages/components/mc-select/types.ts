@@ -8,14 +8,15 @@ export interface SelectOptionProps {
 }
 
 export interface SelectProps {
-  modelValue?: string;
+  modelValue?: string | string[];
   placeholder?: string;
   disabled?: boolean;
   type?: SelectType;
 }
 
 export interface SelectEmits {
-  (e: "update:modelValue", val: string): void;
+  (e: "update:modelValue", val: string | string[]): void;
+  (e: "change", val: string | string[]): void;
 }
 
 export interface SelectContext {

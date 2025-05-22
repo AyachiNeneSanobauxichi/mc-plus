@@ -33,6 +33,7 @@ defineOptions({
 
 // props
 const props = withDefaults(defineProps<SelectProps>(), {
+  modelValue: "",
   type: "single",
   placeholder: "Please select",
 });
@@ -48,19 +49,44 @@ const handleClick = () => {
   isExpand.value = !isExpand.value;
 };
 
+// is multiple
+const isMultiple = (modelValue: string | string[]): modelValue is string[] => {
+  return props.type === "multi-choice";
+};
+
 // select values
-const selectValues = ref<string[]>([props.modelValue ?? ""]);
+const selectValues = ref<string[]>(
+  !isMultiple(props.modelValue) ? [props.modelValue] : props.modelValue ?? []
+);
 // select value change
 watch(
   () => props.modelValue,
   () => {
-    selectValues.value = [props.modelValue ?? ""];
+    if (isMultiple(props.modelValue)) {
+      selectValues.value = props.modelValue;
+    } else {
+      selectValues.value = [props.modelValue];
+    }
   }
 );
 
 // select event
 const handleSelect = (item: SelectOptionProps) => {
-  emit("update:modelValue", item.value);
+  if (isMultiple(props.modelValue)) {
+    let newValues: string[] = [];
+    if (props.modelValue.includes(item.value)) {
+      newValues = selectValues.value = props.modelValue.filter(
+        (value) => value !== item.value
+      );
+    } else {
+      newValues = [...props.modelValue, item.value];
+    }
+    emit("update:modelValue", newValues);
+    emit("change", newValues);
+  } else {
+    emit("update:modelValue", item.value);
+    emit("change", item.value);
+  }
 };
 
 // provide
