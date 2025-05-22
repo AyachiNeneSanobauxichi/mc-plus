@@ -1,5 +1,6 @@
 <template>
   <li
+    v-if="isShow"
     class="mc-select-dropdown-item mc-select-option"
     :class="{ 'mc-select-option-icon-active': isActive }"
     @click="handleClick"
@@ -18,6 +19,7 @@ import type { SelectOptionProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { computed, inject } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
+import { isNil } from "lodash-es";
 
 // options
 defineOptions({
@@ -33,6 +35,13 @@ const ctx = inject(SELECT_INJECTION_KEY, void 0);
 // active
 const isActive = computed(() => {
   return ctx?.selectValues.value.includes(props.value);
+});
+
+// show
+const isShow = computed(() => {
+  return isNil(ctx?.searchValue)
+    ? true
+    : props.label.includes(ctx?.searchValue.value);
 });
 
 // click

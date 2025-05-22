@@ -1,5 +1,6 @@
 $text_color: var(--mc-gray-800);
 $bg_color_active: var(--mc-teal-100);
+$bg_color_hover: var(--mc-teal-50);
 
 .mc-select-option {
   width: 100%;
@@ -11,8 +12,11 @@ $bg_color_active: var(--mc-teal-100);
   box-sizing: border-box;
   color: $text_color;
   gap: 8px;
-  
-  &:hover,
+
+  &:hover {
+    background-color: $bg_color_hover;
+  }
+
   &.mc-select-option-icon-active {
     background-color: $bg_color_active;
   }

@@ -4,7 +4,7 @@
       <span>Select Value: {{ selectValue }}</span>
     </div>
     <div>
-      <mc-select v-model="selectValue" type="multi-choice">
+      <mc-select v-model="selectValue">
         <mc-select-option value="1" label="Option 1" />
         <mc-select-option value="2" label="Option 2" />
         <mc-select-option value="3" label="Option 3" />
@@ -25,10 +25,10 @@ import { McButton } from "mc-plus";
 import McSelect from "@mc-plus/components/mc-select/mc-select.vue";
 import McSelectOption from "@mc-plus/components/mc-select/mc-select-option.vue";
 
-const selectValue = ref<string[]>([]);
+const selectValue = ref<string>();
 
 const handleSetValue = () => {
-  selectValue.value = ["1", "2"];
+  selectValue.value = "1";
 };
 </script>
 

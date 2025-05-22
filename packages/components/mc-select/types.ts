@@ -20,6 +20,7 @@ export interface SelectEmits {
 }
 
 export interface SelectContext {
+  searchValue: Ref<string>;
   selectValues: Ref<string[]>;
   handleSelect(item: SelectOptionProps): void;
 }
