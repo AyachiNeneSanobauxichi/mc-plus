@@ -5,13 +5,18 @@
     </div>
     <div>
       <mc-select v-model="selectValue">
-        <mc-select-group label="Grade 3" />
-        <mc-select-option value="Yui" label="Option Yui 18" />
-        <mc-select-option value="Mio" label="Option Mio 18" />
-        <mc-select-option value="Ritsu" label="Option Ritsu 18" />
-        <mc-select-option value="Mugi" label="Option Mugi 18" />
-        <mc-select-group label="Grade 2" />
-        <mc-select-option value="Azusa" label="Option Azusa 17" />
+        <mc-select-group label="k-on" />
+        <mc-select-option value="Yui" label="Yui 18" />
+        <mc-select-option value="Mio" label="Mio 18" />
+        <mc-select-option value="Ritsu" label="Ritsu 18" />
+        <mc-select-option value="Mugi" label="Mugi 18" />
+        <mc-select-option value="Azusa" label="Azusa 17" />
+        <mc-select-group label="Kankore" />
+        <mc-select-option value="Kagero" label="Kagero" />
+        <mc-select-option value="Kuroshio" label="Kuroshio" />
+        <mc-select-option value="Shiranui" label="Shiranui" />
+        <mc-select-option value="Oyashio" label="Oyashio" />
+        <mc-select-option value="Arashi" label="Arashi" />
       </mc-select>
     </div>
     <div class="tool-bar">

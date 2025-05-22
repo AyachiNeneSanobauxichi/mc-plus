@@ -1,2 +1,23 @@
-@import './reset.css';
-@import './variables.css';
+@import "./reset.css";
+@import "./variables.css";
+
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--mc-gray-200);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--mc-gray-400);
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
