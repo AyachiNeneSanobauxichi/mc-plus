@@ -2,24 +2,23 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 08:54:42
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-20 11:16:22
+ * @LastEditTime: 2025-05-22 10:23:32
 -->
 <template>
   <label
     ref="_ref"
-    class="mc-radio"
+    class="mc-radio mc-radio--large"
     :class="{
-      [`mc-radio--${radioSize}`]: radioSize,
       'is-disabled': isDisabled,
       'is-checked': isChecked,
-      'is-bordered': border,
     }">
     <span class="mc-radio__input">
       <span class="mc-radio__inner"></span>
-      <input class="mc-radio__original" type="radio" :name="name" :value="_value" :disabled="isDisabled" v-model="radioValue" />
+      <input class="mc-radio__original" type="radio" :value="_value" :disabled="isDisabled" v-model="radioValue" />
     </span>
     <span class="mc-radio__label">
-      <slot>{{ label }}</slot>
+      <span v-if="label">{{ label }}</span>
+      <slot v-else></slot>
     </span>
   </label>
 </template>
@@ -34,10 +33,8 @@ defineOptions({
 });
 
 // props
-const props = withDefaults(defineProps<RadioProps>(), {
-  size: "medium",
-});
-const { modelValue, value: _value, disabled, size, name, label } = toRefs(props);
+const props = withDefaults(defineProps<RadioProps>(), {});
+const { modelValue, value: _value, disabled, label } = toRefs(props);
 
 // emits
 const emit = defineEmits<RadioEmits>();
@@ -55,10 +52,6 @@ const isDisabled = computed(() => {
 const isChecked = computed(() => {
   const checkValue = radioGroup ? radioGroup.value.value : modelValue.value;
   return checkValue === _value.value;
-});
-
-const radioSize = computed(() => {
-  return radioGroup ? radioGroup.size?.value : size.value;
 });
 
 // v-model

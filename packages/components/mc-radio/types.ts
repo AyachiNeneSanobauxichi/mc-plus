@@ -2,7 +2,7 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 08:54:26
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-20 11:14:52
+ * @LastEditTime: 2025-05-22 09:52:50
  */
 import type { ComputedRef, Ref } from "vue";
 
@@ -20,9 +20,6 @@ export interface RadioProps {
   modelValue?: string | number | boolean;
   value?: string | number | boolean;
   disabled?: boolean;
-  size?: RadioSize;
-  name?: string;
-  border?: boolean;
   label?: string;
 }
 

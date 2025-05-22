@@ -158,19 +158,4 @@ $small_height: 16px;
       }
     }
   }
-
-  /* bordered */
-  &.is-bordered {
-    padding: 8px 16px;
-    border-radius: $radius;
-    border: 1px solid $primary_color;
-
-    &.is-disabled {
-      border-color: $text_disabled;
-    }
-
-    &:hover:not(.is-disabled) {
-      border-color: $primary_color_hover;
-    }
-  }
 }
