@@ -1,0 +1,33 @@
+$text_color: var(--mc-gray-800);
+$bg_color_active: var(--mc-teal-100);
+
+.mc-select-option {
+  width: 100%;
+  height: 40px;
+  padding: 0 7px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: $text_color;
+  gap: 8px;
+  
+  &:hover,
+  &.mc-select-option-icon-active {
+    background-color: $bg_color_active;
+  }
+
+  .mc-select-option-content {
+    flex: 1;
+  }
+
+  .mc-select-option-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: inherit;
+  }
+}

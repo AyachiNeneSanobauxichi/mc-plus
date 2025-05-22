@@ -1,59 +1,30 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <span>Disabled: {{ disabled }}</span>
-      <span>Input Value: {{ inputValue }}</span>
+      <span>Select Value: {{ selectValue }}</span>
     </div>
     <div>
-      <mc-input
-        :disabled="disabled"
-        v-model="inputValue"
-        search
-        password
-        @change="handleChange"
-        @input="handleInput"
-        @focus="handleFocus"
-        @blur="handleBlur"
-      />
+      <mc-select v-model="selectValue">
+        <mc-select-option value="1" label="Option 1" />
+        <mc-select-option value="2" label="Option 2" />
+        <mc-select-option value="3" label="Option 3" />
+        <mc-select-option value="4" label="Option 4" />
+        <mc-select-option value="5" label="Option 5" />
+      </mc-select>
     </div>
-    <div class="tool-bar">
+    <!-- <div class="tool-bar">
       <mc-button @click="changeDisabled">Change disabled</mc-button>
       <mc-button @click="handleSetValue">Set Value</mc-button>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton } from "mc-plus";
-import McInput from "@mc-plus/components/mc-input/mc-input.vue";
+import McSelect from "@mc-plus/components/mc-select/mc-select.vue";
+import McSelectOption from "@mc-plus/components/mc-select/mc-select-option.vue";
 
-const inputValue = ref<string>("");
-
-const disabled = ref<boolean>(false);
-const changeDisabled = () => {
-  disabled.value = !disabled.value;
-};
-
-const handleSetValue = () => {
-  inputValue.value = "Hello World";
-};
-
-const handleChange = () => {
-  console.log("Change: ", inputValue.value);
-};
-
-const handleInput = () => {
-  console.log("Input: ", inputValue.value);
-};
-
-const handleFocus = () => {
-  console.log("Handle Focus");
-};
-
-const handleBlur = () => {
-  console.log("Handle Blur");
-};
+const selectValue = ref<string>("");
 </script>
 
 <style lang="scss" scoped>
