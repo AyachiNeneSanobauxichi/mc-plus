@@ -5,11 +5,13 @@
     </div>
     <div>
       <mc-select v-model="selectValue">
+        <mc-select-group label="Grade 3" />
         <mc-select-option value="Yui" label="Option Yui 18" />
         <mc-select-option value="Mio" label="Option Mio 18" />
-        <mc-select-option value="Azusa" label="Option Azusa 17" />
         <mc-select-option value="Ritsu" label="Option Ritsu 18" />
         <mc-select-option value="Mugi" label="Option Mugi 18" />
+        <mc-select-group label="Grade 2" />
+        <mc-select-option value="Azusa" label="Option Azusa 17" />
       </mc-select>
     </div>
     <div class="tool-bar">
@@ -24,6 +26,7 @@ import { ref } from "vue";
 import { McButton } from "mc-plus";
 import McSelect from "@mc-plus/components/mc-select/mc-select.vue";
 import McSelectOption from "@mc-plus/components/mc-select/mc-select-option.vue";
+import McSelectGroup from "@mc-plus/components/mc-select/mc-select-group.vue";
 
 const selectValue = ref<string>();
 

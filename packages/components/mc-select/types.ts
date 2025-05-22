@@ -12,6 +12,10 @@ export interface SelectOptionInstance {
   ref: Ref<HTMLLIElement | undefined>;
 }
 
+export interface SelectGroupProps {
+  label: string;
+}
+
 export interface SelectProps {
   modelValue?: string | string[];
   placeholder?: string;
