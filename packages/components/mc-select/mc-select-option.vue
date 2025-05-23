@@ -1,5 +1,5 @@
 <template>
-  <li
+  <div
     v-if="isShow"
     class="mc-select-dropdown-item mc-select-option"
     :class="{ 'mc-select-option-icon-active': isActive }"
@@ -12,15 +12,14 @@
     <div class="mc-select-option-icon">
       <mc-icon name="Tick" v-if="isActive" />
     </div>
-  </li>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { SelectOptionInstance, SelectOptionProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { computed, inject, ref } from "vue";
-import { SELECT_INJECTION_KEY } from "./constant";
-import { isNil } from "lodash-es";
+import { computed, inject, onBeforeUnmount, onMounted, ref } from "vue";
+import { SELECT_GROUP_INJECTION_KEY, SELECT_INJECTION_KEY } from "./constant";
 
 // options
 defineOptions({
@@ -35,6 +34,7 @@ const props = defineProps<SelectOptionProps>();
 
 // context
 const ctx = inject(SELECT_INJECTION_KEY, void 0);
+const groupCtx = inject(SELECT_GROUP_INJECTION_KEY, void 0);
 
 // active
 const isActive = computed(() => {
@@ -43,15 +43,24 @@ const isActive = computed(() => {
 
 // show
 const isShow = computed(() => {
-  return isNil(ctx?.searchValue)
-    ? true
-    : props.label.includes(ctx?.searchValue.value);
+  return !!ctx?.filterOptions.value.some((item) => item.value === props.value);
 });
 
 // click
 const handleClick = () => {
   ctx?.handleSelect(props);
 };
+
+onMounted(() => {
+  ctx?.addOption({
+    ...props,
+    group: groupCtx?.groupName,
+  });
+});
+
+onBeforeUnmount(() => {
+  ctx?.removeOption(props);
+});
 
 // expose
 defineExpose<SelectOptionInstance>({

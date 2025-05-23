@@ -1,4 +1,8 @@
 <template>
+  <div class="debug-box">
+    <div>select options: {{ selectOptions }}</div>
+    <div>filterOptions: {{ filterOptions }}</div>
+  </div>
   <div
     class="mc-select"
     :class="[isExpand ? 'mc-select-expand' : 'mc-select-collapse']"
@@ -20,10 +24,13 @@
       </div>
     </div>
     <transition name="mc-select-dropdown-transition">
-      <div class="mc-select-dropdown-wrapper" v-if="isExpand">
-        <ul class="mc-select-dropdown">
+      <div class="mc-select-dropdown-wrapper" v-show="isExpand">
+        <div class="mc-select-dropdown">
           <slot></slot>
-        </ul>
+          <div v-if="noData" class="mc-select-no-data">
+            <slot name="empty">No data</slot>
+          </div>
+        </div>
       </div>
     </transition>
   </div>
@@ -32,9 +39,10 @@
 <script setup lang="ts">
 import type { SelectEmits, SelectOptionProps, SelectProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { ref, provide, watch, computed, useSlots } from "vue";
+import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
+import { find, isNil } from "lodash-es";
 
 // options
 defineOptions({
@@ -51,8 +59,31 @@ const props = withDefaults(defineProps<SelectProps>(), {
 // emits
 const emit = defineEmits<SelectEmits>();
 
-// slots
-const slots = useSlots();
+// select options
+const selectOptions = ref<SelectOptionProps[]>([]);
+// remove option
+const removeOption = (option: SelectOptionProps) => {
+  selectOptions.value = selectOptions.value.filter(
+    (item) => item.value !== option.value
+  );
+};
+// add option
+const addOption = (option: SelectOptionProps) => {
+  selectOptions.value.push(option);
+};
+
+// filter options
+const filterOptions = computed(() => {
+  if (isNil(searchValue.value)) return selectOptions.value;
+  return selectOptions.value.filter((item) => {
+    return item.label.includes(searchValue.value);
+  });
+});
+
+// no data
+const noData = computed(() => {
+  return filterOptions.value.length === 0;
+});
 
 // expand
 const isExpand = ref<boolean>(false);
@@ -109,9 +140,9 @@ const placeholderDisplay = computed(() => {
   if (isMultiple(props.modelValue)) {
     return props.placeholder;
   } else {
-    const selectLabel = slots
-      .default?.()
-      ?.find((slot) => slot.props?.value === props.modelValue)?.props?.label;
+    const selectLabel = find(selectOptions.value, {
+      value: props.modelValue,
+    })?.label;
     return selectLabel ?? props.modelValue ?? props.placeholder;
   }
 });
@@ -132,12 +163,17 @@ useClickOutside(_ref, () => {
 
 // provide
 provide(SELECT_INJECTION_KEY, {
-  searchValue,
+  filterOptions,
   selectValues,
   handleSelect,
+  removeOption,
+  addOption,
 });
 </script>
 
 <style scoped lang="scss">
 @use "./styles//index.scss";
+.debug-box {
+  margin-bottom: 100px;
+}
 </style>

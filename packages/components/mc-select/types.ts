@@ -1,10 +1,11 @@
-import type { Ref } from "vue";
+import type { ComputedRef, Ref } from "vue";
 
 export type SelectType = "single" | "multi-choice";
 
 export interface SelectOptionProps {
   value: string;
   label: string;
+  group?: string;
 }
 
 export interface SelectOptionInstance {
@@ -29,7 +30,13 @@ export interface SelectEmits {
 }
 
 export interface SelectContext {
-  searchValue: Ref<string>;
+  filterOptions: ComputedRef<SelectOptionProps[]>;
   selectValues: Ref<string[]>;
   handleSelect(item: SelectOptionProps): void;
+  removeOption(item: SelectOptionProps): void;
+  addOption(item: SelectOptionProps): void;
+}
+
+export interface SelectGroupContext {
+  groupName: string;
 }
