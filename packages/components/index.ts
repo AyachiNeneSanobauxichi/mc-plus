@@ -4,3 +4,4 @@ export * from "./mc-collapse";
 export * from "./mc-switch";
 export * from "./mc-tooltip";
 export * from "./mc-input";
+export * from "./mc-select";
