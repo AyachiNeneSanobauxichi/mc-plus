@@ -1,8 +1,4 @@
 <template>
-  <div class="debug-box">
-    <div>select options: {{ selectOptions }}</div>
-    <div>filterOptions: {{ filterOptions }}</div>
-  </div>
   <div
     class="mc-select"
     :class="[isExpand ? 'mc-select-expand' : 'mc-select-collapse']"
@@ -42,7 +38,7 @@ import McIcon from "../mc-icon/mc-icon.vue";
 import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
-import { find, isNil } from "lodash-es";
+import { find, isNil, lowerCase } from "lodash-es";
 
 // options
 defineOptions({
@@ -76,7 +72,7 @@ const addOption = (option: SelectOptionProps) => {
 const filterOptions = computed(() => {
   if (isNil(searchValue.value)) return selectOptions.value;
   return selectOptions.value.filter((item) => {
-    return item.label.includes(searchValue.value);
+    return lowerCase(item.label).includes(lowerCase(searchValue.value));
   });
 });
 
@@ -173,7 +169,4 @@ provide(SELECT_INJECTION_KEY, {
 
 <style scoped lang="scss">
 @use "./styles//index.scss";
-.debug-box {
-  margin-bottom: 100px;
-}
 </style>
