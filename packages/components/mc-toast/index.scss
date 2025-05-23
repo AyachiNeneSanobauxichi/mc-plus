@@ -59,6 +59,10 @@ $background_color: var(--mc-white);
       background-color: var(--mc-success);
     }
 
+    &.mc-toast__header--info {
+      background-color: var(--mc-info);
+    }
+
     &.mc-toast__header--warning {
       background-color: var(--mc-warning);
     }
@@ -95,6 +99,23 @@ $background_color: var(--mc-white);
       font-size: 14px;
       line-height: 1.5;
     }
+  }
+
+  .mc-toast__body--primary {
+    background-color: var(--mc-success-background);
+  }
+  .mc-toast__body--success {
+    background-color: var(--mc-success-background);
+  }
+  .mc-toast__body--info {
+    background-color: var(--mc-info-background);
+  }
+  .mc-toast__body--warning {
+    background-color: var(--mc-warning-background);
+  }
+
+  .mc-toast__body--error {
+    background-color: var(--mc-error-background);
   }
 
   &.mc-toast--entering,
