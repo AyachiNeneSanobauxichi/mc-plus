@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: space-between;
   border-radius: var(--mc-radius);
+  padding: 8px 16px;
   transition: opacity var(--mc-transition-duration), transform var(--mc-transition-duration);
 
   &__content {
@@ -18,11 +19,15 @@
     color: var(--mc-gray-800);
 
     .mc-alert__title {
+      font-weight: 600;
       font-size: 16px;
+      line-height: 24px;
     }
 
     .mc-alert__description {
+      font-weight: 400;
       font-size: 14px;
+      line-height: 20px;
     }
   }
 
@@ -52,33 +57,33 @@
   }
 
   // Generate size variants
-  $sizes: (
-    small: (
-      padding: calc(var(--mc-gap) + 2px) calc(var(--mc-gap) * 3),
-      font-size: 12px,
-      icon-size: 14px,
-    ),
-    medium: (
-      padding: calc(var(--mc-gap) * 2) calc(var(--mc-gap) * 4),
-      font-size: 14px,
-      icon-size: 16px,
-    ),
-    large: (
-      padding: calc(var(--mc-gap) * 2.5) calc(var(--mc-gap) * 5),
-      font-size: 16px,
-      icon-size: 18px,
-    ),
-  );
+  // $sizes: (
+  //   small: (
+  //     padding: calc(var(--mc-gap) + 2px) calc(var(--mc-gap) * 3),
+  //     font-size: 12px,
+  //     icon-size: 14px,
+  //   ),
+  //   medium: (
+  //     padding: calc(var(--mc-gap) * 2) calc(var(--mc-gap) * 4),
+  //     font-size: 14px,
+  //     icon-size: 16px,
+  //   ),
+  //   large: (
+  //     padding: calc(var(--mc-gap) * 2.5) calc(var(--mc-gap) * 5),
+  //     font-size: 16px,
+  //     icon-size: 18px,
+  //   ),
+  // );
 
-  @each $size, $props in $sizes {
-    &--#{$size} {
-      padding: map.get($props, "padding");
-      font-size: map.get($props, "font-size");
+  // @each $size, $props in $sizes {
+  //   &--#{$size} {
+  //     padding: map.get($props, "padding");
+  //     font-size: map.get($props, "font-size");
 
-      .mc-alert__icon,
-      .mc-alert__close {
-        font-size: map.get($props, "icon-size");
-      }
-    }
-  }
+  //     .mc-alert__icon,
+  //     .mc-alert__close {
+  //       font-size: map.get($props, "icon-size");
+  //     }
+  //   }
+  // }
 }

@@ -2,10 +2,10 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 13:57:15
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-22 11:59:01
+ * @LastEditTime: 2025-05-23 11:02:34
 -->
 <template>
-  <div ref="_ref" :style="style" class="mc-alert" :class="[`mc-alert--${type}`, `mc-alert--${size}`]" v-if="visible">
+  <div ref="_ref" :style="style" class="mc-alert" :class="[`mc-alert--${type}`]" v-if="visible">
     <div class="mc-alert__content">
       <mc-icon v-if="showIcon" :name="iconMap[type]" class="mc-alert__icon"></mc-icon>
       <div class="mc-alert__message" v-if="description">
@@ -30,7 +30,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<AlertProps>(), {
   type: "info",
-  size: "medium",
   closable: true,
   showIcon: true,
 });
