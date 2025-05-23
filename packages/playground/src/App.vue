@@ -19,6 +19,12 @@
         <mc-select-option value="Arashi" label="Arashi" />
       </mc-select>
     </div>
+    <div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus qui odio
+      provident, magnam totam commodi, nesciunt explicabo ab eos, molestias
+      tempora asperiores blanditiis veniam distinctio error? Vel atque dolores
+      sint?
+    </div>
     <div class="tool-bar">
       <!-- <mc-button @click="changeDisabled">Change disabled</mc-button> -->
       <mc-button @click="handleSetValue">Set Value</mc-button>

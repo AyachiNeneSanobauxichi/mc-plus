@@ -2,6 +2,7 @@
   <div
     class="mc-select"
     :class="[isExpand ? 'mc-select-expand' : 'mc-select-collapse']"
+    ref="_ref"
   >
     <div class="mc-select-input-wrapper" @click="handleClick">
       <input
@@ -33,6 +34,7 @@ import type { SelectEmits, SelectOptionProps, SelectProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { ref, provide, watch, computed, useSlots } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
+import { useClickOutside } from "@mc-plus/hooks";
 
 // options
 defineOptions({
@@ -96,6 +98,7 @@ const handleSelect = (item: SelectOptionProps) => {
     emit("change", newValues);
   } else {
     searchValue.value = "";
+    isExpand.value = false;
     emit("update:modelValue", item.value);
     emit("change", item.value);
   }
@@ -115,11 +118,17 @@ const placeholderDisplay = computed(() => {
 
 // search value
 const searchValue = ref<string>("");
-
 // search event
 const handleSearch = () => {
   isExpand.value = true;
 };
+
+// ref
+const _ref = ref<HTMLElement>();
+// click outside
+useClickOutside(_ref, () => {
+  isExpand.value = false;
+});
 
 // provide
 provide(SELECT_INJECTION_KEY, {
