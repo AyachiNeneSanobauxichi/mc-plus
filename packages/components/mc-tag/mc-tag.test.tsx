@@ -2,7 +2,7 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it, test, vi } from "vitest";
 import { McTag as _McTag } from ".";
 import McTag from "./mc-tag.vue";
-import type { TagType } from "./types";
+import type { TagRadius, TagType } from "./types";
 
 describe("mc-tag installer", () => {
   test("tag installer", () => {
@@ -109,6 +109,30 @@ describe("mc-tag", () => {
         props: { type },
       });
       expect(wrapper.classes()).toContain(`mc-tag--${type}`);
+    });
+  });
+
+  // tag with custom color
+  test("tag with custom color", () => {
+    const wrapper = mount(() => (
+      <McTag type="primary" color="#ff0000">
+        Tag Text
+      </McTag>
+    ));
+
+    const _tag = wrapper.get("div");
+    expect(_tag.attributes("style")).toContain("--mc-tag-custom-color: #ff0000");
+    expect(_tag.attributes("style")).toContain("--mc-tag-custom-hover-color: #ff0000");
+  });
+
+  // tag radius
+  it("should has the correct radius class when radius prop is set", () => {
+    const radiusTypes: TagRadius[] = ["default", "round"];
+    radiusTypes.forEach((radius) => {
+      const wrapper = mount(McTag, {
+        props: { radius },
+      });
+      expect(wrapper.classes()).toContain(`mc-tag--radius-${radius}`);
     });
   });
 });
