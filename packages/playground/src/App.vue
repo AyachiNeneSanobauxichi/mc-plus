@@ -5,27 +5,56 @@
     </div>
     <div>
       <mc-select v-model="selectValue">
-        <mc-select-group label="k-on">
-          <mc-select-option value="Yui" label="Yui 18" />
-          <mc-select-option value="Mio" label="Mio 18" />
-          <mc-select-option value="Ritsu" label="Ritsu 18" />
-          <mc-select-option value="Mugi" label="Mugi 18" />
-          <mc-select-option value="Azusa" label="Azusa 17" />
+        <mc-select-group label="Cryptocurrencies">
+          <mc-select-option value="BTC" label="BTC">
+            <div class="currency-option">
+              <img src="./imgs/BTC.svg" alt="BTC" />
+              <div class="currency-option-content">
+                <div class="currency-option-content-name">BTC</div>
+                <div class="currency-option-content-desc">crypto btc</div>
+              </div>
+            </div>
+          </mc-select-option>
+          <mc-select-option value="ETH" label="ETH">
+            <div class="currency-option">
+              <img src="./imgs/ETH.svg" alt="ETH" />
+              <div class="currency-option-content">
+                <div class="currency-option-content-name">ETH</div>
+                <div class="currency-option-content-desc">crypto eth</div>
+              </div>
+            </div>
+          </mc-select-option>
         </mc-select-group>
-        <mc-select-group label="Kankore">
-          <mc-select-option value="Kagero" label="Kagero" />
-          <mc-select-option value="Kuroshio" label="Kuroshio" />
-          <mc-select-option value="Shiranui" label="Shiranui" />
-          <mc-select-option value="Oyashio" label="Oyashio" />
-          <mc-select-option value="Arashi" label="Arashi" />
+        <mc-select-group label="Fiatcurrencies">
+          <mc-select-option value="USD" label="USD"
+            ><div class="currency-option">
+              <img src="./imgs/USD.svg" alt="USD" />
+              <div class="currency-option-content">
+                <div class="currency-option-content-name">USD</div>
+                <div class="currency-option-content-desc">fiat usd</div>
+              </div>
+            </div></mc-select-option
+          >
+          <mc-select-option value="SGD" label="SGD"
+            ><div class="currency-option">
+              <img src="./imgs/SGD.svg" alt="SGD" />
+              <div class="currency-option-content">
+                <div class="currency-option-content-name">SGD</div>
+                <div class="currency-option-content-desc">fiat sgd</div>
+              </div>
+            </div></mc-select-option
+          >
+          <mc-select-option value="EUR" label="EUR"
+            ><div class="currency-option">
+              <img src="./imgs/EUR.svg" alt="EUR" />
+              <div class="currency-option-content">
+                <div class="currency-option-content-name">EUR</div>
+                <div class="currency-option-content-desc">fiat eur</div>
+              </div>
+            </div></mc-select-option
+          >
         </mc-select-group>
       </mc-select>
-    </div>
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus qui odio
-      provident, magnam totam commodi, nesciunt explicabo ab eos, molestias
-      tempora asperiores blanditiis veniam distinctio error? Vel atque dolores
-      sint?
     </div>
     <div class="tool-bar">
       <!-- <mc-button @click="changeDisabled">Change disabled</mc-button> -->
@@ -74,6 +103,30 @@ const handleSetValue = () => {
     gap: 8px;
     position: absolute;
     bottom: 0;
+  }
+}
+
+.currency-option {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+  }
+
+  .currency-option-content-name {
+    font-weight: 700;
+    color: #222;
+    font-size: 14px;
+  }
+
+  .currency-option-content-desc {
+    color: #808080;
+    font-size: 12px;
   }
 }
 </style>

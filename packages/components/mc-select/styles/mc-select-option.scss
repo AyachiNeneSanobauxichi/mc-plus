@@ -4,7 +4,7 @@ $bg_color_hover: var(--mc-teal-50);
 
 .mc-select-option {
   width: 100%;
-  height: 40px;
+  min-height: 40px;
   padding: 0 7px;
   display: flex;
   align-items: center;
