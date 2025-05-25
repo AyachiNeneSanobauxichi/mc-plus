@@ -7,17 +7,21 @@
     :style="style"
   >
     <div class="mc-select-trigger" @click="handleClick">
-      <div class="mc-select-selected-content" v-if="selectedOption">
+      <div
+        class="mc-select-selected-content"
+        v-if="selectedOption && !searchValue"
+      >
         <component :is="selectedOption.content" :key="selectedOption.value" />
       </div>
-      <div class="mc-select-input-wrapper" v-else></div>
-      <!-- <input
-        class="mc-select-input"
-        type="text"
-        v-model="searchValue"
-        :placeholder="placeholderDisplay"
-        @input="handleSearch"
-      /> -->
+      <div class="mc-select-input-wrapper">
+        <input
+          class="mc-select-input"
+          type="text"
+          :placeholder="placeholderDisplay"
+          v-model="searchValue"
+          @input="handleSearch"
+        />
+      </div>
       <div
         class="mc-select-icon-wrapper"
         :class="{ 'mc-select-icon-wrapper-expand': isExpand }"
@@ -138,32 +142,25 @@ const handleSelect = (item: SelectOptionProps) => {
   //   emit("change", newValues);
   // } else {
 
-  searchValue.value = "";
   isExpand.value = false;
+  searchValue.value = "";
   emit("update:modelValue", item.value);
   emit("change", item.value);
 
   // }
 };
 
-// // placeholder display
-// const placeholderDisplay = computed(() => {
-//   if (isMultiple(props.modelValue)) {
-//     return props.placeholder;
-//   } else {
-//     const selectLabel = find(selectOptions.value, {
-//       value: props.modelValue,
-//     })?.label;
-//     return selectLabel ?? props.modelValue ?? props.placeholder;
-//   }
-// });
+// placeholder display
+const placeholderDisplay = computed(() =>
+  selectedOption.value ? "" : props.placeholder
+);
 
 // search value
 const searchValue = ref<string>("");
-// // search event
-// const handleSearch = () => {
-//   isExpand.value = true;
-// };
+// search event
+const handleSearch = () => {
+  isExpand.value = true;
+};
 
 // attrs
 const attrs = toRefs(useAttrs());

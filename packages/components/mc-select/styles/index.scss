@@ -20,29 +20,43 @@ $bg_color_disabled: var(--mc-gray-200);
     padding: 0 8px;
     display: flex;
     align-items: center;
+    justify-content: end;
     gap: 8px;
     box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
     .mc-select-selected-content,
     .mc-select-input-wrapper {
       width: 100%;
       height: 100%;
       overflow: hidden;
     }
-    // .mc-select-input {
-    //   margin: 0;
-    //   padding: 0;
-    //   width: 100%;
-    //   height: 100%;
-    //   outline: none;
-    //   border: none;
-    //   font-size: 16px;
-    //   box-sizing: border-box;
-    //   color: inherit;
 
-    //   &::placeholder {
-    //     color: $text_color;
-    //   }
-    // }
+    .mc-select-input-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      padding: 0 8px;
+      .mc-select-input {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        border: none;
+        font-size: 16px;
+        box-sizing: border-box;
+        color: inherit;
+        background-color: transparent;
+
+        &::placeholder {
+          color: $text_color;
+        }
+      }
+    }
 
     .mc-select-icon-wrapper {
       width: 16px;
