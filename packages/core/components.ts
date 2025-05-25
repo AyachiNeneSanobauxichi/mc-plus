@@ -7,6 +7,8 @@ import {
   McTooltip,
   McInput,
   McSelect,
+  McSelectGroup,
+  McSelectOption,
 } from "@mc-plus/components";
 
 export default [
@@ -17,4 +19,6 @@ export default [
   McTooltip,
   McInput,
   McSelect,
+  McSelectGroup,
+  McSelectOption,
 ] as Plugin[];

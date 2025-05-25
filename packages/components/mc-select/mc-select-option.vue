@@ -76,6 +76,7 @@ const generateProps = (props: SelectOptionProps): SelectOptionProps => {
   return {
     ...props,
     group: groupCtx?.groupName,
+    // @ts-ignore
     content: slot.default?.()?.[0],
   };
 };

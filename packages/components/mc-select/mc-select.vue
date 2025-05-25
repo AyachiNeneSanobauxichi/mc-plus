@@ -101,6 +101,7 @@ const handleClick = () => {
 };
 
 // is multiple
+// @ts-ignore
 const isMultiple = (modelValue: string | string[]): modelValue is string[] => {
   return props.type === "multi-choice";
 };
