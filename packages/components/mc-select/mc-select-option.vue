@@ -25,9 +25,6 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
-  toRefs,
-  toValue,
-  useAttrs,
   useSlots,
 } from "vue";
 import { SELECT_GROUP_INJECTION_KEY, SELECT_INJECTION_KEY } from "./constant";
@@ -35,6 +32,7 @@ import { SELECT_GROUP_INJECTION_KEY, SELECT_INJECTION_KEY } from "./constant";
 // options
 defineOptions({
   name: "McSelectOption",
+  inheritAttrs: false,
 });
 
 // ref
@@ -82,12 +80,9 @@ const generateProps = (props: SelectOptionProps): SelectOptionProps => {
   };
 };
 
-// attrs
-const attrs = toRefs(useAttrs());
 // style
 const style = computed(() => {
   return {
-    ...toValue(attrs).style,
     ...{
       width: props.width ?? void 0,
       height: props.height ?? void 0,

@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import type { SelectEmits, SelectOptionProps, SelectProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { ref, provide, watch, computed, useAttrs, toRefs, toValue } from "vue";
+import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
 import { isNil, lowerCase } from "lodash-es";
@@ -53,6 +53,7 @@ import { isNil, lowerCase } from "lodash-es";
 // options
 defineOptions({
   name: "McSelect",
+  inheritAttrs: false,
 });
 
 // props
@@ -162,12 +163,9 @@ const handleSearch = () => {
   isExpand.value = true;
 };
 
-// attrs
-const attrs = toRefs(useAttrs());
 // style
 const style = computed(() => {
   return {
-    ...toValue(attrs).style,
     ...{
       width: props.width ?? void 0,
       height: props.height ?? void 0,
