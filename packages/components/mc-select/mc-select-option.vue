@@ -5,6 +5,7 @@
     :class="{ 'mc-select-option-icon-active': isActive }"
     @click="handleClick"
     ref="_ref"
+    :style="style"
   >
     <div class="mc-select-option-content">
       <slot>{{ label }}</slot>
@@ -18,7 +19,17 @@
 <script setup lang="ts">
 import type { SelectOptionInstance, SelectOptionProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { computed, inject, onBeforeUnmount, onMounted, ref } from "vue";
+import {
+  computed,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  toRefs,
+  toValue,
+  useAttrs,
+  useSlots,
+} from "vue";
 import { SELECT_GROUP_INJECTION_KEY, SELECT_INJECTION_KEY } from "./constant";
 
 // options
@@ -46,20 +57,42 @@ const isShow = computed(() => {
   return !!ctx?.filterOptions.value.some((item) => item.value === props.value);
 });
 
+// slot
+const slot = useSlots();
+
 // click
 const handleClick = () => {
-  ctx?.handleSelect(props);
+  ctx?.handleSelect(generateProps(props));
 };
 
 onMounted(() => {
-  ctx?.addOption({
-    ...props,
-    group: groupCtx?.groupName,
-  });
+  ctx?.addOption(generateProps(props));
 });
 
 onBeforeUnmount(() => {
-  ctx?.removeOption(props);
+  ctx?.removeOption(generateProps(props));
+});
+
+// generate props
+const generateProps = (props: SelectOptionProps): SelectOptionProps => {
+  return {
+    ...props,
+    group: groupCtx?.groupName,
+    content: slot.default?.()?.[0],
+  };
+};
+
+// attrs
+const attrs = toRefs(useAttrs());
+// style
+const style = computed(() => {
+  return {
+    ...toValue(attrs).style,
+    ...{
+      width: props.width ?? void 0,
+      height: props.height ?? void 0,
+    },
+  };
 });
 
 // expose

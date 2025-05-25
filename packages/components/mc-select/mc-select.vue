@@ -1,17 +1,23 @@
 <template>
+  <div>Style: {{ style }}</div>
   <div
     class="mc-select"
     :class="[isExpand ? 'mc-select-expand' : 'mc-select-collapse']"
     ref="_ref"
+    :style="style"
   >
-    <div class="mc-select-input-wrapper" @click="handleClick">
-      <input
+    <div class="mc-select-trigger" @click="handleClick">
+      <div class="mc-select-selected-content" v-if="selectedOption">
+        <component :is="selectedOption.content" :key="selectedOption.value" />
+      </div>
+      <div class="mc-select-input-wrapper" v-else></div>
+      <!-- <input
         class="mc-select-input"
         type="text"
         v-model="searchValue"
         :placeholder="placeholderDisplay"
         @input="handleSearch"
-      />
+      /> -->
       <div
         class="mc-select-icon-wrapper"
         :class="{ 'mc-select-icon-wrapper-expand': isExpand }"
@@ -35,10 +41,10 @@
 <script setup lang="ts">
 import type { SelectEmits, SelectOptionProps, SelectProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { ref, provide, watch, computed } from "vue";
+import { ref, provide, watch, computed, useAttrs, toRefs, toValue } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
-import { find, isNil, lowerCase } from "lodash-es";
+import { isNil, lowerCase } from "lodash-es";
 
 // options
 defineOptions({
@@ -110,45 +116,67 @@ watch(
   }
 );
 
+// selected option
+const selectedOption = computed<SelectOptionProps | undefined>(() => {
+  return selectOptions.value.find((item) => {
+    return item.value === selectValues.value[0];
+  });
+});
+
 // select event
 const handleSelect = (item: SelectOptionProps) => {
-  if (isMultiple(props.modelValue)) {
-    let newValues: string[] = [];
-    if (props.modelValue.includes(item.value)) {
-      newValues = selectValues.value = props.modelValue.filter(
-        (value) => value !== item.value
-      );
-    } else {
-      newValues = [...props.modelValue, item.value];
-    }
-    emit("update:modelValue", newValues);
-    emit("change", newValues);
-  } else {
-    searchValue.value = "";
-    isExpand.value = false;
-    emit("update:modelValue", item.value);
-    emit("change", item.value);
-  }
+  // if (isMultiple(props.modelValue)) {
+  //   let newValues: string[] = [];
+  //   if (props.modelValue.includes(item.value)) {
+  //     newValues = selectValues.value = props.modelValue.filter(
+  //       (value) => value !== item.value
+  //     );
+  //   } else {
+  //     newValues = [...props.modelValue, item.value];
+  //   }
+  //   emit("update:modelValue", newValues);
+  //   emit("change", newValues);
+  // } else {
+
+  searchValue.value = "";
+  isExpand.value = false;
+  emit("update:modelValue", item.value);
+  emit("change", item.value);
+
+  // }
 };
 
-// placeholder display
-const placeholderDisplay = computed(() => {
-  if (isMultiple(props.modelValue)) {
-    return props.placeholder;
-  } else {
-    const selectLabel = find(selectOptions.value, {
-      value: props.modelValue,
-    })?.label;
-    return selectLabel ?? props.modelValue ?? props.placeholder;
-  }
-});
+// // placeholder display
+// const placeholderDisplay = computed(() => {
+//   if (isMultiple(props.modelValue)) {
+//     return props.placeholder;
+//   } else {
+//     const selectLabel = find(selectOptions.value, {
+//       value: props.modelValue,
+//     })?.label;
+//     return selectLabel ?? props.modelValue ?? props.placeholder;
+//   }
+// });
 
 // search value
 const searchValue = ref<string>("");
-// search event
-const handleSearch = () => {
-  isExpand.value = true;
-};
+// // search event
+// const handleSearch = () => {
+//   isExpand.value = true;
+// };
+
+// attrs
+const attrs = toRefs(useAttrs());
+// style
+const style = computed(() => {
+  return {
+    ...toValue(attrs).style,
+    ...{
+      width: props.width ?? void 0,
+      height: props.height ?? void 0,
+    },
+  };
+});
 
 // ref
 const _ref = ref<HTMLElement>();

@@ -1,11 +1,14 @@
-import type { ComputedRef, Ref } from "vue";
+import type { ComputedRef, Ref, VNode } from "vue";
 
 export type SelectType = "single" | "multi-choice";
 
 export interface SelectOptionProps {
   value: string;
   label: string;
+  width?: string;
+  height?: string;
   group?: string;
+  content?: VNode;
 }
 
 export interface SelectOptionInstance {
@@ -15,6 +18,8 @@ export interface SelectOptionInstance {
 
 export interface SelectGroupProps {
   label: string;
+  width?: string;
+  height?: string;
 }
 
 export interface SelectProps {
@@ -22,6 +27,8 @@ export interface SelectProps {
   placeholder?: string;
   disabled?: boolean;
   type?: SelectType;
+  width?: string;
+  height?: string;
 }
 
 export interface SelectEmits {

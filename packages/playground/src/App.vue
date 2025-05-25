@@ -4,8 +4,12 @@
       <span>Select Value: {{ selectValue }}</span>
     </div>
     <div>
-      <mc-select v-model="selectValue">
-        <mc-select-group label="Cryptocurrencies">
+      <mc-select v-model="selectValue" width="100%" height="56px">
+        <mc-select-group
+          label="Cryptocurrencies"
+          height="24px"
+          :style="{ color: '#301A6D' }"
+        >
           <mc-select-option value="BTC" label="BTC">
             <div class="currency-option">
               <img src="./imgs/BTC.svg" alt="BTC" />
@@ -25,7 +29,11 @@
             </div>
           </mc-select-option>
         </mc-select-group>
-        <mc-select-group label="Fiatcurrencies">
+        <mc-select-group
+          label="Fiatcurrencies"
+          height="24px"
+          :style="{ color: '#301A6D' }"
+        >
           <mc-select-option value="USD" label="USD"
             ><div class="currency-option">
               <img src="./imgs/USD.svg" alt="USD" />
