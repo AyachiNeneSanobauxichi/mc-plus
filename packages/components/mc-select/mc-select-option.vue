@@ -21,6 +21,7 @@ import type { SelectOptionInstance, SelectOptionProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
 import {
   computed,
+  h,
   inject,
   onBeforeUnmount,
   onMounted,
@@ -75,9 +76,8 @@ onBeforeUnmount(() => {
 const generateProps = (props: SelectOptionProps): SelectOptionProps => {
   return {
     ...props,
-    group: groupCtx?.groupName,
-    // @ts-ignore
-    content: slot.default?.()?.[0],
+    _group: groupCtx?.groupName,
+    _vnode: h("div", { class: "mc-select-option-content" }, slot.default?.()),
   };
 };
 

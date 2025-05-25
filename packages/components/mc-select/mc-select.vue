@@ -1,5 +1,4 @@
 <template>
-  <div>Style: {{ style }}</div>
   <div
     class="mc-select"
     :class="[isExpand ? 'mc-select-expand' : 'mc-select-collapse']"
@@ -11,15 +10,17 @@
         class="mc-select-selected-content"
         v-if="selectedOption && !searchValue"
       >
-        <component :is="selectedOption.content" :key="selectedOption.value" />
+        <component :is="selectedOption._vnode" :key="selectedOption.value" />
       </div>
       <div class="mc-select-input-wrapper">
         <input
           class="mc-select-input"
+          :class="{ 'mc-select-input-readonly': !search }"
           type="text"
           :placeholder="placeholderDisplay"
           v-model="searchValue"
           @input="handleSearch"
+          :readonly="!search"
         />
       </div>
       <div
@@ -83,7 +84,9 @@ const addOption = (option: SelectOptionProps) => {
 const filterOptions = computed(() => {
   if (isNil(searchValue.value)) return selectOptions.value;
   return selectOptions.value.filter((item) => {
-    return lowerCase(item.label).includes(lowerCase(searchValue.value));
+    return lowerCase(item.label ?? item.value).includes(
+      lowerCase(searchValue.value)
+    );
   });
 });
 
@@ -100,25 +103,13 @@ const handleClick = () => {
   isExpand.value = !isExpand.value;
 };
 
-// is multiple
-// @ts-ignore
-const isMultiple = (modelValue: string | string[]): modelValue is string[] => {
-  return props.type === "multi-choice";
-};
-
 // select values
-const selectValues = ref<string[]>(
-  !isMultiple(props.modelValue) ? [props.modelValue] : props.modelValue ?? []
-);
+const selectValues = ref<string[]>([props.modelValue as string]);
 // select value change
 watch(
   () => props.modelValue,
   () => {
-    if (isMultiple(props.modelValue)) {
-      selectValues.value = props.modelValue;
-    } else {
-      selectValues.value = [props.modelValue];
-    }
+    selectValues.value = [props.modelValue as string];
   }
 );
 

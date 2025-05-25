@@ -38,7 +38,7 @@ provide(SELECT_GROUP_INJECTION_KEY, {
 
 // show
 const isShow = computed(() => {
-  return ctx?.filterOptions.value.some((item) => item.group === props.label);
+  return ctx?.filterOptions.value.some((item) => item._group === props.label);
 });
 
 // attrs
@@ -46,7 +46,7 @@ const attrs = toRefs(useAttrs());
 // style
 const style = computed(() => {
   return {
-    ...(toValue(attrs).style as Ref<Record<string, string>>).value,
+    ...(toValue(attrs)?.style as Ref<Record<string, string>>)?.value,
     ...{
       width: props.width ?? void 0,
       height: props.height ?? void 0,
