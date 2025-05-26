@@ -4,17 +4,11 @@
       <span>Select Value: {{ selectValue }}</span>
     </div>
     <div>
-      <mc-select v-model="selectValue">
-        <mc-select-group label="Group 1">
-          <mc-select-option value="1"> Option 1 </mc-select-option>
-          <mc-select-option value="2">Option 2</mc-select-option>
-          <mc-select-option value="3">Option 3</mc-select-option>
-        </mc-select-group>
-        <mc-select-group label="Group 2">
-          <mc-select-option value="4">Option 4</mc-select-option>
-          <mc-select-option value="5">Option 5</mc-select-option>
-        </mc-select-group>
-      </mc-select>
+      <mc-checkbox
+        v-model="selectValue"
+        content="Hello World"
+        remarks="lorem ipsum dolor sit amet"
+      />
     </div>
     <div class="tool-bar">
       <!-- <mc-button @click="changeDisabled">Change disabled</mc-button> -->
@@ -26,14 +20,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { McButton } from "mc-plus";
-import McSelect from "../../components/mc-select/mc-select.vue";
-import McSelectOption from "../../components/mc-select/mc-select-option.vue";
-import McSelectGroup from "../../components/mc-select/mc-select-group.vue";
+import McCheckbox from "../../components/mc-checkbox/mc-checkbox.vue";
 
-const selectValue = ref<string>();
+const selectValue = ref<boolean>(false);
 
 const handleSetValue = () => {
-  selectValue.value = "1";
+  selectValue.value = true;
 };
 </script>
 

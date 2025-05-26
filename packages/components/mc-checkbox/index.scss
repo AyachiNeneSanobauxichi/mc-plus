@@ -1,0 +1,100 @@
+$border-color: var(--mc-gray-400);
+$border-color-hover: var(--mc-gray-500);
+$border-radius: var(--mc-radius);
+$bg-color: var(--mc-teal-500);
+$bg-color-hover: var(--mc-teal-900);
+$bg-color-disabled: var(--mc-gray-300);
+$text-color: var(--mc-gray-800);
+$text-color-remarks: var(--mc-gray-500);
+$text-color-disabled: var(--mc-gray-400);
+$text-icon: var(--mc-white);
+
+.mc-checkbox {
+  display: flex;
+  align-items: start;
+  position: relative;
+
+  .mc-checkbox__input {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    appearance: none;
+  }
+
+  .mc-checkbox__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .mc-checkbox__checkbox {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      box-sizing: border-box;
+      border-radius: $border-radius;
+      border: 1px solid $border-color;
+
+      &:hover {
+        border: 2px solid $border-color-hover;
+      }
+
+      &.mc-checkbox__checkbox--checked {
+        background-color: $bg-color;
+        border-color: $bg-color;
+        position: relative;
+
+        &:hover {
+          border-color: $bg-color-hover;
+          background-color: $bg-color-hover;
+        }
+
+        &::after {
+          content: "\e694";
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-family: "mc-iconfont" !important;
+          font-size: 24px;
+          color: $text-icon;
+        }
+      }
+    }
+
+    .mc-checkbox__content {
+      font-size: 14px;
+      color: $text-color;
+    }
+
+    .mc-checkbox__content-remarks {
+      position: absolute;
+      width: 100%;
+      top: 24px;
+      left: 32px;
+      color: $text-color-remarks;
+      font-size: 12px;
+    }
+  }
+
+  &.mc-checkbox--disabled {
+    .mc-checkbox__checkbox {
+      background-color: $bg-color-disabled !important;
+      border-color: $bg-color-disabled !important;
+      cursor: not-allowed !important;
+    }
+
+    .mc-checkbox__content-text {
+      color: $text-color-disabled;
+    }
+  }
+}

@@ -16,3 +16,4 @@ export * from "./mc-input";
 export * from "./mc-select";
 export * from "./mc-tag";
 export * from "./mc-toast";
+export * from "./mc-checkbox";
