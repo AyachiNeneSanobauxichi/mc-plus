@@ -2,7 +2,3 @@
   font-family: "Poppins";
   src: url("@mc-plus/theme/fonts/Poppins-Regular.ttf");
 }
-@font-face {
-  font-family: "Poppins Medium";
-  src: url("../font/Poppins-Medium.ttf");
-}
