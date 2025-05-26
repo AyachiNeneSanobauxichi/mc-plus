@@ -87,6 +87,11 @@ $bg_color_disabled: var(--mc-gray-200);
       border: 1px solid $border_color;
       border-radius: 4px;
       color: $text_color;
+
+      &:hover {
+        border: 2px solid $border_color_hover;
+        padding: 0 7px;
+      }
     }
   }
 
@@ -98,6 +103,23 @@ $bg_color_disabled: var(--mc-gray-200);
       border: 2px solid $border_color_hover;
       border-bottom: 2px solid $border_color_hover;
       padding: 0 7px;
+    }
+  }
+
+  // disabled style
+  &.mc-select-disabled {
+    .mc-select-trigger {
+      border: 1px solid $border_color;
+      color: $text_color_disabled;
+      background-color: $bg_color_disabled;
+      cursor: not-allowed;
+      .mc-select-input {
+        cursor: not-allowed;
+      }
+      &:hover {
+        border: 1px solid $border_color;
+        padding: 0 8px;
+      }
     }
   }
 
