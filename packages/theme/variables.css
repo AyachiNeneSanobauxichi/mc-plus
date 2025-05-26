@@ -51,4 +51,6 @@
   --mc-transition-duration: 0.3s;
   --mc-transform-distance: 2px;
   --mc-base-height: 40px;
+  --mc-font-size-base: 14px;
+  --mc-font-family: "Poppins";
 }
