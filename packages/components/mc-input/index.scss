@@ -1,0 +1,76 @@
+$border_color: var(--mc-gray-400);
+$border_color_hover: var(--mc-gray-600);
+$border_color_error: var(--mc-error);
+$text_color: var(--mc-gray-400);
+$text_color_active: var(--mc-black);
+$text_color_disabled: var(--mc-gray-500);
+$icon_color: var(--mc-gray-800);
+$bg_color: var(--mc-white);
+$bg_color_disabled: var(--mc-gray-200);
+
+.mc-input {
+  width: 320px;
+  height: 40px;
+  padding: 0 8px;
+  background-color: $bg_color;
+  box-sizing: border-box;
+  border: 1px solid $border_color;
+  border-radius: 4px;
+  color: $text_color;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .mc-input-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    color: $icon_color;
+  }
+
+  .mc-input-icon-eye {
+    cursor: pointer;
+  }
+
+  &:hover {
+    border: 2px solid $border_color_hover;
+    padding: 0 7px;
+  }
+
+  &.mc-input--disabled {
+    cursor: not-allowed;
+    color: $text_color_disabled;
+    background-color: $bg_color_disabled;
+    .mc-input-icon {
+      color: inherit;
+    }
+
+    &:hover {
+      border: 1px solid $border_color;
+      padding: 0 8px;
+    }
+  }
+
+  .mc-input__inner {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    color: inherit;
+    cursor: inherit;
+
+    &:focus {
+      color: $text_color_active;
+    }
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
+}

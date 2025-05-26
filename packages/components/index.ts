@@ -11,5 +11,8 @@ export * from "./mc-icon";
 export * from "./mc-message";
 export * from "./mc-radio";
 export * from "./mc-switch";
+export * from "./mc-tooltip";
+export * from "./mc-input";
+export * from "./mc-select";
 export * from "./mc-tag";
 export * from "./mc-toast";
