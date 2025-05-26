@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import type { FormItemProps } from "./types";
 
-const props = defineProps<FormItemProps>();
+defineProps<FormItemProps>();
 </script>
 
 <style scoped lang="scss">
