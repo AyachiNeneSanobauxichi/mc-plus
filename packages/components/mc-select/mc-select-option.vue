@@ -77,7 +77,7 @@ const generateProps = (props: SelectOptionProps): SelectOptionProps => {
   return {
     ...props,
     _group: groupCtx?.groupName,
-    _vnode: h("div", { class: "mc-select-option-content" }, slot.default?.()),
+    _vnode: h("div", { class: "mc-select-option-content" }, slot.default?.({})),
   };
 };
 
