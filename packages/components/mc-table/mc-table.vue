@@ -1,550 +1,152 @@
+<!--
+ * @Author: Tieju yang
+ * @Date: 2025-05-26 09:37:04
+ * @LastEditors: Tieju yang
+ * @LastEditTime: 2025-05-26 17:01:10
+-->
 <template>
-  <div class="mc-table-wrapper mc-table--large">
-    <!-- Loading Overlay -->
-    <div v-if="loading" class="mc-table__loading-overlay">
-      <div class="mc-table__loading-spinner"></div>
-    </div>
+  <div
+    ref="_ref"
+    class="mc-table"
+    :class="{
+      'mc-table--border': border,
+      'mc-table--stripe': stripe,
+      'mc-table--loading': loading,
+    }">
+    <!-- 表头组件 -->
+    <mc-table-header ref="headerRef" :columns="columnsWithFixed" :show-header="showHeader" :get-sort-order="getSortOrder" @header-click="handleHeaderClick" @sort-change="handleSortChange">
+      <template v-for="(_, slotName) in $slots" #[slotName]="slotProps">
+        <slot :name="slotName" v-bind="slotProps"></slot>
+      </template>
+    </mc-table-header>
 
-    <!-- Table Container -->
-    <div class="mc-table-container" ref="tableContainer" @scroll="handleScroll">
-      <!-- Fixed Header Shadow -->
-      <div v-if="showHeaderShadow" class="mc-table__fixed-header-shadow"></div>
+    <!-- 表体组件 -->
+    <mc-table-body ref="bodyRef" :data="finalData" :columns="columnsWithFixed" :row-key="rowKey" :empty-text="emptyText" :height="height" :max-height="maxHeight" :span-method="spanMethod" :pagination="pagination" :get-row-class="getRowClass" @row-click="handleRowClick">
+      <template v-for="(_, name) in $slots" #[name]="slotProps">
+        <slot :name="name" v-bind="slotProps" />
+      </template>
+    </mc-table-body>
 
-      <!-- Left Fixed Columns -->
-      <div v-if="shouldUseFixedColumns && leftColumns.length" class="mc-table__fixed-left" :style="leftFixedStyle">
-        <table class="mc-table mc-table--fixed">
-          <!-- Header -->
-          <thead v-if="showHeader" class="mc-table__header">
-            <tr>
-              <th v-for="(column, index) in leftColumns" :key="`left-${index}`" :class="getColumnClass(column, 'left', index === leftColumns.length - 1)" :style="{ width: column.width + 'px', minWidth: column.minWidth + 'px' }">
-                <div class="mc-table__cell">{{ column.label }}</div>
-              </th>
-            </tr>
-          </thead>
-          <!-- Body -->
-          <tbody class="mc-table__body" ref="leftBody">
-            <tr v-for="(row, rowIndex) in tableData" :key="getRowKey(row, rowIndex)" :class="{ 'is-hover': rowHover }" @click="(e) => handleRowClick(row, e)">
-              <td v-for="(column, colIndex) in leftColumns" :key="`left-${colIndex}`" :class="getColumnClass(column, 'left', colIndex === leftColumns.length - 1)">
-                <div class="mc-table__cell">{{ getCellValue(row, column) }}</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <!-- 分页组件 -->
+    <mc-table-pagination v-if="pagination && pagination?.total > 0" :pagination="pagination" @page-change="handlePageChange" />
 
-      <!-- Right Fixed Columns -->
-      <div v-if="shouldUseFixedColumns && rightColumns.length" class="mc-table__fixed-right" :style="rightFixedStyle">
-        <table class="mc-table mc-table--fixed">
-          <!-- Header -->
-          <thead v-if="showHeader" class="mc-table__header">
-            <tr>
-              <th v-for="(column, index) in rightColumns" :key="`right-${index}`" :class="getColumnClass(column, 'right', index === 0)" :style="{ width: column.width + 'px', minWidth: column.minWidth + 'px' }">
-                <div class="mc-table__cell">{{ column.label }}</div>
-              </th>
-            </tr>
-          </thead>
-          <!-- Body -->
-          <tbody class="mc-table__body" ref="rightBody">
-            <tr v-for="(row, rowIndex) in tableData" :key="getRowKey(row, rowIndex)" :class="{ 'is-hover': rowHover }" @click="(e) => handleRowClick(row, e)">
-              <td v-for="(column, colIndex) in rightColumns" :key="`right-${colIndex}`" :class="getColumnClass(column, 'right', colIndex === 0)">
-                <div class="mc-table__cell">{{ getCellValue(row, column) }}</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Main Table (Scrollable) -->
-      <div class="mc-table__main-wrapper">
-        <table class="mc-table" :style="tableStyle" ref="mainTable">
-          <!-- Header -->
-          <thead v-if="showHeader" class="mc-table__header">
-            <tr>
-              <th v-for="(column, index) in shouldUseFixedColumns ? centerColumns : allColumns" :key="`center-${index}`" :class="getColumnClass(column)" :style="{ width: column.width + 'px', minWidth: column.minWidth + 'px' }">
-                <div class="mc-table__cell">{{ column.label }}</div>
-              </th>
-            </tr>
-          </thead>
-          <!-- Body -->
-          <tbody class="mc-table__body">
-            <tr v-for="(row, rowIndex) in tableData" :key="getRowKey(row, rowIndex)" :class="{ 'is-hover': rowHover }" @click="(e) => handleRowClick(row, e)">
-              <td v-for="(column, colIndex) in shouldUseFixedColumns ? centerColumns : allColumns" :key="`center-${colIndex}`" :class="getColumnClass(column)">
-                <div class="mc-table__cell">{{ getCellValue(row, column) }}</div>
-              </td>
-            </tr>
-            <!-- Empty Data Display -->
-            <tr v-if="tableData.length === 0" class="mc-table__empty-row">
-              <td :colspan="allColumns.length" class="mc-table__empty-cell">
-                <div class="mc-table__empty-text">No data</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- Pagination -->
-  <div v-if="pagination" class="mc-table__pagination">
-    <mc-pagination v-model:current-page2="currentPage" v-model:page-size="pageSize" :total="100" :show-size-changer="showSizeChanger" :show-total="showTotal" :show-jumper="showJumper" @change="handlePaginationChange" />
+    <!-- Loading 组件 -->
+    <mc-table-loading class="mc-table__loading" :loading="loading" :loading-text="loadingText" :loading-config="loadingConfig">
+      <template #loading="loadingProps">
+        <slot name="loading" v-bind="loadingProps" />
+      </template>
+    </mc-table-loading>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from "vue";
-import mcPagination from "../mc-pagination/mc-pagination.vue";
-import type { TableColumn } from "./types";
-import { tableEmits, tableProps } from "./types";
+import { computed, nextTick, ref, toRefs } from "vue";
+import McTableBody from "./components/mc-table-body.vue";
+import McTableHeader from "./components/mc-table-header.vue";
+import McTableLoading from "./components/mc-table-loading.vue";
+import McTablePagination from "./components/mc-table-pagination.vue";
+import { usePagination } from "./composables/usePagination";
+import { useTableScroll } from "./composables/useTableScroll";
+import { useTableSelection } from "./composables/useTableSelection";
+import { useTableSort } from "./composables/useTableSort";
+import type { TableColumn, TableEmits, TableInstance, TableProps } from "./types";
 
-// Props and emits
-const props = defineProps(tableProps);
-const emit = defineEmits(tableEmits);
-
-// Refs
-const tableContainer = ref<HTMLElement | null>(null);
-const mainTable = ref<HTMLElement | null>(null);
-const leftBody = ref<HTMLElement | null>(null);
-const rightBody = ref<HTMLElement | null>(null);
-const showHeaderShadow = ref(false);
-
-// 是否需要使用固定列
-const shouldUseFixedColumns = ref(false);
-
-// Columns by position
-const allColumns = computed(() => (props.columns || []) as TableColumn[]);
-const leftColumns = computed(() => allColumns.value.filter((col) => col.fixed === true || col.fixed === "left"));
-const rightColumns = computed(() => allColumns.value.filter((col) => col.fixed === "right"));
-const centerColumns = computed(() => allColumns.value.filter((col) => col.fixed !== true && col.fixed !== "left" && col.fixed !== "right"));
-
-// 计算所有列的总宽度
-const totalColumnsWidth = computed(() => {
-  return allColumns.value.reduce((total, column) => {
-    // 如果有明确设置的宽度，使用它
-    if (column.width) {
-      return total + (typeof column.width === "number" ? column.width : parseInt(column.width));
-    }
-    // 如果有最小宽度，使用最小宽度作为默认
-    else if (column.minWidth) {
-      return total + (typeof column.minWidth === "number" ? column.minWidth : parseInt(column.minWidth));
-    }
-    // 默认列宽
-    return total + 80;
-  }, 0);
+// options
+defineOptions({
+  name: "McTable",
 });
 
-// Data
-const tableData = computed(() => (props.data || []) as any[]);
+// props
+const props = withDefaults(defineProps<TableProps>(), {
+  border: false,
+  stripe: false,
+  showHeader: true,
+  emptyText: "No Data",
+  loading: false,
+  loadingText: "Loading...",
 
-// Styles
-const tableStyle = computed(() => ({
-  height: props.height ? `${props.height}px` : "",
-  maxHeight: props.maxHeight ? `${props.maxHeight}px` : "",
-}));
+  selectedRowKeys: () => [],
+  highlightCurrentRow: false,
+});
 
-const leftFixedStyle = computed(() => ({
-  width: `${leftColumns.value.reduce((width, col) => width + (parseInt(col.width as string) || 80), 0)}px`,
-}));
+const { data, columns, pagination, spanMethod, loading, loadingText, loadingConfig, defaultSort, selectedRowKeys, highlightCurrentRow, rowKey } = toRefs(props);
 
-const rightFixedStyle = computed(() => ({
-  width: `${rightColumns.value.reduce((width, col) => width + (parseInt(col.width as string) || 80), 0)}px`,
-}));
+// emits
+const emit = defineEmits<TableEmits>();
 
-// Row key getter
-const getRowKey = (row: any, index: number) => {
-  if (props.rowKey) {
-    return typeof props.rowKey === "function" ? props.rowKey(row) : row[props.rowKey];
-  }
-  return index;
-};
+// ref
+const _ref = ref<HTMLDivElement>();
+const headerRef = ref<InstanceType<typeof McTableHeader>>();
+const bodyRef = ref<InstanceType<typeof McTableBody>>();
 
-// Helper methods
-const getCellValue = (row: any, column: TableColumn) => {
-  const value = row[column.prop];
-  return column.formatter ? column.formatter(row, column, value, tableData.value.indexOf(row)) : value;
-};
+// 使用组合式函数
+const { columnsWithFixed } = useTableScroll(columns, headerRef, bodyRef);
 
-const getColumnClass = (column: TableColumn, position?: "left" | "right", isEdge?: boolean) => {
-  return [
-    column.className,
-    {
-      [`is-align-${column.align || "left"}`]: true,
-      [`is-fixed-${position}`]: position && shouldUseFixedColumns.value,
-      "is-last-column": position === "left" && isEdge,
-      "is-first-column": position === "right" && isEdge,
-    },
-  ];
-};
+// 排序功能
+const { sortedData, handleSort, getSortOrder } = useTableSort(data, columnsWithFixed, defaultSort?.value);
 
-// 检查是否需要启用固定列
-const checkShouldUseFixedColumns = () => {
-  if (!tableContainer.value) return;
+// 选中功能
+const { toggleRowSelection, setCurrentRow, getRowClass } = useTableSelection(data, rowKey, selectedRowKeys, highlightCurrentRow);
 
-  const containerWidth = tableContainer.value.clientWidth;
-  const contentWidth = totalColumnsWidth.value;
+// 分页功能
+const { paginatedData, updatePagination } = usePagination(sortedData, pagination);
 
-  // 只有当内容宽度大于容器宽度时，才启用固定列
-  shouldUseFixedColumns.value = contentWidth > containerWidth;
-};
+// 最终数据（经过排序和分页处理）
+const finalData = computed(() => paginatedData.value);
 
-// Event handlers
-const handleScroll = (e: Event) => {
-  const target = e.target as HTMLElement;
-
-  // Show header shadow when scrolled vertically
-  showHeaderShadow.value = target.scrollTop > 0;
-
-  // Sync fixed columns vertical scrolling
-  if (leftBody.value && shouldUseFixedColumns.value) {
-    leftBody.value.style.transform = `translateY(-${target.scrollTop}px)`;
+// 事件处理
+function handleRowClick(row: any, index: number) {
+  // 处理行选中
+  if (selectedRowKeys.value.length >= 0) {
+    const newSelectedKeys = toggleRowSelection(row, index);
+    emit("selection-change", newSelectedKeys);
   }
 
-  if (rightBody.value && shouldUseFixedColumns.value) {
-    rightBody.value.style.transform = `translateY(-${target.scrollTop}px)`;
+  // 处理当前行高亮
+  if (highlightCurrentRow.value) {
+    const newCurrentRow = setCurrentRow(row);
+    emit("current-change", newCurrentRow);
   }
-};
 
-const handleRowClick = (row: any, event: Event) => {
-  const target = event.target as HTMLElement;
-  const td = target.closest("td");
-  if (!td) return;
+  emit("row-click", row, index);
+}
 
-  // Find column index
-  const cellIndex = Array.from(td.parentElement?.children || []).indexOf(td);
+function handleHeaderClick(column: TableColumn, event: Event) {
+  emit("header-click", column, event);
+}
 
-  // Determine the column based on which section was clicked
-  let column: TableColumn | undefined;
-  const container = (event.currentTarget as HTMLElement).closest(".mc-table-container");
+function handleSortChange(column: TableColumn) {
+  const sortConfig = handleSort(column);
+  if (sortConfig) {
+    emit("sort-change", sortConfig);
+  }
+}
+async function handlePageChange(payload: { pageSize: number; pageNum: number }) {
+  updatePagination(payload);
 
-  if (container) {
-    const isLeftFixed = td.closest(".mc-table__fixed-left");
-    const isRightFixed = td.closest(".mc-table__fixed-right");
-
-    if (isLeftFixed) {
-      column = leftColumns.value[cellIndex];
-    } else if (isRightFixed) {
-      column = rightColumns.value[cellIndex];
-    } else {
-      // 根据是否启用固定列来决定使用哪个列数组
-      const columns = shouldUseFixedColumns.value ? centerColumns.value : allColumns.value;
-      column = columns[cellIndex];
+  // 等待DOM更新完成后滚动到表格顶部
+  nextTick(() => {
+    if (bodyRef.value?.bodyWrapper) {
+      bodyRef.value.bodyWrapper.scrollTop = 0;
     }
-  }
-
-  if (column) {
-    emit("row-click", row, column, event);
-  }
-};
-
-// 监听窗口大小变化和表格容器变化
-const setupResizeObserver = () => {
-  if (!tableContainer.value) return;
-
-  const resizeObserver = new ResizeObserver(() => {
-    checkShouldUseFixedColumns();
   });
 
-  resizeObserver.observe(tableContainer.value);
+  emit("page-change", payload);
 
-  return () => {
-    if (tableContainer.value) {
-      resizeObserver.unobserve(tableContainer.value);
-    }
-    resizeObserver.disconnect();
-  };
-};
+  // 如果存在 initData 方法，则调用
+  if (props.initData && typeof props.initData === "function") {
+    const { data: initData, total } = await props.initData({ pageSize: payload.pageSize, pageNum: payload.pageNum });
+    data.value = initData;
+    pagination.value!.total = total;
+  }
+}
 
-// 监听列配置变化
-watch(
-  allColumns,
-  () => {
-    nextTick(() => {
-      checkShouldUseFixedColumns();
-    });
-  },
-  { deep: true }
-);
-
-// Pagination methods
-const handlePaginationChange = (params: { page: number; pageSize: number }) => {
-  emit("pagination-change", params);
-};
-
-// Lifecycle hooks
-onMounted(() => {
-  const cleanupResizeObserver = setupResizeObserver();
-  checkShouldUseFixedColumns();
-
-  return () => {
-    if (cleanupResizeObserver) {
-      cleanupResizeObserver();
-    }
-  };
+// expose
+defineExpose<TableInstance>({
+  ref: _ref,
 });
 </script>
 
-<style lang="scss" scoped>
-/* Variables */
-$primary-color: var(--mc-teal-500);
-$border-color: var(--mc-gray-200);
-$text-color: var(--mc-gray-800);
-$text-disabled: var(--mc-gray-400);
-$bg-color: var(--mc-white);
-$hover-bg: var(--mc-gray-100);
-$striped-bg: var(--mc-gray-100);
-$selected-bg: var(--mc-teal-50);
-$loading-overlay: rgba(255, 255, 255, 0.7);
-$shadow-color: rgba(0, 0, 0, 0.1);
-$radius: var(--mc-radius);
-$transition: var(--mc-transition-duration);
-
-.mc-table-wrapper {
-  /* Reset and common styles */
-  box-sizing: border-box;
-  width: 100%;
-  position: relative;
-  font-family: inherit;
-  font-size: 14px;
-  color: $text-color;
-  line-height: 1.5;
-
-  /* Table container with horizontal and vertical scroll */
-  .mc-table-container {
-    width: 100%;
-    overflow: auto;
-    position: relative;
-    max-height: inherit;
-
-    /* Custom scrollbar styles */
-    &::-webkit-scrollbar {
-      height: 6px;
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: $bg-color;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: $border-color;
-      border-radius: 3px;
-
-      &:hover {
-        background: $primary-color;
-      }
-    }
-
-    /* Fixed left columns */
-    .mc-table__fixed-left {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 2;
-      overflow: hidden;
-      background-color: $bg-color;
-      box-shadow: 4px 0 8px -4px $shadow-color;
-
-      .mc-table__body {
-        overflow: hidden;
-      }
-    }
-
-    /* Fixed right columns */
-    .mc-table__fixed-right {
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 2;
-      overflow: hidden;
-      background-color: $bg-color;
-      box-shadow: -4px 0 8px -4px $shadow-color;
-
-      .mc-table__body {
-        overflow: hidden;
-      }
-    }
-
-    /* Fixed header shadow */
-    .mc-table__fixed-header-shadow {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 6px;
-      top: 40px; /* Adjust to match header height */
-      background: linear-gradient($shadow-color, transparent);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    /* Main table wrapper */
-    .mc-table__main-wrapper {
-      overflow-x: auto !important;
-    }
-  }
-
-  /* Loading overlay */
-  .mc-table__loading-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-    background-color: $loading-overlay;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .mc-table__loading-spinner {
-      width: 30px;
-      height: 30px;
-      border: 2px solid $primary-color;
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: table-loading 1s linear infinite;
-    }
-
-    @keyframes table-loading {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-  }
-
-  /* Table base styles */
-  .mc-table {
-    width: 100%;
-    min-width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    table-layout: fixed;
-
-    /* Fixed table styles */
-    &.mc-table--fixed {
-      width: 100%;
-      table-layout: fixed;
-    }
-
-    /* Table header */
-    .mc-table__header {
-      background-color: $bg-color;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-
-      th {
-        padding: 12px 8px;
-        font-weight: 600;
-        text-align: left;
-        border-bottom: 1px solid $border-color;
-        background-color: $bg-color;
-        transition: background-color $transition;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
-        &.is-align-left {
-          text-align: left;
-        }
-        &.is-align-center {
-          text-align: center;
-        }
-        &.is-align-right {
-          text-align: right;
-        }
-
-        &.is-fixed-left,
-        &.is-fixed-right {
-          position: relative;
-          z-index: 1;
-        }
-
-        &.is-last-column {
-          border-right: 1px solid $border-color;
-        }
-        &.is-first-column {
-          border-left: 1px solid $border-color;
-        }
-      }
-    }
-
-    /* Table body */
-    .mc-table__body {
-      tr {
-        transition: background-color $transition;
-
-        &.is-hover:hover {
-          background-color: $hover-bg;
-        }
-
-        &.is-selected {
-          background-color: $selected-bg;
-        }
-
-        td {
-          padding: 12px 8px;
-          border-bottom: 1px solid $border-color;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-
-          &.is-align-left {
-            text-align: left;
-          }
-          &.is-align-center {
-            text-align: center;
-          }
-          &.is-align-right {
-            text-align: right;
-          }
-
-          &.is-fixed-left,
-          &.is-fixed-right {
-            position: relative;
-            z-index: 1;
-          }
-
-          &.is-last-column {
-            border-right: 1px solid $border-color;
-          }
-          &.is-first-column {
-            border-left: 1px solid $border-color;
-          }
-        }
-      }
-    }
-
-    /* Empty data message */
-    .mc-table__empty-row {
-      .mc-table__empty-cell {
-        text-align: center;
-        padding: 20px;
-
-        .mc-table__empty-text {
-          color: $text-disabled;
-        }
-      }
-    }
-  }
-
-  /* Cell styles */
-  .mc-table__cell {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &.mc-table--large {
-    font-size: 16px;
-
-    .mc-table__header th,
-    .mc-table__body td {
-      padding: 14px 12px;
-    }
-  }
-
-  /* Pagination */
-  &__pagination {
-    margin-top: 16px;
-  }
-}
+<style scoped lang="scss">
+@use "./index.scss";
 </style>

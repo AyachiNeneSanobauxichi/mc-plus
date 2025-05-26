@@ -1,13 +1,14 @@
 /*
  * @Author: Tieju yang
- * @Date: 2025-05-21 14:09:00
+ * @Date: 2025-05-26 09:36:30
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-22 17:15:04
+ * @LastEditTime: 2025-05-26 14:05:46
  */
-import { withInstall } from "@mc-plus/utils";
-import _McTable from "./mc-table.vue";
+import McTable from "./mc-table.vue";
 
-export const McTable = withInstall(_McTable);
+export { McTable };
 export default McTable;
 
+export * from "./composables/usePagination";
+export * from "./composables/useTableScroll";
 export * from "./types";

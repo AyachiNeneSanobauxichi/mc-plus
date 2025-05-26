@@ -1,161 +1,112 @@
 /*
  * @Author: Tieju yang
- * @Date: 2025-05-21 14:09:00
+ * @Date: 2025-05-26 09:36:30
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-22 17:09:58
+ * @LastEditTime: 2025-05-26 16:13:14
  */
-import type { ExtractPropTypes } from "vue";
-import type { PaginationChangeEvent } from "../mc-pagination/types";
+import type { Ref } from "vue";
 
-export type TableSize = "large" | "medium" | "small";
-export type TableAlign = "left" | "center" | "right";
+export type SortOrder = "asc" | "desc" | null;
 
 export interface TableColumn {
   prop: string;
   label: string;
-  width?: string | number;
-  minWidth?: string | number;
+  width?: number | string;
   fixed?: boolean | "left" | "right";
-  formatter?: (row: any, column: TableColumn, cellValue: any, index: number) => any;
-  align?: TableAlign;
+  formatter?: (row: Record<string, unknown>, column: TableColumn, cellValue: any, index: number) => any;
+  align?: "left" | "center" | "right";
+  headerAlign?: "left" | "center" | "right";
   className?: string;
-  showOverflowTooltip?: boolean;
+  headerClassName?: string;
+  // 新增字段，支持自定义列渲染
+  slot?: string;
+  // 新增合并列的配置
+  colSpan?: number | ((row: Record<string, unknown>, column: TableColumn, index: number) => number);
+  // 新增合并行的配置
+  rowSpan?: number | ((row: Record<string, unknown>, column: TableColumn, index: number) => number);
+  // 排序相关
+  sortable?: boolean;
+  sortOrder?: SortOrder;
+  sortMethod?: (a: any, b: any) => number;
 }
 
-export const tableProps = {
-  /**
-   * Table data array
-   */
-  data: {
-    type: Array,
-    required: true,
-  },
-  /**
-   * Column definitions
-   */
-  columns: {
-    type: Array,
-    required: true,
-  },
-  /**
-   * Table size
-   */
-  size: {
-    type: String,
-    values: ["large", "medium", "small"],
-    default: "large",
-  },
-  /**
-   * Height of table
-   */
-  height: {
-    type: [String, Number],
-    default: "",
-  },
-  /**
-   * Max height of table
-   */
-  maxHeight: {
-    type: [String, Number],
-    default: "",
-  },
-  /**
-   * Whether table header is visible
-   */
-  showHeader: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * Whether the row's background color changes when hovering
-   */
-  rowHover: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * Function to get a row's key
-   */
-  rowKey: {
-    type: [Function, String],
-  },
-  /**
-   * Whether the table is loading
-   */
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Whether to show pagination
-   */
-  pagination: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Total number of items for pagination
-   */
-  total: {
-    type: Number,
-    default: 0,
-  },
-  /**
-   * Current page for pagination
-   */
-  currentPage: {
-    type: Number,
-    default: 1,
-  },
-  /**
-   * Page size for pagination
-   */
-  pageSize: {
-    type: Number,
-    default: 10,
-  },
-  /**
-   * Whether to show total count in pagination
-   */
-  showTotal: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * Whether to show page size selector in pagination
-   */
-  showSizeChanger: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * Whether to show quick jumper in pagination
-   */
-  showJumper: {
-    type: Boolean,
-    default: true,
-  },
-};
+export interface SortConfig {
+  prop: string;
+  order: SortOrder;
+}
 
-export type TableProps = ExtractPropTypes<typeof tableProps>;
+export interface PaginationConfig {
+  currentPage?: number;
+  pageSize?: number;
+  total: number;
+  pageSizes?: number[];
+  layout?: string;
+  background?: boolean;
+}
 
-export const tableEmits = {
-  /**
-   * Triggers when row is clicked
-   */
-  "row-click": (row: any, column: TableColumn, event: Event) => true,
-  /**
-   * Triggers when pagination changes
-   */
-  "update:currentPage": (page: number) => typeof page === "number",
-  /**
-   * Triggers when page size changes
-   */
-  "update:pageSize": (pageSize: number) => typeof pageSize === "number",
-  /**
-   * Triggers when pagination page or size changes
-   */
-  "pagination-change": (params: PaginationChangeEvent) => true,
-};
+export interface LoadingConfig {
+  text?: string;
+  spinner?: string;
+  background?: string;
+  customClass?: string;
+}
 
-export type TableEmits = typeof tableEmits;
+export interface TableProps {
+  // 数据
+  data: Record<string, unknown>[];
+  // 列配置
+  columns: TableColumn[];
+  // 是否显示边框
+  border?: boolean;
+  // 是否斑马线
+  stripe?: boolean;
+  // 是否显示表头
+  showHeader?: boolean;
+  // 行键
+  rowKey?: string;
+  // 空数据文本
+  emptyText?: string;
+  // 高度
+  height?: string | number;
+  // 最大高度
+  maxHeight?: string | number;
+  // 分页配置
+  pagination?: PaginationConfig;
+  // 合并单元格配置函数
+  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+  // loading 状态
+  loading?: boolean;
+  // loading 文本
+  loadingText?: string;
+  // loading 配置
+  loadingConfig?: LoadingConfig;
+  // Method for Initializing Table Data
+  initData?: ({ pageSize, pageNum }: { pageSize: number; pageNum: number }) => Promise<{ data: Record<string, unknown>[]; total: number }>;
+  // 排序配置
+  defaultSort?: SortConfig;
+  // 选中行的键值
+  selectedRowKeys?: (string | number)[];
+  // 是否高亮当前行
+  highlightCurrentRow?: boolean;
+}
+
+export interface TableEmits {
+  // 行点击事件
+  (e: "row-click", row: Record<string, unknown>, index: number): void;
+  // 表头点击事件
+  (e: "header-click", column: TableColumn, event: Event): void;
+  // 分页改变事件
+  (e: "page-change", payload: { pageSize: number; pageNum: number }): void;
+  // 分页大小改变事件
+  (e: "page-size-change", pageSize: number): void;
+  // 排序改变事件
+  (e: "sort-change", sortConfig: SortConfig): void;
+  // 选中行改变事件
+  (e: "selection-change", selectedRowKeys: (string | number)[]): void;
+  // 当前行改变事件
+  (e: "current-change", currentRow: Record<string, unknown> | null): void;
+}
+
+export interface TableInstance {
+  ref: Ref<HTMLElement | void>;
+}
