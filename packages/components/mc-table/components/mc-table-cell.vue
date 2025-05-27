@@ -1,13 +1,16 @@
 <template>
   <td v-if="shouldRender" :class="[column.className, column.align ? `is-${column.align}` : '', column.fixed ? `is-fixed-${typeof column.fixed === 'boolean' ? 'left' : column.fixed}` : '', `is-display-${colspan === 0 ? 'none' : 'table-cell'}`]" :rowspan="rowspan" :colspan="colspan">
-    <!-- 内容插槽 -->
-    <slot :name="column.slot || column.prop" :row="row" :column="column" :$index="rowIndex" :value="row[column.prop]">
-      <template v-if="column.formatter">
-        {{ column.formatter(row, column, row[column.prop], rowIndex) }}
-      </template>
-      <template v-else>
-        {{ row[column.prop] }}
-      </template>
+    <!-- 统一内容插槽 - 优先级最高 -->
+    <slot name="cell" :row="row" :column="column" :$index="rowIndex" :value="row[column.prop]" :prop="column.prop">
+      <!-- 单独列插槽 - 向后兼容 -->
+      <slot :name="column.slot || column.prop" :row="row" :column="column" :$index="rowIndex" :value="row[column.prop]">
+        <template v-if="column.formatter">
+          {{ column.formatter(row, column, row[column.prop], rowIndex) }}
+        </template>
+        <template v-else>
+          {{ row[column.prop] }}
+        </template>
+      </slot>
     </slot>
   </td>
 </template>
