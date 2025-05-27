@@ -1,49 +1,69 @@
-/*
- * @Author: Tieju yang
- * @Date: 2025-05-26 09:36:30
- * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-26 16:13:14
- */
 import type { Ref } from "vue";
 
-export type SortOrder = "asc" | "desc" | null;
+/** 表格行数据类型 */
+export type RowData = Record<string, unknown>;
+
+/** 排序方向 */
+export type SortDirection = "asc" | "desc";
+
+/** 排序状态（包含未排序状态） */
+export type SortOrder = SortDirection | null;
+
+/** 对齐方式 */
+export type AlignType = "left" | "center" | "right";
+
+/** 列固定位置 */
+export type ColumnFixed = boolean | "left" | "right";
 
 export interface TableColumn {
+  /** 列唯一标识 (对应 data 中的字段) */
   prop: string;
+  /** 列标题 */
   label: string;
+  /** 列宽度 (支持数字和带单位字符串) */
   width?: number | string;
-  fixed?: boolean | "left" | "right";
-  formatter?: (row: Record<string, unknown>, column: TableColumn, cellValue: any, index: number) => any;
-  align?: "left" | "center" | "right";
-  headerAlign?: "left" | "center" | "right";
+  /** 固定列位置 */
+  fixed?: ColumnFixed;
+  /** 单元格格式化函数 */
+  formatter?: (row: RowData, column: TableColumn, cellValue: unknown, index: number) => unknown;
+  /** 列对齐方式 */
+  align?: AlignType;
+  /** 表头对齐方式 */
+  headerAlign?: AlignType;
+  /** 列自定义类名 */
   className?: string;
+  /** 表头自定义类名 */
   headerClassName?: string;
-  // 新增字段，支持自定义列渲染
+  /** 自定义列插槽名称 */
   slot?: string;
-  // 新增合并列的配置
-  colSpan?: number | ((row: Record<string, unknown>, column: TableColumn, index: number) => number);
-  // 新增合并行的配置
-  rowSpan?: number | ((row: Record<string, unknown>, column: TableColumn, index: number) => number);
-  // 排序相关
+  /** 列合并策略 */
+  colSpan?: number | ((row: RowData, column: TableColumn, index: number) => number);
+  /** 行合并策略 */
+  rowSpan?: number | ((row: RowData, column: TableColumn, index: number) => number);
+  /** 是否支持排序 */
   sortable?: boolean;
+  /** 当前排序状态 */
   sortOrder?: SortOrder;
-  sortMethod?: (a: any, b: any) => number;
+  /** 自定义排序方法 */
+  sortMethod?: (a: unknown, b: unknown) => number;
 }
 
+/** 排序配置 */
 export interface SortConfig {
   prop: string;
   order: SortOrder;
 }
 
+/** 分页配置 */
 export interface PaginationConfig {
   currentPage?: number;
   pageSize?: number;
   total: number;
   pageSizes?: number[];
-  layout?: string;
   background?: boolean;
 }
 
+/** 加载状态配置 */
 export interface LoadingConfig {
   text?: string;
   spinner?: string;
@@ -52,76 +72,72 @@ export interface LoadingConfig {
 }
 
 export interface TableProps {
-  // 数据
-  data: Record<string, unknown>[];
-  // 列配置
+  // 核心数据
+  data: RowData[];
   columns: TableColumn[];
-  // 是否显示边框
-  border?: boolean;
-  // 是否斑马线
-  stripe?: boolean;
-  // 是否显示表头
+
+  // 样式配置
   showHeader?: boolean;
-  // 行键
-  rowKey?: string;
-  // 空数据文本
-  emptyText?: string;
-  // 高度
   height?: string | number;
-  // 最大高度
   maxHeight?: string | number;
-  // 分页配置
+  rowKey?: string;
+  emptyText?: string;
+
+  // 功能配置
   pagination?: PaginationConfig;
-  // 合并单元格配置函数
-  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
-  // loading 状态
   loading?: boolean;
-  // loading 文本
   loadingText?: string;
-  // loading 配置
   loadingConfig?: LoadingConfig;
-  // Method for Initializing Table Data
-  initData?: ({ pageSize, pageNum }: { pageSize: number; pageNum: number }) => Promise<{ data: Record<string, unknown>[]; total: number }>;
-  // 排序配置
-  defaultSort?: SortConfig;
-  // 选中行的键值
-  selectedRowKeys?: (string | number)[];
-  // 是否高亮当前行
   highlightCurrentRow?: boolean;
+
+  // 方法类配置
+  spanMethod?: (params: { row: RowData; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+
+  initData?: (params: { pageSize: number; pageNum: number }) => Promise<{ data: RowData[]; total: number }>;
+
+  // 状态管理
+  defaultSort?: SortConfig;
 }
 
 export interface TableEmits {
-  // 行点击事件
-  (e: "row-click", row: Record<string, unknown>, index: number): void;
-  // 表头点击事件
+  // 用户交互事件
+  (e: "row-click", row: RowData, index: number): void;
   (e: "header-click", column: TableColumn, event: Event): void;
-  // 分页改变事件
+
+  // 分页事件
   (e: "page-change", payload: { pageSize: number; pageNum: number }): void;
-  // 分页大小改变事件
   (e: "page-size-change", pageSize: number): void;
-  // 排序改变事件
-  (e: "sort-change", sortConfig: SortConfig): void;
-  // 选中行改变事件
-  (e: "selection-change", selectedRowKeys: (string | number)[]): void;
-  // 当前行改变事件
-  (e: "current-change", currentRow: Record<string, unknown> | null): void;
+
+  // 排序事件
+  (e: "sort-change", config: SortConfig): void;
+
+  // 当前行变化
+  (e: "current-change", currentRow: RowData | null): void;
 }
 
-// 统一单元格插槽的参数类型
+/** 单元格插槽属性 */
 export interface CellSlotProps {
-  row: Record<string, unknown>;
+  row: RowData;
   column: TableColumn;
   $index: number;
-  value: any;
+  value: unknown;
   prop: string;
 }
 
-// 表头插槽的参数类型
+/** 表头插槽属性 */
 export interface HeaderSlotProps {
   column: TableColumn;
   index: number;
 }
 
+/** 表格组件实例类型 */
 export interface TableInstance {
-  ref: Ref<HTMLElement | void>;
+  /** 表格根元素引用 */
+  ref: Ref<HTMLElement | undefined>;
+  /** 手动刷新表格数据方法 */
+  refresh: () => Promise<void>;
+  /** 清除排序状态方法 */
+  clearSort: () => void;
+  /** 清除选择状态方法 */
+  clearSelection: () => void;
 }

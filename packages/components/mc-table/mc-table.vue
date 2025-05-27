@@ -2,15 +2,13 @@
  * @Author: Tieju yang
  * @Date: 2025-05-26 09:37:04
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-26 17:01:10
+ * @LastEditTime: 2025-05-27 10:21:49
 -->
 <template>
   <div
     ref="_ref"
     class="mc-table"
     :class="{
-      'mc-table--border': border,
-      'mc-table--stripe': stripe,
       'mc-table--loading': loading,
     }">
     <!-- 表头组件 -->
@@ -47,7 +45,6 @@ import McTableLoading from "./components/mc-table-loading.vue";
 import McTablePagination from "./components/mc-table-pagination.vue";
 import { usePagination } from "./composables/usePagination";
 import { useTableScroll } from "./composables/useTableScroll";
-import { useTableSelection } from "./composables/useTableSelection";
 import { useTableSort } from "./composables/useTableSort";
 import type { TableColumn, TableEmits, TableInstance, TableProps } from "./types";
 
@@ -58,13 +55,10 @@ defineOptions({
 
 // props
 const props = withDefaults(defineProps<TableProps>(), {
-  border: false,
-  stripe: false,
   showHeader: true,
   emptyText: "No Data",
   loading: false,
   loadingText: "Loading...",
-
   selectedRowKeys: () => [],
   highlightCurrentRow: false,
 });
@@ -85,23 +79,30 @@ const { columnsWithFixed } = useTableScroll(columns, headerRef, bodyRef);
 // 排序功能
 const { sortedData, handleSort, getSortOrder } = useTableSort(data, columnsWithFixed, defaultSort?.value);
 
-// 选中功能
-const { toggleRowSelection, setCurrentRow, getRowClass } = useTableSelection(data, rowKey, selectedRowKeys, highlightCurrentRow);
-
 // 分页功能
 const { paginatedData, updatePagination } = usePagination(sortedData, pagination);
 
 // 最终数据（经过排序和分页处理）
 const finalData = computed(() => paginatedData.value);
 
+// 当前行状态管理
+const currentRow = ref<any>(null);
+
+function setCurrentRow(row: any) {
+  currentRow.value = row;
+  return currentRow.value;
+}
+
+function getRowClass(row: any, index: number): string[] {
+  const classes = [];
+  if (highlightCurrentRow.value && currentRow.value === row) {
+    classes.push("is-current");
+  }
+  return classes;
+}
+
 // 事件处理
 function handleRowClick(row: any, index: number) {
-  // 处理行选中
-  if (selectedRowKeys.value.length >= 0) {
-    const newSelectedKeys = toggleRowSelection(row, index);
-    emit("selection-change", newSelectedKeys);
-  }
-
   // 处理当前行高亮
   if (highlightCurrentRow.value) {
     const newCurrentRow = setCurrentRow(row);
@@ -121,6 +122,7 @@ function handleSortChange(column: TableColumn) {
     emit("sort-change", sortConfig);
   }
 }
+
 async function handlePageChange(payload: { pageSize: number; pageNum: number }) {
   updatePagination(payload);
 
@@ -141,9 +143,34 @@ async function handlePageChange(payload: { pageSize: number; pageNum: number }) 
   }
 }
 
+// 刷新方法
+async function refresh() {
+  if (props.initData && typeof props.initData === "function" && pagination.value) {
+    const { data: initData, total } = await props.initData({
+      pageSize: pagination.value.pageSize || 10,
+      pageNum: pagination.value.currentPage || 1,
+    });
+    data.value = initData;
+    pagination.value.total = total;
+  }
+}
+
+// 清除排序状态
+function clearSort() {
+  // 重置所有列的排序状态
+  columns.value.forEach((column) => {
+    if (column.sortable) {
+      column.sortOrder = null;
+    }
+  });
+}
+
 // expose
 defineExpose<TableInstance>({
   ref: _ref,
+  refresh,
+  clearSort,
+  clearSelection: () => {}, // 空实现，因为没有选择功能
 });
 </script>
 

@@ -2,7 +2,7 @@
  * @Author: Tieju yang
  * @Date: 2025-05-26 13:39:17
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-26 16:29:33
+ * @LastEditTime: 2025-05-27 10:22:40
 -->
 <template>
   <div class="mc-table__header-wrapper" ref="headerWrapper" v-if="showHeader">
@@ -14,7 +14,6 @@
         <tr>
           <th v-for="(column, index) in columns" :key="index" :class="[column.headerClassName, column.align ? `is-${column.align}` : '', column.fixed ? `is-fixed-${typeof column.fixed === 'boolean' ? 'left' : column.fixed}` : '', column.sortable ? 'is-sortable' : '', getSortClass(column.prop)]" @click="handleHeaderClick(column, $event)">
             <div class="mc-table__header-cell">
-              <!-- 表头插槽 -->
               <span class="mc-table__header-label">
                 <slot :name="`header-${column.slot || column.prop}`" :column="column" :index="index">
                   {{ column.label }}
