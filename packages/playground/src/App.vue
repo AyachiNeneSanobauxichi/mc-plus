@@ -5,9 +5,21 @@
     </div>
     <div>
       <mc-form :model="form">
-        <mc-form-item label="Name" prop="name"> </mc-form-item>
-        <mc-form-item label="Password" prop="password"> </mc-form-item>
-        <mc-form-item label="Email" prop="email"> </mc-form-item>
+        <mc-form-item label="Name" prop="name">
+          <mc-input v-model="form.name" placeholder="Please enter your name" />
+        </mc-form-item>
+        <mc-form-item label="Password" prop="password">
+          <mc-input
+            v-model="form.password"
+            placeholder="Please enter your password"
+          />
+        </mc-form-item>
+        <mc-form-item label="Email" prop="email">
+          <mc-input
+            v-model="form.email"
+            placeholder="Please enter your email"
+          />
+        </mc-form-item>
       </mc-form>
     </div>
     <div class="tool-bar">
@@ -19,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-// import { McButton } from "mc-plus";
+import { McButton, McInput } from "mc-plus";
 import McForm from "../../components/mc-form/mc-form.vue";
 import McFormItem from "../../components/mc-form/mc-form-item.vue";
 
