@@ -4,7 +4,7 @@
       <span>Value: {{ form }}</span>
     </div>
     <div>
-      <mc-form :model="form">
+      <mc-form :model="form" :rules="rules">
         <mc-form-item label="Name" prop="name">
           <mc-input v-model="form.name" placeholder="Please enter your name" />
         </mc-form-item>
@@ -34,6 +34,7 @@ import { ref } from "vue";
 import { McButton, McInput } from "mc-plus";
 import McForm from "../../components/mc-form/mc-form.vue";
 import McFormItem from "../../components/mc-form/mc-form-item.vue";
+import type { FormRules } from "@mc-plus/components/mc-form/types";
 
 const form = ref<{
   name: string;
@@ -43,6 +44,12 @@ const form = ref<{
   name: "",
   password: "",
   email: "",
+});
+
+const rules = ref<FormRules>({
+  name: [{ required: true }],
+  password: [{ required: true }],
+  email: [{ required: true }],
 });
 
 // const handleSetValue = () => {
