@@ -8,3 +8,7 @@ export interface FormItemProps {
   prop?: string;
   required?: boolean;
 }
+
+export interface FormItemContext {
+  validate: (val?: string) => void;
+}
