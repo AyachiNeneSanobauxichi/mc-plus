@@ -107,6 +107,21 @@ export interface TableEmits {
   (e: "current-change", currentRow: Record<string, unknown> | null): void;
 }
 
+// 统一单元格插槽的参数类型
+export interface CellSlotProps {
+  row: Record<string, unknown>;
+  column: TableColumn;
+  $index: number;
+  value: any;
+  prop: string;
+}
+
+// 表头插槽的参数类型
+export interface HeaderSlotProps {
+  column: TableColumn;
+  index: number;
+}
+
 export interface TableInstance {
   ref: Ref<HTMLElement | void>;
 }
