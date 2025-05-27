@@ -1,33 +1,41 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <span>Value: {{ selectValue }}</span>
+      <span>Value: {{ form }}</span>
     </div>
     <div>
-      <mc-radio-group v-model="selectValue" :disabled="disabled">
-        <mc-radio value="1" remark="Remark 1">Option 1</mc-radio>
-        <mc-radio value="2">Option 2</mc-radio>
-        <mc-radio value="3">Option 3</mc-radio>
-      </mc-radio-group>
+      <mc-form :model="form">
+        <mc-form-item label="Name" prop="name"> </mc-form-item>
+        <mc-form-item label="Password" prop="password"> </mc-form-item>
+        <mc-form-item label="Email" prop="email"> </mc-form-item>
+      </mc-form>
     </div>
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Change disabled</mc-button>
-      <mc-button @click="handleSetValue">Set Value</mc-button>
+      <!-- <mc-button @click="handleSetValue">Set Value</mc-button> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton } from "mc-plus";
-import McRadio from "../../components/mc-radio/mc-radio.vue";
-import McRadioGroup from "../../components/mc-radio/mc-radio-group.vue";
+// import { McButton } from "mc-plus";
+import McForm from "../../components/mc-form/mc-form.vue";
+import McFormItem from "../../components/mc-form/mc-form-item.vue";
 
-const selectValue = ref<string>("1");
+const form = ref<{
+  name: string;
+  password: string;
+  email: string;
+}>({
+  name: "",
+  password: "",
+  email: "",
+});
 
-const handleSetValue = () => {
-  selectValue.value = "1";
-};
+// const handleSetValue = () => {
+//   selectValue.value = "1";
+// };
 
 const disabled = ref<boolean>(false);
 
