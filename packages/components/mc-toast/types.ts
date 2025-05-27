@@ -2,12 +2,12 @@
  * @Author: Tieju yang
  * @Date: 2025-05-21 09:33:32
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-21 09:34:25
+ * @LastEditTime: 2025-05-23 17:49:58
  */
 import type { Ref } from "vue";
 import type { IconType } from "../mc-icon/types";
 
-export type ToastType = "primary" | "success" | "warning" | "error";
+export type ToastType = "primary" | "success" | "warning" | "error" | "info";
 export type ToastPosition = "top" | "bottom";
 
 export interface ToastProps {

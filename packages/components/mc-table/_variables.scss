@@ -1,0 +1,37 @@
+// 表格相关的变量和常量
+
+// 尺寸相关
+$table-cell-padding: 23px 8px;
+$table-header-padding: 4px 8px;
+$table-min-height: 56px;
+$table-empty-padding: 32px 0;
+
+// 字体相关
+$table-font-size: 14px;
+$table-line-height: 20px;
+$table-header-font-size: 12px;
+$table-header-line-height: 18px;
+
+// 分页相关
+$pagination-button-size: 32px;
+$pagination-button-padding: 0 8px;
+$pagination-select-height: 32px;
+$pagination-select-padding: 0 12px;
+$pagination-spacing: 16px 0;
+
+// 排序相关
+$sort-icon-size: 16px;
+$sort-caret-width: 12px;
+$sort-caret-margin: 8px;
+
+// Z-index 层级
+$table-fixed-z-index: 2;
+$table-border-z-index: 1;
+$table-loading-z-index: 10;
+
+// 过渡动画
+$table-transition: background-color var(--mc-transition-duration);
+$table-color-transition: color var(--mc-transition-duration);
+
+// Loading 遮罩
+$loading-overlay-bg: rgba(255, 255, 255, 0.8);

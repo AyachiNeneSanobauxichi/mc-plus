@@ -1,15 +1,17 @@
+<!--
+ * @Author: Tieju yang
+ * @Date: 2025-05-21 09:34:05
+ * @LastEditors: Tieju yang
+ * @LastEditTime: 2025-05-23 17:50:45
+-->
 <template>
   <div ref="_ref" class="mc-toast" :class="[entering ? 'mc-toast--entering' : '', leaving ? 'mc-toast--leaving' : '']">
     <div class="mc-toast__header" :class="`mc-toast__header--${type}`">
-      <div class="mc-toast__icon" v-if="icon">
-        <mc-icon :name="icon"></mc-icon>
-      </div>
+      <mc-icon v-if="icon" class="mc-toast__icon" :name="icon"></mc-icon>
       <div class="mc-toast__title">{{ title }}</div>
-      <div class="mc-toast__close" v-if="showClose" @click="close">
-        <mc-icon name="Cross"></mc-icon>
-      </div>
+      <mc-icon name="Cross" class="mc-toast__close" v-if="showClose" @click="close"></mc-icon>
     </div>
-    <div class="mc-toast__body">
+    <div class="mc-toast__body" :class="`mc-toast__body--${type}`">
       <div class="mc-toast__message">{{ message }}</div>
     </div>
   </div>

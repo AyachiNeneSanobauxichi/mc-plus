@@ -5,125 +5,107 @@
   --mc-tag-disabled-text: var(--mc-gray-400);
   --mc-tag-dark-bg: var(--mc-black);
 
-  // Custom properties for tag color
   --tag-color: var(--mc-tag-primary);
   --tag-hover-color: var(--mc-tag-primary-hover);
-  --tag-text-color: #fff;
+  --tag-text-color: #ffffff;
+  --tag-hover-text-color: #fff;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 0px 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
   gap: 4px;
   position: relative;
+  font-weight: 400;
+  box-sizing: border-box;
 
-  &--primary {
-    background-color: var(--tag-color);
-    color: #fff;
-    &:hover:not(.is-disabled),
-    &.is-selected {
-      background-color: var(--tag-hover-color);
-    }
-  }
-
-  &--plain {
-    background-color: #fff;
-    border: 1px solid var(--tag-color);
-    color: var(--tag-color);
-
-    &:hover:not(.is-disabled),
-    &.is-selected {
-      background-color: var(--tag-hover-color);
-      border-color: var(--tag-hover-color);
-      color: white;
-    }
-  }
-
-  &--dark {
-    background-color: var(--mc-tag-dark-bg);
-    color: white;
-
-    &:hover:not(.is-disabled),
-    &.is-selected {
-      background-color: #333;
-    }
-  }
-
-  &--small {
-    height: 7px;
-    line-height: 7px;
-    font-size: 10px;
-  }
-
-  &--medium {
-    height: 16px;
-    line-height: 16px;
-    font-size: 12px;
-  }
-
-  &--large {
-    height: 24px;
-    line-height: 24px;
-    font-size: 12px;
-  }
-
-  &--radius-default {
-    border-radius: 4px;
-  }
-
-  &--radius-round {
-    border-radius: 80px;
-  }
-
-  &.is-disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  &__close {
-    margin-left: 4px;
-    font-size: 12px;
-    transition: opacity 0.2s;
-    opacity: 0.7;
+  .mc-tag__close-icon {
+    font-size: 24px;
 
     &:hover {
-      opacity: 1;
+      opacity: 0.8;
     }
   }
+}
 
-  // 关闭按钮动画
-  .mc-tag__close-enter-active,
-  .mc-tag__close-leave-active {
-    transition: all 0.2s ease;
-    transform: translateX(0);
-    opacity: 1;
-  }
+.mc-tag-radius--square {
+  border-radius: 0px;
+}
+.mc-tag-radius--default {
+  border-radius: 4px;
+}
 
-  .mc-tag__close-enter-from,
-  .mc-tag__close-leave-to {
-    transform: translateX(5px);
-    opacity: 0;
-  }
+.mc-tag-radius--round {
+  border-radius: 80px;
+}
 
-  // 标签淡入淡出动画
-  &-fade-enter-active,
-  &-fade-leave-active {
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
+.mc-tag-radius--circle {
+  border-radius: 50%;
+}
 
-  &-fade-enter-from,
-  &-fade-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
+.mc-tag--primary {
+  background-color: var(--tag-color);
+  color: var(--tag-text-color);
 
-  // 关闭时的动画
-  &.is-closing {
-    transform: scale(0.95);
-    opacity: 0.7;
-    transition: all 0.2s ease;
+  &:hover:not(.is-disabled),
+  &.is-selected {
+    background-color: var(--tag-hover-color);
+    color: var(--tag-hover-text-color);
   }
+}
+
+.mc-tag--plain {
+  background-color: transparent;
+  border: 1px solid var(--tag-color);
+  color: var(--tag-color);
+  &:hover:not(.is-disabled),
+  &.is-selected {
+    padding-left: 7px;
+    padding-right: 7px;
+    border-color: var(--tag-hover-color);
+    border-width: 2px;
+    color: var(--tag-hover-color);
+  }
+}
+
+.mc-tag--small {
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+  .mc-tag__icon {
+    font-size: 16px;
+  }
+}
+
+.mc-tag--medium {
+  height: 32px;
+  line-height: 32px;
+  font-size: 14px;
+  .mc-tag__icon {
+    font-size: 16px;
+  }
+}
+
+.mc-tag--large {
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  .mc-tag__icon {
+    font-size: 24px;
+  }
+}
+
+.is-disabled {
+  cursor: not-allowed;
+}
+
+.mc-tag--primary.is-disabled {
+  background-color: var(--mc-gray-400);
+  color: #ffffff;
+}
+
+.mc-tag--plain.is-disabled {
+  border-color: var(--mc-gray-400);
+  color: var(--mc-gray-400);
 }
