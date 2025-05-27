@@ -9,6 +9,7 @@ import {
   McSelect,
   McSelectGroup,
   McSelectOption,
+  McCheckbox,
 } from "@mc-plus/components";
 
 export default [
@@ -21,4 +22,5 @@ export default [
   McSelect,
   McSelectGroup,
   McSelectOption,
+  McCheckbox,
 ] as Plugin[];

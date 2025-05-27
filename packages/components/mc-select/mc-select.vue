@@ -1,7 +1,10 @@
 <template>
   <div
     class="mc-select"
-    :class="[isExpand ? 'mc-select-expand' : 'mc-select-collapse']"
+    :class="[
+      isExpand && !disabled ? 'mc-select-expand' : 'mc-select-collapse',
+      { 'mc-select-disabled': disabled },
+    ]"
     ref="_ref"
     :style="style"
   >
@@ -21,17 +24,18 @@
           v-model="searchValue"
           @input="handleSearch"
           :readonly="!search"
+          :disabled="disabled"
         />
       </div>
       <div
         class="mc-select-icon-wrapper"
-        :class="{ 'mc-select-icon-wrapper-expand': isExpand }"
+        :class="{ 'mc-select-icon-wrapper-expand': isExpand && !disabled }"
       >
         <mc-icon name="Down-Chevron" />
       </div>
     </div>
     <transition name="mc-select-dropdown-transition">
-      <div class="mc-select-dropdown-wrapper" v-show="isExpand">
+      <div class="mc-select-dropdown-wrapper" v-show="isExpand && !disabled">
         <div class="mc-select-dropdown">
           <slot></slot>
           <div v-if="noData" class="mc-select-no-data">
