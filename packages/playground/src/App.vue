@@ -18,7 +18,7 @@
     </div>
     <div class="tool-bar">
       <!-- <mc-button @click="changeDisabled">Change disabled</mc-button> -->
-      <mc-button @click="handleSetValue">Set Value</mc-button>
+      <mc-button @click="handleSetValue">Login</mc-button>
     </div>
   </div>
 </template>
