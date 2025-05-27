@@ -5,7 +5,7 @@
     </div>
     <div>
       <mc-radio-group v-model="selectValue" :disabled="disabled">
-        <mc-radio value="1">Option 1</mc-radio>
+        <mc-radio value="1" remark="Remark 1">Option 1</mc-radio>
         <mc-radio value="2">Option 2</mc-radio>
         <mc-radio value="3">Option 3</mc-radio>
       </mc-radio-group>
@@ -20,8 +20,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { McButton } from "mc-plus";
-import McRadio from "../../components/mc-radio-new/mc-radio.vue";
-import McRadioGroup from "../../components/mc-radio-new/mc-radio-group.vue";
+import McRadio from "../../components/mc-radio/mc-radio.vue";
+import McRadioGroup from "../../components/mc-radio/mc-radio-group.vue";
 
 const selectValue = ref<string>("1");
 

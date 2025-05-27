@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-radio">
+  <div class="mc-radio" :class="{ 'mc-radio-has-remark': !!remark }">
     <label
       class="mc-radio-label"
       :class="{
@@ -14,6 +14,9 @@
         <slot>{{ label }}</slot>
       </div>
     </label>
+    <div class="mc-radio-remark">
+      <slot name="remark">{{ remark }}</slot>
+    </div>
   </div>
 </template>
 
