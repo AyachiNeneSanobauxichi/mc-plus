@@ -61,6 +61,11 @@ $core-color: var(--mc-white);
       }
     }
 
+    .mc-radio-content {
+      color: $text-color;
+      font-size: 16px;
+    }
+
     &.mc-radio-disabled {
       .mc-radio-circle {
         border: none;

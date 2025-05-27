@@ -1,18 +1,17 @@
-<!--
- * @Author: Tieju yang
- * @Date: 2025-05-20 08:55:24
- * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-22 10:46:36
--->
 <template>
-  <div ref="_ref" class="mc-radio-group" :class="{ 'is-disabled': disabled }">
+  <div class="mc-radio-group">
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, toRefs } from "vue";
-import type { RadioGroupEmits, RadioGroupInstance, RadioGroupProps } from "./types";
+import { computed, provide } from "vue";
+import type {
+  RadioGroupProps,
+  RadioGroupContext,
+  RadioGroupEmits,
+} from "./types";
+import { RADIO_INJECTION_KEY } from "./constant";
 
 // options
 defineOptions({
@@ -20,47 +19,25 @@ defineOptions({
 });
 
 // props
-const props = withDefaults(defineProps<RadioGroupProps>(), {
-  size: "medium",
-});
-const { modelValue, disabled, size, name } = toRefs(props);
+const props = defineProps<RadioGroupProps>();
 
 // emits
 const emit = defineEmits<RadioGroupEmits>();
 
-// ref
-const _ref = ref<HTMLElement>();
+// select
+const handleSelect = (val?: string) => {
+  emit("update:modelValue", val);
+  emit("change", val);
+};
 
 // provide
-provide("radioGroup", {
-  value: computed(() => modelValue.value),
-  size: computed(() => size.value),
-  disabled: computed(() => {
-    return disabled.value;
-  }),
-  name: computed(() => name.value),
-  change: (val: string | number | boolean) => {
-    if (disabled.value) return;
-    emit("update:modelValue", val);
-    emit("change", val);
-  },
-});
-
-// expose
-defineExpose<RadioGroupInstance>({
-  ref: _ref,
+provide<RadioGroupContext>(RADIO_INJECTION_KEY, {
+  modelValue: computed(() => props.modelValue),
+  disabled: computed(() => props.disabled),
+  handleSelect,
 });
 </script>
 
 <style scoped lang="scss">
-.mc-radio-group {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 24px;
-
-  &.is-disabled {
-    cursor: not-allowed;
-  }
-}
+@use "./styles/mc-radio-group.scss";
 </style>

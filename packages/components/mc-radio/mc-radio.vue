@@ -1,61 +1,55 @@
 <template>
-  <label
-    ref="_ref"
-    class="mc-radio"
-    :class="{
-      'is-disabled': isDisabled,
-      'is-checked': isChecked,
-    }">
-    <span class="mc-radio__input">
-      <span class="mc-radio__inner"></span>
-      <input class="mc-radio__original" type="radio" :value="_value" :disabled="isDisabled" v-model="radioValue" />
-    </span>
-    <span class="mc-radio__label">
-      <span v-if="label">{{ label }}</span>
-      <slot v-else></slot>
-    </span>
-  </label>
+  <div class="mc-radio">
+    <label
+      class="mc-radio-label"
+      :class="{
+        'mc-radio-checked': isSelected,
+        'mc-radio-disabled': isDisabled,
+      }"
+      @click="handleSelect"
+    >
+      <input type="radio" class="mc-radio-input" :disabled="disabled" />
+      <span class="mc-radio-circle"></span>
+      <div class="mc-radio-content">
+        <slot>{{ label }}</slot>
+      </div>
+    </label>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, toRefs } from "vue";
-import type { RadioEmits, RadioGroupContext, RadioInstance, RadioProps } from "./types";
+import type { RadioGroupContext, RadioProps } from "./types";
+import { RADIO_INJECTION_KEY } from "./constant";
+import { computed, inject } from "vue";
 
+// options
 defineOptions({
   name: "McRadio",
 });
 
-const props = withDefaults(defineProps<RadioProps>(), {});
-const { modelValue, value: _value, disabled, label } = toRefs(props);
+// props
+const props = defineProps<RadioProps>();
 
-const emit = defineEmits<RadioEmits>();
+// inject
+const radioContext = inject<RadioGroupContext>(RADIO_INJECTION_KEY);
 
-const _ref = ref<HTMLElement>();
-const radioGroup = inject<RadioGroupContext | undefined>("radioGroup", undefined);
-
-const isDisabled = computed(() => radioGroup?.disabled?.value ?? disabled.value);
-const checkValue = computed(() => radioGroup?.value.value ?? modelValue.value);
-const isChecked = computed(() => checkValue.value === _value.value);
-
-const radioValue = computed({
-  get() {
-    return radioGroup ? radioGroup.value.value : modelValue.value;
-  },
-  set(val: string | number | boolean) {
-    if (radioGroup) {
-      radioGroup.change(val);
-    } else {
-      emit("update:modelValue", val);
-      emit("change", val);
-    }
-  },
+// selected
+const isSelected = computed(() => {
+  return radioContext?.modelValue?.value === props.value;
 });
 
-defineExpose<RadioInstance>({
-  ref: _ref,
+// disabled
+const isDisabled = computed(() => {
+  return radioContext?.disabled?.value || props.disabled;
 });
+
+// select event
+const handleSelect = () => {
+  if (isDisabled.value) return;
+  radioContext?.handleSelect(props.value);
+};
 </script>
 
 <style scoped lang="scss">
-@use "./index.scss";
+@use "./styles/mc-radio.scss";
 </style>

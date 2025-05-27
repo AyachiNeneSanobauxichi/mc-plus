@@ -1,42 +1,38 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <span>Value: {{ form }}</span>
+      <span>Value: {{ selectValue }}</span>
     </div>
     <div>
-      <mc-radio-group>
-        <mc-radio>Option 1</mc-radio>
-        <mc-radio>Option 2</mc-radio>
-        <mc-radio>Option 3</mc-radio>
+      <mc-radio-group v-model="selectValue" :disabled="disabled">
+        <mc-radio value="1">Option 1</mc-radio>
+        <mc-radio value="2">Option 2</mc-radio>
+        <mc-radio value="3">Option 3</mc-radio>
       </mc-radio-group>
     </div>
     <div class="tool-bar">
-      <!-- <mc-button @click="changeDisabled">Change disabled</mc-button> -->
-      <mc-button @click="handleSetValue">Login</mc-button>
+      <mc-button @click="changeDisabled">Change disabled</mc-button>
+      <mc-button @click="handleSetValue">Set Value</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { McButton } from "mc-plus";
 import McRadio from "../../components/mc-radio-new/mc-radio.vue";
 import McRadioGroup from "../../components/mc-radio-new/mc-radio-group.vue";
 
-const form = reactive({
-  name: "",
-  email: "",
-  password: "",
-});
-
-const selectValue = ref<boolean>(false);
+const selectValue = ref<string>("1");
 
 const handleSetValue = () => {
-  selectValue.value = true;
+  selectValue.value = "1";
 };
 
-const handleChange = (val?: string) => {
-  console.log("handleChange: ", val);
+const disabled = ref<boolean>(false);
+
+const changeDisabled = () => {
+  disabled.value = !disabled.value;
 };
 </script>
 
