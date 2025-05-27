@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { McButton } from "mc-plus";
 import McCheckbox from "../../components/mc-checkbox/mc-checkbox.vue";
 
