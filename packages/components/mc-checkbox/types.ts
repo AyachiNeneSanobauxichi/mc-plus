@@ -5,6 +5,7 @@ export interface CheckboxProps {
   disabled?: boolean;
   content?: string;
   remarks?: string;
+  partial?: boolean;
 }
 
 export interface CheckboxEmits {

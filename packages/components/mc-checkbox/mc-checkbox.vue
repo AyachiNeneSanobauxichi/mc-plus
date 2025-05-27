@@ -14,7 +14,10 @@
       <span
         class="mc-checkbox__checkbox"
         @click="handleClick"
-        :class="{ 'mc-checkbox__checkbox--checked': modelValue }"
+        :class="{
+          'mc-checkbox__checkbox--checked': modelValue,
+          'mc-checkbox__checkbox--partial': partial,
+        }"
       ></span>
       <div class="mc-checkbox__content">
         <span class="mc-checkbox__content-text">{{ content }}</span>

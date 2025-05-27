@@ -1,20 +1,10 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <span>Form: {{ form }}</span>
+      <span>Value: {{ selectValue }}</span>
     </div>
     <div>
-      <mc-form :model="form">
-        <mc-form-item label="Name" prop="name" required>
-          <mc-input v-model="form.name" />
-        </mc-form-item>
-        <mc-form-item label="Email" prop="email">
-          <mc-input v-model="form.email" />
-        </mc-form-item>
-        <mc-form-item label="Password" prop="password">
-          <mc-input v-model="form.password" />
-        </mc-form-item>
-      </mc-form>
+      <mc-checkbox v-model="selectValue" content="Remember me" partial />
     </div>
     <div class="tool-bar">
       <!-- <mc-button @click="changeDisabled">Change disabled</mc-button> -->
@@ -25,16 +15,8 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { McButton, McInput } from "mc-plus";
-import McForm from "../../components/mc-form/mc-form.vue";
-import McFormItem from "../../components/mc-form/mc-form-item.vue";
-
-
-const form = reactive({
-  name: "",
-  email: "",
-  password: "",
-});
+import { McButton } from "mc-plus";
+import McCheckbox from "../../components/mc-checkbox/mc-checkbox.vue";
 
 const selectValue = ref<boolean>(false);
 
