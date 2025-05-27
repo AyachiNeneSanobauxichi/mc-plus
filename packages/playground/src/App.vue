@@ -4,17 +4,11 @@
       <span>Value: {{ form }}</span>
     </div>
     <div>
-      <mc-form :model="form">
-        <mc-form-item label="Name" prop="name" required>
-          <mc-input v-model="form.name" />
-        </mc-form-item>
-        <mc-form-item label="Email" prop="email">
-          <mc-input v-model="form.email" />
-        </mc-form-item>
-        <mc-form-item label="Password" prop="password">
-          <mc-input v-model="form.password" />
-        </mc-form-item>
-      </mc-form>
+      <mc-radio-group>
+        <mc-radio>Option 1</mc-radio>
+        <mc-radio>Option 2</mc-radio>
+        <mc-radio>Option 3</mc-radio>
+      </mc-radio-group>
     </div>
     <div class="tool-bar">
       <!-- <mc-button @click="changeDisabled">Change disabled</mc-button> -->
@@ -26,9 +20,8 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { McButton } from "mc-plus";
-import McInput from "../../components/mc-input/mc-input.vue";
-import McForm from "../../components/mc-form/mc-form.vue";
-import McFormItem from "../../components/mc-form/mc-form-item.vue";
+import McRadio from "../../components/mc-radio-new/mc-radio.vue";
+import McRadioGroup from "../../components/mc-radio-new/mc-radio-group.vue";
 
 const form = reactive({
   name: "",
