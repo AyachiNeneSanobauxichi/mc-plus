@@ -106,7 +106,8 @@ const currentRules = computed<FormItemRule[]>(() => {
 
   // required
   const required = props.required;
-  if (!isNil(required)) {
+
+  if (isNil(required)) {
     const requiredRules = filter(
       map(rules, (rule, i) => [rule, i]),
       (item: [FormItemRule, number]) => includes(keys(item[0]), "required")
@@ -173,6 +174,7 @@ const getFormItemValidateFunc = (rules: RuleItem[]) => {
       // validate success
       validateStatus.value = "success";
       formContext?.emits("validate", props, true, "");
+      errorMessage.value = "";
 
       return true;
     })
@@ -184,7 +186,7 @@ const getFormItemValidateFunc = (rules: RuleItem[]) => {
         errors && size(errors) > 0 ? errors[0].message ?? "" : "";
       formContext?.emits("validate", props, false, errorMessage.value);
 
-      return Promise.reject(err);
+      return Promise.reject(errors);
     });
 };
 
@@ -209,6 +211,7 @@ const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
   // start validate
   validateStatus.value = "validating";
   const validateFunc = getFormItemValidateFunc(rules);
+
   if (isFunction(validateFunc)) {
     return validateFunc(rules)
       .then(() => {
@@ -216,6 +219,7 @@ const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
         return true;
       })
       .catch((err: FormValidateFailuer) => {
+        console.log("Error: ", err);
         const { fields } = err;
         callback?.(false, fields);
         return Promise.reject(fields);
