@@ -1,115 +1,95 @@
-/* 消息容器样式 */
 #mc-message-container {
   position: fixed;
   top: 20px;
   left: 50%;
-  transform: translateX(-50%);
   z-index: 9999;
   width: 100%;
   display: flex;
+  pointer-events: none;
   flex-direction: column;
   align-items: center;
-  pointer-events: none;
+  transform: translateX(-50%);
+
+  .mc-message-item {
+    display: flex;
+    justify-content: center;
+  }
 }
 
-.mc-message-item {
-  display: flex;
-  justify-content: center;
-}
-
-/* 每个消息项的样式 */
 .mc-message {
-  margin-bottom: 10px;
-  pointer-events: all;
-  padding: calc(var(--mc-gap) * 2) calc(var(--mc-gap) * 4);
-  border-radius: var(--mc-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  background-color: var(--mc-white);
-  min-width: 300px;
-  max-width: 80%;
-  transition: all var(--mc-transition-duration);
+  --mc-message-color: inherit;
+  --mc-message-background: inherit;
+
   display: flex;
+  min-width: 460px;
+  max-width: 80%;
+  padding: calc(var(--mc-gap) * 2) calc(var(--mc-gap) * 4);
+  margin-bottom: 10px;
+  border-radius: var(--mc-radius);
+  background-color: var(--mc-message-background);
+  transition: all var(--mc-transition-duration);
   align-items: center;
   justify-content: space-between;
+  pointer-events: all;
+  gap: 8px;
+
+  $types: (
+    success: var(--mc-success),
+    info: var(--mc-info),
+    warning: var(--mc-warning),
+    error: var(--mc-error),
+  );
+
+  @each $type, $color in $types {
+    &--#{$type} {
+      --mc-message-color: #{$color};
+      --mc-message-background: var(--mc-#{$type}-background);
+    }
+  }
 
   &__content {
+    height: 24px;
     display: flex;
     align-items: center;
-    flex: 1;
-    overflow: hidden;
+    gap: 8px;
   }
 
   &__icon {
-    margin-right: 8px;
-    font-size: 16px;
+    font-size: 24px;
     flex-shrink: 0;
-  }
-
-  &__text {
-    flex: 1;
+    color: var(--mc-message-color);
   }
 
   &__title {
     color: var(--mc-gray-800);
+    font-size: 16px;
+    line-height: 24px;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0px;
-  }
-
-  &__description {
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--mc-gray-800);
-    margin-top: var(--mc-gap);
   }
 
   &__close {
-    cursor: pointer;
     font-size: 16px;
     opacity: 0.8;
     margin-left: 8px;
     flex-shrink: 0;
+    cursor: pointer;
 
     &:hover {
       opacity: 1;
     }
   }
-
-  // Types
-  &--success {
-    .mc-message__icon {
-      color: var(--mc-success);
-    }
-  }
-
-  &--info {
-    .mc-message__icon {
-      color: var(--mc-info);
-    }
-  }
-
-  &--warning {
-    .mc-message__icon {
-      color: var(--mc-warning);
-    }
-  }
-
-  &--error {
-    .mc-message__icon {
-      color: var(--mc-error);
-    }
-  }
 }
 
 // Animation
-.mc-message-fade-enter-active,
-.mc-message-fade-leave-active {
-  transition: opacity var(--mc-transition-duration), transform var(--mc-transition-duration);
-}
+.mc-message-fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity var(--mc-transition-duration), transform var(--mc-transition-duration);
+  }
 
-.mc-message-fade-enter-from,
-.mc-message-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 }

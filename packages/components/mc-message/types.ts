@@ -2,7 +2,7 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 15:27:59
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-20 15:28:16
+ * @LastEditTime: 2025-05-28 10:01:10
  */
 import type { Ref } from "vue";
 
@@ -12,7 +12,6 @@ export type MessagePosition = "top" | "bottom";
 export interface MessageProps {
   type?: MessageType;
   message?: string;
-  description?: string;
   duration?: number;
   showIcon?: boolean;
   closable?: boolean;

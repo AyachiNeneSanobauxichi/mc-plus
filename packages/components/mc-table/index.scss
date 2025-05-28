@@ -17,27 +17,6 @@
   color: var(--mc-gray-800);
 
   // 表格修饰符
-  &--border {
-    @include table-border;
-
-    .mc-table__header-wrapper,
-    .mc-table__body-wrapper {
-      border-right: 1px solid var(--mc-gray-300);
-    }
-
-    th,
-    td {
-      border-right: 1px solid var(--mc-gray-300);
-      border-bottom: 1px solid var(--mc-gray-300);
-    }
-  }
-
-  &--stripe {
-    tbody tr:nth-child(2n) {
-      background-color: var(--mc-gray-100);
-    }
-  }
-
   &--loading {
     position: relative;
 
@@ -119,6 +98,29 @@
     flex: 1;
   }
 
+  // 选择列样式
+  &__selection-column {
+    text-align: center;
+    width: 50px;
+    padding: 8px 12px;
+
+    .mc-table__header-cell,
+    .mc-table__cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  // 表格单元格
+  &__cell {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: inherit;
+  }
+
   // 排序相关样式
   &__sort-caret {
     display: flex;
@@ -138,39 +140,7 @@
     cursor: pointer;
 
     @include table-hover-state(--mc-gray-100);
-    @include table-row-state(selected, --mc-purple-100, --mc-purple-200);
-    @include table-row-state(current, --mc-teal-100, --mc-teal-200);
-
-    &.is-selected.is-current {
-      background-color: var(--mc-purple-200);
-
-      @include table-hover-state(--mc-purple-300);
-    }
-  }
-
-  // 斑马纹行状态调整
-  &--stripe tbody tr:nth-child(2n) {
-    background-color: var(--mc-gray-100);
-
-    @include table-hover-state(--mc-gray-200);
-
-    &.is-selected {
-      background-color: var(--mc-purple-100);
-
-      @include table-hover-state(--mc-purple-200);
-    }
-
-    &.is-current {
-      background-color: var(--mc-teal-100);
-
-      @include table-hover-state(--mc-teal-200);
-    }
-
-    &.is-selected.is-current {
-      background-color: var(--mc-purple-200);
-
-      @include table-hover-state(--mc-purple-300);
-    }
+    @include table-row-state(current, --mc-teal-50, --mc-teal-100);
   }
 
   // 分页组件样式
