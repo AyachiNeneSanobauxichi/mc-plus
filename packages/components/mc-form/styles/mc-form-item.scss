@@ -1,0 +1,27 @@
+$text-color: var(--mc-gray-500);
+$text-color-error: var(--mc-error);
+
+.mc-form-item {
+  .mc-form-item__label {
+    position: relative;
+    font-weight: 700;
+    color: $text-color;
+    font-size: 14px;
+
+    &.mc-form-item__label--required {
+      &::after {
+        content: "*";
+        color: $text-color-error;
+        position: absolute;
+        right: -8px;
+        top: 0;
+      }
+    }
+  }
+
+  .mc-form-item__content {
+    margin-top: 16px;
+  }
+
+  margin-bottom: 32px;
+}
