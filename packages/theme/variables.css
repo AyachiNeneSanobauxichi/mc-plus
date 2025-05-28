@@ -8,7 +8,7 @@
   --mc-purple-100: #a695d7;
   --mc-purple-50: #e6ddff;
   /* teal */
-  --mc-teal-900: #399e9a; /* hover state */
+  --mc-teal-900: #379e9a; /* hover state */
   --mc-teal-500: #3fb9b5; /* core default */
   --mc-teal-300: #45d4cf;
   --mc-teal-200: #aae1df;
@@ -25,11 +25,10 @@
   --mc-gray-300: #d4d4d4; /* disabled component */
   --mc-gray-200: #e7e7e7;
   --mc-gray-100: #f7f7f7;
-  --mc-camp-background: #f9f7ff;
   /* white */
   --mc-white: #ffffff;
   /* background */
-  --mc-camp-bg: #f9f7ff;
+  --mc-camp-bg: #fbfafd;
 
   /* alerts & notifications */
   --mc-success: #23b12f;
