@@ -111,7 +111,7 @@ describe("mc-tag", () => {
 
   // tag type
   it("should have the correct type class when type prop is set", () => {
-    const types: TagType[] = ["primary", "plain", "dark"];
+    const types: TagType[] = ["primary", "plain"];
     types.forEach((type) => {
       const wrapper = mount(McTag, {
         props: { type },

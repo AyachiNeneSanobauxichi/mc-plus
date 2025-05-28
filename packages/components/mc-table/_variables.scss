@@ -7,7 +7,7 @@ $table-min-height: 56px;
 $table-empty-padding: 32px 0;
 
 // 字体相关
-$table-font-size: 14px;
+$table-font-size: var(--mc-font-size-base);
 $table-line-height: 20px;
 $table-header-font-size: 12px;
 $table-header-line-height: 18px;

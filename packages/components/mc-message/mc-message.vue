@@ -2,17 +2,14 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 15:28:13
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-21 09:29:00
+ * @LastEditTime: 2025-05-28 10:01:15
 -->
 <template>
   <transition name="mc-message-fade">
     <div v-show="visible" ref="_ref" class="mc-message" :style="style" :class="[`mc-message--${type}`]">
       <div class="mc-message__content">
         <mc-icon v-if="showIcon" :name="iconMap[type]" class="mc-message__icon"></mc-icon>
-        <div class="mc-message__text">
-          <div class="mc-message__title">{{ message }}</div>
-          <div v-if="description" class="mc-message__description">{{ description }}</div>
-        </div>
+        <div class="mc-message__title">{{ message }}</div>
       </div>
       <mc-icon v-if="closable" name="Cross" class="mc-message__close" @click="handleClose"></mc-icon>
     </div>
@@ -34,7 +31,6 @@ defineOptions({
 const props = withDefaults(defineProps<MessageProps>(), {
   type: "info",
   message: "",
-  description: "",
   duration: 3000,
   showIcon: true,
   closable: false,

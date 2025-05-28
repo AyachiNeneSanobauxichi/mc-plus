@@ -1,6 +1,7 @@
-@use "sass:map";
-
 .mc-alert {
+  --mc-alert-color: inherit;
+  --mc-alert-background: inherit;
+
   position: relative;
   display: flex;
   align-items: center;
@@ -8,82 +9,70 @@
   border-radius: var(--mc-radius);
   padding: 8px 16px;
   transition: opacity var(--mc-transition-duration), transform var(--mc-transition-duration);
+  background-color: var(--mc-alert-background);
 
   &__content {
     display: flex;
-    align-items: center;
-    flex-grow: 1;
-  }
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
 
-  &__message {
-    color: var(--mc-gray-800);
+    .mc-alert__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-    .mc-alert__title {
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
+      .mc-alert__header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .mc-alert__title {
+          font-weight: 600;
+          font-size: 22px;
+          line-height: 30px;
+        }
+      }
+
+      .mc-alert__icon {
+        font-size: 24px;
+        flex-shrink: 0;
+        color: var(--mc-alert-color);
+      }
+
+      .mc-alert__close {
+        font-size: 24px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity var(--mc-transition-duration);
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
 
     .mc-alert__description {
       font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--mc-gray-800);
+      margin-left: 32px;
     }
   }
 
-  &__icon {
-    margin-right: 8px;
-  }
+  $types: (
+    success: var(--mc-success-background),
+    info: var(--mc-info-background),
+    warning: var(--mc-warning-background),
+    error: var(--mc-error-background),
+  );
 
-  &__close {
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity var(--mc-transition-duration);
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  // Generate type variants
-  @each $type in success, info, warning, error {
+  @each $type, $color in $types {
     &--#{$type} {
-      background-color: var(--mc-#{$type}-background);
-
-      .mc-alert__icon {
-        color: var(--mc-#{$type});
-      }
+      --mc-alert-color: var(--mc-#{$type});
+      --mc-alert-background: #{$color};
     }
   }
-
-  // Generate size variants
-  // $sizes: (
-  //   small: (
-  //     padding: calc(var(--mc-gap) + 2px) calc(var(--mc-gap) * 3),
-  //     font-size: 12px,
-  //     icon-size: 14px,
-  //   ),
-  //   medium: (
-  //     padding: calc(var(--mc-gap) * 2) calc(var(--mc-gap) * 4),
-  //     font-size: 14px,
-  //     icon-size: 16px,
-  //   ),
-  //   large: (
-  //     padding: calc(var(--mc-gap) * 2.5) calc(var(--mc-gap) * 5),
-  //     font-size: 16px,
-  //     icon-size: 18px,
-  //   ),
-  // );
-
-  // @each $size, $props in $sizes {
-  //   &--#{$size} {
-  //     padding: map.get($props, "padding");
-  //     font-size: map.get($props, "font-size");
-
-  //     .mc-alert__icon,
-  //     .mc-alert__close {
-  //       font-size: map.get($props, "icon-size");
-  //     }
-  //   }
-  // }
 }

@@ -125,16 +125,16 @@ const visiblePages = computed(() => {
   return pages;
 });
 
-function handlePageChange(page: number) {
+const handlePageChange = (page: number) => {
   if (page < 1 || page > totalPages.value) return;
   currentPage.value = page;
   emit("page-change", { pageSize: pageSize.value, pageNum: page });
-}
+};
 
-function handlePageSizeChange() {
+const handlePageSizeChange = () => {
   currentPage.value = 1; // 切换每页条数时重置为第一页
   emit("page-change", { pageSize: pageSize.value, pageNum: 1 });
-}
+};
 </script>
 
 <style scoped lang="scss">
