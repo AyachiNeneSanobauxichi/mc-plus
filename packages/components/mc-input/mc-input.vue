@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import type { InputProps, InputEmits } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { ref, watch, inject } from "vue";
+import { ref, watch } from "vue";
 
 // options
 defineOptions({ name: "McInput" });
