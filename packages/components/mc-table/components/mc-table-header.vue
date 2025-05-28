@@ -36,25 +36,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import mcIcon from "../../mc-icon/mc-icon.vue";
-import type { SortOrder, TableColumn } from "../types";
-
-export interface McTableHeaderProps {
-  columns: TableColumn[];
-  showHeader?: boolean;
-  getSortOrder?: (prop: string) => SortOrder;
-}
-
-interface Emits {
-  (e: "header-click", column: TableColumn, event: Event): void;
-  (e: "sort-change", column: TableColumn): void;
-}
+import type { McTableHeaderProps, TableColumn, TableHeaderEmits } from "../types";
 
 const props = withDefaults(defineProps<McTableHeaderProps>(), {
   showHeader: true,
   getSortOrder: () => null,
 });
 
-const emit = defineEmits<Emits>();
+const emit = defineEmits<TableHeaderEmits>();
 
 const headerWrapper = ref<HTMLDivElement>();
 

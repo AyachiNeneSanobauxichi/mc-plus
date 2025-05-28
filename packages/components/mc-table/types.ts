@@ -141,3 +141,43 @@ export interface TableInstance {
   /** 清除选择状态方法 */
   clearSelection: () => void;
 }
+
+export interface TableCellProps {
+  row: Record<string, unknown>;
+  column: TableColumn;
+  rowIndex: number;
+  columnIndex: number;
+  pagination?: {
+    currentPage?: number;
+    pageSize?: number;
+    total: number;
+  };
+  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+}
+
+export interface McTableHeaderProps {
+  columns: TableColumn[];
+  showHeader?: boolean;
+  getSortOrder?: (prop: string) => SortOrder;
+}
+
+export interface TableHeaderEmits {
+  (e: "header-click", column: TableColumn, event: Event): void;
+  (e: "sort-change", column: TableColumn): void;
+}
+
+export interface McTableBodyProps {
+  data: Record<string, unknown>[];
+  columns: TableColumn[];
+  rowKey?: string;
+  emptyText?: string;
+  height?: string | number;
+  maxHeight?: string | number;
+  pagination?: PaginationConfig;
+  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+  getRowClass?: (row: Record<string, unknown>, index: number) => string[];
+}
+
+export interface TableBodyEmits {
+  (e: "row-click", row: Record<string, unknown>, index: number): void;
+}

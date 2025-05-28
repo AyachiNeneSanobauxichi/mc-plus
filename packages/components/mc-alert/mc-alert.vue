@@ -2,19 +2,24 @@
  * @Author: Tieju yang
  * @Date: 2025-05-20 13:57:15
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-23 11:02:34
+ * @LastEditTime: 2025-05-28 10:33:34
 -->
 <template>
   <div ref="_ref" :style="style" class="mc-alert" :class="[`mc-alert--${type}`]" v-if="visible">
     <div class="mc-alert__content">
-      <mc-icon v-if="showIcon" :name="iconMap[type]" class="mc-alert__icon"></mc-icon>
-      <div class="mc-alert__message" v-if="description">
-        <div class="mc-alert__title">{{ title }}</div>
-        <div class="mc-alert__description">{{ description }}</div>
+      <div class="mc-alert__header">
+        <div class="mc-alert__header-left">
+          <mc-icon v-if="showIcon" :name="iconMap[type]" class="mc-alert__icon"></mc-icon>
+          <div v-if="title" class="mc-alert__title">{{ title }}</div>
+          <slot name="title" v-else></slot>
+        </div>
+        <mc-icon v-if="closable" name="Cross" class="mc-alert__close" @click="handleClose"></mc-icon>
       </div>
-      <slot v-else></slot>
+      <div v-if="description" class="mc-alert__description">{{ description }}</div>
+      <div v-else class="mc-alert__description">
+        <slot name="description"></slot>
+      </div>
     </div>
-    <mc-icon v-if="closable" name="Cross" class="mc-alert__close" @click="handleClose"></mc-icon>
   </div>
 </template>
 

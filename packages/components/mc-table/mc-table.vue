@@ -2,7 +2,7 @@
  * @Author: Tieju yang
  * @Date: 2025-05-26 09:37:04
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-27 10:21:49
+ * @LastEditTime: 2025-05-28 08:56:26
 -->
 <template>
   <div
@@ -13,14 +13,14 @@
     }">
     <!-- 表头组件 -->
     <mc-table-header ref="headerRef" :columns="columnsWithFixed" :show-header="showHeader" :get-sort-order="getSortOrder" @header-click="handleHeaderClick" @sort-change="handleSortChange">
-      <template v-for="(_, slotName) in $slots" #[slotName]="slotProps">
+      <template v-for="slotName in (Object.keys($slots) as string[])" :key="slotName" #[slotName]="slotProps">
         <slot :name="slotName" v-bind="slotProps"></slot>
       </template>
     </mc-table-header>
 
     <!-- 表体组件 -->
     <mc-table-body ref="bodyRef" :data="finalData" :columns="columnsWithFixed" :row-key="rowKey" :empty-text="emptyText" :height="height" :max-height="maxHeight" :span-method="spanMethod" :pagination="pagination" :get-row-class="getRowClass" @row-click="handleRowClick">
-      <template v-for="(_, name) in $slots" #[name]="slotProps">
+      <template v-for="name in (Object.keys($slots) as string[])" :key="name" #[name]="slotProps">
         <slot :name="name" v-bind="slotProps" />
       </template>
     </mc-table-body>
@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   highlightCurrentRow: false,
 });
 
-const { data, columns, pagination, spanMethod, loading, loadingText, loadingConfig, defaultSort, selectedRowKeys, highlightCurrentRow, rowKey } = toRefs(props);
+const { data, columns, pagination, spanMethod, loading, loadingText, loadingConfig, defaultSort, highlightCurrentRow, rowKey } = toRefs(props);
 
 // emits
 const emit = defineEmits<TableEmits>();
@@ -93,7 +93,7 @@ function setCurrentRow(row: any) {
   return currentRow.value;
 }
 
-function getRowClass(row: any, index: number): string[] {
+function getRowClass(row: any): string[] {
   const classes = [];
   if (highlightCurrentRow.value && currentRow.value === row) {
     classes.push("is-current");

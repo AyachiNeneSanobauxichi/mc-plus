@@ -2,7 +2,7 @@
  * @Author: Tieju yang
  * @Date: 2025-05-26 13:40:06
  * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-27 09:57:41
+ * @LastEditTime: 2025-05-28 08:57:27
 -->
 <template>
   <div class="mc-table__body-wrapper" ref="bodyWrapper" :style="bodyStyle">
@@ -14,7 +14,7 @@
         <template v-if="data && data.length > 0">
           <tr v-for="(row, rowIndex) in data" :key="rowKey ? (row as any)[rowKey] : rowIndex" :class="getRowClass ? getRowClass(row, rowIndex) : []" @click="handleRowClick(row, rowIndex)">
             <mc-table-cell v-for="(column, colIndex) in columns" :key="colIndex" :row="row" :column="column" :row-index="rowIndex" :column-index="colIndex" :span-method="spanMethod" :pagination="pagination as any">
-              <template v-for="(_, slotName) in $slots" #[slotName]="slotProps">
+              <template v-for="slotName in (Object.keys($slots) as string[])" :key="slotName" #[slotName]="slotProps">
                 <slot :name="slotName" v-bind="slotProps"></slot>
               </template>
             </mc-table-cell>
@@ -36,30 +36,14 @@
 
 <script setup lang="ts">
 import { computed, ref, useSlots } from "vue";
-import type { PaginationConfig, TableColumn } from "../types";
+import type { McTableBodyProps, TableBodyEmits } from "../types";
 import McTableCell from "./mc-table-cell.vue";
-
-export interface McTableBodyProps {
-  data: Record<string, unknown>[];
-  columns: TableColumn[];
-  rowKey?: string;
-  emptyText?: string;
-  height?: string | number;
-  maxHeight?: string | number;
-  pagination?: PaginationConfig;
-  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
-  getRowClass?: (row: Record<string, unknown>, index: number) => string[];
-}
-
-interface Emits {
-  (e: "row-click", row: Record<string, unknown>, index: number): void;
-}
 
 const props = withDefaults(defineProps<McTableBodyProps>(), {});
 
 const slots = useSlots();
 
-const emit = defineEmits<Emits>();
+const emit = defineEmits<TableBodyEmits>();
 
 const bodyWrapper = ref<HTMLDivElement>();
 

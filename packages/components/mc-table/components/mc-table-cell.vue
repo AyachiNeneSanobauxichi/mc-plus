@@ -17,22 +17,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import type { TableColumn } from "../types";
+import type { TableCellProps } from "../types";
 
-interface Props {
-  row: Record<string, unknown>;
-  column: TableColumn;
-  rowIndex: number;
-  columnIndex: number;
-  pagination?: {
-    currentPage?: number;
-    pageSize?: number;
-    total: number;
-  };
-  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
-}
-
-const props = defineProps<Props>();
+const props = defineProps<TableCellProps>();
 
 // 获取单元格行合并数量
 const rowspan = computed(() => {
