@@ -234,6 +234,7 @@ const clearValidate = () => {
 
 // form item context
 const formItemCtx = reactive<FormItemContext>({
+  ...props,
   disabled: isDisabled.value,
   validate: handleValidate,
   clearValidate,
