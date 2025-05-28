@@ -43,6 +43,9 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
   loadingText: "Loading...",
+  loadingConfig: () => ({
+    spinner: "default",
+  }),
 });
 
 const displayText = computed(() => {
@@ -118,25 +121,6 @@ const loadingStyle = computed(() => {
       animation-delay: 0.16s;
     }
   }
-}
-
-/* 圆形旋转器 */
-.mc-table__spinner--circle {
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--mc-gray-200);
-  border-top: 3px solid var(--mc-purple-500);
-  border-radius: 50%;
-  animation: mc-table-circle-spin 1s linear infinite;
-}
-
-/* 脉冲旋转器 */
-.mc-table__spinner--pulse {
-  width: 32px;
-  height: 32px;
-  background-color: var(--mc-purple-500);
-  border-radius: 50%;
-  animation: mc-table-pulse 1.5s ease-in-out infinite;
 }
 
 /* 动画定义 */

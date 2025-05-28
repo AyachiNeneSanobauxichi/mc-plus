@@ -98,6 +98,29 @@
     flex: 1;
   }
 
+  // 选择列样式
+  &__selection-column {
+    text-align: center;
+    width: 50px;
+    padding: 8px 12px;
+
+    .mc-table__header-cell,
+    .mc-table__cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  // 表格单元格
+  &__cell {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: inherit;
+  }
+
   // 排序相关样式
   &__sort-caret {
     display: flex;

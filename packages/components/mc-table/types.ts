@@ -15,6 +15,62 @@ export type AlignType = "left" | "center" | "right";
 /** 列固定位置 */
 export type ColumnFixed = boolean | "left" | "right";
 
+export interface TableProps {
+  // 核心数据
+  data: RowData[];
+  columns: TableColumn[];
+
+  // 样式配置
+  showHeader?: boolean;
+  height?: string | number;
+  maxHeight?: string | number;
+  rowKey?: string;
+  emptyText?: string;
+
+  // 功能配置
+  pagination?: PaginationConfig;
+  loading?: boolean;
+  loadingText?: string;
+  loadingConfig?: LoadingConfig;
+  highlightCurrentRow?: boolean;
+
+  // 选择功能配置
+  selectable?: boolean;
+  selectedRows?: RowData[];
+  selectOnRowClick?: boolean;
+
+  // 方法类配置
+  spanMethod?: (params: { row: RowData; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+
+  initData?: (params: { pageSize: number; pageNum: number }) => Promise<{ data: RowData[]; total: number }>;
+
+  // 状态管理
+  defaultSort?: SortConfig;
+}
+
+/** 分页配置 */
+export interface PaginationConfig {
+  currentPage?: number;
+  pageSize?: number;
+  total: number;
+  pageSizes?: number[];
+  background?: boolean;
+}
+
+/** 加载状态配置 */
+export interface LoadingConfig {
+  text?: string;
+  spinner?: string;
+  background?: string;
+  customClass?: string;
+}
+
+/** 排序配置 */
+export interface SortConfig {
+  prop: string;
+  order: SortOrder;
+}
+
 export interface TableColumn {
   /** 列唯一标识 (对应 data 中的字段) */
   prop: string;
@@ -48,57 +104,6 @@ export interface TableColumn {
   sortMethod?: (a: unknown, b: unknown) => number;
 }
 
-/** 排序配置 */
-export interface SortConfig {
-  prop: string;
-  order: SortOrder;
-}
-
-/** 分页配置 */
-export interface PaginationConfig {
-  currentPage?: number;
-  pageSize?: number;
-  total: number;
-  pageSizes?: number[];
-  background?: boolean;
-}
-
-/** 加载状态配置 */
-export interface LoadingConfig {
-  text?: string;
-  spinner?: string;
-  background?: string;
-  customClass?: string;
-}
-
-export interface TableProps {
-  // 核心数据
-  data: RowData[];
-  columns: TableColumn[];
-
-  // 样式配置
-  showHeader?: boolean;
-  height?: string | number;
-  maxHeight?: string | number;
-  rowKey?: string;
-  emptyText?: string;
-
-  // 功能配置
-  pagination?: PaginationConfig;
-  loading?: boolean;
-  loadingText?: string;
-  loadingConfig?: LoadingConfig;
-  highlightCurrentRow?: boolean;
-
-  // 方法类配置
-  spanMethod?: (params: { row: RowData; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
-
-  initData?: (params: { pageSize: number; pageNum: number }) => Promise<{ data: RowData[]; total: number }>;
-
-  // 状态管理
-  defaultSort?: SortConfig;
-}
-
 export interface TableEmits {
   // 用户交互事件
   (e: "row-click", row: RowData, index: number): void;
@@ -113,6 +118,18 @@ export interface TableEmits {
 
   // 当前行变化
   (e: "current-change", currentRow: RowData | null): void;
+
+  // 选择事件
+  (e: "selection-change", selectedRows: RowData[]): void;
+
+  // 选择行事件
+  (e: "select", row: RowData, selected: boolean): void;
+
+  // 全选事件
+  (e: "select-all", selected: boolean): void;
+
+  // 更新已选择行
+  (e: "update:selectedRows", selectedRows: RowData[]): void;
 }
 
 /** 单元格插槽属性 */
@@ -138,8 +155,14 @@ export interface TableInstance {
   refresh: () => Promise<void>;
   /** 清除排序状态方法 */
   clearSort: () => void;
-  /** 清除选择状态方法 */
+  /** 切换行选择状态 */
+  toggleRowSelection: (row: RowData, selected?: boolean) => void;
+  /** 切换全选状态 */
+  toggleAllSelection: (selected: boolean) => void;
+  /** 清除所有选择 */
   clearSelection: () => void;
+  /** 获取已选择的行 */
+  getSelectedRows: () => RowData[];
 }
 
 export interface TableCellProps {
@@ -159,11 +182,15 @@ export interface McTableHeaderProps {
   columns: TableColumn[];
   showHeader?: boolean;
   getSortOrder?: (prop: string) => SortOrder;
+  selectable?: boolean;
+  isAllSelected?: boolean;
+  isIndeterminate?: boolean;
 }
 
 export interface TableHeaderEmits {
   (e: "header-click", column: TableColumn, event: Event): void;
   (e: "sort-change", column: TableColumn): void;
+  (e: "select-all", selected: boolean): void;
 }
 
 export interface McTableBodyProps {
@@ -176,8 +203,12 @@ export interface McTableBodyProps {
   pagination?: PaginationConfig;
   spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
   getRowClass?: (row: Record<string, unknown>, index: number) => string[];
+  selectable?: boolean;
+  selectedRows?: RowData[];
+  selectOnRowClick?: boolean;
 }
 
 export interface TableBodyEmits {
   (e: "row-click", row: Record<string, unknown>, index: number): void;
+  (e: "select", row: RowData, selected: boolean): void;
 }
