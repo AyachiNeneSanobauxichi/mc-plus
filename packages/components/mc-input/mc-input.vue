@@ -28,7 +28,6 @@
 import type { InputProps, InputEmits } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { ref, watch, inject } from "vue";
-import { FORM_ITEM_CONTEXT_KEY } from "../mc-form/constanst";
 
 // options
 defineOptions({ name: "McInput" });
@@ -44,14 +43,10 @@ const emit = defineEmits<InputEmits>();
 // inner value
 const innerValue = ref<string | undefined>(props.modelValue ?? "");
 
-// inject
-const formItemContext = inject(FORM_ITEM_CONTEXT_KEY);
-
 watch(
   () => props.modelValue,
   (newValue) => {
     innerValue.value = newValue;
-    formItemContext?.validate(newValue);
     emit("change", newValue);
   }
 );
