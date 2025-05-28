@@ -1,6 +1,14 @@
+import type { RuleItem } from "async-validator";
+
+export interface FormItemRule extends RuleItem {
+  trigger?: string;
+}
+
+export type FormRules = Record<string, FormItemRule[]>;
+
 export interface FormProps {
   model: any;
-  rules?: any;
+  rules?: FormRules;
 }
 
 export interface FormItemProps {

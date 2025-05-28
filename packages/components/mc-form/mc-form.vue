@@ -12,4 +12,6 @@ import type { FormProps } from "./types";
 defineProps<FormProps>();
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@use "./styles/mc-form.scss";
+</style>
