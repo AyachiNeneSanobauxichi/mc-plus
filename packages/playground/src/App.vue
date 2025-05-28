@@ -57,7 +57,7 @@ const rules = ref<FormRules>({
     {
       required: true,
       validator: (_, value, callback) => {
-        if (value === "给我报错") {
+        if (value === "给我报错" || !value) {
           callback(new Error("你要报错啊"));
         } else {
           callback();

@@ -219,7 +219,6 @@ const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
         return true;
       })
       .catch((err: FormValidateFailuer) => {
-        console.log("Error: ", err);
         const { fields } = err;
         callback?.(false, fields);
         return Promise.reject(fields);
