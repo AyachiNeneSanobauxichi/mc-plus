@@ -50,15 +50,20 @@ const getContainer = (position: string) => {
   container.className = "mc-toast-container";
   container.style.position = "fixed";
   container.style.left = "50%";
-  container.style.top = "50%";
-  container.style.transform = "translate(-50%, -50%)";
+  if (position === "bottom") {
+    container.style.bottom = "10%";
+    container.style.transform = "translate(-50%, -10%)";
+  } else {
+    container.style.top = position === "top" ? "10%" : "50%";
+    container.style.transform = `translate(-50%, ${position === "top" ? "-10%" : "-50%"})`;
+  }
   container.style.zIndex = "9999";
   container.style.display = "flex";
+  ``;
   container.style.flexDirection = "column";
   container.style.alignItems = "center";
   document.body.appendChild(container);
   containers[position] = container;
-
   return container;
 };
 
@@ -143,9 +148,9 @@ export const toast = createToast;
 
 export const toastPrimary = (options: ToastProps | string) => {
   if (typeof options === "string") {
-    return createToast({ message: options, type: "primary", title: "Info", icon: "Info" });
+    return createToast({ message: options, type: "info", title: "Info", icon: "Info" });
   }
-  return createToast({ title: "Info", icon: "Info", ...options, type: "primary" });
+  return createToast({ title: "Info", icon: "Info", ...options, type: "info" });
 };
 
 export const toastSuccess = (options: ToastProps | string) => {
