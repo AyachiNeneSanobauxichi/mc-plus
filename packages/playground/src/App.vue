@@ -47,10 +47,12 @@ const form = ref<{
   name: string;
   password: string;
   email: string;
+  recurring: boolean;
 }>({
   name: "HirasawaYui",
   password: "123456",
   email: "yui@gmail.com",
+  recurring: false,
 });
 
 const formRef = ref<FormInstance>();
@@ -70,6 +72,7 @@ const rules = ref<FormRules>({
     },
   ],
   email: [{ required: true, message: "请输入邮箱" }],
+  recurring: [{ required: true, message: "请选择是否定期" }],
 });
 
 const handleValidate = async () => {
@@ -114,7 +117,7 @@ const changeDisabled = () => {
     align-items: center;
     gap: 8px;
     position: absolute;
-    bottom: 0;
+    bottom: -200px;
   }
 }
 

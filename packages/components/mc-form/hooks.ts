@@ -16,8 +16,5 @@ export function useFormDisabled() {
   const formItem = inject(FORM_ITEM_CTX_KEY, void 0);
   const disabled = useProp<boolean>("disabled");
 
-  return computed(() => {
-    console.log("Form diabled: ", form?.disabled);
-    return disabled.value || form?.disabled || formItem?.disabled;
-  });
+  return computed(() => disabled.value || form?.disabled || formItem?.disabled);
 }

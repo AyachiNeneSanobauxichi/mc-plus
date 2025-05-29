@@ -1,13 +1,13 @@
 <template>
-  <div>isDisabled: {{ isDisabled }}</div>
   <div
     class="mc-input"
-    :class="{ 'mc-input--disabled': isDisabled }"
+    :class="{
+      'mc-input--disabled': isDisabled,
+      'mc-input--focused': isFocused,
+      'mc-input--inputed': modelValue,
+    }"
     ref="wrapperRef"
   >
-    <!-- <slot name="pre">
-      <span class="mc-input-icon" v-if="search"><mc-icon name="Search" /></span>
-    </slot> -->
     <input
       class="mc-input__inner"
       ref="inputRef"
@@ -23,14 +23,6 @@
       @focus="handleFocus"
       @blur="handleBlur"
     />
-    <!-- <slot class="post">
-      <span class="mc-input-icon mc-input-icon-eye" v-if="password">
-        <mc-icon
-          :name="!isHidden ? 'Review' : 'Review-Hidden'"
-          @click="isHidden = !isHidden"
-        />
-      </span>
-    </slot> -->
   </div>
 </template>
 
