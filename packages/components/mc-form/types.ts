@@ -51,7 +51,7 @@ export interface FormInstance {
     keys?: string[],
     callback?: FormValidateCallback
   ): FormValidateResult;
-  // resetFields(keys?: string[]): void;
+  resetFields(keys?: string[]): void;
   clearValidate(keys?: string[]): void;
 }
 
@@ -62,7 +62,7 @@ export interface FormItemInstance {
     trigger: string,
     callback?: FormValidateCallback
   ): FormValidateResult;
-  // resetField(): void;
+  resetField(): void;
   clearValidate(): void;
 }
 
@@ -77,6 +77,6 @@ export interface FormItemContext extends FormItemProps {
     trigger: string,
     callback?: FormValidateCallback
   ): FormValidateResult;
-  // resetField(): void;
+  resetField(): void;
   clearValidate(): void;
 }

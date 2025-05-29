@@ -37,8 +37,10 @@ import {
   reactive,
   onMounted,
   onUnmounted,
+  nextTick,
 } from "vue";
 import {
+  cloneDeep,
   filter,
   get,
   includes,
@@ -46,6 +48,7 @@ import {
   isNil,
   keys,
   map,
+  set,
   size,
   some,
 } from "lodash-es";
@@ -228,6 +231,20 @@ const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
   }
 };
 
+// reset field
+const resetField = () => {
+  const model = formContext?.model;
+  if (model && props.prop && !isNil(get(model, props.prop))) {
+    isResetting = true;
+    set(model, props.prop, cloneDeep(initialValue));
+  }
+
+  // clear validate
+  nextTick(() => {
+    clearValidate();
+  });
+};
+
 // clear validate
 const clearValidate = () => {
   validateStatus.value = "init";
@@ -240,6 +257,7 @@ const formItemCtx = reactive<FormItemContext>({
   ...props,
   disabled: isDisabled.value,
   validate: handleValidate,
+  resetField,
   clearValidate,
 });
 
@@ -266,6 +284,7 @@ defineExpose<FormItemInstance>({
   validateMessage: errorMessage,
   validateStatus,
   validate: handleValidate,
+  resetField,
   clearValidate,
 });
 </script>

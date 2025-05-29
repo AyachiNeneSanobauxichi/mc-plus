@@ -23,8 +23,10 @@
       </mc-form>
     </div>
     <div class="tool-bar">
-      <mc-button @click="changeDisabled">Change disabled</mc-button>
+      <mc-button @click="changeDisabled">Disable</mc-button>
       <mc-button @click="handleValidate">Validate</mc-button>
+      <mc-button @click="handleClearValidate">Clear Validate</mc-button>
+      <mc-button @click="handleResetFields">Reset</mc-button>
     </div>
   </div>
 </template>
@@ -44,28 +46,28 @@ const form = ref<{
   password: string;
   email: string;
 }>({
-  name: "",
-  password: "",
-  email: "",
+  name: "HirasawaYui",
+  password: "123456",
+  email: "yui@gmail.com",
 });
 
 const formRef = ref<FormInstance>();
 
 const rules = ref<FormRules>({
-  name: [{ required: true, message: "名字不对好好填" }],
+  name: [{ required: true, message: "请输入名字" }],
   password: [
     {
       required: true,
       validator: (_, value, callback) => {
-        if (value === "给我报错" || !value) {
-          callback(new Error("你要报错啊"));
+        if (value.length < 6) {
+          callback(new Error("密码长度不能小于6位"));
         } else {
           callback();
         }
       },
     },
   ],
-  email: [{ required: true, message: "填的什么玩意" }],
+  email: [{ required: true, message: "请输入邮箱" }],
 });
 
 const handleValidate = async () => {
@@ -74,6 +76,14 @@ const handleValidate = async () => {
   } catch (error) {
     console.log("Error: ", error);
   }
+};
+
+const handleClearValidate = () => {
+  formRef.value?.clearValidate();
+};
+
+const handleResetFields = () => {
+  formRef.value?.resetFields();
 };
 
 const disabled = ref<boolean>(false);

@@ -103,7 +103,12 @@ const getFieldsByProps = (fields: FormItemContext[], props: string[]) => {
     : fields;
 };
 
-// clear
+// reset fields
+const resetFields = (keys: string[] = []) => {
+  each(getFieldsByProps(fields, keys), (field) => field.resetField());
+};
+
+// clear validate
 const clearValidate = (keys: string[] = []) => {
   each(getFieldsByProps(fields, keys), (field) => field.clearValidate());
 };
@@ -123,6 +128,7 @@ provide<FormContext>(FORM_CTX_KEY, formContext);
 defineExpose<FormInstance>({
   validate,
   validateField,
+  resetFields,
   clearValidate,
 });
 </script>
