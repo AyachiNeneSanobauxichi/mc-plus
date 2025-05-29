@@ -5,8 +5,10 @@ import type {
 } from "async-validator";
 import type { Ref } from "vue";
 
+export type FormItemTrigger = "change" | "blur";
+
 export interface FormItemRule extends RuleItem {
-  trigger?: string | string[];
+  trigger?: FormItemTrigger | FormItemTrigger[];
 }
 export type FormRules = Record<string, FormItemRule[]>;
 
@@ -26,6 +28,7 @@ export interface FormValidateFailuer {
 export interface FormProps {
   model: Record<string, any>;
   rules?: FormRules;
+  disabled?: boolean;
 }
 
 export interface FormEmits {
@@ -59,7 +62,7 @@ export interface FormItemInstance {
   validateStatus: Ref<ValidateStatus>;
   validateMessage: Ref<string>;
   validate(
-    trigger: string,
+    trigger: FormItemTrigger,
     callback?: FormValidateCallback
   ): FormValidateResult;
   resetField(): void;
@@ -74,7 +77,7 @@ export interface FormContext extends FormProps {
 
 export interface FormItemContext extends FormItemProps {
   validate(
-    trigger: string,
+    trigger: FormItemTrigger,
     callback?: FormValidateCallback
   ): FormValidateResult;
   resetField(): void;
