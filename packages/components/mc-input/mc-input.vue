@@ -4,6 +4,7 @@
       <span class="mc-input-icon" v-if="search"><mc-icon name="Search" /></span>
     </slot>
     <input
+      ref="inputRef"
       class="mc-input__inner"
       :type="isHidden && password ? 'password' : 'text'"
       v-model="innerValue"
@@ -25,40 +26,39 @@
 </template>
 
 <script setup lang="ts">
-import type { InputProps, InputEmits } from "./types";
+import type { InputEmits, InputProps } from "./types";
+import { computed, ref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { ref, watch } from "vue";
 
 // options
-defineOptions({ name: "McInput" });
+defineOptions({ name: "McInput", inheritAttrs: false });
 
 // props
 const props = withDefaults(defineProps<InputProps>(), {
-  placeholder: "Please input",
+  type: "text",
+  autocomplete: "off",
+  autofocus: false,
+  clearable: false,
+  disabled: false,
+  placeholder: "Please enter",
+  readonly: false,
+  showPassword: false,
 });
 
 // emit
 const emit = defineEmits<InputEmits>();
 
-// inner value
-const innerValue = ref<string | undefined>(props.modelValue ?? "");
+// input ref
+const inputRef = ref<HTMLInputElement>();
 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    innerValue.value = newValue;
-    emit("change", newValue);
-  }
-);
+// current value
+const currentValue = ref<string>(props.modelValue);
 
-// hidden value
-const isHidden = ref<boolean>(false);
+// password visible
+const passwordVisible = ref<boolean>(false);
 
-// input
-const handleInput = () => {
-  emit("update:modelValue", innerValue.value);
-  emit("input", innerValue.value);
-};
+// show clear
+const showClear = computed(() => props.clearable && !!currentValue.value && isF)
 </script>
 
 <style scoped lang="scss">
