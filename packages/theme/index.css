@@ -1,6 +1,6 @@
-@import "./reset.css";
-@import "./variables.css";
-@import "./fonts//font.css";
+@import "@mc-plus/theme/reset.css";
+@import "@mc-plus/theme/variables.css";
+@import "@mc-plus/theme/fonts/font.css";
 
 /* scroll bar */
 ::-webkit-scrollbar {
