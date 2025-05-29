@@ -49,27 +49,6 @@ $background_color: var(--mc-white);
     display: flex;
     align-items: center;
     padding: 12px 16px;
-    color: $text_white;
-
-    &.mc-toast__header--primary {
-      background-color: var(--mc-success);
-    }
-
-    &.mc-toast__header--success {
-      background-color: var(--mc-success);
-    }
-
-    &.mc-toast__header--info {
-      background-color: var(--mc-info);
-    }
-
-    &.mc-toast__header--warning {
-      background-color: var(--mc-warning);
-    }
-
-    &.mc-toast__header--error {
-      background-color: var(--mc-error);
-    }
 
     .mc-toast__icon {
       margin-right: 8px;
@@ -88,6 +67,11 @@ $background_color: var(--mc-white);
       align-items: center;
       justify-content: center;
       margin-left: 8px;
+      color: $text_white;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 
@@ -98,24 +82,28 @@ $background_color: var(--mc-white);
     .mc-toast__message {
       font-size: 14px;
       line-height: 1.5;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
-  .mc-toast__body--primary {
-    background-color: var(--mc-success-background);
-  }
-  .mc-toast__body--success {
-    background-color: var(--mc-success-background);
-  }
-  .mc-toast__body--info {
-    background-color: var(--mc-info-background);
-  }
-  .mc-toast__body--warning {
-    background-color: var(--mc-warning-background);
-  }
+  $types: (
+    success: var(--mc-success),
+    info: var(--mc-info),
+    warning: var(--mc-warning),
+    error: var(--mc-error),
+  );
 
-  .mc-toast__body--error {
-    background-color: var(--mc-error-background);
+  @each $type, $color in $types {
+    .mc-toast__header--#{$type} {
+      background-color: $color;
+      color: var(--mc-#{$type}-background);
+    }
+
+    .mc-toast__body--#{$type} {
+      background-color: var(--mc-#{$type}-background);
+    }
   }
 
   &.mc-toast--entering,
