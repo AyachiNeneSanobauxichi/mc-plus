@@ -43,7 +43,6 @@ import {
   get,
   includes,
   isArray,
-  isFunction,
   isNil,
   keys,
   map,
@@ -193,11 +192,12 @@ const getFormItemValidateFunc = (rules: RuleItem[]) => {
 // handle validate
 const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
   // resetting || prop not exist || disabled
-  if (isResetting || !props.prop || isDisabled.value) return false;
+  if (isResetting || !props.prop || isDisabled.value)
+    return Promise.reject(false);
   // rules not exist
   if (!validateEnabled.value) {
     callback?.(false);
-    return false;
+    return Promise.reject(false);
   }
 
   // rules
@@ -205,15 +205,15 @@ const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
   // current trigger rules not exist
   if (!size(rules)) {
     callback?.(true);
-    return true;
+    return Promise.resolve(true);
   }
 
   // start validate
   validateStatus.value = "validating";
   const validateFunc = getFormItemValidateFunc(rules);
 
-  if (isFunction(validateFunc)) {
-    return validateFunc(rules)
+  if (validateFunc) {
+    return validateFunc
       .then(() => {
         callback?.(true);
         return true;
@@ -224,7 +224,7 @@ const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
         return Promise.reject(fields);
       });
   } else {
-    return false;
+    return Promise.reject(false);
   }
 };
 
