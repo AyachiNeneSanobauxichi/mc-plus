@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <span>Value: {{ form }}</span>
+      <div>Value: {{ form }}</div>
+      <div>Disabled: {{ disabled }}</div>
     </div>
     <div>
-      <mc-form :model="form" :rules="rules" ref="formRef">
+      <mc-form :model="form" :rules="rules" ref="formRef" :disabled="disabled">
         <mc-form-item label="Name" prop="name">
           <mc-input v-model="form.name" placeholder="Please enter your name" />
         </mc-form-item>
@@ -106,12 +107,6 @@ const changeDisabled = () => {
   .content {
     width: 320px;
     background-color: pink;
-  }
-
-  .show-value {
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
   .tool-bar {

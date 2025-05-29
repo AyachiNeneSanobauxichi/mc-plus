@@ -62,7 +62,7 @@ export interface FormItemInstance {
   validateStatus: Ref<ValidateStatus>;
   validateMessage: Ref<string>;
   validate(
-    trigger: FormItemTrigger,
+    trigger?: FormItemTrigger,
     callback?: FormValidateCallback
   ): FormValidateResult;
   resetField(): void;
@@ -77,7 +77,7 @@ export interface FormContext extends FormProps {
 
 export interface FormItemContext extends FormItemProps {
   validate(
-    trigger: FormItemTrigger,
+    trigger?: FormItemTrigger,
     callback?: FormValidateCallback
   ): FormValidateResult;
   resetField(): void;

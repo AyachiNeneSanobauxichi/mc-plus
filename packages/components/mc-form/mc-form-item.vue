@@ -20,10 +20,10 @@
 
 <script setup lang="ts">
 import type {
-  FormItemContext,
   FormItemInstance,
   FormItemProps,
   FormItemRule,
+  FormItemTrigger,
   FormValidateCallback,
   FormValidateFailuer,
   ValidateStatus,
@@ -38,6 +38,7 @@ import {
   onMounted,
   onUnmounted,
   nextTick,
+  toRefs,
 } from "vue";
 import {
   cloneDeep,
@@ -193,7 +194,10 @@ const getFormItemValidateFunc = (rules: RuleItem[]) => {
 };
 
 // handle validate
-const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
+const handleValidate = (
+  trigger?: FormItemTrigger,
+  callback?: FormValidateCallback
+) => {
   // resetting || prop not exist || disabled
   if (isResetting || !props.prop || isDisabled.value)
     return Promise.reject(false);
@@ -253,8 +257,8 @@ const clearValidate = () => {
 };
 
 // form item context
-const formItemCtx = reactive<FormItemContext>({
-  ...props,
+const formItemCtx = reactive({
+  ...toRefs(props),
   disabled: isDisabled.value,
   validate: handleValidate,
   resetField,

@@ -1,4 +1,5 @@
 <template>
+  <div>isDisabled: {{ isDisabled }}</div>
   <div
     class="mc-input"
     :class="{ 'mc-input--disabled': isDisabled }"

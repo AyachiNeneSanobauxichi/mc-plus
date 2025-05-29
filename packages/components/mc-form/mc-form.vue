@@ -17,7 +17,7 @@ import type {
 } from "./types";
 import { each, filter, includes, keys, size } from "lodash-es";
 import type { ValidateFieldsError } from "async-validator";
-import { provide, reactive } from "vue";
+import { provide, reactive, toRefs } from "vue";
 import { FORM_CTX_KEY } from "./constanst";
 
 // options
@@ -26,7 +26,9 @@ defineOptions({
 });
 
 // props
-const props = defineProps<FormProps>();
+const props = withDefaults(defineProps<FormProps>(), {
+  rules: () => ({}),
+});
 
 // emit
 const emits = defineEmits<FormEmits>();
@@ -52,7 +54,7 @@ const handleValidate = async (fields: FormItemContext[] = []) => {
 
   for (const field of fields) {
     try {
-      await field.validate("");
+      await field.validate();
     } catch (error) {
       validationErrors = {
         ...validationErrors,
@@ -114,8 +116,8 @@ const clearValidate = (keys: string[] = []) => {
 };
 
 // form context
-const formContext = reactive<FormContext>({
-  ...props,
+const formContext = reactive({
+  ...toRefs(props),
   emits,
   addField,
   removeField,
