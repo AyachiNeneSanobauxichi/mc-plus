@@ -1,10 +1,19 @@
 <template>
-  <i
-    ref="_ref"
-    class="mc-iconfont"
-    :class="`mc-icon--${name}`"
-    @click="(e: MouseEvent) => handleIconClick(e)"
-  ></i>
+  <span
+    class="mc-icon"
+    :style="{
+      fontSize: `${size}px`,
+      width: `${size}px`,
+      height: `${size}px`,
+    }"
+  >
+    <i
+      ref="_ref"
+      class="mc-iconfont"
+      :class="`mc-icon--${name}`"
+      @click="(e: MouseEvent) => handleIconClick(e)"
+    ></i>
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -12,12 +21,12 @@ import type { IconEmits, IconInstance, IconProps } from "./types";
 import { ref } from "vue";
 
 // options
-defineOptions({
-  name: "McIcon",
-});
+defineOptions({ name: "McIcon" });
 
 // props
-defineProps<IconProps>();
+withDefaults(defineProps<IconProps>(), {
+  size: 16,
+});
 
 // emits
 const emit = defineEmits<IconEmits>();

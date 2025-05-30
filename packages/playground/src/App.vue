@@ -5,6 +5,7 @@
       <div>Disabled: {{ disabled }}</div>
     </div>
     <div>
+      <mc-icon name="Search" :size="64" />
       <mc-form :model="form" :rules="rules" ref="formRef" :disabled="disabled">
         <mc-form-item label="Name" prop="name">
           <mc-input v-model="form.name" placeholder="Please enter your name" />
@@ -38,6 +39,7 @@ import { McButton } from "mc-plus";
 import McInput from "../../components/mc-input/mc-input.vue";
 import McForm from "../../components/mc-form/mc-form.vue";
 import McFormItem from "../../components/mc-form/mc-form-item.vue";
+import McIcon from "../../components/mc-icon/mc-icon.vue";
 import type {
   FormRules,
   FormInstance,
