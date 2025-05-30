@@ -37,11 +37,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton } from "mc-plus";
-import McInput from "../../components/mc-input/mc-input.vue";
-import McForm from "../../components/mc-form/mc-form.vue";
-import McFormItem from "../../components/mc-form/mc-form-item.vue";
-import McIcon from "../../components/mc-icon/mc-icon.vue";
+import { McButton, McForm, McFormItem, McInput, McIcon } from "mc-plus";
 import type {
   FormRules,
   FormInstance,

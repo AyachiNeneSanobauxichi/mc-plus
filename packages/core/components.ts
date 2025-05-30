@@ -1,30 +1,34 @@
 import type { Plugin } from "vue";
 import {
   McButton,
-  McIcon,
   McCollapse,
   McTooltip,
   McSwitch,
-  McInput,
   McRadio,
   McRadioGroup,
   McSelect,
   McSelectGroup,
   McSelectOption,
   McCheckbox,
+  McForm,
+  McFormItem,
+  McInput,
+  McIcon,
 } from "@mc-plus/components";
 
 export default [
   McButton,
-  McIcon,
   McCollapse,
   McTooltip,
   McSwitch,
-  McInput,
   McRadio,
   McRadioGroup,
   McSelect,
   McSelectGroup,
   McSelectOption,
   McCheckbox,
+  McForm,
+  McFormItem,
+  McInput,
+  McIcon,
 ] as Plugin[];
