@@ -29,12 +29,11 @@ defineOptions({
 
 // props
 const props = withDefaults(defineProps<ToastProps>(), {
-  type: "primary",
+  type: "success",
   message: "",
   title: "",
   showClose: true,
   duration: 0,
-  position: "top",
 });
 
 // emits

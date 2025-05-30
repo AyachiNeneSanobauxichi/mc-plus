@@ -7,8 +7,8 @@
 import type { Ref } from "vue";
 import type { IconType } from "../mc-icon/types";
 
-export type ToastType = "primary" | "success" | "warning" | "error" | "info";
-export type ToastPosition = "top" | "bottom";
+export type ToastType = "success" | "warning" | "error" | "info";
+export type ToastPosition = "top" | "center" | "bottom";
 
 export interface ToastProps {
   type?: ToastType;
