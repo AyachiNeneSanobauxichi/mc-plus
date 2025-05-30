@@ -144,8 +144,18 @@ const handleChange = () => {
 
 // toggle password
 const togglePassword = () => {
+  if (isDisabled.value) return;
   passwordVisible.value = !passwordVisible.value;
 };
+
+// disable changed
+watch(
+  () => isDisabled.value,
+  (val) => {
+    // set password visible to false when disabled
+    if (val) passwordVisible.value = false;
+  }
+);
 
 // model value changed
 watch(

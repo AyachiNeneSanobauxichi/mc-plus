@@ -45,10 +45,6 @@ $font_size: var(--mc-font-size-base);
   &:hover {
     border: 2px solid $border_color_hover;
     padding: 0 7px;
-
-    .mc-input__password {
-      color: $text_color_active;
-    }
   }
 
   // focus
@@ -70,6 +66,10 @@ $font_size: var(--mc-font-size-base);
     background-color: $bg_color_disabled;
     padding: 0 8px;
     cursor: not-allowed;
+
+    .mc-input__password {
+      cursor: not-allowed;
+    }
   }
 
   // password
