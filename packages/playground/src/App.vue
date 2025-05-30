@@ -5,19 +5,21 @@
       <div>Disabled: {{ disabled }}</div>
     </div>
     <div>
-      <mc-icon name="Search" :size="64" />
+      <mc-icon name="Search" :size="32" />
       <mc-form :model="form" :rules="rules" ref="formRef" :disabled="disabled">
         <mc-form-item label="Name" prop="name">
           <mc-input v-model="form.name" placeholder="Please enter your name" />
         </mc-form-item>
         <mc-form-item label="Password" prop="password">
           <mc-input
+            type="password"
             v-model="form.password"
             placeholder="Please enter your password"
           />
         </mc-form-item>
         <mc-form-item label="Email" prop="email">
           <mc-input
+            prefix-icon="Search"
             v-model="form.email"
             placeholder="Please enter your email"
           />

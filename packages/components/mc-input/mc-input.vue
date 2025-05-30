@@ -8,10 +8,15 @@
     }"
     ref="wrapperRef"
   >
+    <div class="mc-input__prefix" v-if="$slots.prefix || prefixIcon">
+      <slot name="prefix">
+        <mc-icon v-if="prefixIcon" :name="prefixIcon" :size="24" />
+      </slot>
+    </div>
     <input
       class="mc-input__inner"
       ref="inputRef"
-      :type="showPassword ? (passwordVisible ? 'text' : 'password') : type"
+      :type="isPassword ? (passwordVisible ? 'text' : 'password') : type"
       :disabled="isDisabled"
       :readonly="readonly"
       :autocomplete="autocomplete"
@@ -23,13 +28,29 @@
       @focus="handleFocus"
       @blur="handleBlur"
     />
+    <template v-if="type === 'password'">
+      <div class="mc-input__password">
+        <mc-icon
+          :name="passwordVisible ? 'Review-Hidden' : 'Review'"
+          :size="24"
+          @click="togglePassword"
+        />
+      </div>
+    </template>
+    <template v-else>
+      <div class="mc-input__suffix" v-if="$slots.suffix || suffixIcon">
+        <slot name="suffix">
+          <mc-icon v-if="suffixIcon" :name="suffixIcon" :size="24" />
+        </slot>
+      </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { InputEmits, InputProps } from "./types";
-import { nextTick, ref, watch } from "vue";
-// import McIcon from "../mc-icon/mc-icon.vue";
+import { computed, nextTick, ref, watch } from "vue";
+import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
 
@@ -45,7 +66,6 @@ const props = withDefaults(defineProps<InputProps>(), {
   disabled: false,
   placeholder: "Please enter",
   readonly: false,
-  showPassword: false,
 });
 
 // emit
@@ -65,6 +85,9 @@ const passwordVisible = ref<boolean>(false);
 
 // disabled
 const isDisabled = useFormDisabled();
+
+// password
+const isPassword = computed(() => props.type === "password");
 
 // form item
 const { formItem } = useFormItem();
@@ -120,9 +143,9 @@ const handleChange = () => {
 };
 
 // toggle password
-// const togglePassword = () => {
-//   passwordVisible.value = !passwordVisible.value;
-// };
+const togglePassword = () => {
+  passwordVisible.value = !passwordVisible.value;
+};
 
 // model value changed
 watch(
