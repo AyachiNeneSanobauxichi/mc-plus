@@ -76,6 +76,7 @@ export interface FormContext extends FormProps {
 }
 
 export interface FormItemContext extends FormItemProps {
+  validateStatus: ValidateStatus;
   validate(
     trigger?: FormItemTrigger,
     callback?: FormValidateCallback

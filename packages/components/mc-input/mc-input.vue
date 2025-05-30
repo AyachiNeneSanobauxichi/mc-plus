@@ -5,6 +5,7 @@
       'mc-input--disabled': isDisabled,
       'mc-input--focused': isFocused,
       'mc-input--inputed': modelValue,
+      [`mc-input--${validateStyle}`]: validateStyle,
     }"
     ref="wrapperRef"
   >
@@ -28,6 +29,16 @@
       @focus="handleFocus"
       @blur="handleBlur"
     />
+    <template v-if="showStatusIcon">
+      <div
+        class="mc-input__status"
+        :class="[
+          isError ? 'mc-input__status--error' : 'mc-input__status--success',
+        ]"
+      >
+        <mc-icon :name="isError ? 'Reject_02' : 'Accept_02'" :size="24" />
+      </div>
+    </template>
     <template v-if="type === 'password'">
       <div class="mc-input__password">
         <mc-icon
@@ -89,8 +100,31 @@ const isDisabled = useFormDisabled();
 // password
 const isPassword = computed(() => props.type === "password");
 
-// form item
+// form item context
 const { formItem } = useFormItem();
+
+// form item validate status style
+const validateStyle = computed(() => {
+  switch (formItem?.validateStatus) {
+    case "success":
+      return "success";
+    case "error":
+      return "error";
+    default:
+      return "";
+  }
+});
+
+// error
+const isError = computed(() => validateStyle.value === "error");
+
+// success
+const isSuccess = computed(() => validateStyle.value === "success");
+
+// show status icon
+const showStatusIcon = computed(
+  () => !isDisabled.value && (isError.value || isSuccess.value)
+);
 
 // use focus controller
 const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(

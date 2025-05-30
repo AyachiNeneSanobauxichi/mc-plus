@@ -39,6 +39,7 @@ import {
   onUnmounted,
   nextTick,
   toRefs,
+  toRef,
 } from "vue";
 import {
   cloneDeep,
@@ -259,6 +260,7 @@ const clearValidate = () => {
 // form item context
 const formItemCtx = reactive({
   ...toRefs(props),
+  validateStatus: computed(() => validateStatus.value),
   disabled: isDisabled.value,
   validate: handleValidate,
   resetField,
