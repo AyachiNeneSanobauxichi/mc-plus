@@ -24,7 +24,7 @@ const meta: Meta<typeof McTag> = {
     },
     radius: {
       control: { type: "select" },
-      options: ["default", "round", "circle", "square"],
+      options: ["default", "round"],
       description: "Tag border radius type",
     },
     disabled: {

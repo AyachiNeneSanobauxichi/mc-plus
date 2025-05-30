@@ -8,14 +8,13 @@
   <transition name="mc-message-fade">
     <div v-show="visible" ref="_ref" class="mc-message" :style="style" :class="[`mc-message--${type}`]">
       <div class="mc-message__content">
-        <mc-icon v-if="showIcon" :name="iconMap[type]" class="mc-message__icon"></mc-icon>
+        <mc-icon v-if="showIcon" :name="iconMap[type]" class="mc-message__icon" :size="24"></mc-icon>
         <div class="mc-message__title">{{ message }}</div>
       </div>
       <mc-icon v-if="closable" name="Cross" class="mc-message__close" @click="handleClose"></mc-icon>
     </div>
   </transition>
 </template>
-
 <script setup lang="ts">
 import { computed, onMounted, ref, toRefs, toValue, useAttrs } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";

@@ -7,9 +7,9 @@
 <template>
   <div ref="_ref" class="mc-toast" :class="[entering ? 'mc-toast--entering' : '', leaving ? 'mc-toast--leaving' : '']">
     <div class="mc-toast__header" :class="`mc-toast__header--${type}`">
-      <mc-icon v-if="icon" class="mc-toast__icon" :name="icon"></mc-icon>
+      <mc-icon v-if="icon" class="mc-toast__icon" :name="icon" :size="24"></mc-icon>
       <div class="mc-toast__title">{{ title }}</div>
-      <mc-icon name="Cross" class="mc-toast__close" v-if="showClose" @click="close"></mc-icon>
+      <mc-icon name="Cross" class="mc-toast__close" :size="24" v-if="showClose" @click="close"></mc-icon>
     </div>
     <div class="mc-toast__body" :class="`mc-toast__body--${type}`">
       <div class="mc-toast__message">{{ message }}</div>
