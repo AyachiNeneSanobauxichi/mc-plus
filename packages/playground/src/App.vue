@@ -1,21 +1,25 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <span>Value: {{ form }}</span>
+      <div>Value: {{ form }}</div>
+      <div>Disabled: {{ disabled }}</div>
     </div>
     <div>
-      <mc-form :model="form" :rules="rules" ref="formRef">
+      <mc-icon name="Search" :size="32" />
+      <mc-form :model="form" :rules="rules" ref="formRef" :disabled="disabled">
         <mc-form-item label="Name" prop="name">
           <mc-input v-model="form.name" placeholder="Please enter your name" />
         </mc-form-item>
         <mc-form-item label="Password" prop="password">
           <mc-input
+            type="password"
             v-model="form.password"
             placeholder="Please enter your password"
           />
         </mc-form-item>
         <mc-form-item label="Email" prop="email">
           <mc-input
+            prefix-icon="Search"
             v-model="form.email"
             placeholder="Please enter your email"
           />
@@ -23,17 +27,17 @@
       </mc-form>
     </div>
     <div class="tool-bar">
-      <mc-button @click="changeDisabled">Change disabled</mc-button>
+      <mc-button @click="changeDisabled">Disable</mc-button>
       <mc-button @click="handleValidate">Validate</mc-button>
+      <mc-button @click="handleClearValidate">Clear Validate</mc-button>
+      <mc-button @click="handleResetFields">Reset</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton, McInput } from "mc-plus";
-import McForm from "../../components/mc-form/mc-form.vue";
-import McFormItem from "../../components/mc-form/mc-form-item.vue";
+import { McButton, McForm, McFormItem, McInput, McIcon } from "mc-plus";
 import type {
   FormRules,
   FormInstance,
@@ -43,29 +47,32 @@ const form = ref<{
   name: string;
   password: string;
   email: string;
+  recurring: boolean;
 }>({
-  name: "",
-  password: "",
-  email: "",
+  name: "HirasawaYui",
+  password: "123456",
+  email: "yui@gmail.com",
+  recurring: false,
 });
 
 const formRef = ref<FormInstance>();
 
 const rules = ref<FormRules>({
-  name: [{ required: true, message: "名字不对好好填" }],
+  name: [{ required: true, message: "请输入名字" }],
   password: [
     {
       required: true,
       validator: (_, value, callback) => {
-        if (value === "给我报错" || !value) {
-          callback(new Error("你要报错啊"));
+        if (value.length < 6) {
+          callback(new Error("密码长度不能小于6位"));
         } else {
           callback();
         }
       },
     },
   ],
-  email: [{ required: true, message: "填的什么玩意" }],
+  email: [{ required: true, message: "请输入邮箱" }],
+  recurring: [{ required: true, message: "请选择是否定期" }],
 });
 
 const handleValidate = async () => {
@@ -74,6 +81,14 @@ const handleValidate = async () => {
   } catch (error) {
     console.log("Error: ", error);
   }
+};
+
+const handleClearValidate = () => {
+  formRef.value?.clearValidate();
+};
+
+const handleResetFields = () => {
+  formRef.value?.resetFields();
 };
 
 const disabled = ref<boolean>(false);
@@ -97,18 +112,12 @@ const changeDisabled = () => {
     background-color: pink;
   }
 
-  .show-value {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
   .tool-bar {
     display: flex;
     align-items: center;
     gap: 8px;
     position: absolute;
-    bottom: 0;
+    bottom: -200px;
   }
 }
 

@@ -1,64 +1,213 @@
 <template>
-  <div class="mc-input" :class="{ 'mc-input--disabled': disabled }">
-    <slot name="pre">
-      <span class="mc-input-icon" v-if="search"><mc-icon name="Search" /></span>
-    </slot>
+  <div
+    class="mc-input"
+    :class="{
+      'mc-input--disabled': isDisabled,
+      'mc-input--focused': isFocused,
+      'mc-input--inputed': modelValue,
+      [`mc-input--${validateStyle}`]: validateStyle,
+    }"
+    ref="wrapperRef"
+  >
+    <div class="mc-input__prefix" v-if="$slots.prefix || prefixIcon">
+      <slot name="prefix">
+        <mc-icon v-if="prefixIcon" :name="prefixIcon" :size="24" />
+      </slot>
+    </div>
     <input
       class="mc-input__inner"
-      :type="isHidden && password ? 'password' : 'text'"
-      v-model="innerValue"
+      ref="inputRef"
+      :type="isPassword ? (passwordVisible ? 'text' : 'password') : type"
+      :disabled="isDisabled"
+      :readonly="readonly"
+      :autocomplete="autocomplete"
       :placeholder="placeholder"
-      :disabled="disabled"
-      @input.stop="handleInput"
-      @focus.stop="(e) => emit('focus', e)"
-      @blur.stop="(e) => emit('blur', e)"
+      :autofocus="autofocus"
+      v-model="innerValue"
+      @input="handleInput"
+      @change="handleChange"
+      @focus="handleFocus"
+      @blur="handleBlur"
     />
-    <slot class="post">
-      <span class="mc-input-icon mc-input-icon-eye" v-if="password">
+    <template v-if="showStatusIcon">
+      <div
+        class="mc-input__status"
+        :class="[
+          isError ? 'mc-input__status--error' : 'mc-input__status--success',
+        ]"
+      >
+        <mc-icon :name="isError ? 'Reject_02' : 'Accept_02'" :size="24" />
+      </div>
+    </template>
+    <template v-if="type === 'password'">
+      <div class="mc-input__password">
         <mc-icon
-          :name="!isHidden ? 'Review' : 'Review-Hidden'"
-          @click="isHidden = !isHidden"
+          :name="passwordVisible ? 'Review-Hidden' : 'Review'"
+          :size="24"
+          @click="togglePassword"
         />
-      </span>
-    </slot>
+      </div>
+    </template>
+    <template v-else>
+      <div class="mc-input__suffix" v-if="$slots.suffix || suffixIcon">
+        <slot name="suffix">
+          <mc-icon v-if="suffixIcon" :name="suffixIcon" :size="24" />
+        </slot>
+      </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { InputProps, InputEmits } from "./types";
+import type { InputEmits, InputProps } from "./types";
+import { computed, nextTick, ref, watch } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { ref, watch } from "vue";
+import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { useFocusController } from "@mc-plus/hooks";
 
 // options
-defineOptions({ name: "McInput" });
+defineOptions({ name: "McInput", inheritAttrs: false });
 
 // props
 const props = withDefaults(defineProps<InputProps>(), {
-  placeholder: "Please input",
+  type: "text",
+  autocomplete: "off",
+  autofocus: false,
+  clearable: false,
+  disabled: false,
+  placeholder: "Please enter",
+  readonly: false,
 });
 
 // emit
 const emit = defineEmits<InputEmits>();
 
-// inner value
-const innerValue = ref<string | undefined>(props.modelValue ?? "");
+// input ref
+const inputRef = ref<HTMLInputElement>();
 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    innerValue.value = newValue;
-    emit("change", newValue);
+// current value
+const innerValue = ref<string>(props.modelValue);
+
+// password visible
+const passwordVisible = ref<boolean>(false);
+
+// show clear
+// const showClear = computed(() => props.clearable && !!innerValue.value);
+
+// disabled
+const isDisabled = useFormDisabled();
+
+// password
+const isPassword = computed(() => props.type === "password");
+
+// form item context
+const { formItem } = useFormItem();
+
+// form item validate status style
+const validateStyle = computed(() => {
+  switch (formItem?.validateStatus) {
+    case "success":
+      return "success";
+    case "error":
+      return "error";
+    default:
+      return "";
+  }
+});
+
+// error
+const isError = computed(() => validateStyle.value === "error");
+
+// success
+const isSuccess = computed(() => validateStyle.value === "success");
+
+// show status icon
+const showStatusIcon = computed(
+  () => !isDisabled.value && (isError.value || isSuccess.value)
+);
+
+// use focus controller
+const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
+  inputRef,
+  {
+    afterBlur() {
+      // after blur validate
+      formItem?.validate("blur");
+    },
   }
 );
 
-// hidden value
-const isHidden = ref<boolean>(false);
+// clear
+const clear = () => {
+  innerValue.value = "";
+  // dispatch events
+  emit("update:modelValue", innerValue.value);
+  emit("input", innerValue.value);
+  emit("change", innerValue.value);
+  emit("clear");
+  // clear validate
+  formItem?.clearValidate();
+};
 
-// input
+// focus
+const focus = async () => {
+  await nextTick();
+  inputRef.value?.focus();
+};
+
+// blur
+const blur = async () => {
+  inputRef.value?.blur();
+};
+
+// select
+const select = () => {
+  inputRef.value?.select();
+};
+
+// input event
 const handleInput = () => {
   emit("update:modelValue", innerValue.value);
   emit("input", innerValue.value);
 };
+
+// change event
+const handleChange = () => {
+  emit("change", innerValue.value);
+};
+
+// toggle password
+const togglePassword = () => {
+  if (isDisabled.value) return;
+  passwordVisible.value = !passwordVisible.value;
+};
+
+// disable changed
+watch(
+  () => isDisabled.value,
+  (val) => {
+    // set password visible to false when disabled
+    if (val) passwordVisible.value = false;
+  }
+);
+
+// model value changed
+watch(
+  () => props.modelValue,
+  (value) => {
+    innerValue.value = value;
+    formItem?.validate("change");
+  }
+);
+
+// expose
+defineExpose({
+  ref: inputRef,
+  focus,
+  blur,
+  select,
+  clear,
+});
 </script>
 
 <style scoped lang="scss">

@@ -4,9 +4,13 @@ $border_color_error: var(--mc-error);
 $text_color: var(--mc-gray-400);
 $text_color_active: var(--mc-black);
 $text_color_disabled: var(--mc-gray-500);
+$text_color_error: var(--mc-error);
+$text_color_success: var(--mc-success);
 $icon_color: var(--mc-gray-800);
 $bg_color: var(--mc-white);
 $bg_color_disabled: var(--mc-gray-200);
+$border_radius: var(--mc-radius);
+$font_size: var(--mc-font-size-base);
 
 .mc-input {
   width: 320px;
@@ -15,42 +19,11 @@ $bg_color_disabled: var(--mc-gray-200);
   background-color: $bg_color;
   box-sizing: border-box;
   border: 1px solid $border_color;
-  border-radius: 4px;
+  border-radius: $border_radius;
   color: $text_color;
   display: flex;
   align-items: center;
   gap: 8px;
-
-  .mc-input-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    color: $icon_color;
-  }
-
-  .mc-input-icon-eye {
-    cursor: pointer;
-  }
-
-  &:hover {
-    border: 2px solid $border_color_hover;
-    padding: 0 7px;
-  }
-
-  &.mc-input--disabled {
-    cursor: not-allowed;
-    color: $text_color_disabled;
-    background-color: $bg_color_disabled;
-    .mc-input-icon {
-      color: inherit;
-    }
-
-    &:hover {
-      border: 1px solid $border_color;
-      padding: 0 8px;
-    }
-  }
 
   .mc-input__inner {
     height: 100%;
@@ -60,17 +33,65 @@ $bg_color_disabled: var(--mc-gray-200);
     padding: 0;
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: $font_size;
     background-color: transparent;
     color: inherit;
     cursor: inherit;
 
-    &:focus {
-      color: $text_color_active;
+    &::placeholder {
+      color: $text_color;
+    }
+  }
+
+  // hover
+  &:hover {
+    border: 2px solid $border_color_hover;
+    padding: 0 7px;
+  }
+
+  // focus
+  &.mc-input--focused {
+    border: 2px solid $border_color_hover;
+    padding: 0 7px;
+    color: $text_color_active;
+  }
+
+  // input
+  &.mc-input--inputed {
+    color: $text_color_active;
+  }
+
+  // disabled
+  &.mc-input--disabled {
+    border: 1px solid $border_color;
+    color: $text_color_disabled;
+    background-color: $bg_color_disabled;
+    padding: 0 8px;
+    cursor: not-allowed;
+
+    .mc-input__password {
+      cursor: not-allowed;
+    }
+  }
+
+  // password
+  .mc-input__password {
+    cursor: pointer;
+  }
+
+  // error
+  &.mc-input--error:not(.mc-input--disabled) {
+    border-color: $border_color_error;
+  }
+
+  // status icon
+  .mc-input__status {
+    &--error {
+      color: $text_color_error;
     }
 
-    &::placeholder {
-      color: inherit;
+    &--success {
+      color: $text_color_success;
     }
   }
 }

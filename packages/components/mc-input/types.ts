@@ -1,19 +1,36 @@
+import type { Ref } from "vue";
+import type { IconType } from "../mc-icon";
+
+export type InputType = "text" | "password" | "number" | "email";
+
+export type InputAutocomplete = "off" | "on";
+
 export interface InputProps {
-  modelValue?: string;
-  search?: boolean;
+  modelValue: string;
+  type?: InputType;
   disabled?: boolean;
-  password?: boolean;
+  clearable?: boolean;
   placeholder?: string;
+  readonly?: boolean;
+  autocomplete?: InputAutocomplete;
+  autofocus?: boolean;
+  prefixIcon?: IconType;
+  suffixIcon?: IconType;
 }
 
 export interface InputEmits {
-  (e: "update:modelValue", value?: string): void;
-  (e: "input", value?: string): void;
-  (e: "change", value?: string): void;
-  (e: "focus", event: Event): void;
-  (e: "blur", event: Event): void;
+  (e: "update:modelValue", value: string): void;
+  (e: "input", value: string): void;
+  (e: "change", value: string): void;
+  (e: "focus", value: FocusEvent): void;
+  (e: "blur", value: FocusEvent): void;
+  (e: "clear"): void;
 }
 
 export interface InputInstance {
-  ref: HTMLInputElement;
+  ref: Ref<HTMLInputElement | void>;
+  focus(): Promise<void>;
+  blur(): void;
+  select(): void;
+  clear(): void;
 }

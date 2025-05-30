@@ -177,6 +177,8 @@ export type IconType =
 
 export interface IconProps {
   name: IconType;
+  size?: number;
+  color?: string;
 }
 
 export interface IconEmits {

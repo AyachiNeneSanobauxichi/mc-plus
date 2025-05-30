@@ -1,1 +1,8 @@
 @use "@mc-plus/theme/iconfonts/iconfont.css";
+
+.mc-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}

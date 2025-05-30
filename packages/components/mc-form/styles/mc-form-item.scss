@@ -22,7 +22,7 @@ $text-color-error: var(--mc-error);
   }
 
   .mc-form-item__content {
-    margin-top: 16px;
+    margin-top: 8px;
   }
 
   .mc-form-item__error {
@@ -32,6 +32,19 @@ $text-color-error: var(--mc-error);
     color: $text-color-error;
     font-size: 12px;
   }
+
+  .mc-form-item-error-enter-active,
+  .mc-form-item-error-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .mc-form-item-error-enter-from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  .mc-form-item-error-leave-to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
-
-

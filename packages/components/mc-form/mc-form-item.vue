@@ -20,10 +20,10 @@
 
 <script setup lang="ts">
 import type {
-  FormItemContext,
   FormItemInstance,
   FormItemProps,
   FormItemRule,
+  FormItemTrigger,
   FormValidateCallback,
   FormValidateFailuer,
   ValidateStatus,
@@ -37,8 +37,11 @@ import {
   reactive,
   onMounted,
   onUnmounted,
+  nextTick,
+  toRefs,
 } from "vue";
 import {
+  cloneDeep,
   filter,
   get,
   includes,
@@ -46,6 +49,7 @@ import {
   isNil,
   keys,
   map,
+  set,
   size,
   some,
 } from "lodash-es";
@@ -190,7 +194,10 @@ const getFormItemValidateFunc = (rules: RuleItem[]) => {
 };
 
 // handle validate
-const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
+const handleValidate = (
+  trigger?: FormItemTrigger,
+  callback?: FormValidateCallback
+) => {
   // resetting || prop not exist || disabled
   if (isResetting || !props.prop || isDisabled.value)
     return Promise.reject(false);
@@ -228,6 +235,20 @@ const handleValidate = (trigger: string, callback?: FormValidateCallback) => {
   }
 };
 
+// reset field
+const resetField = () => {
+  const model = formContext?.model;
+  if (model && props.prop && !isNil(get(model, props.prop))) {
+    isResetting = true;
+    set(model, props.prop, cloneDeep(initialValue));
+  }
+
+  // clear validate
+  nextTick(() => {
+    clearValidate();
+  });
+};
+
 // clear validate
 const clearValidate = () => {
   validateStatus.value = "init";
@@ -236,10 +257,12 @@ const clearValidate = () => {
 };
 
 // form item context
-const formItemCtx = reactive<FormItemContext>({
-  ...props,
+const formItemCtx = reactive({
+  ...toRefs(props),
+  validateStatus: computed(() => validateStatus.value),
   disabled: isDisabled.value,
   validate: handleValidate,
+  resetField,
   clearValidate,
 });
 
@@ -266,6 +289,7 @@ defineExpose<FormItemInstance>({
   validateMessage: errorMessage,
   validateStatus,
   validate: handleValidate,
+  resetField,
   clearValidate,
 });
 </script>
