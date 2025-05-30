@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import type { InputEmits, InputProps } from "./types";
-import { computed, nextTick, ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 // import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
@@ -61,7 +61,7 @@ const innerValue = ref<string>(props.modelValue);
 const passwordVisible = ref<boolean>(false);
 
 // show clear
-const showClear = computed(() => props.clearable && !!innerValue.value);
+// const showClear = computed(() => props.clearable && !!innerValue.value);
 
 // disabled
 const isDisabled = useFormDisabled();
@@ -120,9 +120,9 @@ const handleChange = () => {
 };
 
 // toggle password
-const togglePassword = () => {
-  passwordVisible.value = !passwordVisible.value;
-};
+// const togglePassword = () => {
+//   passwordVisible.value = !passwordVisible.value;
+// };
 
 // model value changed
 watch(

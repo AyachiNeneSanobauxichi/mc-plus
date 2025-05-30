@@ -58,4 +58,13 @@ $font_size: var(--mc-font-size-base);
   &.mc-input--inputed {
     color: $text_color_active;
   }
+
+  // disabled
+  &.mc-input--disabled {
+    border: 1px solid $border_color;
+    color: $text_color_disabled;
+    background-color: $bg_color_disabled;
+    padding: 0 8px;
+    cursor: not-allowed;
+  }
 }
