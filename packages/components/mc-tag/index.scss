@@ -21,8 +21,6 @@
   box-sizing: border-box;
 
   .mc-tag__close-icon {
-    font-size: 24px;
-
     &:hover {
       opacity: 0.8;
     }
@@ -73,27 +71,18 @@
   height: 24px;
   line-height: 24px;
   font-size: 12px;
-  .mc-tag__icon {
-    font-size: 16px;
-  }
 }
 
 .mc-tag--medium {
   height: 32px;
   line-height: 32px;
   font-size: 14px;
-  .mc-tag__icon {
-    font-size: 16px;
-  }
 }
 
 .mc-tag--large {
   height: 40px;
   line-height: 40px;
   font-size: 16px;
-  .mc-tag__icon {
-    font-size: 24px;
-  }
 }
 
 .is-disabled {

@@ -162,8 +162,13 @@
 
       .mc-table__icon {
         cursor: pointer;
-        font-size: 24px;
         color: var(--mc-teal-500);
+
+        &:hover {
+          background-color: var(--mc-gray-100);
+          border-radius: var(--mc-radius);
+          transition: all var(--mc-transition-duration);
+        }
 
         &.is-disabled {
           color: var(--mc-gray-400);

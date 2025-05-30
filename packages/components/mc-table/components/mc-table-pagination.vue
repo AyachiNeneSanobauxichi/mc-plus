@@ -2,8 +2,8 @@
   <div class="mc-table__pagination" v-if="pagination">
     <div class="mc-table__pagination-info">Showing {{ getShowingStart }}-{{ getShowingEnd }} of {{ pagination.total }}</div>
     <div class="mc-table__pagination-controls">
-      <mc-icon name="First" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }" @click="handlePageChange(1)" />
-      <mc-icon name="Left-Chevron" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }" @click="handlePageChange(currentPage - 1)" />
+      <mc-icon name="First" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }" :size="24" @click="handlePageChange(1)" />
+      <mc-icon name="Left-Chevron" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }" :size="24" @click="handlePageChange(currentPage - 1)" />
 
       <!-- 页码按钮 -->
       <template v-for="page in visiblePages" :key="page">
@@ -13,8 +13,8 @@
         <span v-else class="mc-table__pagination-ellipsis">...</span>
       </template>
 
-      <mc-icon name="Right-Chevron" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage >= totalPages }" @click="handlePageChange(currentPage + 1)" />
-      <mc-icon name="Last" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage >= totalPages }" @click="handlePageChange(totalPages)" />
+      <mc-icon name="Right-Chevron" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage >= totalPages }" :size="24" @click="handlePageChange(currentPage + 1)" />
+      <mc-icon name="Last" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage >= totalPages }" :size="24" @click="handlePageChange(totalPages)" />
     </div>
     <div class="mc-table__pagination-size">
       <label class="mc-table__pagination-size-label">View per page</label>

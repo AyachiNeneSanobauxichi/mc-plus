@@ -6,7 +6,11 @@
  */
 export * from "./mc-alert";
 export * from "./mc-button";
+export * from "./mc-checkbox";
 export * from "./mc-collapse";
+export * from "./mc-icon";
+export * from "./mc-input";
+export * from "./mc-light-box";
 export * from "./mc-message";
 export * from "./mc-radio";
 export * from "./mc-select";
@@ -14,9 +18,8 @@ export * from "./mc-switch";
 export * from "./mc-table";
 export * from "./mc-tag";
 export * from "./mc-toast";
-export * from "./mc-checkbox";
 export * from "./mc-tooltip";
 // refactor
 export * from "./mc-form";
-export * from "./mc-input";
 export * from "./mc-icon";
+export * from "./mc-input";

@@ -9,11 +9,11 @@
     <div class="mc-alert__content">
       <div class="mc-alert__header">
         <div class="mc-alert__header-left">
-          <mc-icon v-if="showIcon" :name="iconMap[type]" class="mc-alert__icon"></mc-icon>
+          <mc-icon v-if="showIcon" :name="iconMap[type]" :size="24" class="mc-alert__icon"></mc-icon>
           <div v-if="title" class="mc-alert__title">{{ title }}</div>
           <slot name="title" v-else></slot>
         </div>
-        <mc-icon v-if="closable" name="Cross" class="mc-alert__close" @click="handleClose"></mc-icon>
+        <mc-icon v-if="closable" name="Cross" :size="24" class="mc-alert__close" @click="handleClose"></mc-icon>
       </div>
       <div v-if="description" class="mc-alert__description">{{ description }}</div>
       <div v-else class="mc-alert__description">

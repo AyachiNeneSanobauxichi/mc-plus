@@ -1,8 +1,8 @@
 <template>
   <div ref="_ref" v-if="visible" class="mc-tag" :class="['mc-tag--' + type, 'mc-tag--' + size, 'mc-tag-radius--' + radius, { 'is-disabled': disabled, 'is-selected': selected }]" :style="computedStyle" @click="handleTagClick">
-    <mc-icon class="mc-tag__icon" v-if="icon" :name="icon" />
+    <mc-icon class="mc-tag__icon" v-if="icon" :name="icon" :size="sizeMap[size]" />
     <slot></slot>
-    <mc-icon v-if="closable && !disabled" name="Cross" class="mc-tag__close-icon" @click="handleTagClose" />
+    <mc-icon v-if="closable && !disabled" name="Cross" class="mc-tag__close-icon" :size="sizeMap[size]" @click="handleTagClose" />
   </div>
 </template>
 
@@ -26,6 +26,12 @@ const emit = defineEmits<TagEmits>();
 const visible = ref(true);
 
 const { type, size, disabled, closable, color, textColor, backgroundColor, selectedTextColor, selectedBackgroundColor, radius, height, width, icon, selected } = toRefs(props);
+
+const sizeMap = {
+  small: 16,
+  medium: 16,
+  large: 24,
+} as const;
 
 const computedStyle = computed(() => {
   const style: Record<string, string> = {};
