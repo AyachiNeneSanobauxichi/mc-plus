@@ -30,8 +30,8 @@ import { McButton } from "mc-plus";
 
 const disabled = ref<boolean>(false);
 
-const activeStep = ref<number>(1);
-const successStep = ref<number>(0);
+const activeStep = ref<number>(4);
+const successStep = ref<number>(3);
 
 const steps = ref<StepItem[]>([
   {
@@ -94,7 +94,7 @@ const handleStepChange = (val: string | number) => {
   position: relative;
 
   .content {
-    width: 1020px;
+    width: 100%;
   }
 
   .tool-bar {

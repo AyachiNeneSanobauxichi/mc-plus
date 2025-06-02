@@ -37,8 +37,9 @@
 <script setup lang="ts">
 import type { StepEmits, StepInstance, StepProps } from "../types";
 import { onMounted, ref, watch } from "vue";
-import { findIndex } from "lodash-es";
+import { findIndex, throttle } from "lodash-es";
 import McSuccess from "../../mc-success-icon/mc-success-icon.vue";
+import useWindowResize from "@mc-plus/hooks/useWindowResize";
 
 // options
 defineOptions({
@@ -74,6 +75,7 @@ const isSuccess = (index: number) => {
 
 onMounted(() => {
   setLineWidth();
+  setSuccessLine();
 });
 
 // set line width
@@ -123,6 +125,14 @@ watch(
   () => {
     setSuccessLine();
   }
+);
+
+// window resize
+useWindowResize(
+  throttle(() => {
+    setLineWidth();
+    setSuccessLine();
+  }, 50)
 );
 
 // expose
