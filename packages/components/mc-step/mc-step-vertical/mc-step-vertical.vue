@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import type { StepEmits, StepInstance, StepProps } from "../types";
 import { findIndex } from "lodash-es";
 import McSuccess from "../../mc-success-icon/mc-success-icon.vue";
@@ -67,7 +67,9 @@ const emit = defineEmits<StepEmits>();
 // value changed
 watch(
   () => props.modelValue,
-  (value) => {
+  async (value) => {
+    await nextTick();
+    setSuccessLine();
     emit("change", value);
   }
 );
@@ -83,6 +85,52 @@ const isSuccess = (index: number) => {
     findIndex(props.steps, (step) => step.key === props.successStep) >= index
   );
 };
+
+onMounted(() => {
+  setSuccessLine();
+});
+
+// set success line
+const setSuccessLine = () => {
+  const index = findIndex(
+    props.steps,
+    (step) => step.key === props.successStep
+  );
+
+  const successLine = successLineRef.value!;
+  if (index < 0) {
+    successLine.style.transform = `scaleY(0)`;
+    return;
+  }
+  const container = _ref.value!;
+  const items = container.querySelectorAll(".mc-step-vertical-item");
+
+  if (index + 1 > items.length - 1) {
+    successLine.style.transform = `scaleY(1)`;
+    return;
+  }
+
+  const successNextItem = items?.[index + 1] as HTMLDivElement;
+
+  console.log("container", container);
+  console.log("successNextItem", successNextItem);
+
+  const containerRect = container.getBoundingClientRect();
+  const successNextItemRect = successNextItem.getBoundingClientRect();
+  const successLineHeight = successNextItemRect.top - containerRect.top;
+
+  const percent = successLineHeight / (containerRect.height - 24);
+
+  successLine.style.transform = `scaleY(${percent})`;
+};
+
+// success step changed
+watch(
+  () => props.successStep,
+  () => {
+    setSuccessLine();
+  }
+);
 
 // expose
 defineExpose<StepInstance>({
