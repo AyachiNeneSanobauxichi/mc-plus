@@ -120,5 +120,21 @@ $number_color_disabled: var(--mc-gray-500);
         color: $text_color_disabled;
       }
     }
+
+    .mc-step-item-component-enter-active {
+      transition: transform 1s ease, opacity 0.3s ease;
+      transform-origin: top;
+      width: 100%;
+    }
+
+    .mc-step-item-component-enter-from {
+      opacity: 0;
+      transform: scaleY(0);
+    }
+
+    .mc-step-item-component-enter-to {
+      opacity: 1;
+      transform: scaleY(1);
+    }
   }
 }

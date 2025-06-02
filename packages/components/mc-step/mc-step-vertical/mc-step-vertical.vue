@@ -27,12 +27,14 @@
         <p class="mc-step-item-desc mc-step-item-desc-vertical">
           {{ step.desc }}
         </p>
-        <div
-          class="mc-step-item-component mc-step-item-component-vertical"
-          v-if="step.component && step.key === modelValue"
-        >
-          <component :is="step.component" />
-        </div>
+        <transition name="mc-step-item-component">
+          <div
+            class="mc-step-item-component mc-step-item-component-vertical"
+            v-if="step.component && step.key === modelValue"
+          >
+            <component :is="step.component" />
+          </div>
+        </transition>
       </div>
     </div>
   </div>

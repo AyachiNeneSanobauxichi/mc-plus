@@ -9,9 +9,17 @@ $success_line_color: var(--mc-success);
     gap: 10px;
     min-height: 56px;
 
+    .mc-step-item-content {
+      flex: 1;
+    }
+
     .mc-step-item-label-vertical,
     .mc-step-item-desc-vertical {
       justify-content: left;
     }
+  }
+
+  .mc-step-item-component-vertical {
+    padding: 16px 0 24px;
   }
 }
