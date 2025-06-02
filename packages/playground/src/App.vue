@@ -24,6 +24,13 @@
             placeholder="Please enter your email"
           />
         </mc-form-item>
+        <mc-form-item label="Age" prop="age">
+          <mc-input
+            type="number"
+            v-model="form.age"
+            placeholder="Please enter your age"
+          />
+        </mc-form-item>
       </mc-form>
     </div>
     <div class="tool-bar">
@@ -37,7 +44,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton, McForm, McFormItem, McInput, McIcon } from "mc-plus";
+import { McButton, McForm, McFormItem, McIcon } from "mc-plus";
+import McInput from "../../components/mc-input/mc-input.vue";
 import type {
   FormRules,
   FormInstance,
@@ -48,11 +56,13 @@ const form = ref<{
   password: string;
   email: string;
   recurring: boolean;
+  age: string;
 }>({
   name: "HirasawaYui",
   password: "123456",
   email: "yui@gmail.com",
   recurring: false,
+  age: "16",
 });
 
 const formRef = ref<FormInstance>();

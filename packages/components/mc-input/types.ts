@@ -1,9 +1,13 @@
 import type { Ref } from "vue";
 import type { IconType } from "../mc-icon";
 
-export type InputType = "text" | "password" | "number" | "email";
+export type InputType = "text" | "password" | "number" | "email" | "currency";
 
 export type InputAutocomplete = "off" | "on";
+
+export type InputFormatter = (value: string) => string;
+
+export type InputParser = (value: string) => string;
 
 export interface InputProps {
   modelValue: string;
@@ -16,6 +20,8 @@ export interface InputProps {
   autofocus?: boolean;
   prefixIcon?: IconType;
   suffixIcon?: IconType;
+  formatter?: InputFormatter;
+  parser?: InputParser;
 }
 
 export interface InputEmits {
