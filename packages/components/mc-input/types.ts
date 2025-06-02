@@ -11,6 +11,8 @@ export type InputParser = (value: string) => string;
 
 export interface InputProps {
   modelValue: string;
+  width?: string;
+  height?: string;
   type?: InputType;
   disabled?: boolean;
   clearable?: boolean;
@@ -21,6 +23,7 @@ export interface InputProps {
   prefixIcon?: IconType;
   suffixIcon?: IconType;
   maxlength?: number;
+  currencyAccuracy?: number;
   formatter?: InputFormatter;
   parser?: InputParser;
 }

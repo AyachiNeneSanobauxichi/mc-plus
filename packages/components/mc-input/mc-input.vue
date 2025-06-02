@@ -66,7 +66,12 @@ import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
-import { numberFormatter } from "./formatter/number";
+import {
+  currencyFormatter,
+  currencyParser,
+  numberFormatter,
+  numberParser,
+} from "./formatter";
 
 // options
 defineOptions({ name: "McInput", inheritAttrs: false });
@@ -96,9 +101,12 @@ const nativeValue = computed(() =>
 
 // handle formatter
 const handleFormatter = (value: string) => {
-  // number formatter
   if (props.type === "number") {
+    // number formatter
     value = numberFormatter(value);
+  } else if (props.type === "currency") {
+    // currency formatter
+    value = currencyFormatter(value);
   }
 
   // custom formatter
@@ -111,9 +119,14 @@ const handleFormatter = (value: string) => {
 
 // handle parser
 const handleParser = (value: string) => {
-  // number parser
   if (props.type === "number") {
-    value = numberFormatter(value);
+    // number parser
+    value = numberParser(value);
+  } else if (props.type === "currency") {
+    console.log("accuracy: ", props.currencyAccuracy);
+
+    // currency parser
+    value = currencyParser(value, props.currencyAccuracy);
   }
 
   // custom parser
@@ -213,6 +226,14 @@ const blur = async () => {
 const select = () => {
   inputRef.value?.select();
 };
+
+// accuracy changed
+watch(
+  () => props.currencyAccuracy,
+  () => {
+    emit("update:modelValue", handleParser(nativeValue.value));
+  }
+);
 
 // input event
 const handleInput = (e: Event) => {

@@ -3,6 +3,7 @@
     <div class="show-value">
       <div>Value: {{ form }}</div>
       <div>Disabled: {{ disabled }}</div>
+      <div>Accuracy: {{ accuracy }}</div>
     </div>
     <div>
       <mc-icon name="Search" :size="32" />
@@ -32,6 +33,14 @@
             placeholder="Please enter your age"
           />
         </mc-form-item>
+        <mc-form-item label="Asset" prop="asset">
+          <mc-input
+            type="currency"
+            v-model="form.asset"
+            placeholder="Please enter your asset"
+            :currency-accuracy="accuracy"
+          />
+        </mc-form-item>
       </mc-form>
     </div>
     <div class="tool-bar">
@@ -39,13 +48,16 @@
       <mc-button @click="handleValidate">Validate</mc-button>
       <mc-button @click="handleClearValidate">Clear Validate</mc-button>
       <mc-button @click="handleResetFields">Reset</mc-button>
+      <mc-button @click="handleSetAccuracy">Set Accuracy</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton, McForm, McFormItem, McIcon } from "mc-plus";
+import { McButton, McIcon } from "mc-plus";
+import McForm from "../../components/mc-form/mc-form.vue";
+import McFormItem from "../../components/mc-form/mc-form-item.vue";
 import McInput from "../../components/mc-input/mc-input.vue";
 import type {
   FormRules,
@@ -58,15 +70,19 @@ const form = ref<{
   email: string;
   recurring: boolean;
   age: string;
+  asset: string;
 }>({
   name: "HirasawaYui",
   password: "123456",
   email: "yui@gmail.com",
   recurring: false,
   age: "16",
+  asset: "1300",
 });
 
 const formRef = ref<FormInstance>();
+
+const accuracy = ref<number>(8);
 
 const rules = ref<FormRules>({
   name: [{ required: true, message: "请输入名字" }],
@@ -83,7 +99,6 @@ const rules = ref<FormRules>({
     },
   ],
   email: [{ required: true, message: "请输入邮箱" }],
-  recurring: [{ required: true, message: "请选择是否定期" }],
 });
 
 const handleValidate = async () => {
@@ -106,6 +121,10 @@ const disabled = ref<boolean>(false);
 
 const changeDisabled = () => {
   disabled.value = !disabled.value;
+};
+
+const handleSetAccuracy = () => {
+  accuracy.value = accuracy.value === 8 ? 2 : 8;
 };
 </script>
 
