@@ -18,22 +18,6 @@ $success_line_color: var(--mc-success);
     gap: 12px;
   }
 
-  .mc-step-horizontal-number-container {
-    position: relative;
-    width: 40px;
-    height: 40px;
-
-    .mc-step-horizontal-item-number {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      top: 0;
-      left: 0;
-      z-index: 99;
-    }
-  }
-
   .mc-step-horizontal-line {
     position: absolute;
     width: 100%;

@@ -6,7 +6,7 @@
       <div>Success Step: {{ successStep }}</div>
     </div>
     <div class="content">
-      <mc-step-horizontal
+      <mc-step-vertical
         v-model="activeStep"
         :steps="steps"
         :success-step="successStep"
@@ -24,7 +24,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import McStepHorizontal from "../../components/mc-step/mc-step-horizontal/mc-step-horizontal.vue";
+// import McStepHorizontal from "../../components/mc-step/mc-step-horizontal/mc-step-horizontal.vue";
+import McStepVertical from "../../components/mc-step/mc-step-vertical/mc-step-vertical.vue";
 import type { StepItem } from "@mc-plus/components/mc-step/types";
 import { McButton } from "mc-plus";
 

@@ -10,8 +10,8 @@
       v-for="(step, index) in steps"
       :key="step.key"
     >
-      <div class="mc-step-horizontal-number-container">
-        <div class="mc-step-item-number mc-step-horizontal-item-number">
+      <div class="mc-step-number-container">
+        <div class="mc-step-item-number">
           <template v-if="!isSuccess(index) || step.disabled">
             <span class="mc-step-item-number-text">{{ index + 1 }}</span>
           </template>

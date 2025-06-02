@@ -24,15 +24,25 @@ $number_color_disabled: var(--mc-gray-500);
     font-weight: inherit;
   }
 
-  .mc-step-item-number {
+  .mc-step-number-container {
+    position: relative;
     width: 40px;
     height: 40px;
+  }
+
+  .mc-step-item-number {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     background-color: $bg_color_white;
     color: $number_color;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    cursor: default;
     @include mixins.flex-center;
     @include mixins.shadow;
-    cursor: default;
 
     .mc-step-item-number-text {
       width: 36px;
