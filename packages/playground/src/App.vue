@@ -10,6 +10,7 @@
         v-model="activeStep"
         :steps="steps"
         :success-step="successStep"
+        @change="(val) => handleStepChange(val)"
       />
     </div>
     <div class="tool-bar">
@@ -76,6 +77,10 @@ const handleSetSuccess = () => {
   if (successStep.value > steps.value.length) {
     successStep.value = 0;
   }
+};
+
+const handleStepChange = (val: string | number) => {
+  console.log("Step: ", val);
 };
 </script>
 
