@@ -61,14 +61,15 @@ import type {
   FormInstance,
 } from "@mc-plus/components/mc-form/types";
 
-const form = ref<{
+type FormState = {
   name: string;
   password: string;
   email: string;
   recurring: boolean;
   age: string;
   asset: string;
-}>({
+};
+const form = ref<FormState>({
   name: "HirasawaYui",
   password: "123456",
   email: "yui@gmail.com",
@@ -81,12 +82,12 @@ const formRef = ref<FormInstance>();
 
 const accuracy = ref<number>(8);
 
-const rules = ref<FormRules>({
+const rules = ref<FormRules<FormState>>({
   name: [{ required: true, message: "请输入名字" }],
   password: [
     {
       required: true,
-      validator: (_, value, callback) => {
+      validator: (_, value: string, callback) => {
         if (value.length < 6) {
           callback(new Error("密码长度不能小于6位"));
         } else {
