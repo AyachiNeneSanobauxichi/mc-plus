@@ -2,3 +2,16 @@
 
 $unsuccess_line_color: var(--mc-gray-400);
 $success_line_color: var(--mc-success);
+
+.mc-step-vertical {
+  .mc-step-vertical-item {
+    display: flex;
+    gap: 10px;
+    min-height: 56px;
+
+    .mc-step-item-label-vertical,
+    .mc-step-item-desc-vertical {
+      justify-content: left;
+    }
+  }
+}

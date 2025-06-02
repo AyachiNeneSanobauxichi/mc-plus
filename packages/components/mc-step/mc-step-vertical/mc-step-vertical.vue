@@ -5,14 +5,19 @@
       :class="{
         'mc-step-item-active': modelValue === step.key,
         'mc-step-item-disabled': step.disabled,
-        'mc-step-item-success': false,
+        'mc-step-item-success': isSuccess(index),
       }"
       v-for="(step, index) in steps"
       :key="step.key"
     >
       <div class="mc-step-number-container">
         <div class="mc-step-item-number">
-          <span class="mc-step-item-number-text">{{ index + 1 }}</span>
+          <template v-if="!isSuccess(index) || step.disabled">
+            <span class="mc-step-item-number-text">{{ index + 1 }}</span>
+          </template>
+          <template v-else>
+            <mc-success />
+          </template>
         </div>
       </div>
       <div class="mc-step-item-content">
@@ -22,6 +27,12 @@
         <p class="mc-step-item-desc mc-step-item-desc-vertical">
           {{ step.desc }}
         </p>
+        <div
+          class="mc-step-item-component mc-step-item-component-vertical"
+          v-if="step.component && step.key === modelValue"
+        >
+          <component :is="step.component" />
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +41,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { StepEmits, StepInstance, StepProps } from "../types";
+import { findIndex } from "lodash-es";
+import McSuccess from "../../mc-success-icon/mc-success-icon.vue";
 
 // options
 defineOptions({
@@ -45,6 +58,13 @@ const emit = defineEmits<StepEmits>();
 
 // ref
 const _ref = ref<HTMLDivElement>();
+
+// success
+const isSuccess = (index: number) => {
+  return (
+    findIndex(props.steps, (step) => step.key === props.successStep) >= index
+  );
+};
 
 // expose
 defineExpose<StepInstance>({

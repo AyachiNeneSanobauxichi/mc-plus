@@ -28,37 +28,47 @@ import { ref } from "vue";
 import McStepVertical from "../../components/mc-step/mc-step-vertical/mc-step-vertical.vue";
 import type { StepItem } from "@mc-plus/components/mc-step/types";
 import { McButton } from "mc-plus";
+import Step1 from "./views/step1.vue";
+import Step2 from "./views/step2.vue";
+import Step3 from "./views/step3.vue";
+import Step4 from "./views/step4.vue";
+import Step5 from "./views/step5.vue";
 
 const disabled = ref<boolean>(false);
 
 const activeStep = ref<number>(4);
-const successStep = ref<number>(3);
+const successStep = ref<number>(0);
 
 const steps = ref<StepItem[]>([
   {
     key: 1,
     label: "Hirasawa Yui",
     desc: "yui",
+    component: Step1,
   },
   {
     key: 2,
     label: "Akiyama Mio",
     desc: "mio",
+    component: Step2,
   },
   {
     key: 3,
     label: "Nakano Azusa",
     desc: "azusa",
+    component: Step3,
   },
   {
     key: 4,
     label: "Tainaka Ritsu",
     desc: "Ritsu",
+    component: Step4,
   },
   {
     key: 5,
     label: "Kotobuku Tsumugi",
     desc: "Mugi",
+    component: Step5,
   },
 ]);
 

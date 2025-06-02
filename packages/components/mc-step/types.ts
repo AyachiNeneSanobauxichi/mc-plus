@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref } from "vue";
+import type { Component, ComputedRef, Ref } from "vue";
 
 export type StepKey = string | number;
 
@@ -7,6 +7,7 @@ export interface StepItem {
   label?: string;
   desc?: string;
   disabled?: boolean | ComputedRef<boolean> | Ref<boolean>;
+  component?: Component;
 }
 
 export interface StepProps {
