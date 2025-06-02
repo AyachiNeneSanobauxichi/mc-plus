@@ -37,11 +37,17 @@
         </transition>
       </div>
     </div>
+    <div
+      ref="unsuccessLineRef"
+      class="mc-step-vertical-line mc-step-vertical-unsuccess-line"
+    >
+      <div ref="successLineRef" class="mc-step-vertical-success-line"></div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { StepEmits, StepInstance, StepProps } from "../types";
 import { findIndex } from "lodash-es";
 import McSuccess from "../../mc-success-icon/mc-success-icon.vue";
@@ -58,8 +64,18 @@ const props = defineProps<StepProps>();
 // emit
 const emit = defineEmits<StepEmits>();
 
+// value changed
+watch(
+  () => props.modelValue,
+  (value) => {
+    emit("change", value);
+  }
+);
+
 // ref
 const _ref = ref<HTMLDivElement>();
+const unsuccessLineRef = ref<HTMLDivElement>();
+const successLineRef = ref<HTMLDivElement>();
 
 // success
 const isSuccess = (index: number) => {
