@@ -2,7 +2,7 @@ $text-color: var(--mc-gray-500);
 $text-color-error: var(--mc-error);
 
 .mc-form-item {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   position: relative;
   .mc-form-item__label {
     position: relative;
@@ -27,7 +27,7 @@ $text-color-error: var(--mc-error);
 
   .mc-form-item__error {
     position: absolute;
-    bottom: -24px;
+    bottom: -20px;
     left: 0;
     color: $text-color-error;
     font-size: 12px;

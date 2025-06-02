@@ -10,7 +10,9 @@ export type FormItemTrigger = "change" | "blur";
 export interface FormItemRule extends RuleItem {
   trigger?: FormItemTrigger | FormItemTrigger[];
 }
-export type FormRules = Record<string, FormItemRule[]>;
+export type FormRules<T extends Record<string, any> = any> = Partial<
+  Record<keyof T, FormItemRule[]>
+>;
 
 export type FormValidateResult = Promise<boolean>;
 export type FormValidateCallback = (

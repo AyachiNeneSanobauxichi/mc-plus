@@ -3,6 +3,7 @@
     <div class="show-value">
       <div>Value: {{ form }}</div>
       <div>Disabled: {{ disabled }}</div>
+      <div>Accuracy: {{ accuracy }}</div>
     </div>
     <div>
       <mc-icon name="Search" :size="32" />
@@ -24,6 +25,22 @@
             placeholder="Please enter your email"
           />
         </mc-form-item>
+        <mc-form-item label="Age" prop="age">
+          <mc-input
+            :maxlength="3"
+            type="number"
+            v-model="form.age"
+            placeholder="Please enter your age"
+          />
+        </mc-form-item>
+        <mc-form-item label="Asset" prop="asset">
+          <mc-input
+            type="currency"
+            v-model="form.asset"
+            placeholder="Please enter your asset"
+            :currency-accuracy="accuracy"
+          />
+        </mc-form-item>
       </mc-form>
     </div>
     <div class="tool-bar">
@@ -31,38 +48,46 @@
       <mc-button @click="handleValidate">Validate</mc-button>
       <mc-button @click="handleClearValidate">Clear Validate</mc-button>
       <mc-button @click="handleResetFields">Reset</mc-button>
+      <mc-button @click="handleSetAccuracy">Set Accuracy</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton, McForm, McFormItem, McInput, McIcon } from "mc-plus";
+import { McButton, McIcon, McForm, McFormItem, McInput } from "mc-plus";
 import type {
   FormRules,
   FormInstance,
 } from "@mc-plus/components/mc-form/types";
 
-const form = ref<{
+type FormState = {
   name: string;
   password: string;
   email: string;
   recurring: boolean;
-}>({
+  age: string;
+  asset: string;
+};
+const form = ref<FormState>({
   name: "HirasawaYui",
   password: "123456",
   email: "yui@gmail.com",
   recurring: false,
+  age: "16",
+  asset: "1300",
 });
 
 const formRef = ref<FormInstance>();
 
-const rules = ref<FormRules>({
+const accuracy = ref<number>(8);
+
+const rules = ref<FormRules<FormState>>({
   name: [{ required: true, message: "请输入名字" }],
   password: [
     {
       required: true,
-      validator: (_, value, callback) => {
+      validator: (_, value: string, callback) => {
         if (value.length < 6) {
           callback(new Error("密码长度不能小于6位"));
         } else {
@@ -72,7 +97,6 @@ const rules = ref<FormRules>({
     },
   ],
   email: [{ required: true, message: "请输入邮箱" }],
-  recurring: [{ required: true, message: "请选择是否定期" }],
 });
 
 const handleValidate = async () => {
@@ -95,6 +119,10 @@ const disabled = ref<boolean>(false);
 
 const changeDisabled = () => {
   disabled.value = !disabled.value;
+};
+
+const handleSetAccuracy = () => {
+  accuracy.value = accuracy.value === 8 ? 2 : 8;
 };
 </script>
 
