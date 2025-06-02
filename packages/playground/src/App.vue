@@ -15,12 +15,13 @@
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Disable</mc-button>
       <mc-button @click="handleSetStep">Set Step</mc-button>
+      <mc-button @click="handleSetSuccess">Set Success</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import McStepHorizontal from "../../components/mc-step/mc-step-horizontal/mc-step-horizontal.vue";
 import type { StepItem } from "@mc-plus/components/mc-step/types";
 import { McButton } from "mc-plus";
@@ -28,9 +29,7 @@ import { McButton } from "mc-plus";
 const disabled = ref<boolean>(false);
 
 const activeStep = ref<number>(1);
-const successStep = computed(() => {
-  return activeStep.value - 1;
-});
+const successStep = ref<number>(0);
 
 const steps = ref<StepItem[]>([
   {
@@ -58,6 +57,13 @@ const handleSetStep = () => {
   activeStep.value = activeStep.value + 1;
   if (activeStep.value > steps.value.length) {
     activeStep.value = 1;
+  }
+};
+
+const handleSetSuccess = () => {
+  successStep.value = successStep.value + 1;
+  if (successStep.value > steps.value.length) {
+    successStep.value = 0;
   }
 };
 </script>

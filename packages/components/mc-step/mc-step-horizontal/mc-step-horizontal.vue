@@ -11,7 +11,7 @@
       :key="step.key"
     >
       <div class="mc-step-item-number">
-        <template v-if="!isSuccess(index)">
+        <template v-if="!isSuccess(index) || step.disabled">
           <span class="mc-step-item-number-text">{{ index + 1 }}</span>
         </template>
         <template v-else>

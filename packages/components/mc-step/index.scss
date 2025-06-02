@@ -95,6 +95,20 @@ $number_color_disabled: var(--mc-gray-500);
 
     /* disabled */
     &.mc-step-item-disabled {
+      .mc-step-item-number {
+        background-color: $bg_color_white;
+        color: $number_color_disabled;
+        .mc-step-item-number-text {
+          background-color: $bg_color_disabled;
+        }
+      }
+
+      .mc-step-item-label {
+        color: $text_color_disabled;
+      }
+      .mc-step-item-desc {
+        color: $text_color_disabled;
+      }
     }
   }
 }
