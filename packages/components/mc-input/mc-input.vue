@@ -123,8 +123,6 @@ const handleParser = (value: string) => {
     // number parser
     value = numberParser(value);
   } else if (props.type === "currency") {
-    console.log("accuracy: ", props.currencyAccuracy);
-
     // currency parser
     value = currencyParser(value, props.currencyAccuracy);
   }

@@ -200,11 +200,11 @@ const handleValidate = (
 ) => {
   // resetting || prop not exist || disabled
   if (isResetting || !props.prop || isDisabled.value)
-    return Promise.reject(false);
+    return Promise.resolve(true);
   // rules not exist
   if (!validateEnabled.value) {
-    callback?.(false);
-    return Promise.reject(false);
+    callback?.(true);
+    return Promise.resolve(true);
   }
 
   // rules
