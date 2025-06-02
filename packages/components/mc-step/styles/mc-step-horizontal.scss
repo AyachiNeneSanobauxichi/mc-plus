@@ -1,5 +1,3 @@
-@use "../index.scss";
-
 $unsuccess_line_color: var(--mc-gray-400);
 $success_line_color: var(--mc-success);
 
@@ -10,7 +8,7 @@ $success_line_color: var(--mc-success);
   justify-content: space-between;
   position: relative;
 
-  .mc-step-horizontal-item {
+  .mc-step-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,13 +16,13 @@ $success_line_color: var(--mc-success);
     gap: 12px;
   }
 
-  .mc-step-horizontal-line {
+  .mc-step-line {
     position: absolute;
     width: 100%;
     top: 20px;
     left: 0;
 
-    &.mc-step-horizontal-unsuccess-line {
+    &.mc-step-unsuccess-line {
       border: 1.5px solid transparent;
       border-image: repeating-linear-gradient(
           to right,
@@ -35,7 +33,7 @@ $success_line_color: var(--mc-success);
         )
         1;
 
-      .mc-step-horizontal-success-line {
+      .mc-step-success-line {
         position: absolute;
         width: 100%;
         top: -1.5px;

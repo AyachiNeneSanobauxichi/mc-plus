@@ -2,6 +2,8 @@ import type { Component, ComputedRef, Ref } from "vue";
 
 export type StepKey = string | number;
 
+export type StepType = "horizontal" | "vertical";
+
 export interface StepItem {
   key: StepKey;
   label?: string;
@@ -13,6 +15,7 @@ export interface StepItem {
 export interface StepProps {
   modelValue: StepKey;
   steps: StepItem[];
+  type?: StepType;
   successStep?: StepKey;
 }
 

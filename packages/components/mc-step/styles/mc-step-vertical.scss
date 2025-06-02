@@ -1,12 +1,10 @@
-@use "../index.scss";
-
 $unsuccess_line_color: var(--mc-gray-400);
 $success_line_color: var(--mc-success);
 
 .mc-step-vertical {
   position: relative;
 
-  .mc-step-vertical-item {
+  .mc-step-item {
     display: flex;
     gap: 10px;
     min-height: 56px;
@@ -15,23 +13,23 @@ $success_line_color: var(--mc-success);
       flex: 1;
     }
 
-    .mc-step-item-label-vertical,
-    .mc-step-item-desc-vertical {
+    .mc-step-item-label,
+    .mc-step-item-desc {
       justify-content: left;
     }
   }
 
-  .mc-step-item-component-vertical {
+  .mc-step-item-component {
     margin: 16px 0 24px;
   }
 
-  .mc-step-vertical-line {
+  .mc-step-line {
     position: absolute;
     height: calc(100% - 24px);
     top: 0;
     left: 20px;
 
-    &.mc-step-vertical-unsuccess-line {
+    &.mc-step-unsuccess-line {
       border: 1.5px solid transparent;
       border-image: repeating-linear-gradient(
           to bottom,
@@ -42,7 +40,7 @@ $success_line_color: var(--mc-success);
         )
         1;
 
-      .mc-step-vertical-success-line {
+      .mc-step-success-line {
         position: absolute;
         height: 100%;
         left: -1.5px;
