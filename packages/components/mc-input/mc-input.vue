@@ -7,6 +7,7 @@
       'mc-input--inputed': modelValue,
       [`mc-input--${validateStyle}`]: validateStyle,
     }"
+    :style="{ width, height }"
     ref="wrapperRef"
   >
     <div class="mc-input__prefix" v-if="$slots.prefix || prefixIcon">
@@ -246,7 +247,6 @@ watch(
 // model value changed
 watch(nativeValue, () => {
   setNativeValue();
-  console.log("model value changed");
   formItem?.validate("change");
 });
 
