@@ -11,7 +11,12 @@
       :key="step.key"
     >
       <div class="mc-step-item-number">
-        <span class="mc-step-item-number-text">{{ index + 1 }}</span>
+        <template v-if="!isSuccess(index)">
+          <span class="mc-step-item-number-text">{{ index + 1 }}</span>
+        </template>
+        <template v-else>
+          <mc-success />
+        </template>
       </div>
       <div class="mc-step-item-content">
         <h3 class="mc-step-item-label">{{ step.label }}</h3>
@@ -23,8 +28,9 @@
 
 <script setup lang="ts">
 import type { StepEmits, StepInstance, StepProps } from "../types";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { findIndex } from "lodash-es";
+import McSuccess from "../../mc-success/mc-success.vue";
 
 // options
 defineOptions({
@@ -37,6 +43,14 @@ const props = defineProps<StepProps>();
 
 // emit
 const emit = defineEmits<StepEmits>();
+
+// value changed
+watch(
+  () => props.modelValue,
+  (value) => {
+    emit("change", value);
+  }
+);
 
 // ref
 const _ref = ref<HTMLDivElement>();

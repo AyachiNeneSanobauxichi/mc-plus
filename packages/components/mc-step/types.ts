@@ -1,4 +1,4 @@
-import type { Ref } from "vue";
+import type { ComputedRef, Ref } from "vue";
 
 export type StepKey = string | number;
 
@@ -6,7 +6,7 @@ export interface StepItem {
   key: StepKey;
   label?: string;
   desc?: string;
-  disabled?: boolean;
+  disabled?: boolean | ComputedRef<boolean> | Ref<boolean>;
 }
 
 export interface StepProps {
