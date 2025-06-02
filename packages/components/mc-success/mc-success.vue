@@ -14,7 +14,7 @@
       class="tick"
       fill="none"
       stroke-width="26"
-      points="88,214 173,284 304,138"
+      points="120,214 173,260 274,160"
       stroke-linecap="round"
       stroke-linejoin="round"
     ></polyline>
