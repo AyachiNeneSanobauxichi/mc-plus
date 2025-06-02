@@ -16,6 +16,7 @@
       <mc-button @click="changeDisabled">Disable</mc-button>
       <mc-button @click="handleSetStep">Set Step</mc-button>
       <mc-button @click="handleSetSuccess">Set Success</mc-button>
+      <mc-button @click="successStep = 4">Set Success 4</mc-button>
     </div>
   </div>
 </template>
@@ -46,6 +47,16 @@ const steps = ref<StepItem[]>([
     key: 3,
     label: "Nakano Azusa",
     desc: "azusa",
+  },
+  {
+    key: 4,
+    label: "Tainaka Ritsu",
+    desc: "Ritsu",
+  },
+  {
+    key: 5,
+    label: "Kotobuku Tsumugi",
+    desc: "Mugi",
   },
 ]);
 
@@ -78,7 +89,7 @@ const handleSetSuccess = () => {
   position: relative;
 
   .content {
-    width: 820px;
+    width: 1020px;
   }
 
   .tool-bar {

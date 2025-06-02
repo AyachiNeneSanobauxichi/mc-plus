@@ -21,5 +21,6 @@ export * from "./mc-toast";
 export * from "./mc-tooltip";
 // refactor
 export * from "./mc-form";
-export * from "./mc-icon";
 export * from "./mc-input";
+export * from "./mc-icon";
+export * from "./mc-success-icon";

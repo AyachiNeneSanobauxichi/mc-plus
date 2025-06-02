@@ -1,6 +1,7 @@
 @use "../index.scss";
 
 $unsuccess_line_color: var(--mc-gray-400);
+$success_line_color: var(--mc-success);
 
 .mc-step-horizontal {
   width: 100%;
@@ -40,7 +41,7 @@ $unsuccess_line_color: var(--mc-gray-400);
     left: 0;
 
     &.mc-step-horizontal-unsuccess-line {
-      border: 1.2px solid transparent;
+      border: 1.5px solid transparent;
       border-image: repeating-linear-gradient(
           to right,
           $unsuccess_line_color 0,
@@ -49,6 +50,17 @@ $unsuccess_line_color: var(--mc-gray-400);
           transparent 8px
         )
         1;
+
+      .mc-step-horizontal-success-line {
+        position: absolute;
+        width: 100%;
+        top: -1.5px;
+        border: 1.5px solid $success_line_color;
+        z-index: 10;
+        transition: transform 0.5s ease-in-out;
+        transform-origin: left;
+        transform: scaleX(0);
+      }
     }
   }
 }

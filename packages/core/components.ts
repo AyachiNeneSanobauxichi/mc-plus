@@ -15,6 +15,7 @@ import {
   McFormItem,
   McInput,
   McIcon,
+  McSuccessIcon,
 } from "@mc-plus/components";
 
 export default [
@@ -33,4 +34,5 @@ export default [
   McFormItem,
   McInput,
   McIcon,
+  McSuccessIcon,
 ] as Plugin[];

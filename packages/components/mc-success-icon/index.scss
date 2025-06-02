@@ -1,20 +1,6 @@
 $bg_color_white: var(--mc-white);
 $bg_color_success: var(--mc-success);
 
-@keyframes circle {
-  from {
-    stroke-dashoffset: 1194;
-    fill: $bg_color_white;
-  }
-  99.9% {
-    fill: $bg_color_white;
-  }
-  to {
-    stroke-dashoffset: 2388;
-    fill: $bg_color_success;
-  }
-}
-
 @keyframes tick {
   from {
     stroke-dashoffset: 350;
@@ -30,15 +16,15 @@ $bg_color_success: var(--mc-success);
   height: 100%;
   .circle {
     stroke-dasharray: 1194;
-    stroke-dashoffset: 1194;
     stroke: $bg_color_success;
-    animation: circle 0.8s ease-in-out forwards;
+    stroke-dashoffset: 2388;
+    fill: $bg_color_success;
   }
 
   .tick {
     stroke-dasharray: 350;
     stroke-dashoffset: 350;
     stroke: $bg_color_white;
-    animation: tick 0.8s 1.2s ease-in-out forwards;
+    animation: tick 0.8s ease-in-out forwards;
   }
 }

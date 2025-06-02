@@ -28,8 +28,9 @@
     <div
       ref="unsuccessLineRef"
       class="mc-step-horizontal-line mc-step-horizontal-unsuccess-line"
-    ></div>
-    <!-- <div class="mc-step-horizontal-success-line"></div> -->
+    >
+      <div ref="successLineRef" class="mc-step-horizontal-success-line"></div>
+    </div>
   </div>
 </template>
 
@@ -37,7 +38,7 @@
 import type { StepEmits, StepInstance, StepProps } from "../types";
 import { onMounted, ref, watch } from "vue";
 import { findIndex } from "lodash-es";
-import McSuccess from "../../mc-success/mc-success.vue";
+import McSuccess from "../../mc-success-icon/mc-success-icon.vue";
 
 // options
 defineOptions({
@@ -62,7 +63,7 @@ watch(
 // ref
 const _ref = ref<HTMLDivElement>();
 const unsuccessLineRef = ref<HTMLDivElement>();
-// const successLineRef = ref<HTMLDivElement>();
+const successLineRef = ref<HTMLDivElement>();
 
 // success
 const isSuccess = (index: number) => {
@@ -72,6 +73,11 @@ const isSuccess = (index: number) => {
 };
 
 onMounted(() => {
+  setLineWidth();
+});
+
+// set line width
+const setLineWidth = () => {
   const container = _ref.value!;
   const unsuccessLine = unsuccessLineRef.value!;
   const items = container.querySelectorAll(".mc-step-horizontal-item");
@@ -93,7 +99,31 @@ onMounted(() => {
 
   unsuccessLine.style.width = `${lastItemRect.left - firstItemRect.left}px`;
   unsuccessLine.style.left = `${firstItemRect.left - containerRect.left}px`;
-});
+};
+
+// set success line
+const setSuccessLine = () => {
+  const successStep = props.successStep;
+  const successLine = successLineRef.value!;
+
+  const successIdx = findIndex(props.steps, (item) => item.key === successStep);
+  if (successIdx < 0) {
+    successLine.style.transform = "scaleX(0)";
+    return;
+  }
+
+  const _percent = (successIdx + 1) / (props.steps.length - 1);
+  const percent = _percent > 1 ? 1 : _percent;
+  successLine.style.transform = `scaleX(${percent})`;
+};
+
+// success step changed
+watch(
+  () => props.successStep,
+  () => {
+    setSuccessLine();
+  }
+);
 
 // expose
 defineExpose<StepInstance>({
