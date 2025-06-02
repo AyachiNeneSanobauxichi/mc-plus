@@ -6,6 +6,7 @@
     </div>
     <div class="content">
       <mc-step
+        type="horizontal"
         v-model="activeStep"
         :steps="steps"
         @change="(val) => handleStepChange(val)"
@@ -20,9 +21,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import McStep from "../../components/mc-step/mc-step.vue";
-import type { StepItem } from "@mc-plus/components/mc-step/types";
-import { McButton } from "mc-plus";
+import { McButton, McStep, type StepItem } from "mc-plus";
 import Step1 from "./views/step1.vue";
 import Step2 from "./views/step2.vue";
 import Step3 from "./views/step3.vue";
