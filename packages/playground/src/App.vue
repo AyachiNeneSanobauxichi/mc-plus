@@ -26,6 +26,7 @@
         </mc-form-item>
         <mc-form-item label="Age" prop="age">
           <mc-input
+            :maxlength="3"
             type="number"
             v-model="form.age"
             placeholder="Please enter your age"

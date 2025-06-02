@@ -23,6 +23,7 @@
       :autocomplete="autocomplete"
       :placeholder="placeholder"
       :autofocus="autofocus"
+      :maxlength="maxlength"
       @input="handleInput"
       @change="handleChange"
       @focus="handleFocus"
@@ -245,6 +246,7 @@ watch(
 // model value changed
 watch(nativeValue, () => {
   setNativeValue();
+  console.log("model value changed");
   formItem?.validate("change");
 });
 

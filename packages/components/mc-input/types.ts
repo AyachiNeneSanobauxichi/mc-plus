@@ -20,6 +20,7 @@ export interface InputProps {
   autofocus?: boolean;
   prefixIcon?: IconType;
   suffixIcon?: IconType;
+  maxlength?: number;
   formatter?: InputFormatter;
   parser?: InputParser;
 }
