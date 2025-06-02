@@ -16,14 +16,14 @@ export interface StepProps {
   modelValue: StepKey;
   steps: StepItem[];
   type?: StepType;
-  successStep?: StepKey;
 }
 
 export interface StepEmits {
-  (e: "update:modelValue", value: StepKey): void;
   (e: "change", value: StepKey): void;
+  (e: "success", value: StepKey): void;
 }
 
 export interface StepInstance {
   ref: Ref<HTMLDivElement | void>;
+  setSuccessStep: (key: StepKey) => void;
 }

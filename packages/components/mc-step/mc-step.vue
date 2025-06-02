@@ -5,14 +5,14 @@
       :class="{
         'mc-step-item-active': modelValue === step.key,
         'mc-step-item-disabled': step.disabled,
-        'mc-step-item-success': isSuccess(index),
+        'mc-step-item-success': index <= successStepIndex,
       }"
       v-for="(step, index) in steps"
       :key="step.key"
     >
       <div class="mc-step-number-container">
         <div class="mc-step-item-number">
-          <template v-if="!isSuccess(index) || step.disabled">
+          <template v-if="index > successStepIndex || step.disabled">
             <span class="mc-step-item-number-text">{{ index + 1 }}</span>
           </template>
           <template v-else>
@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from "vue";
-import type { StepEmits, StepInstance, StepProps } from "./types";
+import type { StepEmits, StepInstance, StepKey, StepProps } from "./types";
 import { findIndex, throttle } from "lodash-es";
 import McSuccess from "../mc-success-icon/mc-success-icon.vue";
 import useWindowResize from "@mc-plus/hooks/useWindowResize";
@@ -73,8 +73,10 @@ const emit = defineEmits<StepEmits>();
 watch(
   () => props.modelValue,
   async (value) => {
+    await nextTick();
+    const successStep = props.steps[currentStepIndex.value - 1]?.key;
+    setSuccessStep(successStep);
     if (isVertical.value) {
-      await nextTick();
       setVerticalSuccessLine();
     }
     emit("change", value);
@@ -86,12 +88,24 @@ const _ref = ref<HTMLDivElement>();
 const unsuccessLineRef = ref<HTMLDivElement>();
 const successLineRef = ref<HTMLDivElement>();
 
-// success
-const isSuccess = (index: number) => {
-  return (
-    findIndex(props.steps, (step) => step.key === props.successStep) >= index
-  );
+// current step index
+const currentStepIndex = computed(() => {
+  return findIndex(props.steps, (step) => step.key === props.modelValue);
+});
+
+// success step
+const successStep = ref<StepKey>();
+
+// set success step
+const setSuccessStep = (key: StepKey) => {
+  successStep.value = key;
+  emit("success", key);
 };
+
+// success step index
+const successStepIndex = computed(() => {
+  return findIndex(props.steps, (step) => step.key === successStep.value);
+});
 
 onMounted(() => {
   if (isVertical.value) {
@@ -104,10 +118,7 @@ onMounted(() => {
 
 // set vertical success line
 const setVerticalSuccessLine = () => {
-  const index = findIndex(
-    props.steps,
-    (step) => step.key === props.successStep
-  );
+  const index = successStepIndex.value;
 
   const successLine = successLineRef.value!;
   if (index < 0) {
@@ -159,10 +170,8 @@ const setHorizontalLineWidth = () => {
 
 // set horizontal success line
 const setHorizontalSuccessLine = () => {
-  const successStep = props.successStep;
   const successLine = successLineRef.value!;
-
-  const successIdx = findIndex(props.steps, (item) => item.key === successStep);
+  const successIdx = successStepIndex.value;
   if (successIdx < 0) {
     successLine.style.transform = "scaleX(0)";
     return;
@@ -175,7 +184,7 @@ const setHorizontalSuccessLine = () => {
 
 // success step changed
 watch(
-  () => props.successStep,
+  () => successStep.value,
   () => {
     if (isVertical.value) {
       setVerticalSuccessLine();
@@ -200,6 +209,7 @@ useWindowResize(
 // expose
 defineExpose<StepInstance>({
   ref: _ref,
+  setSuccessStep,
 });
 </script>
 

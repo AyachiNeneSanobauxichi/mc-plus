@@ -3,22 +3,17 @@
     <div class="show-value">
       <div>Disabled: {{ disabled }}</div>
       <div>Active Step: {{ activeStep }}</div>
-      <div>Success Step: {{ successStep }}</div>
     </div>
     <div class="content">
       <mc-step
-        type="horizontal"
         v-model="activeStep"
         :steps="steps"
-        :success-step="successStep"
         @change="(val) => handleStepChange(val)"
       />
     </div>
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Disable</mc-button>
       <mc-button @click="handleSetStep">Set Step</mc-button>
-      <mc-button @click="handleSetSuccess">Set Success</mc-button>
-      <mc-button @click="successStep = 4">Set Success 4</mc-button>
     </div>
   </div>
 </template>
@@ -37,7 +32,6 @@ import Step5 from "./views/step5.vue";
 const disabled = ref<boolean>(false);
 
 const activeStep = ref<number>(4);
-const successStep = ref<number>(0);
 
 const steps = ref<StepItem[]>([
   {
@@ -80,13 +74,6 @@ const handleSetStep = () => {
   activeStep.value = activeStep.value + 1;
   if (activeStep.value > steps.value.length) {
     activeStep.value = 1;
-  }
-};
-
-const handleSetSuccess = () => {
-  successStep.value = successStep.value + 1;
-  if (successStep.value > steps.value.length) {
-    successStep.value = 0;
   }
 };
 
