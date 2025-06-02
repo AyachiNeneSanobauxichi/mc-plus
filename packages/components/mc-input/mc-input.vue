@@ -17,7 +17,7 @@
     <input
       class="mc-input__inner"
       ref="inputRef"
-      :type="isPassword ? (passwordVisible ? 'text' : 'password') : type"
+      :type="isPassword ? (passwordVisible ? 'text' : 'password') : 'text'"
       :disabled="isDisabled"
       :readonly="readonly"
       :autocomplete="autocomplete"
