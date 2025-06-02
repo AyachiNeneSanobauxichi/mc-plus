@@ -19,7 +19,9 @@ export * from "./mc-table";
 export * from "./mc-tag";
 export * from "./mc-toast";
 export * from "./mc-tooltip";
+export * from "./mc-step";
 // refactor
 export * from "./mc-form";
-export * from "./mc-icon";
 export * from "./mc-input";
+export * from "./mc-icon";
+export * from "./mc-success-icon";

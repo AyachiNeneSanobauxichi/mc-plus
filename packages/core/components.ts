@@ -11,10 +11,12 @@ import {
   McSelectGroup,
   McSelectOption,
   McCheckbox,
+  McStep,
   McForm,
   McFormItem,
   McInput,
   McIcon,
+  McSuccessIcon,
 } from "@mc-plus/components";
 
 export default [
@@ -29,8 +31,10 @@ export default [
   McSelectGroup,
   McSelectOption,
   McCheckbox,
+  McStep,
   McForm,
   McFormItem,
   McInput,
   McIcon,
+  McSuccessIcon,
 ] as Plugin[];
