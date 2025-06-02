@@ -1,0 +1,72 @@
+@use "@mc-plus/theme/mixins.scss" as mixins;
+
+$text_color: var(--mc-gray-500);
+$text_color_desc: var(--mc-gray-800);
+$text_color_active: var(--mc-purple-500);
+$text_color_success: var(--mc-success);
+$text_color_disabled: var(--mc-gray-500);
+$bg_color: var(--mc-gray-200);
+$bg_color_active: var(--mc-purple-500);
+$bg_color_success: var(--mc-success);
+$bg_color_disabled: var(--mc-gray-100);
+$bg_color_white: var(--mc-white);
+$number_color: var(--mc-gray-800);
+$number_color_active: var(--mc-white);
+$number_color_disabled: var(--mc-gray-500);
+
+.mc-step {
+  h3,
+  p {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    font-weight: inherit;
+  }
+
+  .mc-step-item-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $bg_color_white;
+    color: $number_color;
+    @include mixins.flex-center;
+    @include mixins.shadow;
+    cursor: default;
+
+    .mc-step-item-number-text {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: $bg_color;
+      @include mixins.flex-center;
+    }
+  }
+
+  .mc-step-item-content {
+    .mc-step-item-label {
+      width: 100%;
+      height: 24px;
+      font-weight: 600;
+      font-size: 16px;
+      color: $text_color;
+      @include mixins.flex-center;
+    }
+
+    .mc-step-item-desc {
+      font-size: 14px;
+      color: $text_color_desc;
+      width: 100%;
+      height: 20px;
+      @include mixins.flex-center;
+    }
+  }
+
+  .mc-step-item {
+    /* active */
+    &.mc-step-item-active {
+    }
+
+    /* disabled */
+  }
+}

@@ -1,128 +1,64 @@
 <template>
   <div class="container">
     <div class="show-value">
-      <div>Value: {{ form }}</div>
       <div>Disabled: {{ disabled }}</div>
-      <div>Accuracy: {{ accuracy }}</div>
+      <div>Active Step: {{ activeStep }}</div>
+      <div>Success Step: {{ successStep }}</div>
     </div>
-    <div>
-      <mc-icon name="Search" :size="32" />
-      <mc-form :model="form" :rules="rules" ref="formRef" :disabled="disabled">
-        <mc-form-item label="Name" prop="name">
-          <mc-input v-model="form.name" placeholder="Please enter your name" />
-        </mc-form-item>
-        <mc-form-item label="Password" prop="password">
-          <mc-input
-            type="password"
-            v-model="form.password"
-            placeholder="Please enter your password"
-          />
-        </mc-form-item>
-        <mc-form-item label="Email" prop="email">
-          <mc-input
-            prefix-icon="Search"
-            v-model="form.email"
-            placeholder="Please enter your email"
-          />
-        </mc-form-item>
-        <mc-form-item label="Age" prop="age">
-          <mc-input
-            :maxlength="3"
-            type="number"
-            v-model="form.age"
-            placeholder="Please enter your age"
-          />
-        </mc-form-item>
-        <mc-form-item label="Asset" prop="asset">
-          <mc-input
-            type="currency"
-            v-model="form.asset"
-            placeholder="Please enter your asset"
-            :currency-accuracy="accuracy"
-          />
-        </mc-form-item>
-      </mc-form>
+    <div class="content">
+      <mc-step-horizontal
+        v-model="activeStep"
+        :steps="steps"
+        :success-step="successStep"
+      />
     </div>
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Disable</mc-button>
-      <mc-button @click="handleValidate">Validate</mc-button>
-      <mc-button @click="handleClearValidate">Clear Validate</mc-button>
-      <mc-button @click="handleResetFields">Reset</mc-button>
-      <mc-button @click="handleSetAccuracy">Set Accuracy</mc-button>
+      <mc-button @click="handleSetStep">Set Step</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { McButton, McIcon, McForm, McFormItem, McInput } from "mc-plus";
-import type {
-  FormRules,
-  FormInstance,
-} from "@mc-plus/components/mc-form/types";
-
-type FormState = {
-  name: string;
-  password: string;
-  email: string;
-  recurring: boolean;
-  age: string;
-  asset: string;
-};
-const form = ref<FormState>({
-  name: "HirasawaYui",
-  password: "123456",
-  email: "yui@gmail.com",
-  recurring: false,
-  age: "16",
-  asset: "1300",
-});
-
-const formRef = ref<FormInstance>();
-
-const accuracy = ref<number>(8);
-
-const rules = ref<FormRules<FormState>>({
-  name: [{ required: true, message: "请输入名字" }],
-  password: [
-    {
-      required: true,
-      validator: (_, value: string, callback) => {
-        if (value.length < 6) {
-          callback(new Error("密码长度不能小于6位"));
-        } else {
-          callback();
-        }
-      },
-    },
-  ],
-  email: [{ required: true, message: "请输入邮箱" }],
-});
-
-const handleValidate = async () => {
-  try {
-    await formRef.value?.validate();
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
-
-const handleClearValidate = () => {
-  formRef.value?.clearValidate();
-};
-
-const handleResetFields = () => {
-  formRef.value?.resetFields();
-};
+import { computed, ref } from "vue";
+import McStepHorizontal from "../../components/mc-step/mc-step-horizontal/mc-step-horizontal.vue";
+import type { StepItem } from "@mc-plus/components/mc-step/types";
+import { McButton } from "mc-plus";
 
 const disabled = ref<boolean>(false);
+
+const activeStep = ref<number>(1);
+const successStep = computed(() => {
+  return activeStep.value - 1;
+});
+
+const steps = ref<StepItem[]>([
+  {
+    key: 1,
+    label: "Hirasawa Yui",
+    desc: "yui",
+  },
+  {
+    key: 2,
+    label: "Akiyama Mio",
+    desc: "mio",
+  },
+  {
+    key: 3,
+    label: "Nakano Azusa",
+    desc: "azusa",
+  },
+]);
 
 const changeDisabled = () => {
   disabled.value = !disabled.value;
 };
 
-const handleSetAccuracy = () => {
-  accuracy.value = accuracy.value === 8 ? 2 : 8;
+const handleSetStep = () => {
+  activeStep.value = activeStep.value + 1;
+  if (activeStep.value > steps.value.length) {
+    activeStep.value = 1;
+  }
 };
 </script>
 
@@ -136,8 +72,7 @@ const handleSetAccuracy = () => {
   position: relative;
 
   .content {
-    width: 320px;
-    background-color: pink;
+    width: 820px;
   }
 
   .tool-bar {
