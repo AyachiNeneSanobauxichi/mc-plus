@@ -7,7 +7,9 @@
       <div class="mc-drawer-content-wrapper">
         <div class="mc-drawer-content"></div>
       </div>
-      <div class="mc-drawer-footer">Footer</div>
+      <div class="mc-drawer-footer">
+        <mc-footer></mc-footer>
+      </div>
     </div>
   </mc-overlay>
 </template>
