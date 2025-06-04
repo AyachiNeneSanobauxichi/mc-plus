@@ -1,6 +1,7 @@
 <template>
   <section
     class="mc-footer"
+    :class="{ 'mc-footer-border': showborder }"
     :style="{ width: width, height: height }"
     ref="_ref"
   >
@@ -36,7 +37,9 @@ import type { FooterInstance, FooterProps } from "./types";
 defineOptions({ name: "McFooter", inheritAttrs: false });
 
 // props
-defineProps<FooterProps>();
+withDefaults(defineProps<FooterProps>(), {
+  showborder: true,
+});
 
 // ref
 const _ref = ref<HTMLDivElement | void>();

@@ -4,6 +4,7 @@ export interface FooterProps {
   width?: string;
   height?: string;
   wrapperWidth?: string;
+  showborder?: boolean;
 }
 
 export interface FooterInstance {
