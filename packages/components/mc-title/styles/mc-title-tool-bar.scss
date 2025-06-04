@@ -1,0 +1,56 @@
+$text_color: var(--mc-teal-500);
+$text_color_hover: var(--mc-teal-900);
+$text_color_error: var(--mc-error);
+$line_color: var(--mc-gray-200);
+
+@keyframes refresh {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.mc-title-tool-bar {
+  width: fit-content;
+  height: 24px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: default;
+  user-select: none;
+
+  .mc-title-tool-bar-reset {
+    color: $text_color;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: transform 0.3s;
+    cursor: pointer;
+    &:hover {
+      color: $text_color_hover;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+
+    .mc-title-tool-bar-reset-icon {
+      animation: refresh 0.3s linear infinite;
+    }
+  }
+
+  .mc-title-tool-bar-line {
+    width: 1px;
+    height: 100%;
+    background-color: $line_color;
+  }
+
+  .mc-title-tool-bar-mandatory {
+    color: $text_color_error;
+  }
+}
