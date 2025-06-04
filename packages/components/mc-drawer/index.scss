@@ -21,6 +21,11 @@ $bg_color: var(--mc-white);
     width: 100%;
     position: absolute;
     bottom: 0;
+
+    .mc-drawer-button {
+      width: fit-content;
+      min-width: 160px;
+    }
   }
 
   .mc-drawer-content-wrapper {
@@ -28,5 +33,9 @@ $bg_color: var(--mc-white);
     height: 100%;
     box-sizing: border-box;
     overflow-y: auto;
+    .mc-drawer-content {
+      padding: 24px;
+      box-sizing: border-box;
+    }
   }
 }

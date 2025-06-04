@@ -33,9 +33,7 @@ import { throttle } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
-defineOptions({
-  name: "McButton",
-});
+defineOptions({ name: "McButton" });
 
 // props
 const props = withDefaults(defineProps<ButtonProps>(), {
