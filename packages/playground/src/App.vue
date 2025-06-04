@@ -4,8 +4,7 @@
       <div>Disabled: {{ disabled }}</div>
     </div>
     <div class="content">
-      <!-- <mc-drawer></mc-drawer> -->
-      <mc-title title="Title"></mc-title>
+      <mc-drawer title="Mc Drawer"></mc-drawer>
     </div>
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Disable</mc-button>
@@ -16,8 +15,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { McButton } from "mc-plus";
-// import McDrawer from "../../components/mc-drawer/mc-drawer.vue";
-import McTitle from "../../components/mc-title/mc-title.vue";
+import McDrawer from "../../components/mc-drawer/mc-drawer.vue";
 const disabled = ref<boolean>(false);
 
 const changeDisabled = () => {

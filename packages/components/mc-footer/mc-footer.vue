@@ -34,7 +34,7 @@ import { ref } from "vue";
 import type { FooterInstance, FooterProps } from "./types";
 
 // options
-defineOptions({ name: "McFooter", inheritAttrs: false });
+defineOptions({ name: "McFooter" });
 
 // props
 withDefaults(defineProps<FooterProps>(), {

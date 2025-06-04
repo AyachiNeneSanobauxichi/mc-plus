@@ -1,5 +1,10 @@
 <template>
-  <div class="mc-title" :class="{ 'mc-title-border': showBorder }" ref="_ref">
+  <div
+    class="mc-title"
+    :class="{ 'mc-title-border': showBorder }"
+    ref="_ref"
+    :style="{ width: width, height: height }"
+  >
     <div class="mc-title-content">
       <slot>
         <h1 class="mc-title-text">
@@ -23,7 +28,7 @@ import McTitleToolBar from "./mc-title-tool-bar.vue";
 import { ref } from "vue";
 
 // options
-defineOptions({ name: "McTitle", inheritAttrs: false });
+defineOptions({ name: "McTitle" });
 
 // props
 withDefaults(defineProps<TitleProps>(), {
