@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 // options
-defineOptions({ name: "McOverlay", inheritAttrs: false });
+defineOptions({ name: "McOverlay" });
 </script>
 
 <style scoped lang="scss">

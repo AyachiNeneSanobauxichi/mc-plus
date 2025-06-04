@@ -20,7 +20,7 @@ import McIcon from "../mc-icon/mc-icon.vue";
 import { throttle } from "lodash-es";
 
 // options
-defineOptions({ name: "McTitleToolBar", inheritAttrs: false });
+defineOptions({ name: "McTitleToolBar" });
 
 // ref
 const _ref = ref<HTMLDivElement>();

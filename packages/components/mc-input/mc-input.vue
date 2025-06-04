@@ -74,7 +74,7 @@ import {
 } from "./formatter";
 
 // options
-defineOptions({ name: "McInput", inheritAttrs: false });
+defineOptions({ name: "McInput" });
 
 // props
 const props = withDefaults(defineProps<InputProps>(), {

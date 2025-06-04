@@ -31,10 +31,7 @@ import {
 import { SELECT_GROUP_INJECTION_KEY, SELECT_INJECTION_KEY } from "./constant";
 
 // options
-defineOptions({
-  name: "McSelectOption",
-  inheritAttrs: false,
-});
+defineOptions({ name: "McSelectOption" });
 
 // ref
 const _ref = ref<HTMLLIElement>();

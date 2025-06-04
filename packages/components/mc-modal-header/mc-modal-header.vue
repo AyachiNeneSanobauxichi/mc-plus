@@ -24,7 +24,7 @@ import McIcon from "../mc-icon/mc-icon.vue";
 import McTitle from "../mc-title/mc-title.vue";
 
 // options
-defineOptions({ name: "McModalHeader", inheritAttrs: false });
+defineOptions({ name: "McModalHeader" });
 
 // props
 withDefaults(defineProps<ModalHeaderProps>(), {
