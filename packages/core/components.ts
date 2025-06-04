@@ -22,6 +22,7 @@ import {
   McInput,
   McIcon,
   McSuccessIcon,
+  McFooter,
 } from "@mc-plus/components";
 
 export default [
@@ -47,4 +48,5 @@ export default [
   McInput,
   McIcon,
   McSuccessIcon,
+  McFooter,
 ] as Plugin[];

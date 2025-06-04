@@ -2,82 +2,33 @@
   <div class="container">
     <div class="show-value">
       <div>Disabled: {{ disabled }}</div>
-      <div>Active Step: {{ activeStep }}</div>
     </div>
     <div class="content">
-      <mc-step
-        type="horizontal"
-        v-model="activeStep"
-        :steps="steps"
-        @change="(val) => handleStepChange(val)"
-      />
+      <mc-footer>
+        <template #left>
+          <mc-button type="plain" width="160px">Previous Step</mc-button>
+        </template>
+        <template #right-button-group>
+          <mc-button type="link" width="58px">Cancel</mc-button>
+          <mc-button type="plain" width="160px">Save as Draft</mc-button>
+          <mc-button type="primary" width="160px">Next Step</mc-button>
+        </template>
+      </mc-footer>
     </div>
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Disable</mc-button>
-      <mc-button @click="handleSetStep">Set Step</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton, McStep, type StepItem } from "mc-plus";
-import Step1 from "./views/step1.vue";
-import Step2 from "./views/step2.vue";
-import Step3 from "./views/step3.vue";
-import Step4 from "./views/step4.vue";
-import Step5 from "./views/step5.vue";
-
+import { McButton } from "mc-plus";
+import McFooter from "../../components/mc-footer/mc-footer.vue";
 const disabled = ref<boolean>(false);
-
-const activeStep = ref<number>(4);
-
-const steps = ref<StepItem[]>([
-  {
-    key: 1,
-    label: "Hirasawa Yui",
-    desc: "yui",
-    component: Step1,
-  },
-  {
-    key: 2,
-    label: "Akiyama Mio",
-    desc: "mio",
-    component: Step2,
-  },
-  {
-    key: 3,
-    label: "Nakano Azusa",
-    desc: "azusa",
-    component: Step3,
-  },
-  {
-    key: 4,
-    label: "Tainaka Ritsu",
-    desc: "Ritsu",
-    component: Step4,
-  },
-  {
-    key: 5,
-    label: "Kotobuku Tsumugi",
-    desc: "Mugi",
-    component: Step5,
-  },
-]);
 
 const changeDisabled = () => {
   disabled.value = !disabled.value;
-};
-
-const handleSetStep = () => {
-  activeStep.value = activeStep.value + 1;
-  if (activeStep.value > steps.value.length) {
-    activeStep.value = 1;
-  }
-};
-
-const handleStepChange = (val: string | number) => {
-  console.log("Step: ", val);
 };
 </script>
 
