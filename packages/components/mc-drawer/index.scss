@@ -1,2 +1,11 @@
+$bg_color: var(--mc-white);
+
 .mc-drawer {
+  width: 708px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $bg_color;
+  z-index: 9999;
 }

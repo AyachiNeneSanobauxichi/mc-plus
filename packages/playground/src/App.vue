@@ -4,16 +4,7 @@
       <div>Disabled: {{ disabled }}</div>
     </div>
     <div class="content">
-      <mc-footer>
-        <template #left>
-          <mc-button type="plain" width="160px">Previous Step</mc-button>
-        </template>
-        <template #right-button-group>
-          <mc-button type="link" width="58px">Cancel</mc-button>
-          <mc-button type="plain" width="160px">Save as Draft</mc-button>
-          <mc-button type="primary" width="160px">Next Step</mc-button>
-        </template>
-      </mc-footer>
+      <mc-drawer></mc-drawer>
     </div>
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Disable</mc-button>
@@ -24,7 +15,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { McButton } from "mc-plus";
-import McFooter from "../../components/mc-footer/mc-footer.vue";
+import McDrawer from "../../components/mc-drawer/mc-drawer.vue";
 const disabled = ref<boolean>(false);
 
 const changeDisabled = () => {
