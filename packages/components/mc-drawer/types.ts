@@ -3,6 +3,7 @@ import type { IconType } from "../mc-icon";
 export type DrawerSize = "large" | "medium" | "small";
 
 export type DrawerButton = {
+  key: string;
   text?: string;
   leftIcon?: IconType;
   rightIcon?: IconType;
@@ -24,7 +25,7 @@ export interface DrawerProps {
 export interface DrawerEmits {
   (e: "update:modelValue", value: boolean): void;
   (e: "close"): void;
-  (e: "click:cancel"): void;
+  (e: string): void;
 }
 
 export interface DrawerFooterConfig {

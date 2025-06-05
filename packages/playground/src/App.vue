@@ -12,6 +12,10 @@
         :left-button="drawerConfig.leftButton"
         :middle-button="drawerConfig.middleButton"
         :right-button="drawerConfig.rightButton"
+        @previous="handlePrevious"
+        @cancel="handleCancel"
+        @draft="handleDraft"
+        @next="handleNext"
       >
         <div class="drawer-content"></div>
       </mc-drawer>
@@ -32,17 +36,20 @@ const disabled = ref<boolean>(false);
 
 const drawerConfig = reactive<DrawerFooterConfig>({
   leftButton: {
+    key: "previous",
     text: "Previous Step",
     leftIcon: "Corner_Arrow_Left",
     disable: false,
     hidden: false,
   },
   middleButton: {
+    key: "draft",
     text: "Save as Draft",
     disable: false,
     hidden: false,
   },
   rightButton: {
+    key: "next",
     text: "Next Step",
     rightIcon: "Corner_Arrow_Right",
     disable: false,
@@ -51,6 +58,19 @@ const drawerConfig = reactive<DrawerFooterConfig>({
 });
 
 const drawerShower = ref<boolean>(false);
+
+const handlePrevious = () => {
+  console.log("Previous");
+};
+const handleCancel = () => {
+  console.log("Cancel");
+};
+const handleDraft = () => {
+  console.log("Draft");
+};
+const handleNext = () => {
+  console.log("Next");
+};
 
 const handleShowDrawer = () => {
   drawerShower.value = !drawerShower.value;
