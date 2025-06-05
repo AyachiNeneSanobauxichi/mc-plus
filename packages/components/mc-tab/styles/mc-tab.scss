@@ -1,17 +1,67 @@
 /* primary tab */
 $primary_bg_color: var(--mc-gray-200);
 $primary_bg_color_active: var(--mc-teal-500);
-$primary_bg_color_active_hover: var(--mc-teal-900);
+$primary_bg_color_hover: var(--mc-teal-900);
 $primary_bg_color_disable: var(--mc-gray-300);
 $primary_text_color_active: var(--mc-white);
+$primary_border_color: var(--mc-teal-500);
 /* plain tab */
 $plain_bg_color: var(--mc-white);
 $plain_text_color_active: var(--mc-teal-500);
-$plain_text_color_active_hover: var(--mc-teal-900);
+$plain_text_color_hover: var(--mc-teal-900);
+$plain_border_color: var(--mc-gray-200);
+$plain_line: var(--mc-teal-500);
 /* common */
 $bg_color_tip: var(--mc-error);
 $text_color: var(--mc-gray-500);
 $text_color_disable: var(--mc-gray-400);
 
 .mc-tab {
+  height: 48px;
+  box-sizing: border-box;
+
+  .mc-tab-nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+
+    .mc-tab-nav-item {
+      min-width: 115px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $text_color;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  /* plain */
+  &.mc-tab-plain {
+    border-bottom: 2px solid $plain_border_color;
+
+    .mc-tab-nav-item {
+      background-color: transparent;
+      &:hover {
+        color: $plain_text_color_hover;
+      }
+      &.mc-tab-nav-item-active {
+        color: $plain_text_color_active;
+      }
+      &.mc-tab-nav-item-disabled {
+        color: $text_color_disable;
+      }
+    }
+
+    .mc-tab-line {
+      width: 300px;
+      height: 2px;
+      position: absolute;
+      bottom: -2px;
+      background-color: $plain_line;
+    }
+  }
 }

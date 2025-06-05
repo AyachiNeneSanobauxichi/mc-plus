@@ -1,10 +1,10 @@
-import type { Ref } from "vue";
+import type { Ref, VNode } from "vue";
 
 export type TabType = "primary" | "plain";
 
 export interface TabProps {
-  modelValue: string;
-  type: TabType;
+  modelValue?: string;
+  type?: TabType;
 }
 
 export interface TabEmits {
@@ -20,4 +20,9 @@ export interface TabItemProps {
   name: string;
   label?: string;
   disabled?: boolean;
+  count?: number;
+}
+
+export interface TabItem extends TabItemProps {
+  vn?: VNode;
 }
