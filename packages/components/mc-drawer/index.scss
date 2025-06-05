@@ -11,6 +11,14 @@ $bg_color: var(--mc-white);
   z-index: 9999;
   box-sizing: border-box;
 
+  &.mc-drawer-large {
+    width: 996px;
+  }
+
+  &.mc-drawer-small {
+    width: 480px;
+  }
+
   .mc-drawer-header {
     width: 100%;
     position: absolute;
@@ -37,5 +45,18 @@ $bg_color: var(--mc-white);
       padding: 24px;
       box-sizing: border-box;
     }
+  }
+}
+
+.mc-drawer-overlay-enter-active,
+.mc-drawer-overlay-leave-active {
+  transition: opacity 0.3s ease-in-out;
+  &.mc-drawer-overlay-enter-from,
+  &.mc-drawer-overlay-leave-to {
+    opacity: 0;
+  }
+  &.mc-drawer-overlay-enter-to,
+  &.mc-drawer-overlay-leave-from {
+    opacity: 1;
   }
 }

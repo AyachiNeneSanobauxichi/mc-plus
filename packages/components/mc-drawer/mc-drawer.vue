@@ -1,72 +1,74 @@
 <template>
-  <mc-overlay>
-    <div class="mc-drawer">
-      <div class="mc-drawer-header">
-        <mc-modal-header :title="title" />
-      </div>
-      <div class="mc-drawer-content-wrapper">
-        <div class="mc-drawer-content">
-          <slot></slot>
+  <transition name="mc-drawer-overlay">
+    <mc-overlay>
+      <div class="mc-drawer" :class="[`mc-drawer-${size}`]">
+        <div class="mc-drawer-header">
+          <mc-modal-header :title="title" />
+        </div>
+        <div class="mc-drawer-content-wrapper">
+          <div class="mc-drawer-content">
+            <slot></slot>
+          </div>
+        </div>
+        <div class="mc-drawer-footer">
+          <mc-footer>
+            <template #left>
+              <slot name="footer-left">
+                <template v-if="!leftButton?.hidden">
+                  <mc-button
+                    type="plain"
+                    class="mc-drawer-button"
+                    :left-icon="leftButton?.leftIcon"
+                    :right-icon="leftButton?.rightIcon"
+                    :disabled="leftButton?.disable"
+                  >
+                    {{ leftButton?.text }}
+                  </mc-button>
+                </template>
+              </slot>
+            </template>
+            <template #right-button-group>
+              <slot name="footer-right">
+                <template v-if="!cancel?.hidden">
+                  <mc-button
+                    type="link"
+                    width="58px"
+                    :left-icon="cancel?.leftIcon"
+                    :right-icon="cancel?.rightIcon"
+                    :disabled="cancel?.disable"
+                  >
+                    {{ cancel?.text || "Cancel" }}
+                  </mc-button>
+                </template>
+                <template v-if="!middleButton?.hidden">
+                  <mc-button
+                    type="plain"
+                    class="mc-drawer-button"
+                    :left-icon="middleButton?.leftIcon"
+                    :right-icon="middleButton?.rightIcon"
+                    :disabled="middleButton?.disable"
+                  >
+                    {{ middleButton?.text }}
+                  </mc-button>
+                </template>
+                <template v-if="!rightButton?.hidden">
+                  <mc-button
+                    type="primary"
+                    class="mc-drawer-button"
+                    :left-icon="rightButton?.leftIcon"
+                    :right-icon="rightButton?.rightIcon"
+                    :disabled="rightButton?.disable"
+                  >
+                    {{ rightButton?.text }}
+                  </mc-button>
+                </template>
+              </slot>
+            </template>
+          </mc-footer>
         </div>
       </div>
-      <div class="mc-drawer-footer">
-        <mc-footer>
-          <template #left>
-            <slot name="footer-left">
-              <template v-if="!leftButton?.hidden">
-                <mc-button
-                  type="plain"
-                  class="mc-drawer-button"
-                  :left-icon="leftButton?.leftIcon"
-                  :right-icon="leftButton?.rightIcon"
-                  :disabled="leftButton?.disable"
-                >
-                  {{ leftButton?.text }}
-                </mc-button>
-              </template>
-            </slot>
-          </template>
-          <template #right-button-group>
-            <slot name="footer-right">
-              <template v-if="!cancel?.hidden">
-                <mc-button
-                  type="link"
-                  width="58px"
-                  :left-icon="cancel?.leftIcon"
-                  :right-icon="cancel?.rightIcon"
-                  :disabled="cancel?.disable"
-                >
-                  {{ cancel?.text || "Cancel" }}
-                </mc-button>
-              </template>
-              <template v-if="!middleButton?.hidden">
-                <mc-button
-                  type="plain"
-                  class="mc-drawer-button"
-                  :left-icon="middleButton?.leftIcon"
-                  :right-icon="middleButton?.rightIcon"
-                  :disabled="middleButton?.disable"
-                >
-                  {{ middleButton?.text }}
-                </mc-button>
-              </template>
-              <template v-if="!rightButton?.hidden">
-                <mc-button
-                  type="primary"
-                  class="mc-drawer-button"
-                  :left-icon="rightButton?.leftIcon"
-                  :right-icon="rightButton?.rightIcon"
-                  :disabled="rightButton?.disable"
-                >
-                  {{ rightButton?.text }}
-                </mc-button>
-              </template>
-            </slot>
-          </template>
-        </mc-footer>
-      </div>
-    </div>
-  </mc-overlay>
+    </mc-overlay>
+  </transition>
 </template>
 
 <script setup lang="ts">
@@ -81,7 +83,7 @@ defineOptions({ name: "McDrawer" });
 
 // props
 const props = withDefaults(defineProps<DrawerProps>(), {
-  size: "large",
+  size: "medium",
 });
 
 // emit

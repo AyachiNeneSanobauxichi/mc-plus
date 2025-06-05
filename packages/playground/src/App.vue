@@ -7,6 +7,7 @@
     <div class="content">
       <mc-drawer
         title="Mc Drawer"
+        size="large"
         :left-button="drawerConfig.leftButton"
         :middle-button="drawerConfig.middleButton"
         :right-button="drawerConfig.rightButton"

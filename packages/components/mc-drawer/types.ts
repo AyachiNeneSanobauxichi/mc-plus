@@ -11,6 +11,7 @@ export type DrawerButton = {
 };
 
 export interface DrawerProps {
+  modelValue?: boolean;
   title?: string;
   size?: DrawerSize;
   leftButton?: DrawerButton;
