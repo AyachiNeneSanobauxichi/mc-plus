@@ -1,3 +1,4 @@
+import type { Ref } from "vue";
 import type { IconType } from "../mc-icon";
 
 export type DrawerSize = "large" | "medium" | "small";
@@ -20,6 +21,8 @@ export interface DrawerProps {
   middleButton?: DrawerButton;
   rightButton?: DrawerButton;
   clickOverlayClose?: boolean;
+  fixed?: boolean;
+  portCssSelector?: string;
 }
 
 export interface DrawerEmits {
@@ -33,4 +36,10 @@ export interface DrawerFooterConfig {
   cancel?: DrawerButton;
   middleButton?: DrawerButton;
   rightButton?: DrawerButton;
+}
+
+export interface DrawerInstance {
+  ref: Ref<HTMLDivElement | void>;
+  open: () => void;
+  close: () => void;
 }

@@ -4,6 +4,7 @@
     ref="_ref"
     @click="(e) => handleClick(e)"
     v-if="visible"
+    :style="{ position: fixed ? 'fixed' : 'absolute' }"
   >
     <slot></slot>
   </div>
@@ -17,7 +18,9 @@ import type { OverlayEmits, OverlayInstance, OverlayPorps } from "./types";
 defineOptions({ name: "McOverlay" });
 
 // props
-defineProps<OverlayPorps>();
+withDefaults(defineProps<OverlayPorps>(), {
+  fixed: true,
+});
 
 // emit
 const emit = defineEmits<OverlayEmits>();
