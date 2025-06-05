@@ -1,5 +1,5 @@
 <template>
-  <svg class="success-icon" width="400" height="400" viewBox="0 0 400 400">
+  <svg class="success-icon" :style="{ width, height }" viewBox="0 0 400 400">
     <circle
       class="circle"
       fill="none"
@@ -20,6 +20,19 @@
     ></polyline>
   </svg>
 </template>
+
+<script setup lang="ts">
+import type { SuccessIconProps } from "./types";
+
+// options
+defineOptions({ name: "McSuccessIcon" });
+
+// props
+withDefaults(defineProps<SuccessIconProps>(), {
+  width: "40px",
+  height: "40px",
+});
+</script>
 
 <style scoped lang="scss">
 @use "./index.scss";

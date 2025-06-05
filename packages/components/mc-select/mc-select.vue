@@ -56,10 +56,7 @@ import { useClickOutside } from "@mc-plus/hooks";
 import { isNil, lowerCase } from "lodash-es";
 
 // options
-defineOptions({
-  name: "McSelect",
-  inheritAttrs: false,
-});
+defineOptions({ name: "McSelect" });
 
 // props
 const props = withDefaults(defineProps<SelectProps>(), {

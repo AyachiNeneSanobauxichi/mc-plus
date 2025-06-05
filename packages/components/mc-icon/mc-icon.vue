@@ -5,6 +5,7 @@
       fontSize: `${size}px`,
       width: `${size}px`,
       height: `${size}px`,
+      color: color,
     }"
   >
     <i

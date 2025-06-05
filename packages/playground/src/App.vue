@@ -1,129 +1,63 @@
 <template>
-  <div class="container">
-    <div class="show-value">
-      <div>Disabled: {{ disabled }}</div>
-      <div>Active Step: {{ activeStep }}</div>
-    </div>
-    <div class="content">
+  <div>
+    <div id="drawer"></div>
+    <div><mc-success-icon /></div>
+    <div>
       <mc-step
+        :model-value="step"
+        :steps="stepConfig"
         type="horizontal"
-        v-model="activeStep"
-        :steps="steps"
-        @change="(val) => handleStepChange(val)"
-      />
+      ></mc-step>
     </div>
-    <div class="tool-bar">
-      <mc-button @click="changeDisabled">Disable</mc-button>
-      <mc-button @click="handleSetStep">Set Step</mc-button>
+    <div>
+      <mc-button @click="handleNextStep">Next Step</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { McButton, McStep, type StepItem } from "mc-plus";
-import Step1 from "./views/step1.vue";
-import Step2 from "./views/step2.vue";
-import Step3 from "./views/step3.vue";
-import Step4 from "./views/step4.vue";
-import Step5 from "./views/step5.vue";
+import McSuccessIcon from "../../components/mc-success-icon/mc-success-icon.vue";
+import { McStep, McButton, type StepItem } from "mc-plus";
 
-const disabled = ref<boolean>(false);
+const step = ref<number>(1);
 
-const activeStep = ref<number>(4);
-
-const steps = ref<StepItem[]>([
+const stepConfig = ref<StepItem[]>([
   {
     key: 1,
-    label: "Hirasawa Yui",
-    desc: "yui",
-    component: Step1,
+    label: "Step 1",
+    desc: "Step 1 description",
   },
   {
     key: 2,
-    label: "Akiyama Mio",
-    desc: "mio",
-    component: Step2,
+    label: "Step 2",
+    desc: "Step 2 description",
   },
   {
     key: 3,
-    label: "Nakano Azusa",
-    desc: "azusa",
-    component: Step3,
+    label: "Step 3",
+    desc: "Step 3 description",
   },
   {
     key: 4,
-    label: "Tainaka Ritsu",
-    desc: "Ritsu",
-    component: Step4,
-  },
-  {
-    key: 5,
-    label: "Kotobuku Tsumugi",
-    desc: "Mugi",
-    component: Step5,
+    label: "Step 4",
+    desc: "Step 4 description",
   },
 ]);
 
-const changeDisabled = () => {
-  disabled.value = !disabled.value;
-};
-
-const handleSetStep = () => {
-  activeStep.value = activeStep.value + 1;
-  if (activeStep.value > steps.value.length) {
-    activeStep.value = 1;
+const handleNextStep = () => {
+  step.value++;
+  if (step.value > stepConfig.value.length) {
+    step.value = 1;
   }
-};
-
-const handleStepChange = (val: string | number) => {
-  console.log("Step: ", val);
 };
 </script>
 
-<style lang="scss" scoped>
-.container {
+<style scoped lang="scss">
+#drawer {
   width: 100%;
   height: 800px;
-  padding: 200px;
-  box-sizing: border-box;
-  background-color: #fff;
+  background-color: lightgreen;
   position: relative;
-
-  .content {
-    width: 100%;
-  }
-
-  .tool-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    position: absolute;
-    bottom: -200px;
-  }
-}
-
-.currency-option {
-  height: 50px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  img {
-    width: 24px;
-    height: 24px;
-    border-radius: 100%;
-  }
-
-  .currency-option-content-name {
-    font-weight: 700;
-    color: #222;
-    font-size: 14px;
-  }
-
-  .currency-option-content-desc {
-    color: #808080;
-    font-size: 12px;
-  }
 }
 </style>

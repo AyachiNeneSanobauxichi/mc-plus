@@ -25,3 +25,7 @@ export * from "./mc-form";
 export * from "./mc-input";
 export * from "./mc-icon";
 export * from "./mc-success-icon";
+export * from "./mc-title";
+export * from "./mc-footer";
+export * from "./mc-modal-header";
+export * from "./mc-drawer";

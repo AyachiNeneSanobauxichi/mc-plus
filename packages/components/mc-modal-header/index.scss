@@ -1,0 +1,16 @@
+.mc-modal-header {
+  width: 100%;
+  height: 56px;
+  .mc-modal-header-title {
+    padding: 0 24px;
+  }
+
+  .mc-modal-header-close-icon {
+    cursor: pointer;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: rotate(180deg);
+    }
+  }
+}

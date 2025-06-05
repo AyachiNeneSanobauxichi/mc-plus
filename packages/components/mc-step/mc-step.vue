@@ -53,10 +53,7 @@ import McSuccess from "../mc-success-icon/mc-success-icon.vue";
 import useWindowResize from "@mc-plus/hooks/useWindowResize";
 
 // options
-defineOptions({
-  name: "McStep",
-  inheritAttrs: false,
-});
+defineOptions({ name: "McStep" });
 
 // props
 const props = withDefaults(defineProps<StepProps>(), {
