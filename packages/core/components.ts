@@ -22,7 +22,11 @@ import {
   McInput,
   McIcon,
   McSuccessIcon,
+  McTitle,
   McFooter,
+  McTitleToolBar,
+  McModalHeader,
+  McDrawer,
 } from "@mc-plus/components";
 
 export default [
@@ -48,5 +52,9 @@ export default [
   McInput,
   McIcon,
   McSuccessIcon,
+  McTitle,
   McFooter,
+  McTitleToolBar,
+  McModalHeader,
+  McDrawer,
 ] as Plugin[];
