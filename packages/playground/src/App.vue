@@ -1,11 +1,11 @@
 <template>
   <div>
-    <step-container></step-container>
+    <tab-container />
   </div>
 </template>
 
 <script setup lang="ts">
-import StepContainer from "./views/step-container.vue";
+import TabContainer from "./views/tab-container.vue";
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,0 +1,17 @@
+/* primary tab */
+$primary_bg_color: var(--mc-gray-200);
+$primary_bg_color_active: var(--mc-teal-500);
+$primary_bg_color_active_hover: var(--mc-teal-900);
+$primary_bg_color_disable: var(--mc-gray-300);
+$primary_text_color_active: var(--mc-white);
+/* plain tab */
+$plain_bg_color: var(--mc-white);
+$plain_text_color_active: var(--mc-teal-500);
+$plain_text_color_active_hover: var(--mc-teal-900);
+/* common */
+$bg_color_tip: var(--mc-error);
+$text_color: var(--mc-gray-500);
+$text_color_disable: var(--mc-gray-400);
+
+.mc-tab {
+}
