@@ -1,11 +1,17 @@
 <template>
-  <div class="mc-overlay" @click="handleClick" v-if="visible">
+  <div
+    class="mc-overlay"
+    ref="_ref"
+    @click="(e) => handleClick(e)"
+    v-if="visible"
+  >
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { OverlayEmits, OverlayPorps } from "./types";
+import { ref } from "vue";
+import type { OverlayEmits, OverlayInstance, OverlayPorps } from "./types";
 
 // options
 defineOptions({ name: "McOverlay" });
@@ -16,10 +22,19 @@ defineProps<OverlayPorps>();
 // emit
 const emit = defineEmits<OverlayEmits>();
 
+// ref
+const _ref = ref<HTMLDivElement>();
+
 // click overlay
-const handleClick = () => {
+const handleClick = (e: MouseEvent) => {
+  if (e.target !== _ref.value) return;
   emit("click");
 };
+
+// expose
+defineExpose<OverlayInstance>({
+  ref: _ref,
+});
 </script>
 
 <style scoped lang="scss">

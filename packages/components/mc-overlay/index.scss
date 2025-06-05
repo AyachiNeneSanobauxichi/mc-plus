@@ -1,4 +1,4 @@
-$bg_color: #d0cbda;
+@use "@mc-plus/theme/mixins.scss" as mixins;
 
 .mc-overlay {
   position: fixed;
@@ -6,6 +6,7 @@ $bg_color: #d0cbda;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba($bg_color, 0.5);
+  @include mixins.mask-color();
   z-index: 9999;
+  cursor: pointer;
 }

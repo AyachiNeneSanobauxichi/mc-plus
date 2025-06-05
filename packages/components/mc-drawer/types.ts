@@ -18,10 +18,11 @@ export interface DrawerProps {
   cancel?: DrawerButton;
   middleButton?: DrawerButton;
   rightButton?: DrawerButton;
+  clickOverlayClose?: boolean;
 }
 
 export interface DrawerEmits {
-  (e: "update:visible", value: boolean): void;
+  (e: "update:modelValue", value: boolean): void;
   (e: "close"): void;
   (e: "click:cancel"): void;
 }

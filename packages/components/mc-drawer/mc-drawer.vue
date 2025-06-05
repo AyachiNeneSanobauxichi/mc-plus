@@ -1,9 +1,9 @@
 <template>
   <transition name="mc-drawer-overlay">
-    <mc-overlay>
+    <mc-overlay :visible="showOverlay" @click="handleOverlayClick">
       <div class="mc-drawer" :class="[`mc-drawer-${size}`]">
         <div class="mc-drawer-header">
-          <mc-modal-header :title="title" />
+          <mc-modal-header :title="title" @close="handleCloseIconClick" />
         </div>
         <div class="mc-drawer-content-wrapper">
           <div class="mc-drawer-content">
@@ -73,6 +73,7 @@
 
 <script setup lang="ts">
 import type { DrawerEmits, DrawerProps } from "./types";
+import { nextTick, ref, watch } from "vue";
 import McOverlay from "../mc-overlay/mc-overlay.vue";
 import McModalHeader from "../mc-modal-header/mc-modal-header.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
@@ -84,10 +85,61 @@ defineOptions({ name: "McDrawer" });
 // props
 const props = withDefaults(defineProps<DrawerProps>(), {
   size: "medium",
+  clickOverlayClose: true,
 });
+
+// show overlay
+const showOverlay = ref<boolean>(false);
+
+// show drawer
+const showDrawer = ref<boolean>(false);
+
+// open
+const open = async () => {
+  showOverlay.value = true;
+  await nextTick();
+  showDrawer.value = true;
+  console.log("Open: ", showOverlay.value, showDrawer.value);
+};
+
+// close
+const close = async () => {
+  showDrawer.value = false;
+  await nextTick();
+  showOverlay.value = false;
+};
+
+// visible changed
+watch(
+  () => props.modelValue,
+  (val, oldVal) => {
+    if (!oldVal && val) {
+      open();
+    } else {
+      close();
+    }
+  },
+  {
+    immediate: true,
+    flush: "post",
+  }
+);
 
 // emit
 const emit = defineEmits<DrawerEmits>();
+
+// click  overlay
+const handleOverlayClick = () => {
+  if (!props.clickOverlayClose) return;
+  emit("close");
+  emit("update:modelValue", false);
+};
+
+// click close icon
+const handleCloseIconClick = () => {
+  emit("close");
+  emit("update:modelValue", false);
+};
 </script>
 
 <style scoped lang="scss">

@@ -2,10 +2,11 @@
   <div class="container">
     <div class="show-value">
       <div>Disabled: {{ disabled }}</div>
-      <div>drawerConfig: {{ drawerConfig }}</div>
+      <div>ShowDrawer: {{ drawerShower }}</div>
     </div>
     <div class="content">
       <mc-drawer
+        v-model="drawerShower"
         title="Mc Drawer"
         size="large"
         :left-button="drawerConfig.leftButton"
@@ -17,6 +18,7 @@
     </div>
     <div class="tool-bar">
       <mc-button @click="changeDisabled">Disable</mc-button>
+      <mc-button @click="handleShowDrawer">Show Drawer</mc-button>
     </div>
   </div>
 </template>
@@ -47,6 +49,12 @@ const drawerConfig = reactive<DrawerFooterConfig>({
     hidden: false,
   },
 });
+
+const drawerShower = ref<boolean>(false);
+
+const handleShowDrawer = () => {
+  drawerShower.value = !drawerShower.value;
+};
 
 const changeDisabled = () => {
   disabled.value = !disabled.value;
@@ -80,7 +88,7 @@ const changeDisabled = () => {
     align-items: center;
     gap: 8px;
     position: absolute;
-    bottom: -200px;
+    top: 300px;
     position: fixed;
     bottom: 20px;
     left: 200px;
