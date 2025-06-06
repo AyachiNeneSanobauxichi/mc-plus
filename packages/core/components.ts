@@ -29,6 +29,7 @@ import {
   McDrawer,
   McTab,
   McTabItem,
+  McReset,
 } from "@mc-plus/components";
 
 export default [
@@ -61,4 +62,5 @@ export default [
   McDrawer,
   McTab,
   McTabItem,
+  McReset,
 ] as Plugin[];

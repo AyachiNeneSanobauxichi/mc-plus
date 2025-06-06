@@ -1,12 +1,7 @@
 <template>
   <div class="mc-title-tool-bar" ref="_ref">
-    <div class="mc-title-tool-bar-reset" @click="handleReset">
-      <mc-icon
-        name="Refresh"
-        :size="24"
-        :class="{ 'mc-title-tool-bar-reset-icon': isRotate }"
-      />
-      <span>Reset</span>
+    <div class="mc-title-tool-bar-reset">
+      <mc-reset :rotate="isRotate" @reset="handleReset" />
     </div>
     <div class="mc-title-tool-bar-line"></div>
     <div class="mc-title-tool-bar-mandatory">Mandatory</div>
@@ -16,7 +11,7 @@
 <script setup lang="ts">
 import type { TitleToolBarEmits, TitleToolBarInstance } from "./types";
 import { ref } from "vue";
-import McIcon from "../mc-icon/mc-icon.vue";
+import McReset from "../mc-reset/mc-reset.vue";
 import { throttle } from "lodash-es";
 
 // options

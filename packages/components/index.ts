@@ -30,3 +30,4 @@ export * from "./mc-footer";
 export * from "./mc-modal-header";
 export * from "./mc-drawer";
 export * from "./mc-tab";
+export * from "./mc-reset";
