@@ -72,10 +72,12 @@ const slots = useSlots();
 
 // watch default slot
 watchEffect(() => {
+  // @ts-ignore
   if (!slots.default) {
     tabItems.value = [];
     return;
   }
+  // @ts-ignore
   let vnodes = slots.default();
   // handle v-for
   if (vnodes.length && vnodes[0].type === Fragment) {
