@@ -15,13 +15,32 @@
       </div>
       <div class="mc-tab-line" ref="tabLineRef" v-if="isPlain"></div>
     </div>
+    <template v-if="activeTab?.vn">
+      <component :key="activeTab.name" :is="activeTab.vn"></component>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { TabEmits, TabInstance, TabItem, TabProps } from "./types";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
-import { findIndex } from "lodash-es";
+import type {
+  TabEmits,
+  TabInstance,
+  TabItem,
+  TabItemProps,
+  TabProps,
+} from "./types";
+import {
+  computed,
+  h,
+  onMounted,
+  onUnmounted,
+  ref,
+  useSlots,
+  watch,
+  watchEffect,
+  type VNode,
+} from "vue";
+import { filter, find, findIndex, map } from "lodash-es";
 
 // options
 defineOptions({ name: "McTabItem" });
@@ -39,21 +58,49 @@ const _ref = ref<HTMLDivElement | void>();
 const tabNavRef = ref<HTMLDivElement | void>();
 const tabLineRef = ref<HTMLDivElement | void>();
 
+// tab items
+const tabItems = ref<TabItem[]>([]);
+
+// slots
+const slots = useSlots();
+
+// watch default slot
+watchEffect(() => {
+  if (!slots.default) {
+    tabItems.value = [];
+    return;
+  }
+  const vnodes = slots.default();
+  // filter tab items
+  tabItems.value = map(
+    filter(vnodes, (vn) => (vn.type as { name: string }).name === "McTabItem"),
+    (vn) => {
+      const props = vn.props as TabItemProps;
+      return {
+        ...props,
+        vn: h(
+          "div",
+          { class: "mc-select-option-content" },
+          (vn.children as { default: () => VNode[] })?.default?.()?.[0]
+        ),
+      } as TabItem;
+    }
+  );
+});
+
+// active tab
+const activeTab = computed(() =>
+  find(tabItems.value, (tab) => tab.name === props.modelValue)
+);
+
 // plain
 const isPlain = computed(() => props.type === "plain");
 
-// tab items
-const tabItems = ref<TabItem[]>([
-  { name: "tab-1", label: "HirasawaYui" },
-  { name: "tab-2", label: "NakanoAzusa" },
-  { name: "tab-3", label: "AkiyamaMio" },
-  { name: "tab-4", label: "TainakaRitsu" },
-  { name: "tab-5", label: "KotobukuTsumugi" },
-]);
-
 onMounted(async () => {
+  // set tab line
   setTabLine(props.modelValue);
   setTimeout(() => {
+    // start transition
     setTransition();
   });
 });
