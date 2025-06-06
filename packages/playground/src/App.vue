@@ -1,11 +1,11 @@
 <template>
   <div>
-    <tab-container />
+    <header-container />
   </div>
 </template>
 
 <script setup lang="ts">
-import TabContainer from "./views/tab-container.vue";
+import HeaderContainer from "./views/header-container.vue";
 </script>
 
 <style scoped lang="scss"></style>

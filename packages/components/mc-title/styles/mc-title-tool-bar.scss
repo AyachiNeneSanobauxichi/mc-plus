@@ -52,5 +52,14 @@ $line_color: var(--mc-gray-200);
 
   .mc-title-tool-bar-mandatory {
     color: $text_color_error;
+    box-sizing: border-box;
+    padding-right: 8px;
+    position: relative;
+    &::after {
+      content: "*";
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
 }
