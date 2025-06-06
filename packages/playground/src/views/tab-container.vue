@@ -1,6 +1,6 @@
 <template>
   <div class="tab-container">
-    <mc-tab v-model="activeTab"></mc-tab>
+    <mc-tab v-model="activeTab" type="primary"></mc-tab>
   </div>
 </template>
 
