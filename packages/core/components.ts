@@ -27,6 +27,8 @@ import {
   McTitleToolBar,
   McModalHeader,
   McDrawer,
+  McTab,
+  McTabItem,
 } from "@mc-plus/components";
 
 export default [
@@ -57,4 +59,6 @@ export default [
   McTitleToolBar,
   McModalHeader,
   McDrawer,
+  McTab,
+  McTabItem,
 ] as Plugin[];
