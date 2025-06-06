@@ -44,6 +44,17 @@
   --mc-info-light-background: #f1f6fe;
   --mc-error-light-background: #fff1f1;
 
+  /* color */
+  --mc--blue: #3270d9;
+  --mc--cyan: #33becc;
+  --mc--mint-green: #32d99f;
+  --mc--apple-green: #32d962;
+  --mc--chartreuse: #c8d932;
+  --mc--lemon-yellow: #f0f404;
+  --mc--brick-red: #cc4133;
+  --mc--tomato-red: #d95232;
+  --mc--orange-brown: #d96d32;
+
   /* common */
   --mc-gap: 4px;
   --mc-radius: 4px;
