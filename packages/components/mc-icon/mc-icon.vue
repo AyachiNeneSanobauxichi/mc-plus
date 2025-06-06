@@ -26,7 +26,7 @@ defineOptions({ name: "McIcon" });
 
 // props
 withDefaults(defineProps<IconProps>(), {
-  size: 16,
+  size: 24,
 });
 
 // emits
