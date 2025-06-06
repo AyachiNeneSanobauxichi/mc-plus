@@ -24,5 +24,5 @@ export interface TabItemProps {
 }
 
 export interface TabItem extends TabItemProps {
-  vn?: VNode;
+  _vnode?: VNode;
 }

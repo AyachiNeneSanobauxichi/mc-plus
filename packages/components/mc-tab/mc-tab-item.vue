@@ -13,7 +13,3 @@ defineOptions({ name: "McTabItem" });
 // props
 defineProps<TabItemProps>();
 </script>
-
-<style scoped lang="scss">
-@use "./styles/mc-tab-item.scss";
-</style>

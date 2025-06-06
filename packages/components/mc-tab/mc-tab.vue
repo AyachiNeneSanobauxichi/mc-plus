@@ -11,12 +11,17 @@
         :key="tab.name"
         @click="handleTabClick(tab)"
       >
-        {{ tab.label }}
+        <span>
+          {{ tab.label }}
+        </span>
+        <span v-if="tab.count" class="mc-tab-nav-item-count">
+          {{ tab.count }}
+        </span>
       </div>
       <div class="mc-tab-line" ref="tabLineRef" v-if="isPlain"></div>
     </div>
-    <template v-if="activeTab?.vn">
-      <component :key="activeTab.name" :is="activeTab.vn"></component>
+    <template v-if="activeTab?._vnode">
+      <component :key="activeTab.name" :is="activeTab._vnode"></component>
     </template>
   </div>
 </template>
@@ -38,6 +43,7 @@ import {
   useSlots,
   watch,
   watchEffect,
+  Fragment,
   type VNode,
 } from "vue";
 import { filter, find, findIndex, map } from "lodash-es";
@@ -70,19 +76,24 @@ watchEffect(() => {
     tabItems.value = [];
     return;
   }
-  const vnodes = slots.default();
+  let vnodes = slots.default();
+  // handle v-for
+  if (vnodes.length && vnodes[0].type === Fragment) {
+    vnodes = [...Array.from(vnodes[0].children as VNode[])];
+  }
+
   // filter tab items
   tabItems.value = map(
     filter(vnodes, (vn) => (vn.type as { name: string }).name === "McTabItem"),
     (vn) => {
       const props = vn.props as TabItemProps;
       return {
-        ...props,
-        vn: h(
+        _vnode: h(
           "div",
-          { class: "mc-select-option-content" },
+          { class: "mc-tab-content" },
           (vn.children as { default: () => VNode[] })?.default?.()?.[0]
         ),
+        ...props,
       } as TabItem;
     }
   );
@@ -162,5 +173,5 @@ defineExpose<TabInstance>({
 </script>
 
 <style scoped lang="scss">
-@use "./styles/mc-tab.scss";
+@use "./index.scss";
 </style>

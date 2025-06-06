@@ -17,11 +17,10 @@ $text_color: var(--mc-gray-500);
 $text_color_disable: var(--mc-gray-400);
 
 .mc-tab {
-  height: 48px;
   box-sizing: border-box;
 
   .mc-tab-nav {
-    height: 100%;
+    height: 48px;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -35,18 +34,34 @@ $text_color_disable: var(--mc-gray-400);
       padding: 0 24px;
       align-items: center;
       justify-content: center;
+      gap: 4px;
       color: $text_color;
       font-weight: 600;
       box-sizing: border-box;
       cursor: pointer;
       user-select: none;
+
+      .mc-tab-nav-item-count {
+        min-width: 24px;
+        width: fit-content;
+        height: 16px;
+        padding: 0 1px;
+        border-radius: 16px;
+        color: $primary_text_color_active;
+        font-size: 12px;
+        background-color: $bg_color_tip;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 
   /* plain */
   &.mc-tab-plain {
-    border-bottom: 2px solid $plain_border_color;
-
+    .mc-tab-nav {
+      border-bottom: 2px solid $plain_border_color;
+    }
     .mc-tab-nav-item {
       background-color: transparent;
       &:hover {
@@ -70,7 +85,9 @@ $text_color_disable: var(--mc-gray-400);
 
   /* primary */
   &.mc-tab-primary {
-    border-bottom: 2px solid $primary_border_color;
+    .mc-tab-nav {
+      border-bottom: 2px solid $primary_border_color;
+    }
     .mc-tab-nav-item {
       background-color: $primary_bg_color;
       border-top-left-radius: 4px;
@@ -87,6 +104,7 @@ $text_color_disable: var(--mc-gray-400);
       &.mc-tab-nav-item-disabled {
         background-color: $primary_bg_color_disable;
         color: $text_color_disable;
+        cursor: not-allowed;
       }
     }
   }
