@@ -1,11 +1,21 @@
 <template>
-  <div>
-    <divider-container />
+  <div class="select-container">
+    <select-container />
   </div>
 </template>
 
 <script setup lang="ts">
-import DividerContainer from "./views/divider-container.vue";
+import SelectContainer from "./views/select-container.vue";
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.select-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: pink;
+  width: 1000px;
+  height: 800px;
+}
+</style>
