@@ -1,11 +1,11 @@
 <template>
   <div>
-    <header-container />
+    <divider-container />
   </div>
 </template>
 
 <script setup lang="ts">
-import HeaderContainer from "./views/header-container.vue";
+import DividerContainer from "./views/divider-container.vue";
 </script>
 
 <style scoped lang="scss"></style>
