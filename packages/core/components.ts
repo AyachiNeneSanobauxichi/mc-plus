@@ -30,6 +30,7 @@ import {
   McTab,
   McTabItem,
   McReset,
+  McDivider,
 } from "@mc-plus/components";
 
 export default [
@@ -63,4 +64,5 @@ export default [
   McTab,
   McTabItem,
   McReset,
+  McDivider,
 ] as Plugin[];

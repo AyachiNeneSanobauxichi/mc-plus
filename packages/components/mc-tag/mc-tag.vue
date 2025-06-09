@@ -11,6 +11,9 @@ import { computed, ref, toRefs } from "vue";
 import mcIcon from "../mc-icon/mc-icon.vue";
 import type { TagEmits, TagInstance, TagProps } from "./types";
 
+// options
+defineOptions({name: 'McTag'})
+
 const _ref = ref<HTMLDivElement>();
 
 const props = withDefaults(defineProps<TagProps>(), {

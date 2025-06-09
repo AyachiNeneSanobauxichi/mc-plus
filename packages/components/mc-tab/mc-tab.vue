@@ -49,7 +49,7 @@ import {
 import { filter, find, findIndex, map } from "lodash-es";
 
 // options
-defineOptions({ name: "McTabItem" });
+defineOptions({ name: "McTab" });
 
 // props
 const props = withDefaults(defineProps<TabProps>(), {
