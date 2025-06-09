@@ -1,6 +1,6 @@
 <template>
   <ul class="mc-select-group">
-    <div class="mc-select-group-label">{{ label }}</div>
+    <li class="mc-select-group-label">{{ label }}</li>
     <slot></slot>
   </ul>
 </template>

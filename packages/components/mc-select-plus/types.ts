@@ -20,6 +20,8 @@ export interface SelectEmits {
 export interface SelecOptinonProps {
   value: string;
   label?: string;
+  width?: string;
+  height?: string;
 }
 
 export interface SelectOptinon extends SelecOptinonProps {
