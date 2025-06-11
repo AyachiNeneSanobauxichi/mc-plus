@@ -1,5 +1,19 @@
 <template>
   <div class="input-group-container">
+    <div class="demo">
+      <mc-input v-model="schoolName"></mc-input>
+      <mc-select v-model="student" search>
+        <template v-for="optionGroup in options" :key="optionGroup.value">
+          <mc-select-group :label="optionGroup.label">
+            <template v-for="option in optionGroup.stus" :key="option.value">
+              <mc-select-option :value="option.value" :label="option.label">
+                {{ option.label }}
+              </mc-select-option>
+            </template>
+          </mc-select-group>
+        </template>
+      </mc-select>
+    </div>
     <mc-input-group>
       <mc-input v-model="schoolName"></mc-input>
       <mc-select v-model="student" search>
@@ -50,4 +64,10 @@ const options = ref([
 ]);
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.demo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 600px;
+}
+</style>
