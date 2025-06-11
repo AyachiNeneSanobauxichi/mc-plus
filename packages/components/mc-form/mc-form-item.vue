@@ -209,6 +209,7 @@ const handleValidate = (
 
   // rules
   const rules = getTriggerRules(trigger);
+
   // current trigger rules not exist
   if (!size(rules)) {
     callback?.(true);

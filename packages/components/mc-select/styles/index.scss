@@ -4,6 +4,8 @@ $border_color_error: var(--mc-error);
 $text_color: var(--mc-gray-400);
 $text_color_active: var(--mc-black);
 $text_color_disabled: var(--mc-gray-500);
+$text_color_error: var(--mc-error);
+$text_color_success: var(--mc-success);
 $icon_color: var(--mc-gray-800);
 $bg_color: var(--mc-white);
 $bg_color_disabled: var(--mc-gray-200);
@@ -41,7 +43,7 @@ $bg_color_disabled: var(--mc-gray-200);
       width: 100%;
       height: 100%;
       background-color: transparent;
-      padding: 0 8px;
+      padding: 0 56px 0 8px;
       .mc-select-input {
         margin: 0;
         padding: 0;
@@ -91,6 +93,20 @@ $bg_color_disabled: var(--mc-gray-200);
       &:hover {
         border: 2px solid $border_color_hover;
         padding: 0 7px;
+        .mc-select-input-wrapper {
+          left: -1px;
+        }
+      }
+    }
+  }
+
+  // focused style
+  &.mc-input-focused {
+    .mc-select-trigger {
+      border: 2px solid $border_color_hover;
+      padding: 0 7px;
+      .mc-select-input-wrapper {
+        left: -1px;
       }
     }
   }
@@ -103,6 +119,9 @@ $bg_color_disabled: var(--mc-gray-200);
       border: 2px solid $border_color_hover;
       border-bottom: 2px solid $border_color_hover;
       padding: 0 7px;
+      .mc-select-input-wrapper {
+        left: -1px;
+      }
     }
   }
 
@@ -119,6 +138,9 @@ $bg_color_disabled: var(--mc-gray-200);
       &:hover {
         border: 1px solid $border_color;
         padding: 0 8px;
+        .mc-select-input-wrapper {
+          left: 0px;
+        }
       }
     }
   }
@@ -152,6 +174,104 @@ $bg_color_disabled: var(--mc-gray-200);
         font-size: 12px;
         color: $text_color;
       }
+    }
+  }
+
+  // status icon
+  .mc-select__status {
+    &--error {
+      color: $text_color_error;
+    }
+
+    &--success {
+      color: $text_color_success;
+    }
+  }
+
+  // error style
+  &.mc-select--error:not(.mc-select-disabled) {
+    &.mc-select-collapse {
+      .mc-select-trigger {
+        border-color: $text_color_error;
+        &:hover {
+          border-color: $text_color_error;
+        }
+      }
+    }
+  }
+
+  // input group style
+  &.mc-select--input-group-prefix {
+    width: 108px;
+    .mc-select-trigger {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+
+      &:hover {
+        padding-right: 6px;
+      }
+    }
+
+    &.mc-select-expand,
+    &.mc-input-focused {
+      .mc-select-trigger {
+        border-right: 2px solid $border_color_hover;
+        &:hover {
+          padding-right: 7px;
+        }
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 60%;
+      right: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: $border_color;
+    }
+  }
+
+  &.mc-select--input-group-suffix {
+    width: 108px;
+    .mc-select-trigger {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: none;
+
+      &:hover {
+        padding-left: 6px;
+        .mc-select-input-wrapper {
+          left: -2px;
+        }
+      }
+    }
+
+    &.mc-select-expand,
+    &.mc-input-focused {
+      .mc-select-trigger {
+        border-left: 2px solid $border_color_hover;
+        &:hover {
+          padding-left: 7px;
+          .mc-select-input-wrapper {
+            left: -1px;
+          }
+        }
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 60%;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: $border_color;
     }
   }
 }

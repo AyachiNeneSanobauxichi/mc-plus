@@ -23,6 +23,7 @@ export * from "./mc-step";
 // refactor
 export * from "./mc-form";
 export * from "./mc-input";
+export * from "./mc-input-group";
 export * from "./mc-icon";
 export * from "./mc-success-icon";
 export * from "./mc-title";

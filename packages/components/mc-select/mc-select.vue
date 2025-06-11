@@ -2,10 +2,16 @@
   <div
     class="mc-select"
     :class="[
-      isExpand && !disabled ? 'mc-select-expand' : 'mc-select-collapse',
-      { 'mc-select-disabled': disabled },
+      isExpand && !isDisabled ? 'mc-select-expand' : 'mc-select-collapse',
+      {
+        'mc-select-disabled': isDisabled,
+        'mc-input-focused': isFocused,
+        [`mc-select--${validateStyle}`]: validateStyle,
+        'mc-select--input-group-prefix': isPrefix,
+        'mc-select--input-group-suffix': isSuffix,
+      },
     ]"
-    ref="_ref"
+    ref="wrapperRef"
     :style="style"
   >
     <div class="mc-select-trigger" @click="handleClick">
@@ -19,23 +25,36 @@
         <input
           class="mc-select-input"
           :class="{ 'mc-select-input-readonly': !search }"
+          ref="inputRef"
           type="text"
           :placeholder="placeholderDisplay"
           v-model="searchValue"
           @input="handleSearch"
+          @focus="handleFocus"
+          @blur="handleBlur"
           :readonly="!search"
-          :disabled="disabled"
+          :disabled="isDisabled"
         />
       </div>
+      <template v-if="showStatusIcon">
+        <div
+          class="mc-select__status"
+          :class="[
+            isError ? 'mc-select__status--error' : 'mc-select__status--success',
+          ]"
+        >
+          <mc-icon :name="isError ? 'Reject_02' : 'Accept_02'" :size="24" />
+        </div>
+      </template>
       <div
         class="mc-select-icon-wrapper"
-        :class="{ 'mc-select-icon-wrapper-expand': isExpand && !disabled }"
+        :class="{ 'mc-select-icon-wrapper-expand': isExpand && !isDisabled }"
       >
         <mc-icon name="Down-Chevron" />
       </div>
     </div>
     <transition name="mc-select-dropdown-transition">
-      <div class="mc-select-dropdown-wrapper" v-show="isExpand && !disabled">
+      <div class="mc-select-dropdown-wrapper" v-show="isExpand && !isDisabled">
         <div class="mc-select-dropdown">
           <slot></slot>
           <div v-if="noData" class="mc-select-no-data">
@@ -52,8 +71,10 @@ import type { SelectEmits, SelectOptionProps, SelectProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
-import { useClickOutside } from "@mc-plus/hooks";
+import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import { isNil, lowerCase } from "lodash-es";
+import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { useInputGroupAffix } from "../mc-input-group/hooks";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -67,6 +88,12 @@ const props = withDefaults(defineProps<SelectProps>(), {
 
 // emits
 const emit = defineEmits<SelectEmits>();
+
+// ref
+const inputRef = ref<HTMLInputElement>();
+
+// disabled
+const isDisabled = useFormDisabled();
 
 // select options
 const selectOptions = ref<SelectOptionProps[]>([]);
@@ -90,6 +117,17 @@ const filterOptions = computed(() => {
     );
   });
 });
+
+// use focus controller
+const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
+  inputRef,
+  {
+    afterBlur() {
+      // after blur validate
+      formItem?.validate("blur");
+    },
+  }
+);
 
 // no data
 const noData = computed(() => {
@@ -121,27 +159,42 @@ const selectedOption = computed<SelectOptionProps | undefined>(() => {
   });
 });
 
+// form item context
+const { formItem } = useFormItem();
+
+// form item validate status style
+const validateStyle = computed(() => {
+  switch (formItem?.validateStatus) {
+    case "success":
+      return "success";
+    case "error":
+      return "error";
+    default:
+      return "";
+  }
+});
+
+// error
+const isError = computed(() => validateStyle.value === "error");
+
+// success
+const isSuccess = computed(() => validateStyle.value === "success");
+
+// show status icon
+const showStatusIcon = computed(
+  () =>
+    !isDisabled.value &&
+    (isError.value || isSuccess.value) &&
+    !isPrefix.value &&
+    !isSuffix.value
+);
+
 // select event
 const handleSelect = (item: SelectOptionProps) => {
-  // if (isMultiple(props.modelValue)) {
-  //   let newValues: string[] = [];
-  //   if (props.modelValue.includes(item.value)) {
-  //     newValues = selectValues.value = props.modelValue.filter(
-  //       (value) => value !== item.value
-  //     );
-  //   } else {
-  //     newValues = [...props.modelValue, item.value];
-  //   }
-  //   emit("update:modelValue", newValues);
-  //   emit("change", newValues);
-  // } else {
-
   isExpand.value = false;
-  searchValue.value = "";
   emit("update:modelValue", item.value);
   emit("change", item.value);
-
-  // }
+  formItem?.validate("change");
 };
 
 // placeholder display
@@ -166,12 +219,26 @@ const style = computed(() => {
   };
 });
 
-// ref
-const _ref = ref<HTMLElement>();
 // click outside
-useClickOutside(_ref, () => {
+useClickOutside(wrapperRef, () => {
   isExpand.value = false;
 });
+
+// expand changed
+watch(
+  () => isExpand.value,
+  (val) => {
+    if (!val) {
+      // clear search value
+      setTimeout(() => {
+        searchValue.value = "";
+      }, 300);
+    }
+  },
+  {
+    flush: "post",
+  }
+);
 
 // provide
 provide(SELECT_INJECTION_KEY, {
@@ -181,8 +248,11 @@ provide(SELECT_INJECTION_KEY, {
   removeOption,
   addOption,
 });
+
+// input group
+const { isPrefix, isSuffix } = useInputGroupAffix("select");
 </script>
 
 <style scoped lang="scss">
-@use "./styles//index.scss";
+@use "./styles/index.scss";
 </style>

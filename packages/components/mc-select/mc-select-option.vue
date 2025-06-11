@@ -10,15 +10,11 @@
     <div class="mc-select-option-content">
       <slot>{{ label }}</slot>
     </div>
-    <div class="mc-select-option-icon">
-      <mc-icon name="Tick" v-if="isActive" />
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { SelectOptionInstance, SelectOptionProps } from "./types";
-import McIcon from "../mc-icon/mc-icon.vue";
 import {
   computed,
   h,

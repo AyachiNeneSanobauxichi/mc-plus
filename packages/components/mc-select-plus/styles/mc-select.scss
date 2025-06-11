@@ -1,0 +1,25 @@
+$border_color: var(--mc-gray-400);
+$border_color_hover: var(--mc-gray-600);
+$border_color_error: var(--mc-error);
+$text_color: var(--mc-gray-400);
+$text_color_active: var(--mc-black);
+$text_color_disabled: var(--mc-gray-500);
+$icon_color: var(--mc-gray-800);
+$bg_color: var(--mc-white);
+$bg_color_disabled: var(--mc-gray-200);
+
+ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mc-select {
+  background-color: $bg_color;
+  :deep(.mc-select-selected-content) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
