@@ -123,25 +123,10 @@ const selectedOption = computed<SelectOptionProps | undefined>(() => {
 
 // select event
 const handleSelect = (item: SelectOptionProps) => {
-  // if (isMultiple(props.modelValue)) {
-  //   let newValues: string[] = [];
-  //   if (props.modelValue.includes(item.value)) {
-  //     newValues = selectValues.value = props.modelValue.filter(
-  //       (value) => value !== item.value
-  //     );
-  //   } else {
-  //     newValues = [...props.modelValue, item.value];
-  //   }
-  //   emit("update:modelValue", newValues);
-  //   emit("change", newValues);
-  // } else {
-
   isExpand.value = false;
   searchValue.value = "";
   emit("update:modelValue", item.value);
   emit("change", item.value);
-
-  // }
 };
 
 // placeholder display

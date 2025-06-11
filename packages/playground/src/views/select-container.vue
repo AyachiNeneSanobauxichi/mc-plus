@@ -1,10 +1,10 @@
 <template>
   <div class="select-container">
-    <mc-select v-model="student">
+    <mc-select v-model="student" search>
       <template v-for="optionGroup in options" :key="optionGroup.value">
-        <mc-select-group :value="optionGroup.value" :label="optionGroup.label">
+        <mc-select-group :label="optionGroup.label">
           <template v-for="option in optionGroup.stus" :key="option.value">
-            <mc-select-option :value="option.value">
+            <mc-select-option :value="option.value" :label="option.label">
               {{ option.label }}
             </mc-select-option>
           </template>
@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import McSelect from "../../../components/mc-select-plus/mc-select.vue";
-import McSelectGroup from "../../../components/mc-select-plus/mc-select-group.vue";
-import McSelectOption from "../../../components/mc-select-plus/mc-select-option.vue";
+import McSelect from "../../../components/mc-select/mc-select.vue";
+import McSelectGroup from "../../../components/mc-select/mc-select-group.vue";
+import McSelectOption from "../../../components/mc-select/mc-select-option.vue";
 import { ref } from "vue";
 
 const options = ref([
