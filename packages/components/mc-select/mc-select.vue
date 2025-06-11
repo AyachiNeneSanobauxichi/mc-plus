@@ -124,7 +124,6 @@ const selectedOption = computed<SelectOptionProps | undefined>(() => {
 // select event
 const handleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
-  searchValue.value = "";
   emit("update:modelValue", item.value);
   emit("change", item.value);
 };
@@ -157,6 +156,22 @@ const _ref = ref<HTMLElement>();
 useClickOutside(_ref, () => {
   isExpand.value = false;
 });
+
+// expand changed
+watch(
+  () => isExpand.value,
+  (val) => {
+    if (!val) {
+      // clear search value
+      setTimeout(() => {
+        searchValue.value = "";
+      }, 300);
+    }
+  },
+  {
+    flush: "post",
+  }
+);
 
 // provide
 provide(SELECT_INJECTION_KEY, {
