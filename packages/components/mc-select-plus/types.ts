@@ -17,14 +17,14 @@ export interface SelectEmits {
   (e: "change", val: string | string[]): void;
 }
 
-export interface SelecOptinonProps {
+export interface SelecOptionProps {
   value: string;
   label?: string;
   width?: string;
   height?: string;
 }
 
-export interface SelectOptinon extends SelecOptinonProps {
+export interface SelectOptinon extends SelecOptionProps {
   _group?: string;
   _vnode?: VNode;
   _isGroup?: boolean;
@@ -33,4 +33,8 @@ export interface SelectOptinon extends SelecOptinonProps {
 export interface SelectGroupProps {
   value: string;
   label?: string;
+}
+
+export interface SelectContext {
+  handleSelect(item: SelecOptionProps): void;
 }

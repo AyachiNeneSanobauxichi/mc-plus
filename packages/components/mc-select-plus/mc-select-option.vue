@@ -9,14 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import type { SelecOptinonProps } from "./types";
+import type { SelecOptionProps } from "./types";
 import { ref } from "vue";
 
 // options
 defineOptions({ name: "McSelectOption" });
 
 // props
-withDefaults(defineProps<SelecOptinonProps>(), {
+withDefaults(defineProps<SelecOptionProps>(), {
   width: "100%",
   height: "40px",
 });

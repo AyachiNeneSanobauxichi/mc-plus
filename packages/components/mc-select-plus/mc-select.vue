@@ -1,15 +1,27 @@
 <template>
-  <div class="mc-select">
-    <div class="mc-select-wrapper"></div>
-    <div class="mc-select-dropdown">
+  <div
+    class="mc-select"
+    :class="{ 'mc-select-expand': isExpand }"
+    :style="{ width }"
+    ref="_ref"
+  >
+    <div
+      class="mc-select-wrapper"
+      :style="{ height }"
+      @click="handleClickWrapper"
+    ></div>
+    <ul class="mc-select-dropdown" v-if="isExpand">
       <slot></slot>
-    </div>
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Fragment, ref, useSlots, watchEffect, type VNode } from "vue";
 import type { SelectEmits, SelectOptinon, SelectProps } from "./types";
+import { Fragment, provide, ref, useSlots, watchEffect, type VNode } from "vue";
+import { useClickOutside } from "@mc-plus/hooks";
+import { SELECT_INJECTION_KEY } from "./constant";
+import type { SelectOptionProps } from "../mc-select/types";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -20,6 +32,8 @@ withDefaults(defineProps<SelectProps>(), {
   disabled: false,
   search: false,
   placeholder: "Please select",
+  width: "320px",
+  height: "40px",
 });
 
 // emit
@@ -30,6 +44,21 @@ const slot = useSlots();
 
 // select items
 const selectItems = ref<SelectOptinon[]>([]);
+
+// expand
+const isExpand = ref<boolean>(false);
+
+// click wrapper
+const handleClickWrapper = () => {
+  isExpand.value = !isExpand.value;
+};
+
+// ref
+const _ref = ref<HTMLElement>();
+// click outside
+useClickOutside(_ref, () => {
+  isExpand.value = false;
+});
 
 // generate select items
 const generateItems = (vnodes: VNode[]): SelectOptinon[] => {
@@ -61,17 +90,29 @@ const generateItems = (vnodes: VNode[]): SelectOptinon[] => {
 
   flatten(vnodes);
 
-  console.log("Select Options: ", selectOptions);
-
   return selectOptions;
 };
 
 watchEffect(() => {
   const content = slot?.default?.();
-  // console.log("Content: ", content);
   if (content && content.length) {
-    generateItems(content);
+    selectItems.value = generateItems(content);
+    console.log("SelectItems: ", selectItems.value);
   }
+});
+
+// select event
+const handleSelect = (item: SelectOptionProps) => {
+  isExpand.value = false;
+  emit("update:modelValue", item.value);
+  emit("change", item.value);
+
+  // }
+};
+
+// provide
+provide(SELECT_INJECTION_KEY, {
+  handleSelect,
 });
 </script>
 
