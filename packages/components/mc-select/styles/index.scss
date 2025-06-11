@@ -167,6 +167,18 @@ $bg_color_disabled: var(--mc-gray-200);
       color: $text_color_success;
     }
   }
+
+  // error style
+  &.mc-select--error:not(.mc-select-disabled) {
+    &.mc-select-collapse {
+      .mc-select-trigger {
+        border-color: $text_color_error;
+        &:hover {
+          border-color: $text_color_error;
+        }
+      }
+    }
+  }
 }
 
 .mc-select-dropdown-transition-enter-active,

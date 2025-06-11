@@ -5,7 +5,7 @@
       isExpand && !isDisabled ? 'mc-select-expand' : 'mc-select-collapse',
       {
         'mc-select-disabled': isDisabled,
-        [`mc-input--${validateStyle}`]: validateStyle,
+        [`mc-select--${validateStyle}`]: validateStyle,
       },
     ]"
     ref="_ref"
