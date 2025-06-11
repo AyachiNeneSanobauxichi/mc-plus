@@ -48,9 +48,10 @@ const options = ref([
   },
 ]);
 
-type FormState = { student: string };
+type FormState = { student: string; teacher: string };
 const formState = reactive<FormState>({
-  student: "mio",
+  student: "yui",
+  teacher: "ui",
 });
 
 const rules = reactive<FormRules<FormState>>({

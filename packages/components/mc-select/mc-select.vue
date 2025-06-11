@@ -2,9 +2,9 @@
   <div
     class="mc-select"
     :class="[
-      isExpand && !disabled ? 'mc-select-expand' : 'mc-select-collapse',
+      isExpand && !isDisabled ? 'mc-select-expand' : 'mc-select-collapse',
       {
-        'mc-select-disabled': disabled,
+        'mc-select-disabled': isDisabled,
         [`mc-input--${validateStyle}`]: validateStyle,
       },
     ]"
@@ -27,18 +27,28 @@
           v-model="searchValue"
           @input="handleSearch"
           :readonly="!search"
-          :disabled="disabled"
+          :disabled="isDisabled"
         />
       </div>
+      <template v-if="showStatusIcon">
+        <div
+          class="mc-select__status"
+          :class="[
+            isError ? 'mc-select__status--error' : 'mc-select__status--success',
+          ]"
+        >
+          <mc-icon :name="isError ? 'Reject_02' : 'Accept_02'" :size="24" />
+        </div>
+      </template>
       <div
         class="mc-select-icon-wrapper"
-        :class="{ 'mc-select-icon-wrapper-expand': isExpand && !disabled }"
+        :class="{ 'mc-select-icon-wrapper-expand': isExpand && !isDisabled }"
       >
         <mc-icon name="Down-Chevron" />
       </div>
     </div>
     <transition name="mc-select-dropdown-transition">
-      <div class="mc-select-dropdown-wrapper" v-show="isExpand && !disabled">
+      <div class="mc-select-dropdown-wrapper" v-show="isExpand && !isDisabled">
         <div class="mc-select-dropdown">
           <slot></slot>
           <div v-if="noData" class="mc-select-no-data">
@@ -57,7 +67,7 @@ import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
 import { isNil, lowerCase } from "lodash-es";
-import { useFormItem } from "../mc-form/hooks";
+import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -71,6 +81,9 @@ const props = withDefaults(defineProps<SelectProps>(), {
 
 // emits
 const emit = defineEmits<SelectEmits>();
+
+// disabled
+const isDisabled = useFormDisabled();
 
 // select options
 const selectOptions = ref<SelectOptionProps[]>([]);
@@ -140,11 +153,24 @@ const validateStyle = computed(() => {
   }
 });
 
+// error
+const isError = computed(() => validateStyle.value === "error");
+
+// success
+const isSuccess = computed(() => validateStyle.value === "success");
+
+// show status icon
+const showStatusIcon = computed(
+  () => !isDisabled.value && (isError.value || isSuccess.value)
+);
+
 // select event
 const handleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
   emit("update:modelValue", item.value);
   emit("change", item.value);
+  console.log("Form Item: ", formItem);
+
   formItem?.validate("change");
 };
 

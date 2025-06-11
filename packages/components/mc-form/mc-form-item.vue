@@ -209,6 +209,9 @@ const handleValidate = (
 
   // rules
   const rules = getTriggerRules(trigger);
+
+  console.log("rules: ", rules);
+
   // current trigger rules not exist
   if (!size(rules)) {
     callback?.(true);
@@ -218,6 +221,8 @@ const handleValidate = (
   // start validate
   validateStatus.value = "validating";
   const validateFunc = getFormItemValidateFunc(rules);
+
+  console.log("validateFunc: ", validateFunc);
 
   if (validateFunc) {
     return validateFunc
