@@ -14,7 +14,6 @@ import SelectContainer from "./views/select-container.vue";
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: pink;
   width: 1000px;
   height: 800px;
 }

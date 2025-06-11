@@ -5,10 +5,11 @@
       isExpand && !isDisabled ? 'mc-select-expand' : 'mc-select-collapse',
       {
         'mc-select-disabled': isDisabled,
+        'mc-input-focused': isFocused,
         [`mc-select--${validateStyle}`]: validateStyle,
       },
     ]"
-    ref="_ref"
+    ref="wrapperRef"
     :style="style"
   >
     <div class="mc-select-trigger" @click="handleClick">
@@ -22,10 +23,13 @@
         <input
           class="mc-select-input"
           :class="{ 'mc-select-input-readonly': !search }"
+          ref="inputRef"
           type="text"
           :placeholder="placeholderDisplay"
           v-model="searchValue"
           @input="handleSearch"
+          @focus="handleFocus"
+          @blur="handleBlur"
           :readonly="!search"
           :disabled="isDisabled"
         />
@@ -65,7 +69,7 @@ import type { SelectEmits, SelectOptionProps, SelectProps } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
-import { useClickOutside } from "@mc-plus/hooks";
+import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import { isNil, lowerCase } from "lodash-es";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 
@@ -81,6 +85,9 @@ const props = withDefaults(defineProps<SelectProps>(), {
 
 // emits
 const emit = defineEmits<SelectEmits>();
+
+// ref
+const inputRef = ref<HTMLInputElement>();
 
 // disabled
 const isDisabled = useFormDisabled();
@@ -107,6 +114,17 @@ const filterOptions = computed(() => {
     );
   });
 });
+
+// use focus controller
+const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
+  inputRef,
+  {
+    afterBlur() {
+      // after blur validate
+      formItem?.validate("blur");
+    },
+  }
+);
 
 // no data
 const noData = computed(() => {
@@ -196,10 +214,8 @@ const style = computed(() => {
   };
 });
 
-// ref
-const _ref = ref<HTMLElement>();
 // click outside
-useClickOutside(_ref, () => {
+useClickOutside(wrapperRef, () => {
   isExpand.value = false;
 });
 

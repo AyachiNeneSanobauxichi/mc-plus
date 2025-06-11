@@ -97,6 +97,14 @@ $bg_color_disabled: var(--mc-gray-200);
     }
   }
 
+  // focused style
+  &.mc-input-focused {
+    .mc-select-trigger {
+      border: 2px solid $border_color_hover;
+      padding: 0 7px;
+    }
+  }
+
   // expand style
   &.mc-select-expand {
     .mc-select-trigger {
