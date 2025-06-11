@@ -7,8 +7,8 @@
         'mc-select-disabled': isDisabled,
         'mc-input-focused': isFocused,
         [`mc-select--${validateStyle}`]: validateStyle,
-        'mc-input--input-group-prefix': isPrefix,
-        'mc-input--input-group-suffix': isSuffix,
+        'mc-select--input-group-prefix': isPrefix,
+        'mc-select--input-group-suffix': isSuffix,
       },
     ]"
     ref="wrapperRef"

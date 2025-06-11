@@ -93,6 +93,9 @@ $bg_color_disabled: var(--mc-gray-200);
       &:hover {
         border: 2px solid $border_color_hover;
         padding: 0 7px;
+        .mc-select-input-wrapper {
+          left: -1px;
+        }
       }
     }
   }
@@ -102,6 +105,9 @@ $bg_color_disabled: var(--mc-gray-200);
     .mc-select-trigger {
       border: 2px solid $border_color_hover;
       padding: 0 7px;
+      .mc-select-input-wrapper {
+        left: -1px;
+      }
     }
   }
 
@@ -113,6 +119,9 @@ $bg_color_disabled: var(--mc-gray-200);
       border: 2px solid $border_color_hover;
       border-bottom: 2px solid $border_color_hover;
       padding: 0 7px;
+      .mc-select-input-wrapper {
+        left: -1px;
+      }
     }
   }
 
@@ -129,6 +138,9 @@ $bg_color_disabled: var(--mc-gray-200);
       &:hover {
         border: 1px solid $border_color;
         padding: 0 8px;
+        .mc-select-input-wrapper {
+          left: 0px;
+        }
       }
     }
   }

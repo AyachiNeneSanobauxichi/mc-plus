@@ -18,6 +18,7 @@ $font_size: var(--mc-font-size-base);
   padding: 0 8px;
   background-color: $bg_color;
   box-sizing: border-box;
+  border: 1px solid $border_color;
   border-radius: $border_radius;
   color: $text_color;
   display: flex;
@@ -42,25 +43,16 @@ $font_size: var(--mc-font-size-base);
     }
   }
 
-  // not input group
-  &:not(.mc-input--input-group-prefix):not(.mc-input--input-group-suffix) {
-    border: 1px solid $border_color;
-    // hover
-    &:hover {
-      border: 2px solid $border_color_hover;
-      padding: 0 7px;
-    }
-
-    // focus
-    &.mc-input--focused {
-      border: 2px solid $border_color_hover;
-      padding: 0 7px;
-      color: $text_color_active;
-    }
+  // hover
+  &:hover {
+    border: 2px solid $border_color_hover;
+    padding: 0 7px;
   }
 
   // focus
   &.mc-input--focused {
+    border: 2px solid $border_color_hover;
+    padding: 0 7px;
     color: $text_color_active;
   }
 
