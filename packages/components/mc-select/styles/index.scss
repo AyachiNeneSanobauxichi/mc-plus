@@ -199,6 +199,23 @@ $bg_color_disabled: var(--mc-gray-200);
       }
     }
   }
+
+  // input group style
+  &.mc-select--input-group-prefix {
+    width: 108px;
+    .mc-select-trigger {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  &.mc-select--input-group-suffix {
+    width: 108px;
+    .mc-select-trigger {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
 }
 
 .mc-select-dropdown-transition-enter-active,

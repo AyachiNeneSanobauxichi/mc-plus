@@ -1,8 +1,8 @@
 <template>
   <div class="input-group-container">
     <div class="demo">
-      <mc-input v-model="schoolName"></mc-input>
-      <mc-select v-model="student" search>
+      <mc-input v-model="amount"></mc-input>
+      <mc-select v-model="currency" search>
         <template v-for="optionGroup in options" :key="optionGroup.value">
           <mc-select-group :label="optionGroup.label">
             <template v-for="option in optionGroup.stus" :key="option.value">
@@ -15,8 +15,8 @@
       </mc-select>
     </div>
     <mc-input-group>
-      <mc-input v-model="schoolName"></mc-input>
-      <mc-select v-model="student" search>
+      <mc-input v-model="amount"></mc-input>
+      <mc-select v-model="currency" search>
         <template v-for="optionGroup in options" :key="optionGroup.value">
           <mc-select-group :label="optionGroup.label">
             <template v-for="option in optionGroup.stus" :key="option.value">
@@ -39,26 +39,26 @@ import McSelectGroup from "../../../components/mc-select/mc-select-group.vue";
 import McSelectOption from "../../../components/mc-select/mc-select-option.vue";
 import { ref } from "vue";
 
-const schoolName = ref<string>("");
-const student = ref<string>();
+const amount = ref<string>("");
+const currency = ref<string>();
 
 const options = ref([
   {
-    label: "3 年",
-    value: "grade3",
+    label: "Crypto",
+    value: "crypto",
     stus: [
-      { label: "Hirasawa Yui", value: "yui" },
-      { label: "Akiyama Mio", value: "mio" },
-      { label: "Tainaka Ritsu", value: "ritsu" },
-      { label: "Kotobuku Tsumugi", value: "mugi" },
+      { label: "USDT", value: "USDT" },
+      { label: "BTC", value: "BTC" },
+      { label: "ETH", value: "ETH" },
+      { label: "USDC", value: "USDC" },
     ],
   },
   {
-    label: "2 年",
-    value: "grade3",
+    label: "Fiat",
+    value: "fiat",
     stus: [
-      { label: "Nakano Azusa", value: "azusa" },
-      { label: "Hirasawa Ui", value: "ui" },
+      { label: "USD", value: "USD" },
+      { label: "EUR", value: "EUR" },
     ],
   },
 ]);

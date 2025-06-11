@@ -94,4 +94,15 @@ $font_size: var(--mc-font-size-base);
       color: $text_color_success;
     }
   }
+
+  // input group style
+  &.mc-input--input-group-prefix {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.mc-input--input-group-suffix {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }
