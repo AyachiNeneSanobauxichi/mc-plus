@@ -206,6 +206,32 @@ $bg_color_disabled: var(--mc-gray-200);
     .mc-select-trigger {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      border-right: none;
+
+      &:hover {
+        padding-right: 6px;
+      }
+    }
+
+    &.mc-select-expand,
+    &.mc-input-focused {
+      .mc-select-trigger {
+        border-right: 2px solid $border_color_hover;
+        &:hover {
+          padding-right: 7px;
+        }
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 60%;
+      right: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: $border_color;
     }
   }
 
@@ -214,6 +240,38 @@ $bg_color_disabled: var(--mc-gray-200);
     .mc-select-trigger {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      border-left: none;
+
+      &:hover {
+        padding-left: 6px;
+        .mc-select-input-wrapper {
+          left: -2px;
+        }
+      }
+    }
+
+    &.mc-select-expand,
+    &.mc-input-focused {
+      .mc-select-trigger {
+        border-left: 2px solid $border_color_hover;
+        &:hover {
+          padding-left: 7px;
+          .mc-select-input-wrapper {
+            left: -1px;
+          }
+        }
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 60%;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: $border_color;
     }
   }
 }

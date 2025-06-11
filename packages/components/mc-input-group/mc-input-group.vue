@@ -16,6 +16,9 @@ import {
 import type { InputGroupAffix } from "./types";
 import { INPUT_GROUP_INJECTION_KEY } from "./constant";
 
+// options
+defineOptions({ name: "McInputGroup" });
+
 // slots
 const slots = useSlots();
 

@@ -182,7 +182,11 @@ const isSuccess = computed(() => validateStyle.value === "success");
 
 // show status icon
 const showStatusIcon = computed(
-  () => !isDisabled.value && (isError.value || isSuccess.value)
+  () =>
+    !isDisabled.value &&
+    (isError.value || isSuccess.value) &&
+    !isPrefix.value &&
+    !isSuffix.value
 );
 
 // select event
@@ -250,5 +254,5 @@ const { isPrefix, isSuffix } = useInputGroupAffix("select");
 </script>
 
 <style scoped lang="scss">
-@use "./styles//index.scss";
+@use "./styles/index.scss";
 </style>
