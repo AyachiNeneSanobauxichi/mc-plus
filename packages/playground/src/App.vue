@@ -1,11 +1,11 @@
 <template>
   <div class="select-container">
-    <select-container />
+    <input-group-container></input-group-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import SelectContainer from "./views/select-container.vue";
+import InputGroupContainer from "./views/input-group-container.vue";
 </script>
 
 <style scoped lang="scss">

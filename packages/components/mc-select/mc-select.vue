@@ -187,8 +187,6 @@ const handleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
   emit("update:modelValue", item.value);
   emit("change", item.value);
-  console.log("Form Item: ", formItem);
-
   formItem?.validate("change");
 };
 
