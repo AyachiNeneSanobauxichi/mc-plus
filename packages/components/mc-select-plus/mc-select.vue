@@ -9,7 +9,11 @@
       class="mc-select-wrapper"
       :style="{ height }"
       @click="handleClickWrapper"
-    ></div>
+    >
+      <template v-if="selectedOption">
+        <component :is="selectedOption._vnode"></component>
+      </template>
+    </div>
     <ul class="mc-select-dropdown" v-if="isExpand">
       <slot></slot>
     </ul>
@@ -17,17 +21,32 @@
 </template>
 
 <script setup lang="ts">
-import type { SelectEmits, SelectOptinon, SelectProps } from "./types";
-import { Fragment, provide, ref, useSlots, watchEffect, type VNode } from "vue";
+import type {
+  SelectOptionProps,
+  SelectEmits,
+  SelectOptinon,
+  SelectProps,
+} from "./types";
+import {
+  computed,
+  Fragment,
+  h,
+  provide,
+  ref,
+  useSlots,
+  watch,
+  watchEffect,
+  type VNode,
+} from "vue";
 import { useClickOutside } from "@mc-plus/hooks";
 import { SELECT_INJECTION_KEY } from "./constant";
-import type { SelectOptionProps } from "../mc-select/types";
+import { find } from "lodash-es";
 
 // options
 defineOptions({ name: "McSelect" });
 
 // props
-withDefaults(defineProps<SelectProps>(), {
+const props = withDefaults(defineProps<SelectProps>(), {
   type: "single",
   disabled: false,
   search: false,
@@ -76,7 +95,11 @@ const generateItems = (vnodes: VNode[]): SelectOptinon[] => {
         selectOptions.push({
           ...vn.props,
           _group: group,
-          _vnode: vn,
+          _vnode: h(
+            "div",
+            { class: "mc-select-selected-content" },
+            (vn.children as { default: () => VNode })?.default?.()
+          ),
         } as SelectOptinon);
       } else if ((vn.type as { name: string }).name === "McSelectGroup") {
         selectOptions.push({
@@ -101,13 +124,28 @@ watchEffect(() => {
   }
 });
 
+// select values
+const selectValues = ref<string[]>([props.modelValue as string]);
+// select value change
+watch(
+  () => props.modelValue,
+  () => {
+    selectValues.value = [props.modelValue as string];
+  }
+);
+// selected option
+const selectedOption = computed<SelectOptinon | undefined>(() => {
+  return find(
+    selectItems.value,
+    (item) => item.value === selectValues.value[0]
+  );
+});
+
 // select event
 const handleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
   emit("update:modelValue", item.value);
   emit("change", item.value);
-
-  // }
 };
 
 // provide

@@ -1,6 +1,6 @@
 <template>
   <div class="select-container">
-    <mc-select>
+    <mc-select v-model="student">
       <template v-for="optionGroup in options" :key="optionGroup.value">
         <mc-select-group :value="optionGroup.value" :label="optionGroup.label">
           <template v-for="option in optionGroup.stus" :key="option.value">
@@ -40,6 +40,8 @@ const options = ref([
     ],
   },
 ]);
+
+const student = ref<string>("mio");
 </script>
 
 <style scoped lang="scss"></style>
