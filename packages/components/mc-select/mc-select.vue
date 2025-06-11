@@ -3,7 +3,10 @@
     class="mc-select"
     :class="[
       isExpand && !disabled ? 'mc-select-expand' : 'mc-select-collapse',
-      { 'mc-select-disabled': disabled },
+      {
+        'mc-select-disabled': disabled,
+        [`mc-input--${validateStyle}`]: validateStyle,
+      },
     ]"
     ref="_ref"
     :style="style"
@@ -54,6 +57,7 @@ import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
 import { isNil, lowerCase } from "lodash-es";
+import { useFormItem } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -121,11 +125,27 @@ const selectedOption = computed<SelectOptionProps | undefined>(() => {
   });
 });
 
+// form item context
+const { formItem } = useFormItem();
+
+// form item validate status style
+const validateStyle = computed(() => {
+  switch (formItem?.validateStatus) {
+    case "success":
+      return "success";
+    case "error":
+      return "error";
+    default:
+      return "";
+  }
+});
+
 // select event
 const handleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
   emit("update:modelValue", item.value);
   emit("change", item.value);
+  formItem?.validate("change");
 };
 
 // placeholder display
