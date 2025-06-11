@@ -7,6 +7,8 @@
         'mc-select-disabled': isDisabled,
         'mc-input-focused': isFocused,
         [`mc-select--${validateStyle}`]: validateStyle,
+        'mc-input--input-group-prefix': isPrefix,
+        'mc-input--input-group-suffix': isSuffix,
       },
     ]"
     ref="wrapperRef"
@@ -72,6 +74,7 @@ import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import { isNil, lowerCase } from "lodash-es";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { useInputGroupAffix } from "../mc-input-group/hooks";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -241,6 +244,9 @@ provide(SELECT_INJECTION_KEY, {
   removeOption,
   addOption,
 });
+
+// input group
+const { isPrefix, isSuffix } = useInputGroupAffix("select");
 </script>
 
 <style scoped lang="scss">

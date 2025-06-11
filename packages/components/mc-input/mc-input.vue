@@ -6,6 +6,8 @@
       'mc-input--focused': isFocused,
       'mc-input--inputed': modelValue,
       [`mc-input--${validateStyle}`]: validateStyle,
+      'mc-input--input-group-prefix': isPrefix,
+      'mc-input--input-group-suffix': isSuffix,
     }"
     :style="{ width, height }"
     ref="wrapperRef"
@@ -66,6 +68,7 @@ import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
+import { useInputGroupAffix } from "../mc-input-group/hooks";
 import {
   currencyFormatter,
   currencyParser,
@@ -268,6 +271,9 @@ watch(nativeValue, () => {
   setNativeValue();
   formItem?.validate("change");
 });
+
+// input group
+const { isPrefix, isSuffix } = useInputGroupAffix("input");
 
 // expose
 defineExpose({
