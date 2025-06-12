@@ -14,10 +14,29 @@
               ref="_ref"
               v-if="showLightboxContent"
             >
+              <div class="mc-lightbox-header">
+                <mc-modal-header :title="title" @close="handleCloseIconClick" />
+              </div>
               <div class="mc-lightbox-content-wrapper">
                 <div class="mc-lightbox-content">
                   <slot></slot>
                 </div>
+              </div>
+              <div class="mc-drawer-footer">
+                <mc-footer>
+                  <template #left>
+                    <slot name="footer-left"></slot>
+                  </template>
+                  <template #right>
+                    <slot name="footer-right"></slot>
+                  </template>
+                  <template #right-button-group>
+                    <slot name="footer-right-button-group"></slot>
+                  </template>
+                  <template #desc>
+                    <slot name="footer-desc"></slot>
+                  </template>
+                </mc-footer>
               </div>
             </div>
           </transition>
@@ -31,6 +50,8 @@
 import type { LightboxEmits, LightboxProps } from "./types";
 import { ref } from "vue";
 import McOverlay from "../mc-overlay/mc-overlay.vue";
+import McModalHeader from "../mc-modal-header/mc-modal-header.vue";
+import McFooter from "../mc-footer/mc-footer.vue";
 
 // options
 defineOptions({ name: "McLightbox" });
@@ -61,6 +82,9 @@ const showLightboxContent = ref<boolean>(true);
 const handleOverlayClick = () => {
   if (!props.maskClosable) return;
 };
+
+// click close icon
+const handleCloseIconClick = () => {};
 </script>
 
 <style scoped lang="scss">

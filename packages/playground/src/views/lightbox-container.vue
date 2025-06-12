@@ -1,7 +1,7 @@
 <template>
   <div class="lightbox-container">
     <div>Visible: {{ visible }}</div>
-    <mc-lightbox>
+    <mc-lightbox v-model="visible" title="McLightbox">
       <div class="light-box-content">Light Box</div>
     </mc-lightbox>
     <mc-button @click="handleChangeVisible">Change Visible</mc-button>
