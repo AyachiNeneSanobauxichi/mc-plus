@@ -1,7 +1,7 @@
 <template>
   <div class="lightbox-container">
     <div>Visible: {{ visible }}</div>
-    <mc-lightbox v-model="visible" title="McLightbox">
+    <mc-lightbox v-model="visible" title="McLightbox" size="large">
       <div class="light-box-content">Light Box</div>
       <template #footer-desc>Please Check</template>
       <template #footer-left>

@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, type Ref } from "vue";
+import { onMounted, onUnmounted, watch, type Ref } from "vue";
 import { throttle } from "lodash-es";
 
 function useResizeObserver(
@@ -14,17 +14,27 @@ function useResizeObserver(
     }, duration)
   );
 
+  const observe = (ele: Element) => {
+    resizeObserver.observe(ele);
+  };
+
+  const unobserve = (ele: Element) => {
+    resizeObserver.unobserve(ele);
+  };
+
   onMounted(() => {
-    if (!domRef.value) return;
-    resizeObserver.observe(domRef.value);
+    if (domRef.value) observe(domRef.value);
   });
 
   onUnmounted(() => {
-    if (!domRef.value) return;
-    resizeObserver.unobserve(domRef.value);
+    if (domRef.value) unobserve(domRef.value);
   });
 
-  return { resizeObserver };
+  watch(domRef, (val) => {
+    if (val) observe(val);
+  });
+
+  return { resizeObserver, observe, unobserve };
 }
 
 export default useResizeObserver;
