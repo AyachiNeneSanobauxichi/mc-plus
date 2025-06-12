@@ -15,14 +15,18 @@
               v-if="showLightboxContent"
             >
               <div class="mc-lightbox-header">
-                <mc-modal-header :title="title" @close="handleCloseIconClick" />
+                <mc-modal-header :title="title" @close="handleCloseIconClick">
+                  <template #default>
+                    <slot name="header-title"></slot>
+                  </template>
+                </mc-modal-header>
               </div>
               <div class="mc-lightbox-content-wrapper">
                 <div class="mc-lightbox-content">
                   <slot></slot>
                 </div>
               </div>
-              <div class="mc-drawer-footer">
+              <div class="mc-drawer-footer" ref="footerRef" v-if="!hideFooter">
                 <mc-footer>
                   <template #left>
                     <slot name="footer-left"></slot>
@@ -52,6 +56,7 @@ import { ref } from "vue";
 import McOverlay from "../mc-overlay/mc-overlay.vue";
 import McModalHeader from "../mc-modal-header/mc-modal-header.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
+import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
 defineOptions({ name: "McLightbox" });
@@ -63,6 +68,7 @@ const props = withDefaults(defineProps<LightboxProps>(), {
   maskClosable: true,
   fixed: true,
   portCssSelector: "body",
+  hideFooter: false,
 });
 
 // emits
@@ -70,6 +76,7 @@ defineEmits<LightboxEmits>();
 
 // refs
 const _ref = ref<HTMLDivElement>();
+const footerRef = ref<HTMLDivElement>();
 
 // show lightbox
 const showLightbox = ref<boolean>(true);
@@ -85,6 +92,13 @@ const handleOverlayClick = () => {
 
 // click close icon
 const handleCloseIconClick = () => {};
+
+// footer resize
+useResizeObserver(footerRef, ({ height }) => {
+  const lightbox = _ref.value;
+  if (!lightbox) return;
+  lightbox.style.paddingBottom = `${height}px`;
+});
 </script>
 
 <style scoped lang="scss">

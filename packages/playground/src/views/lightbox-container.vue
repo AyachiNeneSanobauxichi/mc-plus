@@ -3,6 +3,14 @@
     <div>Visible: {{ visible }}</div>
     <mc-lightbox v-model="visible" title="McLightbox">
       <div class="light-box-content">Light Box</div>
+      <template #footer-desc>Please Check</template>
+      <template #footer-left>
+        <mc-button>Previous Step</mc-button>
+      </template>
+      <template #footer-right-button-group>
+        <mc-button>Cancel</mc-button>
+        <mc-button>Next Step</mc-button>
+      </template>
     </mc-lightbox>
     <mc-button @click="handleChangeVisible">Change Visible</mc-button>
   </div>
@@ -22,7 +30,7 @@ const handleChangeVisible = () => {
 <style scoped lang="scss">
 .light-box-content {
   width: 100%;
-  height: 800px;
+  height: 1800px;
   background-color: lightgreen;
 }
 </style>
