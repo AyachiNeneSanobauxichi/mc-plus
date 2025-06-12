@@ -50,6 +50,10 @@ $small_height: 34px;
     transform: translateY($transform_distance);
   }
 
+  .mc-button-text {
+    white-space: nowrap;
+  }
+
   /* medium */
   &.mc-button--medium {
     width: fit-content;

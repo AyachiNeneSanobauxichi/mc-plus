@@ -1,11 +1,11 @@
 <template>
   <div>
-    <drawer-container></drawer-container>
+    <button-container></button-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import DrawerContainer from "./views/drawer-container.vue";
+import ButtonContainer from "./views/button.container.vue";
 </script>
 
 <style scoped lang="scss">
