@@ -12,7 +12,6 @@ import {
   McSelectOption,
   McCheckbox,
   McAlert,
-  McLightBox,
   McMessage,
   McTag,
   McToast,
@@ -32,6 +31,7 @@ import {
   McTabItem,
   McReset,
   McDivider,
+  McLightbox,
 } from "@mc-plus/components";
 
 export default [
@@ -47,7 +47,6 @@ export default [
   McSelectOption,
   McCheckbox,
   McAlert,
-  McLightBox,
   McMessage,
   McTag,
   McToast,
@@ -67,4 +66,5 @@ export default [
   McTabItem,
   McReset,
   McDivider,
+  McLightbox,
 ] as Plugin[];
