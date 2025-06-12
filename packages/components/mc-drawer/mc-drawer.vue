@@ -106,7 +106,7 @@ const props = withDefaults(defineProps<DrawerProps>(), {
   size: "medium",
   clickOverlayClose: true,
   fixed: true,
-  portCssSelector: "#app",
+  portCssSelector: "body",
 });
 
 // show drawer
