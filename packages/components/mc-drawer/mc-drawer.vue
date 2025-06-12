@@ -15,72 +15,36 @@
               v-if="showDrawerContent"
             >
               <div class="mc-drawer-header">
-                <mc-modal-header :title="title" @close="handleCloseIconClick" />
+                <slot name="header">
+                  <mc-modal-header :title="title" @close="handleCloseIconClick">
+                    <template #default>
+                      <slot name="header-title"></slot>
+                    </template>
+                  </mc-modal-header>
+                </slot>
               </div>
               <div class="mc-drawer-content-wrapper">
                 <div class="mc-drawer-content">
                   <slot></slot>
                 </div>
               </div>
-              <div class="mc-drawer-footer">
-                <mc-footer>
-                  <template #left>
-                    <slot name="footer-left">
-                      <template v-if="!leftButton?.hidden">
-                        <mc-button
-                          type="plain"
-                          class="mc-drawer-button"
-                          :left-icon="leftButton?.leftIcon"
-                          :right-icon="leftButton?.rightIcon"
-                          :disabled="leftButton?.disable"
-                          @click="handleButtonClick(leftButton?.key)"
-                        >
-                          {{ leftButton?.text }}
-                        </mc-button>
-                      </template>
-                    </slot>
-                  </template>
-                  <template #right-button-group>
-                    <slot name="footer-right">
-                      <template v-if="!cancel?.hidden">
-                        <mc-button
-                          type="link"
-                          width="58px"
-                          :left-icon="cancel?.leftIcon"
-                          :right-icon="cancel?.rightIcon"
-                          :disabled="cancel?.disable"
-                          @click="handleButtonClick(cancel?.key || 'cancel')"
-                        >
-                          {{ cancel?.text || "Cancel" }}
-                        </mc-button>
-                      </template>
-                      <template v-if="!middleButton?.hidden">
-                        <mc-button
-                          type="plain"
-                          class="mc-drawer-button"
-                          :left-icon="middleButton?.leftIcon"
-                          :right-icon="middleButton?.rightIcon"
-                          :disabled="middleButton?.disable"
-                          @click="handleButtonClick(middleButton?.key)"
-                        >
-                          {{ middleButton?.text }}
-                        </mc-button>
-                      </template>
-                      <template v-if="!rightButton?.hidden">
-                        <mc-button
-                          type="primary"
-                          class="mc-drawer-button"
-                          :left-icon="rightButton?.leftIcon"
-                          :right-icon="rightButton?.rightIcon"
-                          :disabled="rightButton?.disable"
-                          @click="handleButtonClick(rightButton?.key)"
-                        >
-                          {{ rightButton?.text }}
-                        </mc-button>
-                      </template>
-                    </slot>
-                  </template>
-                </mc-footer>
+              <div class="mc-drawer-footer" ref="footerRef">
+                <slot name="footer">
+                  <mc-footer>
+                    <template #left>
+                      <slot name="footer-left"></slot>
+                    </template>
+                    <template #right>
+                      <slot name="footer-right"></slot>
+                    </template>
+                    <template #right-button-group>
+                      <slot name="footer-right-button-group"></slot>
+                    </template>
+                    <template #desc>
+                      <slot name="footer-desc"></slot>
+                    </template>
+                  </mc-footer>
+                </slot>
               </div>
             </div>
           </transition>
@@ -96,7 +60,7 @@ import { nextTick, ref, watch } from "vue";
 import McOverlay from "../mc-overlay/mc-overlay.vue";
 import McModalHeader from "../mc-modal-header/mc-modal-header.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
-import McButton from "../mc-button/mc-button.vue";
+import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
 defineOptions({ name: "McDrawer" });
@@ -131,8 +95,8 @@ const close = async () => {
   showOverlay.value = false;
   await nextTick();
   showDrawer.value = false;
-  emit("close");
-  emit("update:modelValue", false);
+  emits("close");
+  emits("update:modelValue", false);
 };
 
 // visible changed
@@ -151,12 +115,12 @@ watch(
   }
 );
 
-// emit
-const emit = defineEmits<DrawerEmits>();
+// emits
+const emits = defineEmits<DrawerEmits>();
 
 // click  overlay
 const handleOverlayClick = () => {
-  if (!props.clickOverlayClose) return;
+  if (!props.maskClosable) return;
   close();
 };
 
@@ -165,13 +129,16 @@ const handleCloseIconClick = () => {
   close();
 };
 
-// click button
-const handleButtonClick = (key?: string) => {
-  if (!key) return;
-  emit(key);
-};
+// refs
+const _ref = ref<HTMLDivElement | undefined>();
+const footerRef = ref<HTMLDivElement | undefined>();
 
-const _ref = ref<HTMLDivElement | void>();
+// footer resize
+useResizeObserver(footerRef, ({ height }) => {
+  const drawer = _ref.value;
+  if (!drawer) return;
+  drawer.style.paddingBottom = `${height}px`;
+});
 
 // expose
 defineExpose<DrawerInstance>({
