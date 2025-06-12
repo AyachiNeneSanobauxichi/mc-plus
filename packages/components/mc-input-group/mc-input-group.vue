@@ -33,7 +33,7 @@ const group = reactive<{
 
 // slots changed
 watchEffect(() => {
-  const content = slots?.default?.();
+  const content = slots?.default?.({});
   if (!content) return;
   const [fistNode, secNode] = content as VNode[];
   if (
