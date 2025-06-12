@@ -10,16 +10,21 @@
         title="Mc Drawer"
         size="large"
         :fixed="false"
-        :left-button="drawerConfig.leftButton"
-        :middle-button="drawerConfig.middleButton"
-        :right-button="drawerConfig.rightButton"
-        :port-css-selector="'#drawer'"
-        @previous="handlePrevious"
-        @cancel="handleCancel"
-        @draft="handleDraft"
-        @next="handleNext"
+        port-css-selector="body"
       >
         <div class="drawer-content"></div>
+        <template #header-title>{{ "custom title" }}</template>
+        <template #footer-right-button-group>
+          <mc-button>1</mc-button>
+          <mc-button>2</mc-button>
+          <mc-button>3</mc-button>
+        </template>
+        <template #footer-desc>
+          {{ "Check it" }}
+        </template>
+        <template #footer-left>
+          <mc-button>Left</mc-button>
+        </template>
       </mc-drawer>
     </div>
     <div class="tool-bar">
@@ -30,49 +35,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { McButton } from "mc-plus";
 import McDrawer from "../../../components/mc-drawer/mc-drawer.vue";
-import type { DrawerFooterConfig } from "@mc-plus/components/mc-drawer/types";
 const disabled = ref<boolean>(false);
 
-const drawerConfig = reactive<DrawerFooterConfig>({
-  leftButton: {
-    key: "previous",
-    text: "Previous Step",
-    leftIcon: "Corner_Arrow_Left",
-    disable: false,
-    hidden: false,
-  },
-  middleButton: {
-    key: "draft",
-    text: "Save as Draft",
-    disable: false,
-    hidden: false,
-  },
-  rightButton: {
-    key: "next",
-    text: "Next Step",
-    rightIcon: "Corner_Arrow_Right",
-    disable: false,
-    hidden: false,
-  },
-});
-
 const drawerShower = ref<boolean>(false);
-
-const handlePrevious = () => {
-  console.log("Previous");
-};
-const handleCancel = () => {
-  console.log("Cancel");
-};
-const handleDraft = () => {
-  console.log("Draft");
-};
-const handleNext = () => {
-  console.log("Next");
-};
 
 const handleShowDrawer = () => {
   drawerShower.value = !drawerShower.value;
@@ -80,9 +48,6 @@ const handleShowDrawer = () => {
 
 const changeDisabled = () => {
   disabled.value = !disabled.value;
-  drawerConfig.leftButton!.disable = disabled.value;
-  drawerConfig.middleButton!.disable = disabled.value;
-  drawerConfig.rightButton!.disable = disabled.value;
 };
 </script>
 

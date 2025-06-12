@@ -1,15 +1,24 @@
 <template>
   <div class="lightbox-container">
-    <mc-light-box :v-model="visible">
+    <div>Visible: {{ visible }}</div>
+    <mc-lightbox v-model="visible" title="McLightbox" size="large">
       <div class="light-box-content">Light Box</div>
-    </mc-light-box>
+      <template #footer-desc>Please Check</template>
+      <template #footer-left>
+        <mc-button>Previous Step</mc-button>
+      </template>
+      <template #footer-right-button-group>
+        <mc-button>Cancel</mc-button>
+        <mc-button>Next Step</mc-button>
+      </template>
+    </mc-lightbox>
     <mc-button @click="handleChangeVisible">Change Visible</mc-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import McLightBox from "../../../components/mc-light-box/mc-light-box.vue";
+import McLightbox from "../../../components/mc-lightbox/mc-lightbox.vue";
 import { McButton } from "mc-plus";
 
 const visible = ref<boolean>(false);
@@ -21,7 +30,7 @@ const handleChangeVisible = () => {
 <style scoped lang="scss">
 .light-box-content {
   width: 100%;
-  height: 800px;
+  height: 1800px;
   background-color: lightgreen;
 }
 </style>

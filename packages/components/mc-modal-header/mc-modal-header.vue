@@ -6,6 +6,7 @@
       height="100%"
       class="mc-modal-header-title"
     >
+      <slot></slot>
       <template #tool-bar>
         <mc-icon
           name="Cross"

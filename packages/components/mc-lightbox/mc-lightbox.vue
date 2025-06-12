@@ -1,20 +1,20 @@
 <template>
-  <div class="mc-drawer-container" v-if="showDrawer">
+  <div class="mc-lightbox-container" v-if="showLightbox">
     <teleport :to="portCssSelector">
-      <transition name="mc-drawer-overlay">
+      <transition name="mc-lightbox-overlay">
         <mc-overlay
           :visible="showOverlay"
           :fixed="fixed"
           @click="handleOverlayClick"
         >
-          <transition name="mc-drawer-content">
+          <transition name="mc-lightbox-content">
             <div
-              class="mc-drawer"
-              :class="[`mc-drawer-${size}`]"
+              class="mc-lightbox"
+              :class="[`mc-lightbox-${size}`]"
               ref="_ref"
-              v-if="showDrawerContent"
+              v-if="showLightboxContent"
             >
-              <div class="mc-drawer-header">
+              <div class="mc-lightbox-header">
                 <slot name="header">
                   <mc-modal-header :title="title" @close="handleCloseIconClick">
                     <template #default>
@@ -23,12 +23,16 @@
                   </mc-modal-header>
                 </slot>
               </div>
-              <div class="mc-drawer-content-wrapper">
-                <div class="mc-drawer-content">
+              <div class="mc-lightbox-content-wrapper">
+                <div class="mc-lightbox-content">
                   <slot></slot>
                 </div>
               </div>
-              <div class="mc-drawer-footer" ref="footerRef">
+              <div
+                class="mc-lightbox-footer"
+                ref="footerRef"
+                v-if="!hideFooter"
+              >
                 <slot name="footer">
                   <mc-footer>
                     <template #left>
@@ -55,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import type { DrawerEmits, DrawerInstance, DrawerProps } from "./types";
+import type { LightboxEmits, LightboxInstance, LightboxProps } from "./types";
 import { nextTick, ref, watch } from "vue";
 import McOverlay from "../mc-overlay/mc-overlay.vue";
 import McModalHeader from "../mc-modal-header/mc-modal-header.vue";
@@ -63,38 +67,58 @@ import McFooter from "../mc-footer/mc-footer.vue";
 import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
-defineOptions({ name: "McDrawer" });
+defineOptions({ name: "McLightbox" });
 
 // props
-const props = withDefaults(defineProps<DrawerProps>(), {
+const props = withDefaults(defineProps<LightboxProps>(), {
+  modelValue: false,
   size: "medium",
-  clickOverlayClose: true,
+  maskClosable: true,
   fixed: true,
   portCssSelector: "body",
+  hideFooter: false,
 });
 
-// show drawer
-const showDrawer = ref<boolean>(false);
+// emits
+const emits = defineEmits<LightboxEmits>();
+
+// refs
+const _ref = ref<HTMLDivElement>();
+const footerRef = ref<HTMLDivElement>();
+
+// show lightbox
+const showLightbox = ref<boolean>(false);
 // show overlay
 const showOverlay = ref<boolean>(false);
-// show drawer content
-const showDrawerContent = ref<boolean>(false);
+// show lightbox content
+const showLightboxContent = ref<boolean>(false);
+
+// click  overlay
+const handleOverlayClick = () => {
+  if (!props.maskClosable) return;
+  close();
+};
+
+// click close icon
+const handleCloseIconClick = () => {
+  close();
+};
 
 // open
 const open = async () => {
-  showDrawer.value = true;
+  showLightbox.value = true;
   showOverlay.value = true;
   await nextTick();
-  showDrawerContent.value = true;
+  showLightboxContent.value = true;
 };
 
 // close
 const close = async () => {
-  showDrawerContent.value = false;
+  showLightboxContent.value = false;
   await nextTick();
   showOverlay.value = false;
   await nextTick();
-  showDrawer.value = false;
+  showLightbox.value = false;
   emits("close");
   emits("update:modelValue", false);
 };
@@ -115,33 +139,15 @@ watch(
   }
 );
 
-// emits
-const emits = defineEmits<DrawerEmits>();
-
-// click  overlay
-const handleOverlayClick = () => {
-  if (!props.maskClosable) return;
-  close();
-};
-
-// click close icon
-const handleCloseIconClick = () => {
-  close();
-};
-
-// refs
-const _ref = ref<HTMLDivElement | undefined>();
-const footerRef = ref<HTMLDivElement | undefined>();
-
 // footer resize
 useResizeObserver(footerRef, ({ height }) => {
-  const drawer = _ref.value;
-  if (!drawer) return;
-  drawer.style.paddingBottom = `${height}px`;
+  const lightbox = _ref.value;
+  if (!lightbox) return;
+  lightbox.style.paddingBottom = `${height}px`;
 });
 
 // expose
-defineExpose<DrawerInstance>({
+defineExpose<LightboxInstance>({
   ref: _ref,
   open,
   close,

@@ -19,7 +19,9 @@
     <span class="loading-icon" v-if="loading && !disabled">
       <mc-icon name="Loading"></mc-icon>
     </span>
-    <slot></slot>
+    <div class="mc-button-text">
+      <slot></slot>
+    </div>
     <template v-if="rightIcon">
       <mc-icon :name="rightIcon"></mc-icon>
     </template>

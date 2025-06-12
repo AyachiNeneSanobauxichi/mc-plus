@@ -1,13 +1,11 @@
 <template>
   <div>
-    <!-- <input-group-container></input-group-container> -->
-    <lightbox-container />
+    <button-container></button-container>
   </div>
 </template>
 
 <script setup lang="ts">
-// import InputGroupContainer from "./views/input-group-container.vue";
-import LightboxContainer from "./views/lightbox-container.vue";
+import ButtonContainer from "./views/button.container.vue";
 </script>
 
 <style scoped lang="scss">

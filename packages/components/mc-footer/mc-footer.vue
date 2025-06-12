@@ -5,7 +5,7 @@
     :style="{ width: width, height: height }"
     ref="_ref"
   >
-    <div class="mc-footer-content" v-if="($slots as any).default">
+    <div class="mc-footer-content" v-if="($slots as any).desc">
       <div class="mc-footer-wrapper" :style="{ width: wrapperWidth }">
         <slot name="desc"></slot>
       </div>
