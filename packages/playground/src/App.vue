@@ -1,11 +1,11 @@
 <template>
   <div>
-    <lightbox-container></lightbox-container>
+    <upload-container></upload-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import LightboxContainer from "./views/lightbox-container.vue";
+import UploadContainer from "./views/upload-container.vue";
 </script>
 
 <style scoped lang="scss">
