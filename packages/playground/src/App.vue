@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button-container></button-container>
+    <form-container></form-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import ButtonContainer from "./views/button.container.vue";
+import FormContainer from "./views/form-container.vue";
 </script>
 
 <style scoped lang="scss">
