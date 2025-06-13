@@ -1,11 +1,11 @@
 <template>
   <div>
-    <form-container></form-container>
+    <lightbox-container></lightbox-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import FormContainer from "./views/form-container.vue";
+import LightboxContainer from "./views/lightbox-container.vue";
 </script>
 
 <style scoped lang="scss">

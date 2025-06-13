@@ -30,7 +30,7 @@ const handleChangeVisible = () => {
 <style scoped lang="scss">
 .light-box-content {
   width: 100%;
-  height: 1800px;
+  height: 1300px;
   background-color: lightgreen;
 }
 </style>
