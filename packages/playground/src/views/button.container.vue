@@ -1,6 +1,10 @@
 <template>
   <div class="button-container">
-    <mc-button class="button" right-icon="Right" type="link">
+    <mc-button
+      right-icon="Right"
+      @click="handleButtonClick"
+      :loading="isLoading"
+    >
       Next Step
     </mc-button>
     <div class="blank"></div>
@@ -8,14 +12,24 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import McButton from "../../../components/mc-button/mc-button.vue";
+
+// loading
+const isLoading = ref<boolean>(false);
+
+// button click
+const handleButtonClick = () => {
+  isLoading.value = true;
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 2000);
+};
 </script>
 
 <style scoped lang="scss">
 .button-container {
   display: flex;
-  .button {
-  }
   .blank {
     flex: 3;
   }
