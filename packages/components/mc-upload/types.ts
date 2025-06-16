@@ -15,7 +15,7 @@ export interface UploadFile {
 }
 
 export interface UploadProps {
-  files?: UploadFile[];
+  modelValue?: UploadFile[];
   fileSize?: number | string;
   fileCount?: number;
   hiddenIcon?: boolean;
@@ -25,8 +25,8 @@ export interface UploadProps {
 }
 
 export interface UploadEmits {
-  (e: "upload", value: number[]): void;
-  (e: "update:files", value: number[]): void;
+  (e: "upload", files: UploadFile[]): void;
+  (e: "update:modelValue", files: UploadFile[]): void;
   (e: "delete:file", file: UploadFile): void;
   (e: "review:file", file: UploadFile): void;
   (e: "error:count"): void;
@@ -38,9 +38,12 @@ export interface UploadInstance {
   clear: () => void;
 }
 
+export type FileListTheme = "grey" | "white";
+
 export interface FileListProps {
-  files: UploadFile[];
+  files?: UploadFile[];
   deletable?: boolean;
+  theme?: FileListTheme;
 }
 
 export interface FileListEmits {

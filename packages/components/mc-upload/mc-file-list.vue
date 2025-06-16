@@ -1,5 +1,9 @@
 <template>
-  <ul class="mc-file-list" ref="fileContainerRef">
+  <div
+    class="mc-file-list"
+    :class="{ 'mc-file-list-grey': isGrey }"
+    ref="fileContainerRef"
+  >
     <transition-group name="file-list" tag="ul">
       <li
         class="file-item"
@@ -67,12 +71,12 @@
         </template>
       </li>
     </transition-group>
-  </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { FileListEmits, FileListProps, UploadFile } from "./types";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { getFileSize, formatDate } from "./utils";
 import { UPLOAD_TEXT_EH } from "./constanst";
@@ -82,9 +86,10 @@ import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 defineOptions({ name: "McFileList" });
 
 // props
-withDefaults(defineProps<FileListProps>(), {
+const props = withDefaults(defineProps<FileListProps>(), {
   files: () => [],
-  deletable: true,
+  deletable: false,
+  theme: "white",
 });
 
 // emits
@@ -94,6 +99,9 @@ const emits = defineEmits<FileListEmits>();
 const fileContainerRef = ref<HTMLDivElement>();
 // compact
 const isCompact = ref<boolean>(false);
+
+// grey theme
+const isGrey = computed(() => props.theme === "grey");
 
 // observer width
 useResizeObserver(fileContainerRef, ({ width }) => {

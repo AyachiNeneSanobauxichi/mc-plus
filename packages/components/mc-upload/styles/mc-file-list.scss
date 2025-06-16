@@ -4,6 +4,7 @@ $text_color: var(--mc-black);
 $text_color_label: var(--mc-gray-500);
 $text_collor_error: var(--mc-error);
 $bg_color: var(--mc-white);
+$bg_color_grey: var(--mc-gray-100);
 
 @keyframes spin {
   from {
@@ -28,6 +29,11 @@ ul {
 .mc-file-list {
   width: 100%;
   border-radius: 8px;
+  background-color: $bg_color;
+
+  &.mc-file-list-grey {
+    background-color: $bg_color_grey;
+  }
 
   .file-item {
     padding: 16px;

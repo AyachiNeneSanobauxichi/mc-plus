@@ -56,7 +56,7 @@
           :files="allFileList"
           @review:file="handleFileReview"
           @delete:file="handleFileDelete"
-          needDelete
+          deletable
         />
       </template>
     </transition>
@@ -81,6 +81,7 @@ defineOptions({ name: "McUpload" });
 
 // props
 const props = withDefaults(defineProps<UploadProps>(), {
+  modelValue: () => [],
   fileSize: () => 1024 * 1024 * 15,
   fileCount: 0,
   hiddenIcon: false,
@@ -100,7 +101,7 @@ const allFileMap = reactive<Map<string, UploadFile>>(new Map());
 const allFileList = computed(() => [...allFileMap.values()]);
 
 onMounted(() => {
-  const files = props.files;
+  const files = props.modelValue;
   if (files?.length) {
     forEach(files, (file) => {
       if (file.name) {
@@ -285,11 +286,11 @@ const validateFileSize = (files: File[]) => {
 
 // emit upload event
 const emitUploadEvent = () => {
-  const supportFiles = [...allFileMap.values()]
-    .filter((file: UploadFile) => file.status === "successed")
-    .map((file: UploadFile) => file.fid!);
+  const supportFiles = [...allFileMap.values()].filter(
+    (file: UploadFile) => file.status === "successed"
+  );
   emits("upload", supportFiles);
-  emits("update:files", supportFiles);
+  emits("update:modelValue", supportFiles);
 };
 
 // upload api
