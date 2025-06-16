@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button-container></button-container>
+    <alert-container></alert-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import ButtonContainer from "./views/button.container.vue";
+import AlertContainer from "./views/alert-container.vue";
 </script>
 
 <style scoped lang="scss">
