@@ -1,5 +1,5 @@
 <template>
-  <section class="mc-file-list" ref="fileContainerRef">
+  <ul class="mc-file-list" ref="fileContainerRef">
     <transition-group name="file-list" tag="ul">
       <li
         class="file-item"
@@ -67,7 +67,7 @@
         </template>
       </li>
     </transition-group>
-  </section>
+  </ul>
 </template>
 
 <script setup lang="ts">

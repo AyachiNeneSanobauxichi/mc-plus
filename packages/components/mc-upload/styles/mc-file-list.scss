@@ -14,6 +14,17 @@ $bg_color: var(--mc-white);
   }
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .mc-file-list {
   width: 100%;
   border-radius: 8px;
@@ -74,8 +85,13 @@ $bg_color: var(--mc-white);
     &.successed {
       .file-name {
         .file {
-          // .default-link();
+          color: $primary_color;
           gap: 4px;
+          cursor: pointer;
+
+          &:hover {
+            color: $primary_color_hover;
+          }
           .file-name-text {
             max-width: 500px;
             word-wrap: break-word;

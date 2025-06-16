@@ -1,64 +1,66 @@
 <template>
-  <div
-    class="mc-upload"
-    :class="{ dragover: isDragover }"
-    @click="handleUploadClick"
-    @dragover.prevent
-    @drop.prevent="handleDropFiles"
-  >
+  <div>
     <div
-      class="cover"
-      @dragenter="isDragover = true"
-      @dragleave="isDragover = false"
-    ></div>
-    <div class="upload">
-      <div v-show="!hiddenIcon">
-        <svg
-          class="upload-icon"
-          width="32"
-          height="38"
-          viewBox="0 0 32 38"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M27.7647 16.5V10.3334C27.7647 7.53311 27.7647 6.13298 27.2518 5.06342C26.8006 4.12261 26.0807 3.35771 25.1952 2.87834C24.1886 2.33337 22.8708 2.33337 20.2353 2.33337H10.1961C7.56053 2.33337 6.24276 2.33337 5.23612 2.87834C4.35065 3.35771 3.63074 4.12261 3.17957 5.06342C2.66666 6.13298 2.66666 7.53311 2.66666 10.3334V27.6667C2.66666 30.467 2.66666 31.8671 3.17957 32.9367C3.63074 33.8775 4.35065 34.6424 5.23612 35.1217C6.24276 35.6667 7.56053 35.6667 10.1961 35.6667H15.2157M18.3529 17.3334H8.94117M12.0784 24H8.94117M21.4902 10.6667H8.94117M24.6274 34V24M19.9216 29H29.3333"
-            stroke-width="4"
-            stroke-linecap="square"
-          />
-        </svg>
+      class="mc-upload"
+      :class="{ dragover: isDragover }"
+      @click="handleUploadClick"
+      @dragover.prevent
+      @drop.prevent="handleDropFiles"
+    >
+      <div
+        class="cover"
+        @dragenter="isDragover = true"
+        @dragleave="isDragover = false"
+      ></div>
+      <div class="upload">
+        <div v-show="!hiddenIcon">
+          <svg
+            class="upload-icon"
+            width="32"
+            height="38"
+            viewBox="0 0 32 38"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M27.7647 16.5V10.3334C27.7647 7.53311 27.7647 6.13298 27.2518 5.06342C26.8006 4.12261 26.0807 3.35771 25.1952 2.87834C24.1886 2.33337 22.8708 2.33337 20.2353 2.33337H10.1961C7.56053 2.33337 6.24276 2.33337 5.23612 2.87834C4.35065 3.35771 3.63074 4.12261 3.17957 5.06342C2.66666 6.13298 2.66666 7.53311 2.66666 10.3334V27.6667C2.66666 30.467 2.66666 31.8671 3.17957 32.9367C3.63074 33.8775 4.35065 34.6424 5.23612 35.1217C6.24276 35.6667 7.56053 35.6667 10.1961 35.6667H15.2157M18.3529 17.3334H8.94117M12.0784 24H8.94117M21.4902 10.6667H8.94117M24.6274 34V24M19.9216 29H29.3333"
+              stroke-width="4"
+              stroke-linecap="square"
+            />
+          </svg>
+        </div>
+        <div class="desc">
+          <slot>
+            <p class="title" :class="{ 'hidden-icon': hiddenIcon }">
+              {{ UPLOAD_TEXT_EH.upload_note }}
+            </p>
+            <p v-show="fileSizeLimit > 0">
+              {{ UPLOAD_TEXT_EH.max_size }} {{ getFileSize(fileSizeLimit) }}
+            </p>
+            <p>{{ UPLOAD_TEXT_EH.max_count }}</p>
+          </slot>
+        </div>
       </div>
-      <div class="desc">
-        <slot>
-          <p class="title" :class="{ 'hidden-icon': hiddenIcon }">
-            {{ UPLOAD_TEXT_EH.upload_note }}
-          </p>
-          <p v-show="fileSizeLimit > 0">
-            {{ UPLOAD_TEXT_EH.max_size }} {{ getFileSize(fileSizeLimit) }}
-          </p>
-          <p>{{ UPLOAD_TEXT_EH.max_count }}</p>
-        </slot>
-      </div>
-    </div>
-    <input
-      ref="uploadFileRef"
-      type="file"
-      multiple
-      style="display: none"
-      @change="handleFileChange"
-    />
-  </div>
-  <transition name="file-list-show">
-    <template v-if="allFileList?.length">
-      <mc-file-list
-        class="file-list-show"
-        :files="allFileList"
-        @review:file="handleFileReview"
-        @delete:file="handleFileDelete"
-        needDelete
+      <input
+        ref="uploadFileRef"
+        type="file"
+        multiple
+        style="display: none"
+        @change="handleFileChange"
       />
-    </template>
-  </transition>
+    </div>
+    <transition name="file-list-show">
+      <template v-if="allFileList?.length">
+        <mc-file-list
+          class="file-list-show"
+          :files="allFileList"
+          @review:file="handleFileReview"
+          @delete:file="handleFileDelete"
+          needDelete
+        />
+      </template>
+    </transition>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -101,14 +103,16 @@ onMounted(() => {
   const files = props.files;
   if (files?.length) {
     forEach(files, (file) => {
-      allFileMap.set(file.name, {
-        fid: file.fid,
-        name: file.name,
-        size: file.size,
-        status: "successed",
-        uploadBy: file.uploadBy,
-        uploadTime: file.uploadTime,
-      });
+      if (file.name) {
+        allFileMap.set(file.name, {
+          fid: file.fid,
+          name: file.name,
+          size: file.size,
+          status: "successed",
+          uploadBy: file.uploadBy,
+          uploadTime: file.uploadTime,
+        });
+      }
     });
   }
 });
@@ -196,6 +200,7 @@ const uploadFiles = async (files: FileList) => {
       const errorMessage =
         (res[i] as { reason: { message: string } })?.reason?.message ||
         "Upload failed";
+      console.error(res[i]);
       allFileMap.set(currentfile.name, {
         name: currentfile.name,
         size: currentfile.size,
@@ -298,7 +303,7 @@ const uploadApi = async (file: File) => {
 
 // delete file
 const handleFileDelete = (file: UploadFile) => {
-  allFileMap.delete(file.name);
+  allFileMap.delete(file.name!);
   // clear input for next upload the same file
   if (uploadFileRef.value) {
     uploadFileRef.value.value = "";

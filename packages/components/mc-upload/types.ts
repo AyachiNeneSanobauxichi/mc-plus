@@ -2,16 +2,16 @@ import type { Ref } from "vue";
 
 export type UploadState = "loading" | "failed" | "successed";
 
-export type UploadFunc = (files: File) => Promise<UploadFile>;
+export type UploadFunc = (file: File) => Promise<UploadFile>;
 
 export interface UploadFile {
   fid?: number;
-  name: string;
-  size: number;
-  status: UploadState;
+  name?: string;
+  size?: number;
+  status?: UploadState;
   errorMessage?: string;
-  uploadBy: string;
-  uploadTime: string | number;
+  uploadBy?: string;
+  uploadTime?: string | number;
 }
 
 export interface UploadProps {
