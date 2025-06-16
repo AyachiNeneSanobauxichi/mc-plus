@@ -73,10 +73,11 @@ const handleClearFiles = () => {
 const handleUploadFile = () => {
   files.value.push({
     fid: generateRandom8DigitNumber(),
-    name: "Text File",
+    name: `${generateRandom8DigitNumber()} File`,
     size: 1024 * 8,
     uploadBy: "Akiyama Mio",
     uploadTime: Date.now(),
+    status: "successed",
   });
 };
 

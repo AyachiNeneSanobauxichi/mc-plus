@@ -100,7 +100,8 @@ const isDragover = ref<boolean>(false);
 const allFileMap = reactive<Map<string, UploadFile>>(new Map());
 const allFileList = computed(() => [...allFileMap.values()]);
 
-onMounted(() => {
+// set file map
+const setFileMap = () => {
   const files = props.modelValue;
   if (files?.length) {
     forEach(files, (file) => {
@@ -116,6 +117,10 @@ onMounted(() => {
       }
     });
   }
+};
+
+onMounted(() => {
+  setFileMap();
 });
 
 // click to upload
