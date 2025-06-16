@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, watch, type Ref } from "vue";
+import { onBeforeUnmount, onMounted, watch, type Ref } from "vue";
 import { throttle } from "lodash-es";
 
 function useResizeObserver(
@@ -26,7 +26,7 @@ function useResizeObserver(
     if (domRef.value) observe(domRef.value);
   });
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     if (domRef.value) unobserve(domRef.value);
   });
 
