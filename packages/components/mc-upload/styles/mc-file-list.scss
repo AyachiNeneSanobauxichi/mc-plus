@@ -1,0 +1,169 @@
+$primary_color: var(--mc-teal-500);
+$primary_color_hover: var(--mc-teal-900);
+$text_color: var(--mc-black);
+$text_color_label: var(--mc-gray-500);
+$text_collor_error: var(--mc-error);
+$bg_color: var(--mc-white);
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mc-file-list {
+  width: 100%;
+  border-radius: 8px;
+
+  .file-item {
+    padding: 16px;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .file-info-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .compact-container {
+      margin-top: 32px;
+      position: relative;
+
+      &::before {
+        content: "";
+        height: 1px;
+        width: 100%;
+        background-color: $bg_color;
+        position: absolute;
+        top: -16px;
+      }
+
+      .file-info {
+        height: 32px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+
+        .label {
+          margin: 0;
+          min-width: 160px;
+        }
+
+        .content {
+          word-wrap: break-word;
+        }
+      }
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    &.loading {
+      .loading-icon {
+        transform-origin: center;
+        animation: spin 1.5s ease-in-out 0s infinite;
+      }
+    }
+
+    &.successed {
+      .file-name {
+        .file {
+          // .default-link();
+          gap: 4px;
+          .file-name-text {
+            max-width: 500px;
+            word-wrap: break-word;
+          }
+        }
+      }
+    }
+
+    &.failed {
+      .file-name {
+        .file {
+          color: $text_collor_error;
+        }
+        .size {
+          color: $text_collor_error;
+        }
+      }
+      .error-info {
+        color: $text_collor_error;
+        font-size: 12px !important;
+        font-weight: 700;
+      }
+      .delete {
+        color: $text_collor_error;
+      }
+    }
+
+    .file-name {
+      cursor: default;
+      .file {
+        font-size: 12px;
+        font-weight: 400;
+        color: $text_color;
+        display: flex;
+        gap: 8px;
+        transition: transform 0.2s;
+      }
+      .size {
+        margin-top: 8px;
+        margin-left: 24px;
+        font-size: 10px;
+        color: $text_color_label;
+      }
+    }
+
+    .file-info {
+      max-width: 386px;
+      word-break: break-all;
+      .label {
+        margin-bottom: 8px;
+        font-size: 12px;
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+        color: $text_color_label;
+      }
+      .content {
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+
+    .delete {
+      cursor: pointer;
+      color: $primary_color;
+      &:hover {
+        color: $text_collor_error;
+      }
+    }
+  }
+}
+
+.file-list-enter-from,
+.file-list-leave-to {
+  transform: scaleY(0);
+  opacity: 0;
+}
+.file-list-enter-to,
+.file-list-leave-from {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.file-list-enter-active,
+.file-list-leave-active {
+  transform-origin: top;
+  transition: transform 0.3s linear 0s, opacity 0.3s linear 0s;
+}

@@ -40,3 +40,17 @@ export interface UploadInstance {
   uploadInputRef: Ref<HTMLDivElement | void>;
   clear: () => void;
 }
+
+export interface FileListProps {
+  files: UploadFile[];
+  deletable?: boolean;
+}
+
+export interface FileListEmits {
+  (e: "delete:file", file: UploadFile): void;
+  (e: "review:file", file: UploadFile): void;
+}
+
+export interface FileInstance {
+  ref: Ref<HTMLDivElement | void>;
+}
