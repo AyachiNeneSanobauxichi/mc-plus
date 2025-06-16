@@ -14,7 +14,7 @@
     @click="(e: MouseEvent) => useThrottle ? handleBtnClickThrottle(e) : handleBtnClick(e)"
   >
     <template v-if="leftIcon && !loading">
-      <mc-icon :name="leftIcon"></mc-icon>
+      <mc-icon :name="leftIcon" :size="16"></mc-icon>
     </template>
     <span class="loading-icon" v-if="loading && !disabled">
       <mc-icon name="Loading" :size="16"></mc-icon>
@@ -23,7 +23,7 @@
       <slot></slot>
     </div>
     <template v-if="rightIcon">
-      <mc-icon :name="rightIcon"></mc-icon>
+      <mc-icon :name="rightIcon" :size="16"></mc-icon>
     </template>
   </button>
 </template>
