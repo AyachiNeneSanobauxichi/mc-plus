@@ -1,6 +1,8 @@
 <template>
   <div class="button-container">
-    <mc-button class="button"> Mc Button </mc-button>
+    <mc-button class="button" right-icon="Right" type="link">
+      Next Step
+    </mc-button>
     <div class="blank"></div>
   </div>
 </template>
@@ -13,7 +15,6 @@ import McButton from "../../../components/mc-button/mc-button.vue";
 .button-container {
   display: flex;
   .button {
-    flex: 2;
   }
   .blank {
     flex: 3;
