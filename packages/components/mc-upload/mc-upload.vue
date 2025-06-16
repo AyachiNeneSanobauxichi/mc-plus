@@ -36,6 +36,7 @@
           <p v-show="fileSizeLimit > 0">
             {{ UPLOAD_TEXT_EH.max_size }} {{ getFileSize(fileSizeLimit) }}
           </p>
+          <p>{{ UPLOAD_TEXT_EH.max_count }}</p>
         </slot>
       </div>
     </div>
@@ -47,7 +48,7 @@
       @change="handleFileChange"
     />
   </div>
-  <!-- <transition name="file-list-show">
+  <transition name="file-list-show">
     <template v-if="allFileList?.length">
       <FileList
         class="file-list-show"
@@ -56,11 +57,16 @@
         needDelete
       />
     </template>
-  </transition> -->
+  </transition>
 </template>
 
 <script setup lang="ts">
-import type { UploadEmits, UploadFile, UploadProps } from "./types";
+import type {
+  UploadEmits,
+  UploadFile,
+  UploadInstance,
+  UploadProps,
+} from "./types";
 import { computed, reactive, ref } from "vue";
 import { changeSizeStringToNumber, getFileSize } from "./utils";
 import { UPLOAD_TEXT_EH, WILDCARD } from "./constanst";
@@ -186,7 +192,7 @@ const uploadFiles = async (files: FileList) => {
   emitUploadEvent();
 };
 
-// 文件大小
+// file size
 const fileSizeLimit = computed(() => {
   if (typeof props.fileSize === "number") {
     return props.fileSize;
@@ -271,6 +277,31 @@ const uploadApi = async (file: File) => {
     return Promise.reject("UploadFunc is not a function");
   }
 };
+
+// delete file
+const handleFileDelete = (fileName: string) => {
+  allFileMap.delete(fileName);
+  // clear input for next upload the same file
+  if (uploadFileRef.value) {
+    uploadFileRef.value.value = "";
+  }
+  emitUploadEvent();
+};
+
+// clear files
+const clearFiles = () => {
+  allFileMap.clear();
+  if (uploadFileRef.value) {
+    uploadFileRef.value.value = "";
+  }
+  emitUploadEvent();
+};
+
+// expose
+defineExpose<UploadInstance>({
+  uploadInputRef: uploadFileRef,
+  clear: clearFiles,
+});
 </script>
 
 <style scoped lang="scss">

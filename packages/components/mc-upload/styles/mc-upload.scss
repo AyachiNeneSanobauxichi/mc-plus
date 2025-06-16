@@ -6,6 +6,11 @@ $bg_color: rgba(#d7eceb80, 0.5);
 $text_color_tip: var(--mc-gray-500);
 
 .mc-upload {
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
   width: 100%;
   max-width: 1284px;
   min-height: 180px;
@@ -54,7 +59,7 @@ $text_color_tip: var(--mc-gray-500);
     .upload-icon {
       margin-bottom: 16px;
       path {
-        stroke: $bg_color;
+        stroke: $primary_color;
       }
     }
 
@@ -65,7 +70,7 @@ $text_color_tip: var(--mc-gray-500);
         font-size: 14px !important;
         color: $text_color_tip;
         &.title {
-          color: $bg_color;
+          color: $primary_color;
           font-weight: 700 !important;
           font-size: 16px !important;
           margin-bottom: 16px;
