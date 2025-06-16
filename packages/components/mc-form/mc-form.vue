@@ -21,9 +21,7 @@ import { provide, reactive, toRefs } from "vue";
 import { FORM_CTX_KEY } from "./constanst";
 
 // options
-defineOptions({
-  name: "McForm",
-});
+defineOptions({ name: "McForm" });
 
 // props
 const props = withDefaults(defineProps<FormProps>(), {
@@ -80,6 +78,7 @@ const validateField = async (
   // validate
   try {
     const result = await handleValidate(validateFields);
+
     if (result === true) {
       callback?.(true);
     }

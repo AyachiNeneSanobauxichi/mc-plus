@@ -11,7 +11,7 @@
             <div
               class="mc-lightbox"
               :class="[`mc-lightbox-${size}`]"
-              ref="_ref"
+              ref="lightboxRef"
               v-if="showLightboxContent"
             >
               <div class="mc-lightbox-header">
@@ -23,8 +23,8 @@
                   </mc-modal-header>
                 </slot>
               </div>
-              <div class="mc-lightbox-content-wrapper">
-                <div class="mc-lightbox-content">
+              <div class="mc-lightbox-content-wrapper" ref="wrapperRef">
+                <div class="mc-lightbox-content" ref="contentRef">
                   <slot></slot>
                 </div>
               </div>
@@ -65,6 +65,7 @@ import McOverlay from "../mc-overlay/mc-overlay.vue";
 import McModalHeader from "../mc-modal-header/mc-modal-header.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
 import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
+import useWindowResize from "@mc-plus/hooks/useWindowResize";
 
 // options
 defineOptions({ name: "McLightbox" });
@@ -83,8 +84,10 @@ const props = withDefaults(defineProps<LightboxProps>(), {
 const emits = defineEmits<LightboxEmits>();
 
 // refs
-const _ref = ref<HTMLDivElement>();
+const lightboxRef = ref<HTMLDivElement>();
 const footerRef = ref<HTMLDivElement>();
+const wrapperRef = ref<HTMLDivElement>();
+const contentRef = ref<HTMLDivElement>();
 
 // show lightbox
 const showLightbox = ref<boolean>(false);
@@ -139,16 +142,37 @@ watch(
   }
 );
 
+// set content height
+const setContentHeight = () => {
+  if (!wrapperRef.value || !footerRef.value) return;
+  const maxHeight =
+    window.innerHeight * 0.7 - 56 - footerRef.value.offsetHeight;
+  const height = contentRef.value?.offsetHeight ?? 40;
+
+  wrapperRef.value.style.height = `${
+    height > maxHeight ? maxHeight : height
+  }px`;
+};
+
+// window resize
+useWindowResize(() => {
+  setContentHeight();
+});
+
 // footer resize
-useResizeObserver(footerRef, ({ height }) => {
-  const lightbox = _ref.value;
+useResizeObserver(footerRef, async ({ height }) => {
+  const lightbox = lightboxRef.value;
   if (!lightbox) return;
+  // set padding bootom
   lightbox.style.paddingBottom = `${height}px`;
+  await nextTick();
+  // set content height
+  setContentHeight();
 });
 
 // expose
 defineExpose<LightboxInstance>({
-  ref: _ref,
+  ref: lightboxRef,
   open,
   close,
 });

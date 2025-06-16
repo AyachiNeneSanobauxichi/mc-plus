@@ -75,8 +75,8 @@ const rules = reactive<FormRules<FormState>>({
     {
       required: true,
       validator: (_, value, callback) => {
-        if (Number(value) > 3000) {
-          callback(new Error("Amount must be less than 3000"));
+        if (Number(value) > 3000 || formState.currency === "BTC") {
+          callback(new Error("Amount Error"));
         } else {
           callback();
         }

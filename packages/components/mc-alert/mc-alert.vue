@@ -35,7 +35,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<AlertProps>(), {
   type: "info",
-  closable: true,
+  closable: false,
   showIcon: true,
 });
 
