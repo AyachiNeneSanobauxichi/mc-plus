@@ -33,3 +33,4 @@ export * from "./mc-tab";
 export * from "./mc-reset";
 export * from "./mc-divider";
 export * from "./mc-lightbox";
+export * from "./mc-upload";

@@ -32,6 +32,8 @@ import {
   McReset,
   McDivider,
   McLightbox,
+  McUpload,
+  McFileList,
 } from "@mc-plus/components";
 
 export default [
@@ -67,4 +69,6 @@ export default [
   McReset,
   McDivider,
   McLightbox,
+  McUpload,
+  McFileList,
 ] as Plugin[];
