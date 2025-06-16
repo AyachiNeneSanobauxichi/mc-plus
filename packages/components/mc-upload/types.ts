@@ -2,7 +2,7 @@ import type { Ref } from "vue";
 
 export type UploadState = "loading" | "failed" | "successed";
 
-export type UploadFunc = (file: File) => Promise<UploadResponse>;
+export type UploadFunc = (files: File) => Promise<UploadFile>;
 
 export interface UploadFile {
   fid?: number;
@@ -15,23 +15,20 @@ export interface UploadFile {
 }
 
 export interface UploadProps {
+  files?: UploadFile[];
   fileSize?: number | string;
   fileCount?: number;
-  files?: number[];
   hiddenIcon?: boolean;
   allowedFileTypes?: string[];
   uploadUser?: string;
   uploadFunc?: UploadFunc;
 }
 
-export interface UploadResponse {
-  id: number;
-  fileName: string;
-}
-
 export interface UploadEmits {
   (e: "upload", value: number[]): void;
   (e: "update:files", value: number[]): void;
+  (e: "delete:file", file: UploadFile): void;
+  (e: "review:file", file: UploadFile): void;
   (e: "error:count"): void;
   (e: "error:size"): void;
 }

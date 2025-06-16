@@ -1,11 +1,11 @@
 <template>
   <div>
-    <tab-container></tab-container>
+    <upload-container></upload-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import TabContainer from "./views/tab-container.vue";
+import UploadContainer from "./views/upload-container.vue";
 </script>
 
 <style scoped lang="scss">

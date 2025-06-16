@@ -50,10 +50,11 @@
   </div>
   <transition name="file-list-show">
     <template v-if="allFileList?.length">
-      <FileList
+      <mc-file-list
         class="file-list-show"
         :files="allFileList"
-        @delete-file="handleFileDelete"
+        @review:file="handleFileReview"
+        @delete:file="handleFileDelete"
         needDelete
       />
     </template>
@@ -67,10 +68,11 @@ import type {
   UploadInstance,
   UploadProps,
 } from "./types";
-import { computed, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
+import McFileList from "./mc-file-list.vue";
+import { forEach, isFunction } from "lodash-es";
 import { changeSizeStringToNumber, getFileSize } from "./utils";
 import { UPLOAD_TEXT_EH, WILDCARD } from "./constanst";
-import { isFunction } from "lodash-es";
 
 // options
 defineOptions({ name: "McUpload" });
@@ -94,6 +96,22 @@ const isDragover = ref<boolean>(false);
 // files
 const allFileMap = reactive<Map<string, UploadFile>>(new Map());
 const allFileList = computed(() => [...allFileMap.values()]);
+
+onMounted(() => {
+  const files = props.files;
+  if (files?.length) {
+    forEach(files, (file) => {
+      allFileMap.set(file.name, {
+        fid: file.fid,
+        name: file.name,
+        size: file.size,
+        status: "successed",
+        uploadBy: file.uploadBy,
+        uploadTime: file.uploadTime,
+      });
+    });
+  }
+});
 
 // click to upload
 const handleUploadClick = () => {
@@ -165,7 +183,7 @@ const uploadFiles = async (files: FileList) => {
   for (let i = 0; i < res.length; i++) {
     const currentfile = fileArray[i];
     if (res[i].status === "fulfilled") {
-      const fid = (res[i] as { value: { id: number } })?.value?.id;
+      const fid = (res[i] as { value: { fid: number } })?.value?.fid;
       allFileMap.set(currentfile.name, {
         fid,
         name: currentfile.name,
@@ -279,13 +297,19 @@ const uploadApi = async (file: File) => {
 };
 
 // delete file
-const handleFileDelete = (fileName: string) => {
-  allFileMap.delete(fileName);
+const handleFileDelete = (file: UploadFile) => {
+  allFileMap.delete(file.name);
   // clear input for next upload the same file
   if (uploadFileRef.value) {
     uploadFileRef.value.value = "";
   }
+  emits("delete:file", file);
   emitUploadEvent();
+};
+
+// review file
+const handleFileReview = (file: UploadFile) => {
+  emits("review:file", file);
 };
 
 // clear files

@@ -79,7 +79,7 @@ import { UPLOAD_TEXT_EH } from "./constanst";
 import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
-defineOptions<{ name: "McFileList" }>();
+defineOptions({ name: "McFileList" });
 
 // props
 withDefaults(defineProps<FileListProps>(), {
