@@ -2,7 +2,6 @@
   <div class="lightbox-container">
     <div>Visible: {{ visible }}</div>
     <mc-lightbox v-model="visible" title="McLightbox" size="large">
-      <div class="light-box-content">Light Box</div>
       <template #footer-desc>Please Check</template>
       <template #footer-left>
         <mc-button>Previous Step</mc-button>
@@ -30,7 +29,7 @@ const handleChangeVisible = () => {
 <style scoped lang="scss">
 .light-box-content {
   width: 100%;
-  height: 1300px;
+  height: 300px;
   background-color: lightgreen;
 }
 </style>

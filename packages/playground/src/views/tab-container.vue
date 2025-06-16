@@ -1,6 +1,6 @@
 <template>
   <div class="tab-container">
-    <mc-tab v-model="activeTab" type="plain">
+    <mc-tab v-model="activeTab" type="primary">
       <template v-for="item in tabItems">
         <mc-tab-item
           :name="item.name"

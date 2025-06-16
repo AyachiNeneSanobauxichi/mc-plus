@@ -4,6 +4,8 @@
       right-icon="Right"
       @click="handleButtonClick"
       :loading="isLoading"
+      size="medium"
+      disabled
     >
       Next Step
     </mc-button>

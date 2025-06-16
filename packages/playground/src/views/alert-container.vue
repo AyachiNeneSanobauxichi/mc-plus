@@ -1,7 +1,8 @@
 <template>
   <div class="alert-container">
-    <mc-alert title="Mc Alert">
-      <template #description>{{ "Description" }}</template>
+    <mc-alert title="Mc Alert Tile" type="warning">
+      <template #title> {{ "TitleTitleTitleTitleTitleTitleTitle" }}</template>
+      <template #description>{{ "11111111111111111111111111" }}</template>
     </mc-alert>
     <mc-button>Show Alert</mc-button>
   </div>

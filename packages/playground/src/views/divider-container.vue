@@ -1,6 +1,6 @@
 <template>
   <div class="divider-container">
-    <mc-divider emphasis="bold" orientation="vertical" />
+    <mc-divider size="large" emphasis="subtle" orientation="vertical" />
   </div>
 </template>
 
