@@ -9,18 +9,19 @@ $text-color-remark: var(--mc-gray-500);
 $core-color: var(--mc-white);
 
 .mc-radio {
-  height: 24px;
-  position: relative;
+  min-height: 24px;
 
   &.mc-radio-has-remark {
-    height: 40px;
+    min-height: 40px;
   }
 
   .mc-radio-label {
+    width: fit-content;
     height: 24px;
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
 
     .mc-radio-input {
       margin: 0;
@@ -29,6 +30,7 @@ $core-color: var(--mc-white);
       height: 0;
       border: none;
       outline: none;
+      display: none;
     }
 
     .mc-radio-circle {
@@ -36,13 +38,15 @@ $core-color: var(--mc-white);
       height: 24px;
       box-sizing: border-box;
       border-radius: 50%;
-      cursor: pointer;
     }
 
     &:not(.mc-radio-checked) {
       .mc-radio-circle {
         border: 1px solid $border-color;
-        &:hover {
+      }
+
+      &:hover {
+        .mc-radio-circle {
           border: 2px solid $border-color-hover;
         }
       }
@@ -86,10 +90,11 @@ $core-color: var(--mc-white);
   }
 
   .mc-radio-remark {
-    position: absolute;
-    top: 24px;
-    left: 40px;
+    box-sizing: border-box;
+    padding-left: 32px;
     color: $text-color-remark;
     font-size: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
