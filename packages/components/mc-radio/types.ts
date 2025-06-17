@@ -1,24 +1,28 @@
 import type { ComputedRef } from "vue";
 
+export type RadioValue = number | string | boolean;
+
 export interface RadioProps {
   label?: string;
-  value: string;
+  value: RadioValue;
   disabled?: boolean;
   remark?: string;
+  help?: string;
 }
 
 export interface RadioGroupProps {
-  modelValue?: string;
+  modelValue?: RadioValue;
   disabled?: boolean;
 }
 
 export interface RadioGroupContext {
-  modelValue?: ComputedRef<string | undefined>;
+  modelValue?: ComputedRef<RadioValue | undefined>;
   disabled?: ComputedRef<boolean | undefined>;
-  handleSelect: (val?: string) => void;
+  hasError?: ComputedRef<boolean>;
+  handleSelect: (val?: RadioValue) => void;
 }
 
 export interface RadioGroupEmits {
-  (e: "update:modelValue", val?: string): void;
-  (e: "change", val?: string): void;
+  (e: "update:modelValue", val?: RadioValue): void;
+  (e: "change", val?: RadioValue): void;
 }

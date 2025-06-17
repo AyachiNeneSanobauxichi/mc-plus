@@ -1,26 +1,29 @@
 $border-color: var(--mc-gray-400);
 $border-color-hover: var(--mc-gray-500);
+$border-color-error: var(--mc-error);
 $bg-color: var(--mc-teal-500);
 $bg-color-hover: var(--mc-teal-900);
 $bg-color-disabled: var(--mc-gray-300);
+$bg-color-error: var(--mc-error);
 $text-color: var(--mc-gray-800);
 $text-color-disabled: var(--mc-gray-400);
 $text-color-remark: var(--mc-gray-500);
 $core-color: var(--mc-white);
 
 .mc-radio {
-  height: 24px;
-  position: relative;
+  min-height: 24px;
 
   &.mc-radio-has-remark {
-    height: 40px;
+    min-height: 40px;
   }
 
   .mc-radio-label {
+    width: fit-content;
     height: 24px;
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
 
     .mc-radio-input {
       margin: 0;
@@ -29,6 +32,7 @@ $core-color: var(--mc-white);
       height: 0;
       border: none;
       outline: none;
+      display: none;
     }
 
     .mc-radio-circle {
@@ -36,13 +40,15 @@ $core-color: var(--mc-white);
       height: 24px;
       box-sizing: border-box;
       border-radius: 50%;
-      cursor: pointer;
     }
 
     &:not(.mc-radio-checked) {
       .mc-radio-circle {
         border: 1px solid $border-color;
-        &:hover {
+      }
+
+      &:hover {
+        .mc-radio-circle {
           border: 2px solid $border-color-hover;
         }
       }
@@ -73,12 +79,24 @@ $core-color: var(--mc-white);
       font-size: 16px;
     }
 
+    &.mc-radio-error {
+      .mc-radio-circle {
+        border-color: $bg-color-error !important;
+      }
+
+      &.mc-radio-checked .mc-radio-circle {
+        background-color: $bg-color-error;
+      }
+    }
+
     &.mc-radio-disabled {
+      cursor: not-allowed;
       .mc-radio-circle {
         border: none;
         background-color: $bg-color-disabled;
-        cursor: not-allowed;
-        &:hover {
+      }
+      &:hover {
+        .mc-radio-circle {
           border: none;
         }
       }
@@ -86,10 +104,11 @@ $core-color: var(--mc-white);
   }
 
   .mc-radio-remark {
-    position: absolute;
-    top: 24px;
-    left: 40px;
+    box-sizing: border-box;
+    padding-left: 32px;
     color: $text-color-remark;
     font-size: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }

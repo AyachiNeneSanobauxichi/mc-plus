@@ -33,7 +33,7 @@ withDefaults(defineProps<TooltipProps>(), {
   theme: "light",
   placement: "top",
   showArrow: true,
-  iconSize: 16,
+  iconSize: 24,
 });
 </script>
 
