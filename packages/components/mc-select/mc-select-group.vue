@@ -20,10 +20,7 @@ import {
 import { SELECT_GROUP_INJECTION_KEY, SELECT_INJECTION_KEY } from "./constant";
 import type { SelectGroupProps } from "./types";
 
-defineOptions({
-  name: "McSelectGroup",
-  inheritAttrs: false,
-});
+defineOptions({ name: "McSelectGroup" });
 
 // props
 const props = defineProps<SelectGroupProps>();

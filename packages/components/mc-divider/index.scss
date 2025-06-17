@@ -1,0 +1,44 @@
+$minimal_color: var(--mc-gray-200);
+$subtle_color: var(--mc-gray-400);
+$moderate_color: var(--mc-gray-600);
+$bold_color: var(--mc-gray-800);
+
+.mc-divider {
+  /* horizontal */
+  &.mc-divider-horizontal {
+    width: 100%;
+    height: 1px;
+    &.mc-divider-medium {
+      height: 2px;
+    }
+    &.mc-divider-large {
+      height: 4px;
+    }
+  }
+
+  /* vertical */
+  &.mc-divider-vertical {
+    width: 1px;
+    height: 100%;
+    &.mc-divider-medium {
+      width: 2px;
+    }
+    &.mc-divider-large {
+      width: 4px;
+    }
+  }
+
+  /* color */
+  &.mc-divider-minimal {
+    background-color: $minimal_color;
+  }
+  &.mc-divider-subtle {
+    background-color: $subtle_color;
+  }
+  &.mc-divider-moderate {
+    background-color: $moderate_color;
+  }
+  &.mc-divider-bold {
+    background-color: $bold_color;
+  }
+}

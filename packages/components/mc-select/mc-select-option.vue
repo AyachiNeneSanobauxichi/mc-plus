@@ -10,15 +10,11 @@
     <div class="mc-select-option-content">
       <slot>{{ label }}</slot>
     </div>
-    <div class="mc-select-option-icon">
-      <mc-icon name="Tick" v-if="isActive" />
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { SelectOptionInstance, SelectOptionProps } from "./types";
-import McIcon from "../mc-icon/mc-icon.vue";
 import {
   computed,
   h,
@@ -31,10 +27,7 @@ import {
 import { SELECT_GROUP_INJECTION_KEY, SELECT_INJECTION_KEY } from "./constant";
 
 // options
-defineOptions({
-  name: "McSelectOption",
-  inheritAttrs: false,
-});
+defineOptions({ name: "McSelectOption" });
 
 // ref
 const _ref = ref<HTMLLIElement>();

@@ -6,7 +6,10 @@
       'mc-input--focused': isFocused,
       'mc-input--inputed': modelValue,
       [`mc-input--${validateStyle}`]: validateStyle,
+      'mc-input--input-group-prefix': isPrefix,
+      'mc-input--input-group-suffix': isSuffix,
     }"
+    :style="{ width, height }"
     ref="wrapperRef"
   >
     <div class="mc-input__prefix" v-if="$slots.prefix || prefixIcon">
@@ -17,13 +20,13 @@
     <input
       class="mc-input__inner"
       ref="inputRef"
-      :type="isPassword ? (passwordVisible ? 'text' : 'password') : type"
+      :type="isPassword ? (passwordVisible ? 'text' : 'password') : 'text'"
       :disabled="isDisabled"
       :readonly="readonly"
       :autocomplete="autocomplete"
       :placeholder="placeholder"
       :autofocus="autofocus"
-      v-model="innerValue"
+      :maxlength="maxlength"
       @input="handleInput"
       @change="handleChange"
       @focus="handleFocus"
@@ -60,13 +63,21 @@
 
 <script setup lang="ts">
 import type { InputEmits, InputProps } from "./types";
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
+import { useInputGroupAffix } from "../mc-input-group/hooks";
+import {
+  currencyFormatter,
+  currencyParser,
+  numberFormatter,
+  numberParser,
+} from "./formatter";
 
 // options
-defineOptions({ name: "McInput", inheritAttrs: false });
+defineOptions({ name: "McInput" });
 
 // props
 const props = withDefaults(defineProps<InputProps>(), {
@@ -78,6 +89,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   placeholder: "Please enter",
   readonly: false,
 });
+const { formatter, parser } = props;
 
 // emit
 const emit = defineEmits<InputEmits>();
@@ -85,8 +97,59 @@ const emit = defineEmits<InputEmits>();
 // input ref
 const inputRef = ref<HTMLInputElement>();
 
-// current value
-const innerValue = ref<string>(props.modelValue);
+// native input value
+const nativeValue = computed(() =>
+  isNil(props.modelValue) ? "" : toString(props.modelValue)
+);
+
+// handle formatter
+const handleFormatter = (value: string) => {
+  if (props.type === "number") {
+    // number formatter
+    value = numberFormatter(value);
+  } else if (props.type === "currency") {
+    // currency formatter
+    value = currencyFormatter(value);
+  }
+
+  // custom formatter
+  if (isFunction(formatter)) {
+    value = formatter(value);
+  }
+
+  return value;
+};
+
+// handle parser
+const handleParser = (value: string) => {
+  if (props.type === "number") {
+    // number parser
+    value = numberParser(value);
+  } else if (props.type === "currency") {
+    // currency parser
+    value = currencyParser(value, props.currencyAccuracy);
+  }
+
+  // custom parser
+  if (isFunction(parser)) {
+    value = parser(value);
+  }
+
+  return value;
+};
+
+// set native value
+const setNativeValue = () => {
+  const _input = inputRef.value;
+  const _value = handleFormatter(nativeValue.value);
+  if (!_input || _input.value === _value) return;
+  _input.value = _value;
+};
+
+// init native value
+onMounted(() => {
+  setNativeValue();
+});
 
 // password visible
 const passwordVisible = ref<boolean>(false);
@@ -139,11 +202,11 @@ const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
 
 // clear
 const clear = () => {
-  innerValue.value = "";
+  const _value = "";
   // dispatch events
-  emit("update:modelValue", innerValue.value);
-  emit("input", innerValue.value);
-  emit("change", innerValue.value);
+  emit("update:modelValue", _value);
+  emit("input", _value);
+  emit("change", _value);
   emit("clear");
   // clear validate
   formItem?.clearValidate();
@@ -165,15 +228,27 @@ const select = () => {
   inputRef.value?.select();
 };
 
+// accuracy changed
+watch(
+  () => props.currencyAccuracy,
+  () => {
+    emit("update:modelValue", handleParser(nativeValue.value));
+  }
+);
+
 // input event
-const handleInput = () => {
-  emit("update:modelValue", innerValue.value);
-  emit("input", innerValue.value);
+const handleInput = (e: Event) => {
+  const { value } = e.target as HTMLInputElement;
+  emit("update:modelValue", handleParser(value));
+  emit("input", handleParser(value));
+
+  setNativeValue();
 };
 
 // change event
-const handleChange = () => {
-  emit("change", innerValue.value);
+const handleChange = (e: Event) => {
+  const { value } = e.target as HTMLInputElement;
+  emit("change", handleParser(value));
 };
 
 // toggle password
@@ -192,13 +267,13 @@ watch(
 );
 
 // model value changed
-watch(
-  () => props.modelValue,
-  (value) => {
-    innerValue.value = value;
-    formItem?.validate("change");
-  }
-);
+watch(nativeValue, () => {
+  setNativeValue();
+  formItem?.validate("change");
+});
+
+// input group
+const { isPrefix, isSuffix } = useInputGroupAffix("input");
 
 // expose
 defineExpose({

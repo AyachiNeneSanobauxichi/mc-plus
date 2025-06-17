@@ -1,25 +1,24 @@
 import type { Ref } from "vue";
 
+export type LightboxSize = "large" | "medium" | "small";
+
 export interface LightboxProps {
   modelValue?: boolean;
   title?: string;
-  content?: string;
-  showClose?: boolean;
-  size?: "small" | "medium" | "large";
-  position?: "top" | "center" | "bottom";
-  // 点击遮罩层是否关闭
+  size?: LightboxSize;
   maskClosable?: boolean;
-  onClose?: () => void;
-  onConfirm?: () => void;
+  fixed?: boolean;
+  portCssSelector?: string;
+  hideFooter?: boolean;
 }
 
 export interface LightboxEmits {
   (e: "update:modelValue", value: boolean): void;
   (e: "close"): void;
-  (e: "confirm"): void;
 }
 
 export interface LightboxInstance {
   ref: Ref<HTMLDivElement | void>;
   close: () => void;
+  open: () => void;
 }

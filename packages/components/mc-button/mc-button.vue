@@ -17,9 +17,11 @@
       <mc-icon :name="leftIcon"></mc-icon>
     </template>
     <span class="loading-icon" v-if="loading && !disabled">
-      <mc-icon name="Loading"></mc-icon>
+      <mc-icon name="Loading" :size="16"></mc-icon>
     </span>
-    <slot></slot>
+    <div class="mc-button-text">
+      <slot></slot>
+    </div>
     <template v-if="rightIcon">
       <mc-icon :name="rightIcon"></mc-icon>
     </template>
@@ -33,9 +35,7 @@ import { throttle } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
-defineOptions({
-  name: "McButton",
-});
+defineOptions({ name: "McButton" });
 
 // props
 const props = withDefaults(defineProps<ButtonProps>(), {

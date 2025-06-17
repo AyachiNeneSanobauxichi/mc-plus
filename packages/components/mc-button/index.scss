@@ -50,6 +50,10 @@ $small_height: 34px;
     transform: translateY($transform_distance);
   }
 
+  .mc-button-text {
+    white-space: nowrap;
+  }
+
   /* medium */
   &.mc-button--medium {
     width: fit-content;
@@ -100,6 +104,7 @@ $small_height: 34px;
 
   /* link */
   &.mc-button--link {
+    padding: 0;
     color: $primary_color;
     &:hover {
       color: $primary_color_hover;

@@ -29,3 +29,8 @@
   color: transparent;
   display: inline-block; // 确保渐变效果生效
 }
+
+/* mask color */
+@mixin mask-color {
+  background-color: rgba(#211050, 0.2);
+}

@@ -1,0 +1,103 @@
+@use "@mc-plus/theme/mixins.scss" as mixins;
+
+$primary_color: var(--mc-teal-500);
+$primary_color_hover: var(--mc-teal-900);
+$bg_color: rgba(#d7eceb80, 0.5);
+$text_color_tip: var(--mc-gray-500);
+
+.mc-upload {
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  width: 100%;
+  max-width: 1284px;
+  min-height: 180px;
+  padding: 24px;
+  border: 1px solid $primary_color;
+  border-radius: 8px;
+  background-color: $bg_color;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  box-sizing: border-box;
+  @include mixins.flex-center();
+
+  &:hover {
+    .upload-icon {
+      path {
+        stroke: $primary_color_hover !important;
+      }
+    }
+    .desc {
+      .title {
+        color: $primary_color_hover !important;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.dragover {
+    box-sizing: border-box;
+    border: 2px solid $primary_color;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .cover {
+      background-color: rgba(210, 210, 210, 0.1);
+    }
+  }
+
+  .cover {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 8px;
+  }
+
+  .upload {
+    @include mixins.flex-center(column);
+    .upload-icon {
+      margin-bottom: 16px;
+      path {
+        stroke: $primary_color;
+      }
+    }
+
+    .desc {
+      @include mixins.flex-center(column);
+      p {
+        font-weight: 400 !important;
+        font-size: 14px !important;
+        color: $text_color_tip;
+        &.title {
+          color: $primary_color;
+          font-weight: 700 !important;
+          font-size: 16px !important;
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}
+
+.file-list-show {
+  max-width: 1284px;
+  margin-top: 8px;
+}
+
+.file-list-show-enter-from,
+.file-list-show-leave-to {
+  transform: scaleY(0);
+  opacity: 0;
+}
+.file-list-show-enter-to,
+.file-list-show-leave-from {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.file-list-show-enter-active,
+.file-list-show-leave-active {
+  transform-origin: top;
+  transition: transform 0.3s linear 0s, opacity 0.3s linear 0s;
+}

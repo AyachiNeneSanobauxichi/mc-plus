@@ -57,9 +57,7 @@ import Schema from "async-validator";
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
 
 // options
-defineOptions({
-  name: "McFormItem",
-});
+defineOptions({ name: "McFormItem" });
 
 // porps
 const props = withDefaults(defineProps<FormItemProps>(), {
@@ -94,6 +92,10 @@ const currentValue = computed(() => {
 const currentRules = computed<FormItemRule[]>(() => {
   // rules list
   const rules: FormItemRule[] = [];
+  // form item required
+  if (props.required) {
+    rules.push({ required: true });
+  }
   // form item rules
   if (props.rules) {
     rules.push(...props.rules);
@@ -189,7 +191,7 @@ const getFormItemValidateFunc = (rules: RuleItem[]) => {
         errors && size(errors) > 0 ? errors[0].message ?? "" : "";
       formContext?.emits("validate", props, false, errorMessage.value);
 
-      return Promise.reject(errors);
+      return Promise.reject(err);
     });
 };
 
@@ -199,16 +201,18 @@ const handleValidate = (
   callback?: FormValidateCallback
 ) => {
   // resetting || prop not exist || disabled
-  if (isResetting || !props.prop || isDisabled.value)
-    return Promise.reject(false);
+  if (isResetting || !props.prop || isDisabled.value) {
+    return Promise.resolve(true);
+  }
   // rules not exist
   if (!validateEnabled.value) {
-    callback?.(false);
-    return Promise.reject(false);
+    callback?.(true);
+    return Promise.resolve(true);
   }
 
   // rules
   const rules = getTriggerRules(trigger);
+
   // current trigger rules not exist
   if (!size(rules)) {
     callback?.(true);

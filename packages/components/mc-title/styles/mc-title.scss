@@ -1,0 +1,28 @@
+$text_color: var(--mc-gray-800);
+$border_color: var(--mc-gray-200);
+
+.mc-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  &.mc-title-border {
+    border-bottom: 1px solid $border_color;
+  }
+
+  h1 {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mc-title-text {
+    font-weight: 600;
+    font-size: 28px;
+    color: $text_color;
+  }
+}
