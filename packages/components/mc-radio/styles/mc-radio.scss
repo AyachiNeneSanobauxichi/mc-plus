@@ -1,8 +1,10 @@
 $border-color: var(--mc-gray-400);
 $border-color-hover: var(--mc-gray-500);
+$border-color-error: var(--mc-error);
 $bg-color: var(--mc-teal-500);
 $bg-color-hover: var(--mc-teal-900);
 $bg-color-disabled: var(--mc-gray-300);
+$bg-color-error: var(--mc-error);
 $text-color: var(--mc-gray-800);
 $text-color-disabled: var(--mc-gray-400);
 $text-color-remark: var(--mc-gray-500);
@@ -77,12 +79,24 @@ $core-color: var(--mc-white);
       font-size: 16px;
     }
 
+    &.mc-radio-error {
+      .mc-radio-circle {
+        border-color: $bg-color-error !important;
+      }
+
+      &.mc-radio-checked .mc-radio-circle {
+        background-color: $bg-color-error;
+      }
+    }
+
     &.mc-radio-disabled {
+      cursor: not-allowed;
       .mc-radio-circle {
         border: none;
         background-color: $bg-color-disabled;
-        cursor: not-allowed;
-        &:hover {
+      }
+      &:hover {
+        .mc-radio-circle {
           border: none;
         }
       }

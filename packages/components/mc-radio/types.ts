@@ -5,6 +5,7 @@ export interface RadioProps {
   value: string;
   disabled?: boolean;
   remark?: string;
+  help?: string;
 }
 
 export interface RadioGroupProps {
@@ -15,6 +16,7 @@ export interface RadioGroupProps {
 export interface RadioGroupContext {
   modelValue?: ComputedRef<string | undefined>;
   disabled?: ComputedRef<boolean | undefined>;
+  hasError?: ComputedRef<boolean>;
   handleSelect: (val?: string) => void;
 }
 

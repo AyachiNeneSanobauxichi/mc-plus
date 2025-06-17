@@ -5,12 +5,13 @@
       <div class="button-group">
         <mc-button @click="handleValidate">Validate</mc-button>
         <mc-button @click="handleClear">Clear</mc-button>
+        <mc-button @click="handleChangeDisable">Disable</mc-button>
       </div>
     </div>
     <div>
       <mc-form :model="formState" ref="FormRef" :rules="rules">
         <mc-form-item label="Student" prop="stu" required>
-          <mc-radio-group v-model="formState.stu">
+          <mc-radio-group v-model="formState.stu" :disabled="disable">
             <div class="radio">
               <mc-radio
                 value="yui"
@@ -22,13 +23,21 @@
               <mc-radio value="azusa" label="Nakano Azusa"></mc-radio>
             </div>
             <div class="radio">
-              <mc-radio value="mio" label="Akiyama Mio"></mc-radio>
+              <mc-radio
+                value="mio"
+                label="Akiyama Mio"
+                help="Akiyama Mio"
+              ></mc-radio>
             </div>
             <div class="radio">
               <mc-radio value="ritsu" label="Tainaka Ritsu"></mc-radio>
             </div>
             <div class="radio">
-              <mc-radio value="mugi" label="Kotobuku Tsumugi"></mc-radio>
+              <mc-radio
+                value="mugi"
+                label="Kotobuku Tsumugi"
+                disabled
+              ></mc-radio>
             </div>
           </mc-radio-group>
         </mc-form-item>
@@ -77,6 +86,11 @@ const handleValidate = () => {
 
 const handleClear = () => {
   FormRef.value!.clearValidate();
+};
+
+const disable = ref<boolean>(false);
+const handleChangeDisable = () => {
+  disable.value = !disable.value;
 };
 </script>
 

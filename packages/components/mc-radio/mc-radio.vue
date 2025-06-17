@@ -5,6 +5,7 @@
       :class="{
         'mc-radio-checked': isSelected,
         'mc-radio-disabled': isDisabled,
+        'mc-radio-error': isError,
       }"
       @click="handleSelect"
     >
@@ -12,6 +13,11 @@
       <span class="mc-radio-circle"></span>
       <div class="mc-radio-content">
         <slot>{{ label }}</slot>
+      </div>
+      <div class="mc-radio-help" v-if="help || $slots.help">
+        <slot name="help">
+          <mc-tooltip :content="help" :icon-size="24" />
+        </slot>
       </div>
     </label>
     <div class="mc-radio-remark">
@@ -22,8 +28,10 @@
 
 <script setup lang="ts">
 import type { RadioGroupContext, RadioProps } from "./types";
-import { RADIO_INJECTION_KEY } from "./constant";
 import { computed, inject } from "vue";
+import McTooltip from "../mc-tooltip/mc-tooltip.vue";
+import { RADIO_INJECTION_KEY } from "./constant";
+import { useFormDisabled } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McRadio" });
@@ -39,9 +47,17 @@ const isSelected = computed(() => {
   return radioContext?.modelValue?.value === props.value;
 });
 
+// form item disable
+const disabled = useFormDisabled();
+
 // disabled
 const isDisabled = computed(() => {
-  return radioContext?.disabled?.value || props.disabled;
+  return radioContext?.disabled?.value || disabled.value;
+});
+
+// error
+const isError = computed(() => {
+  return !isDisabled.value && radioContext?.hasError?.value;
 });
 
 // select event
