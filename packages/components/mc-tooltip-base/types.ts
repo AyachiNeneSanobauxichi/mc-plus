@@ -11,6 +11,7 @@ export interface TooltipBaseProps {
   showTimeout?: number;
   hideTimeout?: number;
   transitionName?: string;
+  showArrow?: boolean;
 }
 
 export interface TooltipBaseEmits {

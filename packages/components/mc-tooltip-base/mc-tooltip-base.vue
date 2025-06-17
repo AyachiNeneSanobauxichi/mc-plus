@@ -1,16 +1,22 @@
 <template>
   <div class="mc-tooltip-base" ref="containerNode" v-on="outerEvents">
-    <div class="mc-tooltip__trigger" ref="triggerNode" v-on="events">
+    <div class="mc-tooltip-trigger" ref="triggerNode" v-on="events">
       <slot></slot>
     </div>
     <transition :name="transitionName">
       <div
-        class="mc-tooltip__popper"
+        class="mc-tooltip-popper"
         ref="popperNode"
         v-on="dropdownEvents"
         v-if="visible"
       >
         <slot name="content">{{ content }}</slot>
+        <div
+          v-if="showArrow"
+          id="arrow"
+          class="mc-tooltip-arrow"
+          data-popper-arrow
+        ></div>
       </div>
     </transition>
   </div>
@@ -32,11 +38,12 @@ defineOptions({ name: "McTooltipBase" });
 
 // props
 const props = withDefaults(defineProps<TooltipBaseProps>(), {
-  placement: "bottom",
-  trigger: "hover",
+  placement: "top",
+  trigger: "click",
   transitionName: "fade",
   showTimeout: 0,
   hideTimeout: 300,
+  showArrow: true,
 });
 
 // emits

@@ -31,7 +31,7 @@ import McTooltipBase from "../../../components/mc-tooltip-base/mc-tooltip-base.v
 
 .content {
   width: 200px;
-  height: 700px;
+  height: 30px;
   background-color: pink;
 }
 </style>

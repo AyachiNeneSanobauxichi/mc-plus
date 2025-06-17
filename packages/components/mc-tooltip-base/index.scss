@@ -2,8 +2,34 @@ $duration: var(--mc-transition-duration);
 
 .mc-tooltip-base {
   width: max-content;
-  .mc-tooltip__trigger {
+  .mc-tooltip-trigger {
     width: max-content;
+  }
+
+  .mc-tooltip-popper {
+    // top && right
+    .mc-tooltip-arrow {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        transform: translate(-50%, -50%) rotate(45deg);
+        background-color: transparent;
+      }
+    }
+
+    // bottom
+    &[data-popper-placement^="bottom"] > .mc-tooltip-arrow {
+      top: 0;
+    }
+
+    // left
+    &[data-popper-placement^="left"] > .mc-tooltip-arrow {
+      right: 0;
+    }
   }
 }
 
