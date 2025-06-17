@@ -42,7 +42,11 @@ export interface TableProps {
   // 方法类配置
   spanMethod?: (params: { row: RowData; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
 
-  initData?: (params: { pageSize: number; pageNum: number }) => Promise<{ data: RowData[]; total: number }>;
+  // 是否执行初始化数据
+  isInitTableData?: boolean;
+
+  // 初始化数据
+  initTableData?: (params: { pageSize: number; pageNum: number }) => Promise<{ data: RowData[]; total: number }>;
 
   // 状态管理
   defaultSort?: SortConfig;
@@ -111,7 +115,6 @@ export interface TableEmits {
 
   // 分页事件
   (e: "page-change", payload: { pageSize: number; pageNum: number }): void;
-  (e: "page-size-change", pageSize: number): void;
 
   // 排序事件
   (e: "sort-change", config: SortConfig): void;
@@ -151,8 +154,6 @@ export interface HeaderSlotProps {
 export interface TableInstance {
   /** 表格根元素引用 */
   ref: Ref<HTMLElement | undefined>;
-  /** 手动刷新表格数据方法 */
-  refresh: () => Promise<void>;
   /** 清除排序状态方法 */
   clearSort: () => void;
   /** 切换行选择状态 */
@@ -163,6 +164,8 @@ export interface TableInstance {
   clearSelection: () => void;
   /** 获取已选择的行 */
   getSelectedRows: () => RowData[];
+  /** 刷新表格数据 */
+  refresh: () => Promise<void>;
 }
 
 export interface TableCellProps {

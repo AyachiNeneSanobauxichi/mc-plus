@@ -36,7 +36,6 @@
   th,
   td {
     @include table-cell-base;
-    min-height: $table-min-height;
 
     @include table-alignment(center);
     @include table-alignment(right);
@@ -49,6 +48,11 @@
 
     &.is-display-table-cell {
       display: table-cell;
+      // 换行
+      white-space: normal;
+      word-break: break-all;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
   }
 
@@ -133,11 +137,34 @@
 
   // 行状态样式
   tbody tr {
-    transition: $table-transition;
+    // transition: $table-transition;
     cursor: pointer;
 
     @include table-hover-state(--mc-gray-100);
     @include table-row-state(current, --mc-teal-50, --mc-teal-100);
+
+    // 固定列的悬浮状态
+    &:hover {
+      .is-fixed-left,
+      .is-fixed-right {
+        background-color: var(--mc-gray-100) !important;
+      }
+    }
+
+    // 当前行高亮状态下的固定列
+    &.is-current {
+      .is-fixed-left,
+      .is-fixed-right {
+        background-color: var(--mc-teal-50) !important;
+      }
+
+      &:hover {
+        .is-fixed-left,
+        .is-fixed-right {
+          background-color: var(--mc-teal-100) !important;
+        }
+      }
+    }
   }
 
   // 分页组件样式
@@ -165,9 +192,9 @@
         color: var(--mc-teal-500);
 
         &:hover {
-          background-color: var(--mc-gray-100);
+          background-color: var(--mc-teal-50);
           border-radius: var(--mc-radius);
-          transition: all var(--mc-transition-duration);
+          // transition: all var(--mc-transition-duration);
         }
 
         &.is-disabled {
@@ -223,7 +250,7 @@
       background-color: var(--mc-white);
       font-size: $table-font-size;
       cursor: pointer;
-      transition: all var(--mc-transition-duration);
+      // transition: all var(--mc-transition-duration);
 
       &:hover {
         border-color: var(--mc-teal-500);
