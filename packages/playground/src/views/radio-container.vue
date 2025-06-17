@@ -14,30 +14,26 @@
           <mc-radio-group v-model="formState.stu" :disabled="disable">
             <div class="radio">
               <mc-radio
-                value="yui"
+                :value="1"
                 label="Hirasawa Yui"
                 remark="HirasawaYuiHirasawaYuiHirasawaYuiHirasawaYuiHirasawaYui"
               ></mc-radio>
             </div>
             <div class="radio">
-              <mc-radio value="azusa" label="Nakano Azusa"></mc-radio>
+              <mc-radio :value="2" label="Nakano Azusa"></mc-radio>
             </div>
             <div class="radio">
               <mc-radio
-                value="mio"
+                :value="3"
                 label="Akiyama Mio"
                 help="Akiyama Mio"
               ></mc-radio>
             </div>
             <div class="radio">
-              <mc-radio value="ritsu" label="Tainaka Ritsu"></mc-radio>
+              <mc-radio :value="4" label="Tainaka Ritsu"></mc-radio>
             </div>
             <div class="radio">
-              <mc-radio
-                value="mugi"
-                label="Kotobuku Tsumugi"
-                disabled
-              ></mc-radio>
+              <mc-radio :value="5" label="Kotobuku Tsumugi" disabled></mc-radio>
             </div>
           </mc-radio-group>
         </mc-form-item>
@@ -56,11 +52,11 @@ import { McButton } from "mc-plus";
 import type { FormRules } from "mc-plus";
 
 type FormState = {
-  stu: string;
+  stu: number;
 };
 
 const formState = reactive<FormState>({
-  stu: "yui",
+  stu: 2,
 });
 
 const rules: FormRules<FormState> = {
@@ -68,7 +64,7 @@ const rules: FormRules<FormState> = {
     {
       required: true,
       validator: (_, value, callback) => {
-        if (value === "mio") {
+        if (value === 3) {
           callback(new Error("You can`t select Mio"));
         } else {
           callback();
