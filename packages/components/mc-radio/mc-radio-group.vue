@@ -10,6 +10,7 @@ import type {
   RadioGroupProps,
   RadioGroupContext,
   RadioGroupEmits,
+  RadioValue,
 } from "./types";
 import { RADIO_INJECTION_KEY } from "./constant";
 import { useFormItem } from "../mc-form/hooks";
@@ -27,7 +28,7 @@ const emits = defineEmits<RadioGroupEmits>();
 const { formItem } = useFormItem();
 
 // select
-const handleSelect = (val?: string) => {
+const handleSelect = (val?: RadioValue) => {
   emits("update:modelValue", val);
   emits("change", val);
 };
