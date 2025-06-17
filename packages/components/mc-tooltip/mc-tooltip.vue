@@ -2,7 +2,11 @@
   <div class="mc-tooltip">
     <mc-popper :placement="placement" :show-arrow="showArrow">
       <slot>
-        <mc-icon class="mc-tooltip-icon" :name="iconName" :size="16"></mc-icon>
+        <mc-icon
+          class="mc-tooltip-icon"
+          :name="iconName"
+          :size="iconSize"
+        ></mc-icon>
       </slot>
       <template #content>
         <div class="mc-tooltip-content" :class="`mc-tooltip-content-${theme}`">
@@ -29,6 +33,7 @@ withDefaults(defineProps<TooltipProps>(), {
   theme: "light",
   placement: "top",
   showArrow: true,
+  iconSize: 16,
 });
 </script>
 

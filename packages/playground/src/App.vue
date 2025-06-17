@@ -1,11 +1,11 @@
 <template>
   <div>
-    <tool-tip-container></tool-tip-container>
+    <form-container></form-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import ToolTipContainer from "./views/tool-tip-container.vue";
+import FormContainer from "./views/form-container.vue";
 </script>
 
 <style scoped lang="scss">
