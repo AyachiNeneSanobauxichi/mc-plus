@@ -1,11 +1,11 @@
 <template>
   <div>
-    <upload-container></upload-container>
+    <form-container></form-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import UploadContainer from "./views/upload-container.vue";
+import FormContainer from "./views/form-container.vue";
 </script>
 
 <style scoped lang="scss">
