@@ -1,17 +1,17 @@
 <template>
   <div class="tool-tip-container">
-    <mc-tooltip-base placement="top">
+    <mc-popper placement="top">
       <mc-icon name="Info" class="info-icon"></mc-icon>
       <template #content>
         <div class="content"></div>
       </template>
-    </mc-tooltip-base>
+    </mc-popper>
   </div>
 </template>
 
 <script setup lang="ts">
 import { McIcon } from "mc-plus";
-import McTooltipBase from "../../../components/mc-tooltip-base/mc-tooltip-base.vue";
+import McPopper from "../../../components/mc-popper/mc-popper.vue";
 </script>
 
 <style scoped lang="scss">

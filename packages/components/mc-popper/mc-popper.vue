@@ -1,11 +1,11 @@
 <template>
-  <div class="mc-tooltip-base" ref="containerNode" v-on="outerEvents">
-    <div class="mc-tooltip-trigger" ref="triggerNode" v-on="events">
+  <div class="mc-popper" ref="containerNode" v-on="outerEvents">
+    <div class="mc-popper-trigger" ref="triggerNode" v-on="events">
       <slot></slot>
     </div>
     <transition :name="transitionName">
       <div
-        class="mc-tooltip-popper"
+        class="mc-popper-popper"
         ref="popperNode"
         v-on="dropdownEvents"
         v-if="visible"
@@ -14,7 +14,7 @@
         <div
           v-if="showArrow"
           id="arrow"
-          class="mc-tooltip-arrow"
+          class="mc-popper-arrow"
           data-popper-arrow
         ></div>
       </div>
@@ -23,11 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  TooltipBaseProps,
-  TooltipBaseEmits,
-  TooltipBaseInstance,
-} from "./types";
+import type { PopperProps, PopperEmits, PopperInstance } from "./types";
 import { computed, onUnmounted, ref, watch, watchEffect } from "vue";
 import { createPopper, type Instance } from "@popperjs/core";
 import { bind, debounce, isNil, type DebouncedFunc } from "lodash-es";
@@ -37,7 +33,7 @@ import { useClickOutside } from "@mc-plus/hooks";
 defineOptions({ name: "McTooltipBase" });
 
 // props
-const props = withDefaults(defineProps<TooltipBaseProps>(), {
+const props = withDefaults(defineProps<PopperProps>(), {
   placement: "top",
   trigger: "click",
   transitionName: "fade",
@@ -47,7 +43,7 @@ const props = withDefaults(defineProps<TooltipBaseProps>(), {
 });
 
 // emits
-const emits = defineEmits<TooltipBaseEmits>();
+const emits = defineEmits<PopperEmits>();
 
 // events
 const events = ref<Record<string, EventListener>>({});
@@ -197,7 +193,7 @@ useClickOutside(containerNode, () => {
 });
 
 // expose
-defineExpose<TooltipBaseInstance>({
+defineExpose<PopperInstance>({
   show: () => openPopper(false),
   hide: () => closePopper(false),
 });

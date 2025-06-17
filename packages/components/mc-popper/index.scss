@@ -1,14 +1,14 @@
 $duration: var(--mc-transition-duration);
 
-.mc-tooltip-base {
+.mc-popper {
   width: max-content;
-  .mc-tooltip-trigger {
+  .mc-popper-trigger {
     width: max-content;
   }
 
-  .mc-tooltip-popper {
+  .mc-popper-popper {
     // top && right
-    .mc-tooltip-arrow {
+    .mc-popper-arrow {
       &::after {
         content: "";
         position: absolute;
@@ -22,12 +22,12 @@ $duration: var(--mc-transition-duration);
     }
 
     // bottom
-    &[data-popper-placement^="bottom"] > .mc-tooltip-arrow {
+    &[data-popper-placement^="bottom"] > .mc-popper-arrow {
       top: 0;
     }
 
     // left
-    &[data-popper-placement^="left"] > .mc-tooltip-arrow {
+    &[data-popper-placement^="left"] > .mc-popper-arrow {
       right: 0;
     }
   }

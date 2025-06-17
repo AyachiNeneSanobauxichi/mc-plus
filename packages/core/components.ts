@@ -2,7 +2,6 @@ import type { Plugin } from "vue";
 import {
   McButton,
   McCollapse,
-  McTooltip,
   McTable,
   McSwitch,
   McRadio,
@@ -34,12 +33,12 @@ import {
   McLightbox,
   McUpload,
   McFileList,
+  McPopper,
 } from "@mc-plus/components";
 
 export default [
   McButton,
   McCollapse,
-  McTooltip,
   McTable,
   McSwitch,
   McRadio,
@@ -71,4 +70,5 @@ export default [
   McLightbox,
   McUpload,
   McFileList,
+  McPopper,
 ] as Plugin[];
