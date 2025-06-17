@@ -13,7 +13,7 @@
       </colgroup>
       <tbody>
         <template v-if="data && data.length > 0">
-          <tr v-for="(row, rowIndex) in data" :key="getRowKey(row, rowIndex)" :class="getRowClasses(row, rowIndex)" @click="handleRowClick(row, rowIndex)">
+          <tr v-for="(row, rowIndex) in data" :key="rowKey ? (row as any)[rowKey] : rowIndex" :class="getRowClass ? getRowClass(row, rowIndex) : []" @click="handleRowClick(row, rowIndex)">
             <!-- 选择列 -->
             <td v-if="selectable" class="mc-table__selection-column">
               <div class="mc-table__cell">
@@ -21,8 +21,8 @@
               </div>
             </td>
 
-            <mc-table-cell v-for="(column, colIndex) in columns" :key="colIndex" :row="row" :column="column" :row-index="rowIndex" :column-index="colIndex" :span-method="spanMethod" :pagination="paginationData">
-              <template v-for="slotName in Object.keys($slots)" :key="slotName" #[slotName]="slotProps">
+            <mc-table-cell v-for="(column, colIndex) in columns" :key="colIndex" :row="row" :column="column" :row-index="rowIndex" :column-index="colIndex" :span-method="spanMethod" :pagination="pagination as any">
+              <template v-for="slotName in (Object.keys($slots) as string[])" :key="slotName" #[slotName]="slotProps">
                 <slot :name="slotName" v-bind="slotProps"></slot>
               </template>
             </mc-table-cell>
@@ -30,7 +30,7 @@
         </template>
         <template v-else>
           <tr>
-            <td :colspan="getEmptyCellColspan()" class="mc-table__empty-cell">
+            <td :colspan="selectable ? columns.length + 1 : columns.length" class="mc-table__empty-cell">
               <!-- 空数据插槽 -->
               <slot v-if="slots.empty" name="empty"></slot>
               <div v-else>{{ emptyText }}</div>
@@ -54,7 +54,9 @@ const props = withDefaults(defineProps<McTableBodyProps>(), {
 });
 
 const slots = useSlots();
+
 const emit = defineEmits<TableBodyEmits>();
+
 const bodyWrapper = ref<HTMLDivElement>();
 
 // 样式计算
@@ -72,44 +74,24 @@ const bodyStyle = computed(() => {
   return style;
 });
 
-// 分页数据
-const paginationData = computed(() => props.pagination as any);
-
-// 获取行键值
-const getRowKey = (row: RowData, index: number): string | number => {
-  return props.rowKey ? (row as any)[props.rowKey] : index;
-};
-
-// 获取行样式类
-const getRowClasses = (row: RowData, index: number): string[] => {
-  return props.getRowClass ? props.getRowClass(row, index) : [];
-};
-
-// 获取空单元格的列跨度
-const getEmptyCellColspan = (): number => {
-  return props.selectable ? props.columns.length + 1 : props.columns.length;
-};
-
 // 判断行是否被选中
 const isRowSelected = (row: RowData): boolean => {
   if (!props.selectedRows) return false;
   return props.selectedRows.some((selectedRow) => (props.rowKey ? selectedRow[props.rowKey] === row[props.rowKey] : selectedRow === row));
 };
 
-// 事件处理
-const handleRowClick = (row: RowData, index: number) => {
+function handleRowClick(row: Record<string, unknown>, index: number) {
   emit("row-click", row, index);
-};
+}
 
-const handleSelect = (row: RowData, selected: boolean) => {
+function handleSelect(row: RowData, selected: boolean) {
   emit("select", row, selected);
-};
+}
 
 defineExpose({
   bodyWrapper,
 });
 </script>
-
 <style scoped lang="scss">
 @use "../index.scss";
 </style>
