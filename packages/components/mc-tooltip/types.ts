@@ -1,24 +1,13 @@
-import type { Placement, Options } from "@popperjs/core";
+import type { Placement } from "@popperjs/core";
+import type { IconType } from "mc-plus";
 
-export type TooltipTrigger = "hover" | "click";
+export type TooltipTheme = "light" | "dark";
 
 export interface TooltipProps {
+  iconSize?: number;
+  iconName?: IconType;
   content?: string;
-  trigger?: TooltipTrigger;
+  theme?: TooltipTheme;
   placement?: Placement;
-  disabled?: boolean;
-  popperOptions?: Partial<Options>;
-  showTimeout?: number;
-  hideTimeout?: number;
-  transitionName?: string;
-}
-
-export interface TooltipEmits {
-  (e: "visible:change", value: boolean): void;
-  (e: "click:outside"): void;
-}
-
-export interface TooltipInstance {
-  show(): void;
-  hide(): void;
+  showArrow?: boolean;
 }

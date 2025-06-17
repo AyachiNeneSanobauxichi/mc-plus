@@ -1,12 +1,28 @@
 <template>
   <div class="mc-form-item">
-    <label
-      class="mc-form-item__label"
-      :class="{ 'mc-form-item__label--required': isRequired }"
-      v-if="label"
-    >
-      {{ label }}
-    </label>
+    <slot name="label" :required="isRequired">
+      <div class="mc-form-item-label-wrapper">
+        <label class="mc-form-item-label" v-if="label">
+          <span
+            class="mc-form-item-lable-text"
+            :class="{ 'mc-form-item-label-required': isRequired }"
+          >
+            {{ label }}
+          </span>
+          <div class="mc-form-item-help" v-if="help || $slots.help">
+            <slot name="help">
+              <mc-tooltip :content="help" :icon-size="20" />
+            </slot>
+          </div>
+        </label>
+        <slot name="tool"></slot>
+      </div>
+      <div class="mc-form-item-desc" v-if="desc || $slots.desc">
+        <slot name="desc">
+          {{ desc }}
+        </slot>
+      </div>
+    </slot>
     <div class="mc-form-item__content">
       <slot></slot>
     </div>
@@ -54,6 +70,7 @@ import {
   some,
 } from "lodash-es";
 import Schema from "async-validator";
+import McTooltip from "../mc-tooltip/mc-tooltip.vue";
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
 
 // options
