@@ -48,6 +48,8 @@ export interface FormItemProps {
   disabled?: boolean;
   required?: boolean;
   rules?: FormItemRule[];
+  help?: string;
+  desc?: string;
 }
 
 export interface FormInstance {

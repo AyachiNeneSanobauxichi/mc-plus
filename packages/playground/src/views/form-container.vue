@@ -3,10 +3,15 @@
     <div>
       <div>
         <mc-form :model="formState" ref="FormRef" :rules="rules">
-          <mc-form-item prop="amount" label="Amount">
+          <mc-form-item prop="amount" label="Amount" help="Please Input Amount">
+            <template #tool>{{ "Clear" }}</template>
             <mc-input v-model="formState.amount" />
           </mc-form-item>
-          <mc-form-item prop="currency" label="Currency">
+          <mc-form-item
+            prop="currency"
+            label="Currency"
+            desc="Please input currency"
+          >
             <mc-input v-model="formState.currency" />
           </mc-form-item>
           <mc-form-item prop="address.street" label="Street">

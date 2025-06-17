@@ -1,196 +1,39 @@
 <template>
-  <div class="mc-tooltip" ref="containerNode" v-on="outerEvents">
-    <div class="mc-tooltip__trigger" ref="triggerNode" v-on="events">
-      <slot></slot>
-    </div>
-    <transition :name="transitionName">
-      <div
-        class="mc-tooltip__popper"
-        ref="popperNode"
-        v-on="dropdownEvents"
-        v-if="visible"
-      >
-        <slot name="content">{{ content }}</slot>
-      </div>
-    </transition>
+  <div class="mc-tooltip">
+    <mc-popper :placement="placement" :show-arrow="showArrow">
+      <slot>
+        <mc-icon
+          class="mc-tooltip-icon"
+          :name="iconName"
+          :size="iconSize"
+        ></mc-icon>
+      </slot>
+      <template #content>
+        <div class="mc-tooltip-content" :class="`mc-tooltip-content-${theme}`">
+          <slot name="content">
+            {{ content }}
+          </slot>
+        </div>
+      </template>
+    </mc-popper>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { TooltipProps, TooltipEmits, TooltipInstance } from "./types";
-import { computed, onUnmounted, ref, watch, watchEffect } from "vue";
-import { createPopper, type Instance } from "@popperjs/core";
-import { bind, debounce, isNil, type DebouncedFunc } from "lodash-es";
-import { useClickOutside } from "@mc-plus/hooks";
+import type { TooltipProps } from "./types";
+import McIcon from "../mc-icon/mc-icon.vue";
+import McPopper from "../mc-popper/mc-popper.vue";
 
 // options
-defineOptions({
-  name: "McTooltip",
-});
+defineOptions({ name: "McTooltip" });
 
 // props
-const props = withDefaults(defineProps<TooltipProps>(), {
-  placement: "bottom",
-  trigger: "hover",
-  transitionName: "fade",
-  showTimeout: 0,
-  hideTimeout: 300,
-});
-
-// emits
-const emit = defineEmits<TooltipEmits>();
-
-// events
-const events = ref<Record<string, EventListener>>({});
-const outerEvents = ref<Record<string, EventListener>>({});
-const dropdownEvents = ref<Record<string, EventListener>>({});
-
-// refs
-const containerNode = ref<HTMLElement>();
-const triggerNode = ref<HTMLElement>();
-const popperNode = ref<HTMLElement>();
-
-// visible
-const visible = ref<boolean>(false);
-
-// set visible
-const setVisible = (val: boolean) => {
-  if (props.disabled) val = false;
-  visible.value = val;
-  emit("visible:change", val);
-};
-
-// popper options
-const popperOptions = computed(() => ({
-  placement: props.placement,
-  modifiers: [
-    {
-      name: "offset",
-      options: {
-        offset: [0, 8],
-      },
-    },
-  ],
-  ...props.popperOptions,
-}));
-
-// poper instance
-let popperInstance: Instance | undefined;
-
-// visible change
-watch(
-  visible,
-  (val) => {
-    if (!val) return;
-    if (triggerNode.value && popperNode.value) {
-      // create popper instance
-      popperInstance = createPopper(
-        triggerNode.value,
-        popperNode.value,
-        popperOptions.value
-      );
-    }
-  },
-  {
-    flush: "post",
-  }
-);
-
-// destroy popper instance
-const destroyPopperInstance = () => {
-  if (isNil(popperInstance)) return;
-  popperInstance.destroy();
-  popperInstance = undefined;
-};
-
-// destroy popper instance when unmounted
-onUnmounted(() => {
-  destroyPopperInstance();
-});
-
-let openDebounce: DebouncedFunc<() => void> | undefined;
-let closeDebounce: DebouncedFunc<() => void> | undefined;
-
-// attach events
-const attachEvents = () => {
-  // clear existing events
-  clearEvents();
-
-  // close popper when disabled
-  if (props.disabled) {
-    closePopper(false);
-    return;
-  }
-
-  // attach events
-  if (props.trigger === "click") {
-    // click
-    events.value["click"] = () => {
-      visible.value ? closePopper() : openPopper();
-    };
-  } else if (props.trigger === "hover") {
-    // hover
-    events.value["mouseenter"] = () => openPopper();
-    outerEvents.value["mouseleave"] = () => closePopper();
-    dropdownEvents.value["mouseenter"] = () => openPopper();
-  }
-};
-
-// clear events
-const clearEvents = () => {
-  events.value = {};
-  outerEvents.value = {};
-  dropdownEvents.value = {};
-};
-
-// open delay
-const openDelay = computed(() =>
-  props.trigger === "hover" ? props.showTimeout : 0
-);
-
-// close delay
-const closeDelay = computed(() =>
-  props.trigger === "hover" ? props.hideTimeout : 0
-);
-
-// reset events when props changed
-watchEffect(() => {
-  attachEvents();
-  openDebounce = debounce(bind(setVisible, null, true), openDelay.value);
-  closeDebounce = debounce(bind(setVisible, null, false), closeDelay.value);
-});
-
-// open popper
-const openPopper = (useDebounce = true) => {
-  closeDebounce?.cancel();
-  if (useDebounce) {
-    openDebounce?.();
-  } else {
-    setVisible(false);
-  }
-};
-
-// close popper
-const closePopper = (useDebounce = true) => {
-  openDebounce?.cancel();
-  if (useDebounce) {
-    closeDebounce?.();
-  } else {
-    setVisible(false);
-  }
-};
-
-// click outside
-useClickOutside(containerNode, () => {
-  emit("click:outside");
-  if (props.trigger === "hover") return;
-  visible.value && closePopper(false);
-});
-
-// expose
-defineExpose<TooltipInstance>({
-  show: () => openPopper(false),
-  hide: () => closePopper(false),
+withDefaults(defineProps<TooltipProps>(), {
+  iconName: "Info",
+  theme: "light",
+  placement: "top",
+  showArrow: true,
+  iconSize: 16,
 });
 </script>
 
