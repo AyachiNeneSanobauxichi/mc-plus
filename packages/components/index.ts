@@ -17,7 +17,7 @@ export * from "./mc-switch";
 export * from "./mc-table";
 export * from "./mc-tag";
 export * from "./mc-toast";
-export * from "./mc-tooltip";
+export * from "./mc-tooltip-base";
 export * from "./mc-step";
 // refactor
 export * from "./mc-form";

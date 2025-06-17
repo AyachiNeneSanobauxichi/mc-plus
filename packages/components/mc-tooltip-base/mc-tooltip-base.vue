@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-tooltip" ref="containerNode" v-on="outerEvents">
+  <div class="mc-tooltip-base" ref="containerNode" v-on="outerEvents">
     <div class="mc-tooltip__trigger" ref="triggerNode" v-on="events">
       <slot></slot>
     </div>
@@ -17,19 +17,21 @@
 </template>
 
 <script setup lang="ts">
-import type { TooltipProps, TooltipEmits, TooltipInstance } from "./types";
+import type {
+  TooltipBaseProps,
+  TooltipBaseEmits,
+  TooltipBaseInstance,
+} from "./types";
 import { computed, onUnmounted, ref, watch, watchEffect } from "vue";
 import { createPopper, type Instance } from "@popperjs/core";
 import { bind, debounce, isNil, type DebouncedFunc } from "lodash-es";
 import { useClickOutside } from "@mc-plus/hooks";
 
 // options
-defineOptions({
-  name: "McTooltip",
-});
+defineOptions({ name: "McTooltipBase" });
 
 // props
-const props = withDefaults(defineProps<TooltipProps>(), {
+const props = withDefaults(defineProps<TooltipBaseProps>(), {
   placement: "bottom",
   trigger: "hover",
   transitionName: "fade",
@@ -38,7 +40,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 });
 
 // emits
-const emit = defineEmits<TooltipEmits>();
+const emits = defineEmits<TooltipBaseEmits>();
 
 // events
 const events = ref<Record<string, EventListener>>({});
@@ -57,7 +59,7 @@ const visible = ref<boolean>(false);
 const setVisible = (val: boolean) => {
   if (props.disabled) val = false;
   visible.value = val;
-  emit("visible:change", val);
+  emits("visible:change", val);
 };
 
 // popper options
@@ -182,13 +184,13 @@ const closePopper = (useDebounce = true) => {
 
 // click outside
 useClickOutside(containerNode, () => {
-  emit("click:outside");
+  emits("click:outside");
   if (props.trigger === "hover") return;
   visible.value && closePopper(false);
 });
 
 // expose
-defineExpose<TooltipInstance>({
+defineExpose<TooltipBaseInstance>({
   show: () => openPopper(false),
   hide: () => closePopper(false),
 });

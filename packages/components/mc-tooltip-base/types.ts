@@ -1,10 +1,10 @@
 import type { Placement, Options } from "@popperjs/core";
 
-export type TooltipTrigger = "hover" | "click";
+export type TooltipBaseTrigger = "hover" | "click";
 
-export interface TooltipProps {
+export interface TooltipBaseProps {
   content?: string;
-  trigger?: TooltipTrigger;
+  trigger?: TooltipBaseTrigger;
   placement?: Placement;
   disabled?: boolean;
   popperOptions?: Partial<Options>;
@@ -13,12 +13,12 @@ export interface TooltipProps {
   transitionName?: string;
 }
 
-export interface TooltipEmits {
+export interface TooltipBaseEmits {
   (e: "visible:change", value: boolean): void;
   (e: "click:outside"): void;
 }
 
-export interface TooltipInstance {
+export interface TooltipBaseInstance {
   show(): void;
   hide(): void;
 }

@@ -1,0 +1,37 @@
+<template>
+  <div class="tool-tip-container">
+    <mc-tooltip-base placement="top">
+      <mc-icon name="Info" class="info-icon"></mc-icon>
+      <template #content>
+        <div class="content"></div>
+      </template>
+    </mc-tooltip-base>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { McIcon } from "mc-plus";
+import McTooltipBase from "../../../components/mc-tooltip-base/mc-tooltip-base.vue";
+</script>
+
+<style scoped lang="scss">
+.tool-tip-container {
+  width: 1200px;
+  height: 800px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: lightgreen;
+}
+
+.info-icon {
+  cursor: pointer;
+}
+
+.content {
+  width: 200px;
+  height: 700px;
+  background-color: pink;
+}
+</style>
