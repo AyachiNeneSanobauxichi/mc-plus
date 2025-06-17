@@ -30,7 +30,7 @@ import { bind, debounce, isNil, type DebouncedFunc } from "lodash-es";
 import { useClickOutside } from "@mc-plus/hooks";
 
 // options
-defineOptions({ name: "McTooltipBase" });
+defineOptions({ name: "McPopper" });
 
 // props
 const props = withDefaults(defineProps<PopperProps>(), {
