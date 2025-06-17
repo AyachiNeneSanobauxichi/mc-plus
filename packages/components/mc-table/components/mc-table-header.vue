@@ -20,7 +20,7 @@
             </div>
           </th>
 
-          <th v-for="(column, index) in columns" :key="index" :class="getHeaderCellClasses(column)" @click="handleHeaderClick(column, $event)">
+          <th v-for="(column, index) in columns" :key="index" :class="[column.headerClassName, column.align ? `is-${column.align}` : '', column.fixed ? `is-fixed-${typeof column.fixed === 'boolean' ? 'left' : column.fixed}` : '', column.sortable ? 'is-sortable' : '', getSortClass(column.prop)]" @click="handleHeaderClick(column, $event)">
             <div class="mc-table__header-cell">
               <span class="mc-table__header-label">
                 <slot :name="`header-${column.slot || column.prop}`" :column="column" :index="index">
@@ -59,44 +59,6 @@ const emit = defineEmits<TableHeaderEmits>();
 
 const headerWrapper = ref<HTMLDivElement>();
 
-// 获取表头单元格样式类
-const getHeaderCellClasses = (column: TableColumn): string[] => {
-  const classes: string[] = [];
-
-  if (column.headerClassName) {
-    classes.push(column.headerClassName);
-  }
-
-  if (column.align) {
-    classes.push(`is-${column.align}`);
-  }
-
-  if (column.fixed) {
-    const fixedPosition = typeof column.fixed === "boolean" ? "left" : column.fixed;
-    classes.push(`is-fixed-${fixedPosition}`);
-  }
-
-  if (column.sortable) {
-    classes.push("is-sortable");
-  }
-
-  const sortClass = getSortClass(column.prop);
-  if (sortClass) {
-    classes.push(sortClass);
-  }
-
-  return classes;
-};
-
-// 获取排序样式类
-const getSortClass = (prop: string): string => {
-  const order = props.getSortOrder(prop);
-  if (order === "asc") return "is-sort-asc";
-  if (order === "desc") return "is-sort-desc";
-  return "";
-};
-
-// 事件处理
 const handleHeaderClick = (column: TableColumn, event: Event) => {
   // 如果是可排序的列，处理排序
   if (column.sortable) {
@@ -108,6 +70,13 @@ const handleHeaderClick = (column: TableColumn, event: Event) => {
 
 const handleSelectAll = (selected: boolean) => {
   emit("select-all", selected);
+};
+
+const getSortClass = (prop: string): string => {
+  const order = props.getSortOrder(prop);
+  if (order === "asc") return "is-sort-asc";
+  if (order === "desc") return "is-sort-desc";
+  return "";
 };
 
 defineExpose({
