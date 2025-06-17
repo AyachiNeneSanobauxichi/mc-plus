@@ -1,11 +1,11 @@
 <template>
   <div>
-    <form-container></form-container>
+    <radio-container></radio-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import FormContainer from "./views/form-container.vue";
+import RadioContainer from "./views/radio-container.vue";
 </script>
 
 <style scoped lang="scss">

@@ -26,9 +26,7 @@ import { RADIO_INJECTION_KEY } from "./constant";
 import { computed, inject } from "vue";
 
 // options
-defineOptions({
-  name: "McRadio",
-});
+defineOptions({ name: "McRadio" });
 
 // props
 const props = defineProps<RadioProps>();
