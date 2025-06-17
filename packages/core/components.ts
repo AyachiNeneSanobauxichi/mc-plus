@@ -34,6 +34,7 @@ import {
   McUpload,
   McFileList,
   McPopper,
+  McTooltip,
 } from "@mc-plus/components";
 
 export default [
@@ -71,4 +72,5 @@ export default [
   McUpload,
   McFileList,
   McPopper,
+  McTooltip,
 ] as Plugin[];

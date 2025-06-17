@@ -1,17 +1,11 @@
 <template>
   <div class="tool-tip-container">
-    <mc-popper placement="top">
-      <mc-icon name="Info" class="info-icon"></mc-icon>
-      <template #content>
-        <div class="content"></div>
-      </template>
-    </mc-popper>
+    <mc-tooltip content="Mc Tooltip" theme="dark"></mc-tooltip>
   </div>
 </template>
 
 <script setup lang="ts">
-import { McIcon } from "mc-plus";
-import McPopper from "../../../components/mc-popper/mc-popper.vue";
+import McTooltip from "../../../components/mc-tooltip/mc-tooltip.vue";
 </script>
 
 <style scoped lang="scss">
@@ -23,15 +17,5 @@ import McPopper from "../../../components/mc-popper/mc-popper.vue";
   left: 50%;
   transform: translate(-50%, -50%);
   background: lightgreen;
-}
-
-.info-icon {
-  cursor: pointer;
-}
-
-.content {
-  width: 200px;
-  height: 30px;
-  background-color: pink;
 }
 </style>

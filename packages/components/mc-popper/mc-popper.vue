@@ -35,7 +35,7 @@ defineOptions({ name: "McPopper" });
 // props
 const props = withDefaults(defineProps<PopperProps>(), {
   placement: "top",
-  trigger: "click",
+  trigger: "hover",
   transitionName: "fade",
   showTimeout: 0,
   hideTimeout: 300,
