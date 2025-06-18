@@ -1,11 +1,11 @@
 <template>
   <div>
-    <radio-container></radio-container>
+    <tool-tip-container></tool-tip-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import RadioContainer from "./views/radio-container.vue";
+import ToolTipContainer from "./views/tool-tip-container.vue";
 </script>
 
 <style scoped lang="scss">

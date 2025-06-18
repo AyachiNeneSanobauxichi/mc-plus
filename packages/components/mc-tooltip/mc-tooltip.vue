@@ -6,6 +6,7 @@
           class="mc-tooltip-icon"
           :name="iconName"
           :size="iconSize"
+          :color="iconColor"
         ></mc-icon>
       </slot>
       <template #content>
