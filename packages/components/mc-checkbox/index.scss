@@ -109,7 +109,10 @@ $text-icon: var(--mc-white);
 
   &.mc-checkbox--error {
     .mc-checkbox__checkbox {
-      background-color: $bg-color-error !important;
+      &.mc-checkbox__checkbox--partial,
+      &.mc-checkbox__checkbox--checked {
+        background-color: $bg-color-error !important;
+      }
       border-color: $bg-color-error !important;
     }
   }

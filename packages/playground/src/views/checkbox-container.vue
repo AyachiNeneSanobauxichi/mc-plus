@@ -9,6 +9,7 @@
       <mc-form :model="formState" :rules="rules" ref="FormRef">
         <mc-form-item label="Mio" prop="check">
           <mc-checkbox
+            partial
             v-model="formState.check"
             content="Akiyama Mio"
             remarks="k-on"
@@ -36,7 +37,18 @@ const formState = reactive<FormState>({
 });
 
 const rules: FormRules<FormState> = {
-  check: [{ required: true }],
+  check: [
+    {
+      required: true,
+      validator: (_, value, callback) => {
+        if (value === false) {
+          callback(new Error("You can`t select mio"));
+        } else {
+          callback();
+        }
+      },
+    },
+  ],
 };
 
 const disabled = ref<boolean>(false);
