@@ -9,7 +9,7 @@
       }"
       @click="handleSelect"
     >
-      <input type="radio" class="mc-radio-input" :disabled="disabled" />
+      <input type="radio" class="mc-radio-input" :disabled="isDisabled" />
       <span class="mc-radio-circle"></span>
       <div class="mc-radio-content">
         <slot>{{ label }}</slot>

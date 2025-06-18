@@ -1,11 +1,11 @@
 <template>
   <div>
-    <tool-tip-container></tool-tip-container>
+    <checkbox-container></checkbox-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import ToolTipContainer from "./views/tool-tip-container.vue";
+import CheckboxContainer from "./views/checkbox-container.vue";
 </script>
 
 <style scoped lang="scss">

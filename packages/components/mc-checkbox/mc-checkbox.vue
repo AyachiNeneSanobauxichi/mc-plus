@@ -1,14 +1,17 @@
 <template>
   <div
     class="mc-checkbox"
-    :class="{ 'mc-checkbox--disabled': disabled }"
+    :class="{
+      'mc-checkbox--disabled': isDisabled,
+      'mc-checkbox--error': isError,
+    }"
     :style="{ height: remarks ? '40px' : '24px' }"
   >
     <input
       type="checkbox"
       class="mc-checkbox__input"
       :value="modelValue"
-      :disabled="disabled"
+      :disabled="isDisabled"
     />
     <label class="mc-checkbox__wrapper">
       <span
@@ -28,25 +31,47 @@
 </template>
 
 <script setup lang="ts">
+import { computed, watch } from "vue";
+import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import type { CheckboxProps, CheckboxEmits } from "./types";
 
 // options
-defineOptions({
-  name: "McCheckbox",
-});
+defineOptions({ name: "McCheckbox" });
 
 // props
 const props = defineProps<CheckboxProps>();
 
 // emits
-const emit = defineEmits<CheckboxEmits>();
+const emits = defineEmits<CheckboxEmits>();
+
+// form item
+const { formItem } = useFormItem();
+
+// form item disable
+const disabled = useFormDisabled();
+
+// disable
+const isDisabled = computed(() => disabled.value);
+
+// error
+const isError = computed(
+  () => !isDisabled.value && formItem?.validateStatus === "error"
+);
 
 // click
 const handleClick = () => {
   if (props.disabled) return;
-  emit("update:modelValue", !props.modelValue);
-  emit("change", !props.modelValue);
+  emits("update:modelValue", !props.modelValue);
+  emits("change", !props.modelValue);
 };
+
+// model value changed
+watch(
+  () => props.modelValue,
+  () => {
+    formItem?.validate("change");
+  }
+);
 </script>
 
 <style scoped lang="scss">
