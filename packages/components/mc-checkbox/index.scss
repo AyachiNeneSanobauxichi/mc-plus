@@ -4,6 +4,7 @@ $border-radius: var(--mc-radius);
 $bg-color: var(--mc-teal-500);
 $bg-color-hover: var(--mc-teal-900);
 $bg-color-disabled: var(--mc-gray-300);
+$bg-color-error: var(--mc-error);
 $text-color: var(--mc-gray-800);
 $text-color-remarks: var(--mc-gray-500);
 $text-color-disabled: var(--mc-gray-400);
@@ -103,6 +104,16 @@ $text-icon: var(--mc-white);
 
     .mc-checkbox__content-text {
       color: $text-color-disabled;
+    }
+  }
+
+  &.mc-checkbox--error {
+    .mc-checkbox__checkbox {
+      &.mc-checkbox__checkbox--partial,
+      &.mc-checkbox__checkbox--checked {
+        background-color: $bg-color-error !important;
+      }
+      border-color: $bg-color-error !important;
     }
   }
 }

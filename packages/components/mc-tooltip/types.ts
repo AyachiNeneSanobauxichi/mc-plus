@@ -10,4 +10,5 @@ export interface TooltipProps {
   theme?: TooltipTheme;
   placement?: Placement;
   showArrow?: boolean;
+  iconColor?: string;
 }

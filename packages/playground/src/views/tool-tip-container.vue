@@ -1,6 +1,10 @@
 <template>
   <div class="tool-tip-container">
-    <mc-tooltip content="Mc Tooltip" theme="dark"></mc-tooltip>
+    <mc-tooltip
+      content="Mc Tooltip"
+      icon-color="var(--mc-error)"
+      placement="top"
+    ></mc-tooltip>
   </div>
 </template>
 

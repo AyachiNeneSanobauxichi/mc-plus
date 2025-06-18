@@ -1,11 +1,11 @@
 <template>
   <div>
-    <radio-container></radio-container>
+    <checkbox-container></checkbox-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import RadioContainer from "./views/radio-container.vue";
+import CheckboxContainer from "./views/checkbox-container.vue";
 </script>
 
 <style scoped lang="scss">
