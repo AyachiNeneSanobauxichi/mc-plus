@@ -67,12 +67,17 @@
 </template>
 
 <script setup lang="ts">
-import type { SelectEmits, SelectOptionProps, SelectProps } from "./types";
+import type {
+  SelectEmits,
+  SelectOptionProps,
+  SelectProps,
+  SelectValue,
+} from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
-import { isNil, lowerCase } from "lodash-es";
+import { isNil, lowerCase, toString } from "lodash-es";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useInputGroupAffix } from "../mc-input-group/hooks";
 
@@ -87,7 +92,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
 });
 
 // emits
-const emit = defineEmits<SelectEmits>();
+const emits = defineEmits<SelectEmits>();
 
 // ref
 const inputRef = ref<HTMLInputElement>();
@@ -112,7 +117,7 @@ const addOption = (option: SelectOptionProps) => {
 const filterOptions = computed(() => {
   if (isNil(searchValue.value)) return selectOptions.value;
   return selectOptions.value.filter((item) => {
-    return lowerCase(item.label ?? item.value).includes(
+    return lowerCase(toString(item.label ?? item.value)).includes(
       lowerCase(searchValue.value)
     );
   });
@@ -143,7 +148,7 @@ const handleClick = () => {
 };
 
 // select values
-const selectValues = ref<string[]>([props.modelValue as string]);
+const selectValues = ref<SelectValue[]>([props.modelValue as SelectValue]);
 // select value change
 watch(
   () => props.modelValue,
@@ -192,8 +197,8 @@ const showStatusIcon = computed(
 // select event
 const handleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
-  emit("update:modelValue", item.value);
-  emit("change", item.value);
+  emits("update:modelValue", item.value);
+  emits("change", item.value);
   formItem?.validate("change");
 };
 

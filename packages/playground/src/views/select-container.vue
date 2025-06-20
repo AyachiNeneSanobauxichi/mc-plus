@@ -32,26 +32,26 @@ const options = ref([
     label: "3 年",
     value: "grade3",
     stus: [
-      { label: "Hirasawa Yui", value: "yui" },
-      { label: "Akiyama Mio", value: "mio" },
-      { label: "Tainaka Ritsu", value: "ritsu" },
-      { label: "Kotobuku Tsumugi", value: "mugi" },
+      { label: "Hirasawa Yui", value: 1 },
+      { label: "Akiyama Mio", value: 2 },
+      { label: "Tainaka Ritsu", value: 3 },
+      { label: "Kotobuku Tsumugi", value: 4 },
     ],
   },
   {
     label: "2 年",
     value: "grade3",
     stus: [
-      { label: "Nakano Azusa", value: "azusa" },
-      { label: "Hirasawa Ui", value: "ui" },
+      { label: "Nakano Azusa", value: 5 },
+      { label: "Hirasawa Ui", value: 6 },
     ],
   },
 ]);
 
-type FormState = { student: string; teacher: string };
+type FormState = { student: number; teacher: number };
 const formState = reactive<FormState>({
-  student: "yui",
-  teacher: "ui",
+  student: 5,
+  teacher: 6,
 });
 
 const rules = reactive<FormRules<FormState>>({
@@ -60,7 +60,7 @@ const rules = reactive<FormRules<FormState>>({
       required: true,
       message: "Please select a student",
       validator: (_, value, callback) => {
-        if (value === "yui") {
+        if (value === 1) {
           callback(new Error("Please select a student"));
         } else {
           callback();

@@ -10,7 +10,7 @@ export type InputFormatter = (value: string) => string;
 export type InputParser = (value: string) => string;
 
 export interface InputProps {
-  modelValue: string;
+  modelValue?: string | undefined;
   width?: string;
   height?: string;
   type?: InputType;

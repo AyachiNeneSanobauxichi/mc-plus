@@ -11,7 +11,7 @@ export interface RadioProps {
 }
 
 export interface RadioGroupProps {
-  modelValue?: RadioValue;
+  modelValue?: RadioValue | undefined;
   disabled?: boolean;
 }
 
