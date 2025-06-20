@@ -161,8 +161,14 @@ const setHorizontalLineWidth = () => {
   const firstItemRect = firstItem.getBoundingClientRect();
   const lastItemRect = lastItem.getBoundingClientRect();
 
-  unsuccessLine.style.width = `${lastItemRect.left - firstItemRect.left}px`;
-  unsuccessLine.style.left = `${firstItemRect.left - containerRect.left}px`;
+  console.log();
+
+  unsuccessLine.style.width = `${
+    lastItemRect.left - firstItemRect.left - firstItemRect.width
+  }px`;
+  unsuccessLine.style.left = `${
+    firstItemRect.left - containerRect.left + firstItemRect.width
+  }px`;
 };
 
 // set horizontal success line
@@ -170,13 +176,13 @@ const setHorizontalSuccessLine = () => {
   const successLine = successLineRef.value!;
   const successIdx = successStepIndex.value;
   if (successIdx < 0) {
-    successLine.style.transform = "scaleX(0)";
+    successLine.style.width = "0";
     return;
   }
 
   const _percent = (successIdx + 1) / (props.steps.length - 1);
   const percent = _percent > 1 ? 1 : _percent;
-  successLine.style.transform = `scaleX(${percent})`;
+  successLine.style.width = `${percent * 100}%`;
 };
 
 // success step changed

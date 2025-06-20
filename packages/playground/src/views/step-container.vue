@@ -38,6 +38,21 @@ const stepConfig = ref<StepItem[]>([
     label: "Step 4",
     desc: "Step 4 description",
   },
+  {
+    key: 5,
+    label: "Step 5",
+    desc: "Step 5 description",
+  },
+  {
+    key: 6,
+    label: "Step 6",
+    desc: "Step 6 description",
+  },
+  {
+    key: 7,
+    label: "Step 7",
+    desc: "Step 7 description",
+  },
 ]);
 
 const handleNextStep = () => {

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <radio-container></radio-container>
+    <step-container></step-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import RadioContainer from "./views/radio-container.vue";
+import StepContainer from "./views/step-container.vue";
 </script>
 
 <style scoped lang="scss">

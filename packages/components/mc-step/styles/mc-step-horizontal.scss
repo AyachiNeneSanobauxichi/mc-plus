@@ -35,13 +35,11 @@ $success_line_color: var(--mc-success);
 
       .mc-step-success-line {
         position: absolute;
-        width: 100%;
+        width: 0;
         top: -1.5px;
         border: 1.5px solid $success_line_color;
         z-index: 10;
-        transition: transform 0.5s ease-in-out;
-        transform-origin: left;
-        transform: scaleX(0);
+        transition: width 0.5s ease-in-out;
       }
     }
   }
