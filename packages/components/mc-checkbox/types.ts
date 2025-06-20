@@ -1,7 +1,7 @@
 import type { Ref } from "vue";
 
 export interface CheckboxProps {
-  modelValue?: boolean;
+  modelValue?: boolean | undefined;
   disabled?: boolean;
   content?: string;
   remarks?: string;
