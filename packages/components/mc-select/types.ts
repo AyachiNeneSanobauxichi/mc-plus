@@ -3,8 +3,10 @@ import type { ComputedRef, Ref, VNode } from "vue";
 // export type SelectType = "single" | "multi-choice";
 export type SelectType = "single";
 
+export type SelectValue = number | string;
+
 export interface SelectOptionProps {
-  value: string;
+  value: SelectValue;
   label?: string;
   width?: string;
   height?: string;
@@ -24,7 +26,7 @@ export interface SelectGroupProps {
 }
 
 export interface SelectProps {
-  modelValue?: string;
+  modelValue?: SelectValue | undefined;
   placeholder?: string;
   disabled?: boolean;
   type?: SelectType;
@@ -34,13 +36,13 @@ export interface SelectProps {
 }
 
 export interface SelectEmits {
-  (e: "update:modelValue", val: string | string[]): void;
-  (e: "change", val: string | string[]): void;
+  (e: "update:modelValue", val: SelectValue | SelectValue[]): void;
+  (e: "change", val: SelectValue | SelectValue[]): void;
 }
 
 export interface SelectContext {
   filterOptions: ComputedRef<SelectOptionProps[]>;
-  selectValues: Ref<string[]>;
+  selectValues: Ref<SelectValue[]>;
   handleSelect(item: SelectOptionProps): void;
   removeOption(item: SelectOptionProps): void;
   addOption(item: SelectOptionProps): void;

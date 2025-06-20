@@ -52,11 +52,11 @@ import { McButton } from "mc-plus";
 import type { FormRules } from "mc-plus";
 
 type FormState = {
-  stu: number;
+  stu: number | undefined;
 };
 
 const formState = reactive<FormState>({
-  stu: 2,
+  stu: undefined,
 });
 
 const rules: FormRules<FormState> = {
