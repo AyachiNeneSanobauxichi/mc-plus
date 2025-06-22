@@ -21,12 +21,14 @@
         </div>
       </div>
       <div class="mc-step-item-content">
-        <h3 class="mc-step-item-label">
-          {{ step.label }}
-        </h3>
-        <p class="mc-step-item-desc">
-          {{ step.desc }}
-        </p>
+        <div class="mc-step-item-content-title">
+          <h3 class="mc-step-item-label">
+            {{ step.label }}
+          </h3>
+          <p class="mc-step-item-desc">
+            {{ step.desc }}
+          </p>
+        </div>
         <template v-if="isVertical">
           <div
             class="mc-step-item-component"

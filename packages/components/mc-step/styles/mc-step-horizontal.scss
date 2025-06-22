@@ -4,16 +4,22 @@ $success_line_color: var(--mc-success);
 .mc-step-horizontal {
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   position: relative;
 
   .mc-step-item {
+    width: 64px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
+    .mc-step-item-content {
+      margin-top: 12px;
+      .mc-step-item-content-title {
+        width: fit-content;
+        justify-content: start;
+        white-space: nowrap;
+      }
+    }
   }
 
   .mc-step-line {

@@ -26,13 +26,13 @@ const stepConfig = ref<StepItem[]>([
   {
     key: 1,
     label: "Step 1",
-    desc: "Step 1 description",
+    // desc: "Step 1 description",
     component: Step1,
   },
   {
     key: 2,
     label: "Step 2",
-    desc: "Step 2 description",
+    // desc: "Step 2 description",
     component: Step2,
   },
   {
