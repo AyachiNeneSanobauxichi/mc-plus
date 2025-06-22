@@ -3,11 +3,17 @@ $bg_color_minimal: var(--mc-purple-50);
 $bg_color_subtle: var(--mc-white);
 $bg_color_disabled: var(--mc-gray-400);
 $bg_color_disabled_subtle: var(--mc-white);
+$bg_color_info: var(--mc-info);
+$bg_color_success: var(--mc-success);
+$bg_color_cancel: var(--mc-gray-300);
+$bg_color_warning: var(--mc-warning);
+$bg_color_error: var(--mc-error);
 $text_color_bold: var(--mc-white);
 $text_color_minimal: var(--mc-purple-500);
 $text_color_subtle: var(--mc-purple-500);
 $text_color_disabled: var(--mc-white);
 $text_color_disabled_subtle: var(--mc-gray-400);
+$text_color_status: var(--mc-white);
 
 .mc-tag {
   width: fit-content;
@@ -64,13 +70,23 @@ $text_color_disabled_subtle: var(--mc-gray-400);
     border: 1px solid $text_color_subtle;
   }
   &.mc-tag-info {
+    background-color: $bg_color_info;
+    color: $text_color_status;
   }
   &.mc-tag-success {
+    background-color: $bg_color_success;
+    color: $text_color_status;
   }
   &.mc-tag-cancel {
+    background-color: $bg_color_cancel;
+    color: $text_color_status;
   }
   &.mc-tag-warning {
+    background-color: $bg_color_warning;
+    color: $text_color_status;
   }
   &.mc-tag-error {
+    background-color: $bg_color_error;
+    color: $text_color_status;
   }
 }
