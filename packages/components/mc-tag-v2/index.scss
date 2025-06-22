@@ -1,6 +1,8 @@
 $bg_color_bold: var(--mc-purple-500);
 $bg_color_minimal: var(--mc-purple-50);
 $bg_color_subtle: var(--mc-white);
+$bg_color_bold_hover: var(--mc-purple-900);
+$bg_color_minimal_hover: var(--mc-purple-100);
 $bg_color_disabled: var(--mc-gray-400);
 $bg_color_disabled_subtle: var(--mc-white);
 $bg_color_info: var(--mc-info);
@@ -10,6 +12,7 @@ $bg_color_warning: var(--mc-warning);
 $bg_color_error: var(--mc-error);
 $text_color_bold: var(--mc-white);
 $text_color_minimal: var(--mc-purple-500);
+$text_color_minimal_hover: var(--mc-white);
 $text_color_subtle: var(--mc-purple-500);
 $text_color_disabled: var(--mc-white);
 $text_color_disabled_subtle: var(--mc-gray-400);
@@ -30,6 +33,26 @@ $text_color_status: var(--mc-white);
   }
   &.mc-tag-selectable {
     border-radius: 4px;
+    /* hover */
+    &:hover:not(.mc-tag-disabled) {
+      &.mc-tag-bold {
+        background-color: $bg_color_bold_hover;
+      }
+      &.mc-tag-minimal {
+        color: $text_color_minimal_hover;
+        background-color: $bg_color_minimal_hover;
+      }
+      &.mc-tag-subtle {
+        border: 2px solid $text_color_subtle;
+        &.mc-tag-x-small {
+          padding: 0 7px;
+        }
+        &.mc-tag-small,
+        &.mc-tag-medium {
+          padding: 0 15px;
+        }
+      }
+    }
   }
 
   /* size */
