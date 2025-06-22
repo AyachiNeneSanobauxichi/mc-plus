@@ -3,7 +3,15 @@ import type { IconType } from "mc-plus";
 
 export type TagType = "basic" | "selectable";
 
-export type TagEmphasis = "bold" | "minimal" | "subtle";
+export type TagEmphasis =
+  | "bold"
+  | "minimal"
+  | "subtle"
+  | "info"
+  | "success"
+  | "cancel"
+  | "warning"
+  | "error";
 
 export type TagSize = "x-small" | "small" | "medium";
 

@@ -1,10 +1,35 @@
 <template>
-  <div class="mc-tag" ref="_ref">Mc Tag</div>
+  <div
+    class="mc-tag"
+    ref="_ref"
+    :style="{ width, height }"
+    :class="[
+      `mc-tag-${size}`,
+      `mc-tag-${type}`,
+      `mc-tag-${emphasis}`,
+      `mc-tag-${disabled}`,
+    ]"
+  >
+    <mc-icon
+      v-if="leftIcon"
+      :name="leftIcon"
+      class="mc-tag-left-icon"
+      :size="16"
+    ></mc-icon>
+    <slot></slot>
+    <mc-icon
+      v-if="rightIcon"
+      :name="rightIcon"
+      class="mc-tag-right-icon"
+      :size="16"
+    ></mc-icon>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { TagEmits, TagInstance, TagProps } from "./types";
 import { ref } from "vue";
+import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
 defineOptions({ name: "McTag" });

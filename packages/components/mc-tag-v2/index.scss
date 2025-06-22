@@ -10,4 +10,67 @@ $text_color_disabled: var(--mc-white);
 $text_color_disabled_subtle: var(--mc-gray-400);
 
 .mc-tag {
+  width: fit-content;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+
+  /* type */
+  &.mc-tag-basic {
+    border-radius: 80px;
+  }
+  &.mc-tag-selectable {
+    border-radius: 4px;
+  }
+
+  /* size */
+  &.mc-tag-x-small {
+    min-width: 81px;
+    height: 24px;
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  &.mc-tag-small {
+    min-width: 107px;
+    height: 32px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  &.mc-tag-medium {
+    min-width: 107px;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  /* emphasis */
+  &.mc-tag-bold {
+    background-color: $bg_color_bold;
+    color: $text_color_bold;
+  }
+  &.mc-tag-minimal {
+    background-color: $bg_color_minimal;
+    color: $text_color_minimal;
+  }
+  &.mc-tag-subtle {
+    background-color: $bg_color_subtle;
+    color: $text_color_subtle;
+    border: 1px solid $text_color_subtle;
+  }
+  &.mc-tag-info {
+  }
+  &.mc-tag-success {
+  }
+  &.mc-tag-cancel {
+  }
+  &.mc-tag-warning {
+  }
+  &.mc-tag-error {
+  }
 }
