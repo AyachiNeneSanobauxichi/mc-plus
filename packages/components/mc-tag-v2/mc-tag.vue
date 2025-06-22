@@ -10,7 +10,13 @@ import { ref } from "vue";
 defineOptions({ name: "McTag" });
 
 // props
-withDefaults(defineProps<TagProps>(), {});
+const props = withDefaults(defineProps<TagProps>(), {
+  size: "small",
+  type: "basic",
+  emphasis: "bold",
+  disabled: false,
+  deletable: true,
+});
 
 // emits
 const emits = defineEmits<TagEmits>();
@@ -19,9 +25,7 @@ const emits = defineEmits<TagEmits>();
 const _ref = ref<HTMLDivElement | void>();
 
 // expose
-defineExpose<TagInstance>({
-  ref: _ref,
-});
+defineExpose<TagInstance>({ ref: _ref });
 </script>
 
 <style scoped lang="scss">
