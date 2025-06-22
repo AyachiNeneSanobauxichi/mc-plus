@@ -22,7 +22,10 @@
           </div>
         </div>
         <div class="mc-step-item-content">
-          <div class="mc-step-item-content-title">
+          <div
+            class="mc-step-item-content-title"
+            v-if="step.label || step.desc"
+          >
             <h3 class="mc-step-item-label">
               {{ step.label }}
             </h3>
@@ -78,10 +81,13 @@ const emit = defineEmits<StepEmits>();
 // value changed
 watch(
   () => props.modelValue,
-  async (value) => {
+  (value) => {
     const successStep = props.steps[currentStepIndex.value - 1];
     setSuccessStep(successStep?.key);
     emit("change", value);
+  },
+  {
+    flush: "post",
   }
 );
 
@@ -117,6 +123,9 @@ onMounted(() => {
     setHorizontalLineWidth();
     setHorizontalSuccessLine();
   }
+
+  const successStep = props.steps[currentStepIndex.value - 1];
+  setSuccessStep(successStep?.key);
 });
 
 // set vertical success line
@@ -126,14 +135,14 @@ const setVerticalSuccessLine = async () => {
 
   const successLine = successLineRef.value!;
   if (index < 0) {
-    successLine.style.transform = `scaleY(0)`;
+    successLine.style.height = `0`;
     return;
   }
   const container = stepContainerRef.value!;
   const items = container.querySelectorAll(".mc-step-item");
 
   if (index + 1 > items.length - 1) {
-    successLine.style.transform = `scaleY(1)`;
+    successLine.style.height = `100%`;
     return;
   }
 
@@ -144,7 +153,7 @@ const setVerticalSuccessLine = async () => {
 
   const percent = successLineHeight / (containerRect.height - 24);
 
-  successLine.style.transform = `scaleY(${percent})`;
+  successLine.style.height = `${percent * 100}%`;
 };
 
 // set horizontal line width

@@ -1,7 +1,7 @@
 <template>
   <div class="step-container">
     <div class="step-wrapper">
-      <mc-step v-model="step" :steps="stepConfig" type="horizontal"></mc-step>
+      <mc-step v-model="step" :steps="stepConfig" type="vertical"></mc-step>
     </div>
     <div class="tool-bar">
       <mc-button @click="handleNextStep">Next Step</mc-button>
@@ -71,8 +71,11 @@ const handleNextStep = () => {
     padding: 100px;
     box-sizing: border-box;
   }
-  .tool-bar {
-    margin-top: 200px;
-  }
+}
+
+.tool {
+  position: fixed;
+  left: 30px;
+  bottom: 200px;
 }
 </style>
