@@ -78,19 +78,6 @@ const isVertical = computed(() => props.type === "vertical");
 // emit
 const emit = defineEmits<StepEmits>();
 
-// value changed
-watch(
-  () => props.modelValue,
-  (value) => {
-    const successStep = props.steps[currentStepIndex.value - 1];
-    setSuccessStep(successStep?.key);
-    emit("change", value);
-  },
-  {
-    flush: "post",
-  }
-);
-
 // ref
 const _ref = ref<HTMLDivElement>();
 const stepContainerRef = ref<HTMLUListElement>();
@@ -102,11 +89,28 @@ const currentStepIndex = computed(() => {
   return findIndex(props.steps, (step) => step.key === props.modelValue);
 });
 
+// defalut success step key
+const defaultSuccessStepKey = computed(() => {
+  return props.steps[currentStepIndex.value - 1]?.key;
+});
+
+// value changed
+watch(
+  () => props.modelValue,
+  (value) => {
+    setSuccessStep();
+    emit("change", value);
+  },
+  {
+    flush: "post",
+  }
+);
+
 // success step
 const successStep = ref<StepKey>();
 
 // set success step
-const setSuccessStep = (key: StepKey) => {
+const setSuccessStep = (key: StepKey = defaultSuccessStepKey.value) => {
   successStep.value = key;
   emit("success", key);
 };
@@ -124,8 +128,7 @@ onMounted(() => {
     setHorizontalSuccessLine();
   }
 
-  const successStep = props.steps[currentStepIndex.value - 1];
-  setSuccessStep(successStep?.key);
+  setSuccessStep();
 });
 
 // set vertical success line
