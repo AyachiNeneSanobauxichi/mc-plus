@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import McTag from "../../../../components/mc-tag-v2/mc-tag.vue";
+import McTag from "@mc-plus/components/mc-tag/mc-tag.vue";
 </script>
 
 <style scoped lang="scss"></style>
