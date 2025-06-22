@@ -1,7 +1,7 @@
 <template>
   <div class="step-container">
     <div class="step-wrapper">
-      <mc-step v-model="step" :steps="stepConfig" type="vertical"></mc-step>
+      <mc-step v-model="step" :steps="stepConfig" type="horizontal"></mc-step>
     </div>
     <div class="tool-bar">
       <mc-button @click="handleNextStep">Next Step</mc-button>
@@ -26,13 +26,13 @@ const stepConfig = ref<StepItem[]>([
   {
     key: 1,
     label: "Step 1",
-    // desc: "Step 1 description",
+    desc: "Step 1 description",
     component: Step1,
   },
   {
     key: 2,
     label: "Step 2",
-    // desc: "Step 2 description",
+    desc: "Step 2 description",
     component: Step2,
   },
   {
@@ -67,6 +67,7 @@ const handleNextStep = () => {
 .step-container {
   .step-wrapper {
     width: 1300px;
+    height: 800px;
     padding: 100px;
     box-sizing: border-box;
   }

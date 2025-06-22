@@ -3,21 +3,30 @@ $success_line_color: var(--mc-success);
 
 .mc-step-horizontal {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
+
+  ul,
+  li {
+    padding: 0;
+    margin: 0;
+  }
+
+  .mc-step-item-container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
 
   .mc-step-item {
-    width: 64px;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     .mc-step-item-content {
       margin-top: 12px;
-      .mc-step-item-content-title {
-        width: fit-content;
-        justify-content: start;
-        white-space: nowrap;
+      .mc-step-item-component {
+        margin-top: 16px;
       }
     }
   }
@@ -48,5 +57,9 @@ $success_line_color: var(--mc-success);
         transition: width 0.5s ease-in-out;
       }
     }
+  }
+
+  .mc-step-item-component {
+    margin-top: 16px;
   }
 }

@@ -1,54 +1,63 @@
 <template>
   <div class="mc-step" :class="`mc-step-${type}`" ref="_ref">
-    <div
-      class="mc-step-item"
-      :class="{
-        'mc-step-item-active': modelValue === step.key,
-        'mc-step-item-disabled': step.disabled,
-        'mc-step-item-success': index <= successStepIndex,
-      }"
-      v-for="(step, index) in steps"
-      :key="step.key"
-    >
-      <div class="mc-step-number-container">
-        <div class="mc-step-item-number">
-          <template v-if="index > successStepIndex || step.disabled">
-            <span class="mc-step-item-number-text">{{ index + 1 }}</span>
-          </template>
-          <template v-else>
-            <mc-success />
-          </template>
+    <ul class="mc-step-item-container" ref="stepContainerRef">
+      <li
+        class="mc-step-item"
+        :class="{
+          'mc-step-item-active': modelValue === step.key,
+          'mc-step-item-disabled': step.disabled,
+          'mc-step-item-success': index <= successStepIndex,
+        }"
+        v-for="(step, index) in steps"
+        :key="step.key"
+      >
+        <div class="mc-step-number-container">
+          <div class="mc-step-item-number">
+            <template v-if="index > successStepIndex || step.disabled">
+              <span class="mc-step-item-number-text">{{ index + 1 }}</span>
+            </template>
+            <template v-else>
+              <mc-success />
+            </template>
+          </div>
         </div>
-      </div>
-      <div class="mc-step-item-content">
-        <div class="mc-step-item-content-title">
-          <h3 class="mc-step-item-label">
-            {{ step.label }}
-          </h3>
-          <p class="mc-step-item-desc">
-            {{ step.desc }}
-          </p>
-        </div>
-        <template v-if="isVertical">
+        <div class="mc-step-item-content">
+          <div class="mc-step-item-content-title">
+            <h3 class="mc-step-item-label">
+              {{ step.label }}
+            </h3>
+            <p class="mc-step-item-desc">
+              {{ step.desc }}
+            </p>
+          </div>
           <div
             class="mc-step-item-component"
-            v-if="step.component && step.key === modelValue"
+            v-if="showVerticalComponent(step)"
           >
             <component :is="step.component" />
           </div>
-        </template>
+        </div>
+      </li>
+      <div ref="unsuccessLineRef" class="mc-step-line mc-step-unsuccess-line">
+        <div ref="successLineRef" class="mc-step-success-line"></div>
       </div>
-    </div>
-    <div ref="unsuccessLineRef" class="mc-step-line mc-step-unsuccess-line">
-      <div ref="successLineRef" class="mc-step-success-line"></div>
+    </ul>
+    <div class="mc-step-item-component" v-if="showHorizontalComponent">
+      <component :is="showHorizontalComponent" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { StepEmits, StepInstance, StepKey, StepProps } from "./types";
+import type {
+  StepEmits,
+  StepInstance,
+  StepItem,
+  StepKey,
+  StepProps,
+} from "./types";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
-import { findIndex, throttle } from "lodash-es";
+import { find, findIndex, throttle } from "lodash-es";
 import McSuccess from "../mc-success-icon/mc-success-icon.vue";
 import useWindowResize from "@mc-plus/hooks/useWindowResize";
 
@@ -78,6 +87,7 @@ watch(
 
 // ref
 const _ref = ref<HTMLDivElement>();
+const stepContainerRef = ref<HTMLUListElement>();
 const unsuccessLineRef = ref<HTMLDivElement>();
 const successLineRef = ref<HTMLDivElement>();
 
@@ -119,7 +129,7 @@ const setVerticalSuccessLine = async () => {
     successLine.style.transform = `scaleY(0)`;
     return;
   }
-  const container = _ref.value!;
+  const container = stepContainerRef.value!;
   const items = container.querySelectorAll(".mc-step-item");
 
   if (index + 1 > items.length - 1) {
@@ -139,7 +149,7 @@ const setVerticalSuccessLine = async () => {
 
 // set horizontal line width
 const setHorizontalLineWidth = () => {
-  const container = _ref.value!;
+  const container = stepContainerRef.value!;
   const unsuccessLine = unsuccessLineRef.value!;
   const items = container.querySelectorAll(".mc-step-item");
   const firstItem = items?.[0]?.querySelector(
@@ -179,6 +189,19 @@ const setHorizontalSuccessLine = () => {
   const percent = _percent > 1 ? 1 : _percent;
   successLine.style.width = `${percent * 100}%`;
 };
+
+// show vertical component
+const showVerticalComponent = (step: StepItem) => {
+  return isVertical.value && step.component && step.key === props.modelValue;
+};
+
+// show horizontal component
+const showHorizontalComponent = computed(() => {
+  return (
+    !isVertical.value &&
+    find(props.steps, (step) => step.key === props.modelValue)?.component
+  );
+});
 
 // success step changed
 watch(
