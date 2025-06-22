@@ -5,7 +5,6 @@
       size="x-small"
       emphasis="bold"
       left-icon="User"
-      right-icon="Right"
       disabled
     >
       Mc Tag
