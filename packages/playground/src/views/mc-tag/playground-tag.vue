@@ -1,6 +1,6 @@
 <template>
   <div class="playground-tag">
-    <mc-tag size="small" emphasis="bold" left-icon="User" right-icon="Right">
+    <mc-tag size="small" emphasis="error" left-icon="User" right-icon="Right">
       Mc Tag
     </mc-tag>
   </div>

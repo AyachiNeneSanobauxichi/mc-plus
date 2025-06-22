@@ -7,7 +7,7 @@
       `mc-tag-${size}`,
       `mc-tag-${type}`,
       `mc-tag-${emphasis}`,
-      `mc-tag-${disabled}`,
+      { 'mc-tag-disabled': disabled },
     ]"
   >
     <mc-icon

@@ -89,4 +89,24 @@ $text_color_status: var(--mc-white);
     background-color: $bg_color_error;
     color: $text_color_status;
   }
+
+  /* disabled */
+  &.mc-tag-disabled {
+    cursor: not-allowed;
+    &.mc-tag-bold,
+    &.mc-tag-minimal,
+    &.mc-tag-info,
+    &.mc-tag-success,
+    &.mc-tag-cancel,
+    &.mc-tag-warning,
+    &.mc-tag-error {
+      background-color: $bg_color_disabled;
+      color: $text_color_disabled;
+    }
+    &.mc-tag-subtle {
+      color: $text_color_disabled_subtle;
+      background-color: $bg_color_disabled_subtle;
+      border-color: $text_color_disabled_subtle;
+    }
+  }
 }
