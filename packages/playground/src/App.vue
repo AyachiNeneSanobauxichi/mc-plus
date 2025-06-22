@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import StepContainer from "./views/step-container.vue";
+import StepContainer from "./views/mc-step/step-container.vue";
 </script>
 
 <style scoped lang="scss">

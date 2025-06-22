@@ -1,13 +1,13 @@
 <template>
-  <div class="step4">Step4</div>
+  <div class="step1">Step1</div>
 </template>
 
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-.step4 {
+.step1 {
   width: 100%;
-  height: 60px;
-  background-color: lightcoral;
+  height: 180px;
+  background-color: lightblue;
 }
 </style>
