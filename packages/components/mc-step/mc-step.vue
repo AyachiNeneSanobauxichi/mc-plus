@@ -28,14 +28,12 @@
           {{ step.desc }}
         </p>
         <template v-if="isVertical">
-          <transition name="mc-step-item-component">
-            <div
-              class="mc-step-item-component"
-              v-if="step.component && step.key === modelValue"
-            >
-              <component :is="step.component" />
-            </div>
-          </transition>
+          <div
+            class="mc-step-item-component"
+            v-if="step.component && step.key === modelValue"
+          >
+            <component :is="step.component" />
+          </div>
         </template>
       </div>
     </div>
@@ -46,8 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from "vue";
 import type { StepEmits, StepInstance, StepKey, StepProps } from "./types";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { findIndex, throttle } from "lodash-es";
 import McSuccess from "../mc-success-icon/mc-success-icon.vue";
 import useWindowResize from "@mc-plus/hooks/useWindowResize";
@@ -70,12 +68,8 @@ const emit = defineEmits<StepEmits>();
 watch(
   () => props.modelValue,
   async (value) => {
-    await nextTick();
-    const successStep = props.steps[currentStepIndex.value - 1]?.key;
-    setSuccessStep(successStep);
-    if (isVertical.value) {
-      setVerticalSuccessLine();
-    }
+    const successStep = props.steps[currentStepIndex.value - 1];
+    setSuccessStep(successStep?.key);
     emit("change", value);
   }
 );
@@ -114,7 +108,8 @@ onMounted(() => {
 });
 
 // set vertical success line
-const setVerticalSuccessLine = () => {
+const setVerticalSuccessLine = async () => {
+  await nextTick();
   const index = successStepIndex.value;
 
   const successLine = successLineRef.value!;
@@ -160,8 +155,6 @@ const setHorizontalLineWidth = () => {
   const containerRect = container.getBoundingClientRect();
   const firstItemRect = firstItem.getBoundingClientRect();
   const lastItemRect = lastItem.getBoundingClientRect();
-
-  console.log();
 
   unsuccessLine.style.width = `${
     lastItemRect.left - firstItemRect.left - firstItemRect.width
