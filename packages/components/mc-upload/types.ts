@@ -15,7 +15,7 @@ export interface UploadFile {
 }
 
 export interface UploadProps {
-  modelValue?: UploadFile[];
+  modelValue?: UploadFile[] | undefined;
   fileSize?: number | string;
   fileCount?: number;
   hiddenIcon?: boolean;
@@ -41,7 +41,7 @@ export interface UploadInstance {
 export type FileListTheme = "grey" | "white";
 
 export interface FileListProps {
-  files?: UploadFile[];
+  files?: UploadFile[] | undefined;
   deletable?: boolean;
   theme?: FileListTheme;
 }
