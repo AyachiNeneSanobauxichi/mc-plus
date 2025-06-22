@@ -15,6 +15,12 @@ $number_color_active: var(--mc-white);
 $number_color_disabled: var(--mc-gray-500);
 
 .mc-step {
+  ul,
+  li {
+    padding: 0;
+    margin: 0;
+  }
+
   h3,
   p {
     margin: 0;
@@ -55,21 +61,23 @@ $number_color_disabled: var(--mc-gray-500);
     }
   }
 
-  .mc-step-item-label {
-    width: 100%;
-    height: 24px;
-    font-weight: 600;
-    font-size: 16px;
-    color: $text_color;
-    @include mixins.flex-center;
-  }
+  .mc-step-item-content-title {
+    box-sizing: border-box;
+    @include mixins.flex-center(column);
+    .mc-step-item-label {
+      width: 100%;
+      font-weight: 600;
+      font-size: 16px;
+      color: $text_color;
+      @include mixins.flex-center;
+    }
 
-  .mc-step-item-desc {
-    font-size: 14px;
-    color: $text_color_desc;
-    width: 100%;
-    height: 20px;
-    @include mixins.flex-center;
+    .mc-step-item-desc {
+      font-size: 14px;
+      color: $text_color_desc;
+      width: 100%;
+      @include mixins.flex-center;
+    }
   }
 
   .mc-step-item {
@@ -119,22 +127,6 @@ $number_color_disabled: var(--mc-gray-500);
       .mc-step-item-desc {
         color: $text_color_disabled;
       }
-    }
-
-    .mc-step-item-component-enter-active {
-      transition: transform 1s ease, opacity 0.3s ease;
-      transform-origin: top;
-      width: 100%;
-    }
-
-    .mc-step-item-component-enter-from {
-      opacity: 0;
-      transform: scaleY(0);
-    }
-
-    .mc-step-item-component-enter-to {
-      opacity: 1;
-      transform: scaleY(1);
     }
   }
 }

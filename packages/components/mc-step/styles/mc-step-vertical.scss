@@ -13,6 +13,11 @@ $success_line_color: var(--mc-success);
       flex: 1;
     }
 
+    .mc-step-item-content-title {
+      min-height: 36px;
+      margin-bottom: 16px;
+    }
+
     .mc-step-item-label,
     .mc-step-item-desc {
       justify-content: left;
@@ -20,7 +25,7 @@ $success_line_color: var(--mc-success);
   }
 
   .mc-step-item-component {
-    margin: 16px 0 24px;
+    margin-bottom: 24px;
   }
 
   .mc-step-line {
@@ -42,13 +47,11 @@ $success_line_color: var(--mc-success);
 
       .mc-step-success-line {
         position: absolute;
-        height: 100%;
+        height: 0;
         left: -1.5px;
         border: 1.5px solid $success_line_color;
         z-index: 10;
-        transition: transform 0.5s ease-in-out;
-        transform-origin: top;
-        transform: scaleY(0);
+        transition: height 0.5s ease-in-out;
       }
     }
   }

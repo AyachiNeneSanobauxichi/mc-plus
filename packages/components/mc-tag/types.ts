@@ -1,33 +1,35 @@
 import type { Ref } from "vue";
-import type { IconType } from "../mc-icon/types";
+import type { IconType } from "mc-plus";
 
-// tag types
-export type TagType = "primary" | "plain";
+export type TagType = "basic" | "selectable";
 
-export type TagSize = "medium" | "large" | "small";
+export type TagEmphasis =
+  | "bold"
+  | "minimal"
+  | "subtle"
+  | "info"
+  | "success"
+  | "cancel"
+  | "warning"
+  | "error";
 
-export type TagRadius = "default" | "round" | "circle" | "square";
+export type TagSize = "x-small" | "small" | "medium";
 
 export interface TagProps {
-  type?: TagType;
-  size?: TagSize;
-  disabled?: boolean;
-  closable?: boolean;
-  color?: string;
-  textColor?: string;
-  backgroundColor?: string;
-  selectedTextColor?: string;
-  selectedBackgroundColor?: string;
-  radius?: TagRadius;
-  height?: string;
   width?: string;
-  icon?: IconType;
-  selected?: boolean;
+  height?: string;
+  size?: TagSize;
+  type?: TagType;
+  emphasis?: TagEmphasis;
+  disabled?: boolean;
+  deletable?: boolean;
+  leftIcon?: IconType;
+  rightIcon?: IconType;
 }
 
 export interface TagEmits {
-  (e: "click", val: MouseEvent): void;
-  (e: "close", val: MouseEvent): void;
+  (e: "delete"): void;
+  (e: "click"): void;
 }
 
 export interface TagInstance {

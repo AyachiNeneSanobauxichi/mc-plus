@@ -12,7 +12,6 @@ import {
   McCheckbox,
   McAlert,
   McMessage,
-  McTag,
   McToast,
   McStep,
   McForm,
@@ -35,6 +34,7 @@ import {
   McFileList,
   McPopper,
   McTooltip,
+  McTag,
 } from "@mc-plus/components";
 
 export default [
@@ -50,7 +50,6 @@ export default [
   McCheckbox,
   McAlert,
   McMessage,
-  McTag,
   McToast,
   McStep,
   McForm,
@@ -73,4 +72,5 @@ export default [
   McFileList,
   McPopper,
   McTooltip,
+  McTag,
 ] as Plugin[];
