@@ -43,17 +43,16 @@ const props = withDefaults(defineProps<SwitchProps>(), {
 });
 
 // emits
-const emit = defineEmits<SwitchEmits>();
+const emits = defineEmits<SwitchEmits>();
 
 // ref
 const _ref = ref<HTMLLabelElement>();
 
-/**
- * Toggle the switch state and emit the update event
- */
+// toggle the switch state
 const toggleSwitch = () => {
   if (!props.disabled) {
-    emit("update:modelValue", !props.modelValue);
+    emits("update:modelValue", !props.modelValue);
+    emits("change", !props.modelValue);
   }
 };
 

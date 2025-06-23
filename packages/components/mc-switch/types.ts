@@ -11,6 +11,7 @@ export interface SwitchProps {
 
 export interface SwitchEmits {
   (e: "update:modelValue", val: boolean): void;
+  (e: "change", val: boolean): void;
 }
 
 export interface SwitchInstance {
