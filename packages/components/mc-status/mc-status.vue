@@ -1,6 +1,11 @@
 <template>
   <div class="mc-status" :class="[`mc-status-${type}`]">
-    <mc-icon name="Indicator" :size="12" />
+    <div class="mc-status-icon">
+      <mc-icon name="Indicator" :size="12" />
+    </div>
+    <p class="mc-status-content">
+      <slot> </slot>
+    </p>
   </div>
 </template>
 

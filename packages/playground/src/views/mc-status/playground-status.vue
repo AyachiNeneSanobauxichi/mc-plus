@@ -1,6 +1,6 @@
 <template>
   <div class="playground-status">
-    <mc-status></mc-status>
+    <mc-status type="error">Reject</mc-status>
   </div>
 </template>
 

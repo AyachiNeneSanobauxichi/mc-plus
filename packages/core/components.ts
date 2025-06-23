@@ -35,6 +35,7 @@ import {
   McPopper,
   McTooltip,
   McTag,
+  McStatus,
 } from "@mc-plus/components";
 
 export default [
@@ -73,4 +74,5 @@ export default [
   McPopper,
   McTooltip,
   McTag,
+  McStatus,
 ] as Plugin[];
