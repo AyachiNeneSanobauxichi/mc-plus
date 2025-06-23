@@ -1,5 +1,5 @@
 <template>
-  <div class="select-container">
+  <div class="playground-select">
     <mc-form :model="formState" :rules="rules">
       <mc-form-item label="Student" prop="student" required>
         <mc-select v-model="formState.student" search>
@@ -19,11 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import McSelect from "../../../components/mc-select/mc-select.vue";
-import McSelectGroup from "../../../components/mc-select/mc-select-group.vue";
-import McSelectOption from "../../../components/mc-select/mc-select-option.vue";
-import McForm from "../../../components/mc-form/mc-form.vue";
-import McFormItem from "../../../components/mc-form/mc-form-item.vue";
+import McSelect from "../../../../components/mc-select/mc-select.vue";
+import McSelectGroup from "../../../../components/mc-select/mc-select-group.vue";
+import McSelectOption from "../../../../components/mc-select/mc-select-option.vue";
+import McForm from "../../../../components/mc-form/mc-form.vue";
+import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import { reactive, ref } from "vue";
 import { type FormRules } from "mc-plus";
 
