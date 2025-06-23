@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
+import McSwitch from "../../../../components/mc-switch-v2/mc-switch.vue";
 
 const check = ref<boolean>(false);
 </script>
