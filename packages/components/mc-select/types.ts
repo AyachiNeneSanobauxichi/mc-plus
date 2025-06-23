@@ -39,6 +39,7 @@ export interface SelectEmits {
   (e: "change", val: SelectValue | SelectValue[] | undefined): void;
   (e: "blur"): void;
   (e: "focus"): void;
+  (e: "reset"): void;
 }
 
 export interface SelectContext {

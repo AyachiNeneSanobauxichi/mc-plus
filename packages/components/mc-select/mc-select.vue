@@ -26,7 +26,18 @@
           />
         </template>
         <template v-else>
-          <div>{{ modelValue }}</div>
+          <div class="mc-select-multi-wrapper">
+            <mc-tag
+              v-for="label in selectedLables"
+              :key="label"
+              size="x-small"
+              type="selectable"
+              :emphasis="tagStyle"
+              :disabled="isDisabled"
+            >
+              {{ label }}
+            </mc-tag>
+          </div>
         </template>
       </div>
       <div class="mc-select-input-wrapper">
@@ -62,13 +73,29 @@
       </div>
     </div>
     <transition name="mc-select-dropdown-transition">
-      <div class="mc-select-dropdown-wrapper" v-show="isExpand && !isDisabled">
-        <div class="mc-select-dropdown">
-          <slot></slot>
-          <div v-if="noData" class="mc-select-no-data">
-            <slot name="empty">No data</slot>
+      <div
+        class="mc-select-dropdown-wrapper"
+        v-show="isExpand && !isDisabled"
+        :style="{ paddingBottom: showDropdownFooter ? '48px' : '0' }"
+      >
+        <div class="mc-select-dropdown-content">
+          <div class="mc-select-dropdown">
+            <slot></slot>
+            <div v-if="noData" class="mc-select-no-data">
+              <slot name="empty">No data</slot>
+            </div>
           </div>
         </div>
+        <mc-footer v-if="showDropdownFooter" class="mc-select-dropdown-footer">
+          <template #right-button-group>
+            <mc-button type="link" size="small" @click="handleReset">
+              Reset
+            </mc-button>
+            <mc-button type="plain" size="small" @click="handleApply">
+              Apply
+            </mc-button>
+          </template>
+        </mc-footer>
       </div>
     </transition>
   </div>
@@ -81,13 +108,17 @@ import type {
   SelectProps,
   SelectValue,
 } from "./types";
+import type { TagEmphasis } from "../mc-tag";
 import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
-import { filter, includes, isNil, lowerCase, toString } from "lodash-es";
+import { filter, includes, isNil, lowerCase, map, toString } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useInputGroupAffix } from "../mc-input-group/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
+import McButton from "../mc-button/mc-button.vue";
+import McTag from "../mc-tag/mc-tag.vue";
+import McFooter from "../mc-footer/mc-footer.vue";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -156,6 +187,11 @@ const noData = computed(() => {
   return filterOptions.value.length === 0;
 });
 
+// show dropdown footer
+const showDropdownFooter = computed(() => {
+  return !noData.value && isMulti.value;
+});
+
 // expand
 const isExpand = ref<boolean>(false);
 
@@ -194,6 +230,18 @@ const selectedSingleOption = computed<SelectOptionProps | undefined>(() => {
   return isMulti.value ? undefined : selectedOptions.value?.[0];
 });
 
+// selected multi option labels
+const selectedLables = computed<string[]>(() => {
+  if (!isMulti.value) return [];
+  return map(selectedOptions.value, (item) => item.label ?? "");
+});
+
+// selected tag style
+const tagStyle = computed<TagEmphasis>(() => {
+  if (isFocused.value) return "minimal";
+  else return "bold";
+});
+
 // form item context
 const { formItem } = useFormItem();
 
@@ -226,24 +274,49 @@ const showStatusIcon = computed(
 
 // select event
 const handleSelect = (item: SelectOptionProps) => {
-  isExpand.value = false;
   if (isMultiValue(props.modelValue)) {
-    const newValues = [...props.modelValue];
-
-    if (!includes(newValues, item.value)) {
-      newValues.push(item.value);
-    } else {
-      newValues.splice(newValues.indexOf(item.value), 1);
-    }
-    emits("update:modelValue", newValues);
-    emits("change", newValues);
-    formItem?.validate("change");
+    handleMultiSelect(item);
   } else {
-    const newValue = props.modelValue === item.value ? void 0 : item.value;
-    emits("update:modelValue", newValue);
-    emits("change", newValue);
-    formItem?.validate("change");
+    handleSingleSelect(item);
   }
+};
+
+// single select
+const handleSingleSelect = (item: SelectOptionProps) => {
+  isExpand.value = false;
+  const newValue = props.modelValue === item.value ? void 0 : item.value;
+  emits("update:modelValue", newValue);
+  emits("change", newValue);
+  formItem?.validate("change");
+};
+
+// old selected values
+let oldSelectedValues: SelectValue[] = [];
+
+// multi select
+const handleMultiSelect = (item: SelectOptionProps) => {
+  const newValues = [...(props.modelValue as SelectValue[])];
+
+  if (!includes(newValues, item.value)) {
+    newValues.push(item.value);
+  } else {
+    newValues.splice(newValues.indexOf(item.value), 1);
+  }
+  emits("update:modelValue", newValues);
+};
+
+// reset
+const handleReset = () => {
+  emits("update:modelValue", [...oldSelectedValues]);
+  emits("change", [...oldSelectedValues]);
+  formItem?.validate("change");
+};
+
+// apply
+const handleApply = () => {
+  isExpand.value = false;
+  emits("change", [...(props.modelValue as SelectValue[])]);
+  formItem?.validate("change");
 };
 
 // placeholder display
@@ -282,6 +355,10 @@ watch(
       setTimeout(() => {
         searchValue.value = "";
       }, 300);
+    } else {
+      if (isMulti.value) {
+        oldSelectedValues = [...(props.modelValue as SelectValue[])];
+      }
     }
   },
   {

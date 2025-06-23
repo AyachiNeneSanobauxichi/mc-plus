@@ -1,9 +1,10 @@
 <template>
   <div class="playground-select">
     <div>Students: {{ formState.students }}</div>
+    <div>Teacher: {{ formState.teacher }}</div>
     <mc-form :model="formState" :rules="rules">
-      <mc-form-item label="Student" prop="students" required>
-        <mc-select v-model="formState.students" search type="multi-choice">
+      <mc-form-item label="Student" prop="teacher" required>
+        <mc-select class="student-select" v-model="formState.teacher" search>
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
               <template v-for="option in optionGroup.stus" :key="option.value">
@@ -45,6 +46,7 @@ const options = ref([
     stus: [
       { label: "Nakano Azusa", value: 5 },
       { label: "Hirasawa Ui", value: 6 },
+      { label: "Ayachi Nene", value: 7 },
     ],
   },
 ]);
@@ -65,4 +67,8 @@ const rules = reactive<FormRules<FormState>>({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.student-select {
+  width: 100%;
+}
+</style>
