@@ -2,7 +2,7 @@
   <div class="playground-select">
     <div>Students: {{ formState.students }}</div>
     <mc-form :model="formState" :rules="rules">
-      <mc-form-item label="Student" prop="student" required>
+      <mc-form-item label="Student" prop="students" required>
         <mc-select v-model="formState.students" search type="multi-choice">
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
