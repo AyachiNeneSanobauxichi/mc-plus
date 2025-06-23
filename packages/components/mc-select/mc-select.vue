@@ -17,9 +17,17 @@
     <div class="mc-select-trigger" @click="handleClick">
       <div
         class="mc-select-selected-content"
-        v-if="selectedOption && !searchValue"
+        v-if="selectedOptions.length && !searchValue"
       >
-        <component :is="selectedOption._vnode" :key="selectedOption.value" />
+        <template v-if="!isMulti">
+          <component
+            :is="selectedSingleOption!._vnode"
+            :key="selectedSingleOption!.value"
+          />
+        </template>
+        <template v-else>
+          <div>{{ modelValue }}</div>
+        </template>
       </div>
       <div class="mc-select-input-wrapper">
         <input
@@ -73,20 +81,19 @@ import type {
   SelectProps,
   SelectValue,
 } from "./types";
-import McIcon from "../mc-icon/mc-icon.vue";
 import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
+import { filter, includes, isNil, lowerCase, toString } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
-import { isNil, lowerCase, toString } from "lodash-es";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useInputGroupAffix } from "../mc-input-group/hooks";
+import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
 defineOptions({ name: "McSelect" });
 
 // props
 const props = withDefaults(defineProps<SelectProps>(), {
-  modelValue: "",
   type: "single",
   placeholder: "Please select",
 });
@@ -99,6 +106,16 @@ const inputRef = ref<HTMLInputElement>();
 
 // disabled
 const isDisabled = useFormDisabled();
+
+// multi
+const isMulti = computed(() => props.type === "multi-choice");
+
+// multi value
+const isMultiValue = (
+  modelValue: SelectProps["modelValue"]
+): modelValue is SelectValue[] => {
+  return isMulti.value && Array.isArray(modelValue);
+};
 
 // select options
 const selectOptions = ref<SelectOptionProps[]>([]);
@@ -147,21 +164,34 @@ const handleClick = () => {
   isExpand.value = !isExpand.value;
 };
 
+// get select values
+const getSelectValues = () => {
+  return isMultiValue(props.modelValue)
+    ? [...props.modelValue]
+    : [props.modelValue as SelectValue];
+};
+
 // select values
-const selectValues = ref<SelectValue[]>([props.modelValue as SelectValue]);
+const selectValues = ref<SelectValue[]>(getSelectValues());
+
 // select value change
 watch(
   () => props.modelValue,
   () => {
-    selectValues.value = [props.modelValue as string];
+    selectValues.value = getSelectValues();
   }
 );
 
-// selected option
-const selectedOption = computed<SelectOptionProps | undefined>(() => {
-  return selectOptions.value.find((item) => {
-    return item.value === selectValues.value[0];
-  });
+// selected options
+const selectedOptions = computed<SelectOptionProps[]>(() => {
+  return filter(selectOptions.value, (item) =>
+    includes(selectValues.value, item.value)
+  );
+});
+
+// selected single option
+const selectedSingleOption = computed<SelectOptionProps | undefined>(() => {
+  return isMulti.value ? undefined : selectedOptions.value?.[0];
 });
 
 // form item context
@@ -197,14 +227,28 @@ const showStatusIcon = computed(
 // select event
 const handleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
-  emits("update:modelValue", item.value);
-  emits("change", item.value);
-  formItem?.validate("change");
+  if (isMultiValue(props.modelValue)) {
+    const newValues = [...props.modelValue];
+
+    if (!includes(newValues, item.value)) {
+      newValues.push(item.value);
+    } else {
+      newValues.splice(newValues.indexOf(item.value), 1);
+    }
+    emits("update:modelValue", newValues);
+    emits("change", newValues);
+    formItem?.validate("change");
+  } else {
+    const newValue = props.modelValue === item.value ? void 0 : item.value;
+    emits("update:modelValue", newValue);
+    emits("change", newValue);
+    formItem?.validate("change");
+  }
 };
 
 // placeholder display
 const placeholderDisplay = computed(() =>
-  selectedOption.value ? "" : props.placeholder
+  selectOptions.value.length ? "" : props.placeholder
 );
 
 // search value
