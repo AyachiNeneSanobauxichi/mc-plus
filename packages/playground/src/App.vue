@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-switch></playground-switch>
+    <playground-status></playground-status>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundSwitch from "./views/mc-switch/playground-switch.vue";
+import PlaygroundStatus from "./views/mc-status/playground-status.vue";
 </script>
 
 <style scoped lang="scss">
