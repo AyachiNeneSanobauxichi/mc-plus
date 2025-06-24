@@ -3,7 +3,6 @@ import {
   McButton,
   McCollapse,
   McTable,
-  McSwitch,
   McRadio,
   McRadioGroup,
   McSelect,
@@ -36,13 +35,13 @@ import {
   McTooltip,
   McTag,
   McStatus,
+  McSwitch,
 } from "@mc-plus/components";
 
 export default [
   McButton,
   McCollapse,
   McTable,
-  McSwitch,
   McRadio,
   McRadioGroup,
   McSelect,
@@ -75,4 +74,5 @@ export default [
   McTooltip,
   McTag,
   McStatus,
+  McSwitch,
 ] as Plugin[];
