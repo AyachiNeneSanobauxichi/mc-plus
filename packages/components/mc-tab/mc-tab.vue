@@ -100,6 +100,8 @@ watchEffect(() => {
       } as TabItem;
     }
   );
+
+  console.log("Tab Items: ", tabItems.value);
 });
 
 // active tab
