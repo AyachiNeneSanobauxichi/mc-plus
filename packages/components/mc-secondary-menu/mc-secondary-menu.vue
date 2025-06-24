@@ -1,5 +1,16 @@
 <template>
-  <div class="mc-secondary-menu">Secondary Menu</div>
+  <div class="mc-secondary-menu">
+    <div class="mc-secondary-menu-wrapper"></div>
+    <div
+      class="mc-secondary-menu-item"
+      v-for="option in options"
+      :key="option.name"
+    >
+      <div class="mc-secondary-menu-item-label">
+        {{ option.label }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -9,7 +20,9 @@ import type { SecondaryMenuEmits, SecondaryMenuProps } from "./types";
 defineOptions({ name: "McSecondaryMenu" });
 
 // props
-const props = withDefaults(defineProps<SecondaryMenuProps>(), {});
+const props = withDefaults(defineProps<SecondaryMenuProps>(), {
+  options: () => [],
+});
 
 // emits
 const emits = defineEmits<SecondaryMenuEmits>();
