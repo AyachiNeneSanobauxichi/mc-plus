@@ -1,11 +1,6 @@
 <template>
   <div class="playground-switch">
-    <mc-switch
-      v-model="check"
-      on-text="on"
-      off-text="off"
-      label="Mc Switch"
-    ></mc-switch>
+    <mc-switch v-model="check" active-text="ON" inactive-text="OFF"></mc-switch>
   </div>
 </template>
 
