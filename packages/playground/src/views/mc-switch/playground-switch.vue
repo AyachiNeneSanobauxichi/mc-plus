@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import type { FormRules } from "mc-plus";
 import { ref } from "vue";
-import McSwitch from "../../../../components/mc-switch-v2/mc-switch.vue";
+import McSwitch from "@mc-plus/components/mc-switch/mc-switch.vue";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 
