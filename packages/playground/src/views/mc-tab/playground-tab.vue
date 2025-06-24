@@ -1,6 +1,6 @@
 <template>
   <div class="playground-tab">
-    <mc-tab v-model="activeTab" type="primary">
+    <mc-tab v-model="activeTab" type="primary" wrapper-padding="32px">
       <mc-tab-item name="Yui" label="Hirasawa Yui">
         <tab1></tab1>
       </mc-tab-item>

@@ -4,9 +4,15 @@ export type TabType = "primary" | "plain";
 
 export type TabValue = string | number;
 
+export interface TabWrapperPadding {
+  left?: string;
+  right?: string;
+}
+
 export interface TabProps {
   modelValue?: TabValue | undefined;
   type?: TabType;
+  wrapperPadding?: string | TabWrapperPadding;
 }
 
 export interface TabEmits {
