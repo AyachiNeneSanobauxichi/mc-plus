@@ -4,6 +4,7 @@
     :class="[
       isActive ? 'mc-switch-actived' : 'mc-switch-inactive',
       { 'mc-switch-disabled': disabled },
+      `mc-switch-${size}`,
     ]"
     :style="{ width, height }"
   >
@@ -40,6 +41,7 @@ defineOptions({ name: "McSwitch" });
 const props = withDefaults(defineProps<SwitchProps>(), {
   modelValue: false,
   disabled: false,
+  size: "fit-content",
 });
 
 // emits

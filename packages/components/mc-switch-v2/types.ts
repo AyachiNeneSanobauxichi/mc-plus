@@ -1,3 +1,5 @@
+export type SwitchSize = "small" | "medium" | "large" | "fit-content";
+
 export interface SwitchProps {
   modelValue?: boolean | undefined;
   width?: string;
@@ -5,6 +7,7 @@ export interface SwitchProps {
   activeText?: string;
   inactiveText?: string;
   disabled?: boolean;
+  size?: SwitchSize;
 }
 
 export interface SwitchEmits {

@@ -16,6 +16,17 @@ $text_color: var(--mc-white);
   @include mixin.flex-center();
   position: relative;
 
+  /* size */
+  &.mc-switch-small {
+    width: 90px;
+  }
+  &.mc-switch-medium {
+    width: 120px;
+  }
+  &.mc-switch-large {
+    width: 150px;
+  }
+
   .mc-switch-input {
     position: absolute;
     width: 0;
