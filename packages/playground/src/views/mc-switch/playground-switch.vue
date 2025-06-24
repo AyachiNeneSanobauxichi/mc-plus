@@ -34,7 +34,7 @@ const formRules = ref<FormRules>({
   check: [
     {
       required: true,
-      validator: (rule, value, callback) => {
+      validator: (_, value, callback) => {
         if (value) {
           callback();
         } else {
