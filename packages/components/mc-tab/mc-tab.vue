@@ -21,7 +21,9 @@
       <div class="mc-tab-line" ref="tabLineRef" v-if="isPlain"></div>
     </div>
     <template v-if="activeTab?._vnode">
-      <component :key="activeTab.name" :is="activeTab._vnode"></component>
+      <div class="mc-tab-actived-component">
+        <component :key="activeTab.name" :is="activeTab._vnode"></component>
+      </div>
     </template>
   </div>
 </template>
@@ -33,6 +35,7 @@ import type {
   TabItem,
   TabItemProps,
   TabProps,
+  TabValue,
 } from "./types";
 import {
   computed,
@@ -92,13 +95,14 @@ watchEffect(() => {
       return {
         _vnode: h(
           "div",
-          { class: "mc-tab-content" },
           (vn.children as { default: () => VNode[] })?.default?.()?.[0]
         ),
         ...props,
       } as TabItem;
     }
   );
+
+  console.log("Tab Items: ", tabItems.value);
 });
 
 // active tab
@@ -130,7 +134,7 @@ const handleTabClick = (tab: TabItem) => {
 };
 
 // set active tab line
-const setTabLine = (tabName?: string) => {
+const setTabLine = (tabName?: TabValue) => {
   if (!isPlain.value) return;
   const line = tabLineRef.value!;
   const navContainer = tabNavRef.value!;
@@ -155,8 +159,8 @@ const setTabLine = (tabName?: string) => {
 
 // set transition
 const setTransition = (transition: boolean = true) => {
-  if (!isPlain.value) return;
-  const line = tabLineRef.value!;
+  const line = tabLineRef.value;
+  if (!isPlain.value || !line) return;
   line.style.transition = transition ? "transform 0.3s ease-in-out" : "";
 };
 
