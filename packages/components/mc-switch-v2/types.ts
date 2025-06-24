@@ -1,3 +1,5 @@
+import type { IconType } from "../mc-icon";
+
 export type SwitchSize = "small" | "medium" | "large" | "fit-content";
 
 export interface SwitchProps {
@@ -8,6 +10,16 @@ export interface SwitchProps {
   inactiveText?: string;
   disabled?: boolean;
   size?: SwitchSize;
+  label?: string;
+  labelPosition?: "left" | "right";
+  helpIcon?: IconType;
+  helpText?: string;
+}
+
+export interface SwitchLabelProps {
+  label?: string;
+  helpText?: string;
+  helpIcon?: IconType;
 }
 
 export interface SwitchEmits {
