@@ -1,19 +1,28 @@
-import type { Ref } from "vue";
+import type { IconType } from "../mc-icon";
+
+export type SwitchSize = "small" | "medium" | "large" | "fit-content";
 
 export interface SwitchProps {
-  modelValue?: boolean;
+  modelValue?: boolean | undefined;
   width?: string;
-  label?: string;
+  height?: string;
+  activeText?: string;
+  inactiveText?: string;
   disabled?: boolean;
-  onText?: string;
-  offText?: string;
+  size?: SwitchSize;
+  label?: string;
+  labelPosition?: "left" | "right";
+  helpIcon?: IconType;
+  helpText?: string;
+}
+
+export interface SwitchLabelProps {
+  label?: string;
+  helpText?: string;
+  helpIcon?: IconType;
 }
 
 export interface SwitchEmits {
-  (e: "update:modelValue", val: boolean): void;
-  (e: "change", val: boolean): void;
-}
-
-export interface SwitchInstance {
-  ref: Ref<HTMLLabelElement | void>;
+  (e: "update:modelValue", value: boolean): void;
+  (e: "change", value: boolean): void;
 }
