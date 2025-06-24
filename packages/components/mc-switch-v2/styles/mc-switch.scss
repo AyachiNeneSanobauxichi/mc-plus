@@ -71,6 +71,7 @@ $text_color: var(--mc-white);
         color: $text_color;
         font-size: 16px;
         font-weight: 400;
+        user-select: none;
       }
 
       &:active .mc-switch-inner::after {

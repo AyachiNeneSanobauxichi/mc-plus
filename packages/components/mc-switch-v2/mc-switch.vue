@@ -18,7 +18,7 @@
       class="mc-switch-wrapper"
       :class="[
         isActive ? 'mc-switch-actived' : 'mc-switch-inactive',
-        { 'mc-switch-disabled': disabled },
+        { 'mc-switch-disabled': isDisabled },
         `mc-switch-${size}`,
       ]"
       :style="{ width, height }"
@@ -62,8 +62,9 @@
 
 <script setup lang="ts">
 import type { SwitchEmits, SwitchProps } from "./types";
-import { computed, useSlots } from "vue";
+import { computed, useSlots, watch } from "vue";
 import McSwitchLabel from "./mc-switch-label.vue";
+import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McSwitch" });
@@ -88,7 +89,7 @@ const isActive = computed(() => props.modelValue);
 
 // click
 const handleClick = () => {
-  if (props.disabled) return;
+  if (isDisabled.value) return;
   emits("update:modelValue", !props.modelValue);
   emits("change", !props.modelValue);
 };
@@ -107,6 +108,20 @@ const isLeft = computed(() => labelPosition.value === "left");
 
 // right
 const isRight = computed(() => labelPosition.value === "right");
+
+// form item
+const { formItem } = useFormItem();
+
+// form item disable
+const isDisabled = useFormDisabled();
+
+// model value changed
+watch(
+  () => props.modelValue,
+  () => {
+    formItem?.validate("change");
+  }
+);
 </script>
 
 <style scoped lang="scss">
