@@ -19,7 +19,7 @@ export interface TabInstance {
 }
 
 export interface TabItemProps {
-  name: string;
+  name: TabValue;
   label?: string;
   disabled?: boolean;
   count?: number;

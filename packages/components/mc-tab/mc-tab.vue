@@ -158,8 +158,8 @@ const setTabLine = (tabName?: TabValue) => {
 
 // set transition
 const setTransition = (transition: boolean = true) => {
-  if (!isPlain.value) return;
-  const line = tabLineRef.value!;
+  const line = tabLineRef.value;
+  if (!isPlain.value || !line) return;
   line.style.transition = transition ? "transform 0.3s ease-in-out" : "";
 };
 
