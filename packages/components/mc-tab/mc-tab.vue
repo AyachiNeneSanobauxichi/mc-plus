@@ -21,7 +21,9 @@
       <div class="mc-tab-line" ref="tabLineRef" v-if="isPlain"></div>
     </div>
     <template v-if="activeTab?._vnode">
-      <component :key="activeTab.name" :is="activeTab._vnode"></component>
+      <div class="mc-tab-actived-component">
+        <component :key="activeTab.name" :is="activeTab._vnode"></component>
+      </div>
     </template>
   </div>
 </template>
@@ -93,7 +95,6 @@ watchEffect(() => {
       return {
         _vnode: h(
           "div",
-          { class: "mc-tab-content" },
           (vn.children as { default: () => VNode[] })?.default?.()?.[0]
         ),
         ...props,
