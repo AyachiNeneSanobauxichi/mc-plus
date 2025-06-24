@@ -1,0 +1,50 @@
+$text_color_info: var(--mc-info);
+$text_color_success: var(--mc-success);
+$text_color_cancel: var(--mc-gray-300);
+$text_color_warning: var(--mc-warning);
+$text_color_error: var(--mc-error);
+$text_color: var(--mc-gray-800);
+
+.mc-status {
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  /* icon */
+  &.mc-status-info {
+    color: $text_color_info;
+  }
+  &.mc-status-cancel {
+    color: $text_color_cancel;
+  }
+  &.mc-status-success {
+    color: $text_color_success;
+  }
+  &.mc-status-warning {
+    color: $text_color_warning;
+  }
+  &.mc-status-error {
+    color: $text_color_error;
+  }
+
+  .mc-status-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+  }
+
+  /* content */
+  .mc-status-content {
+    color: $text_color;
+    font-size: 16px;
+    font-weight: 400;
+  }
+}

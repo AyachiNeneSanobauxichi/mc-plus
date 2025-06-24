@@ -173,7 +173,9 @@ export type IconType =
   | "Upload"
   | "Wallet"
   | "Youtube"
-  | "Unlock";
+  | "Unlock"
+  | "Indicator"
+  | "Bullet";
 
 export interface IconProps {
   name: IconType;

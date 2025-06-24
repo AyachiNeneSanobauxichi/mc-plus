@@ -1,8 +1,10 @@
 <template>
-  <div class="select-container">
+  <div class="playground-select">
+    <div>Students: {{ formState.students }}</div>
+    <div>Teacher: {{ formState.teacher }}</div>
     <mc-form :model="formState" :rules="rules">
-      <mc-form-item label="Student" prop="student" required>
-        <mc-select v-model="formState.student" search>
+      <mc-form-item label="Student" prop="teacher" required>
+        <mc-select class="student-select" v-model="formState.teacher" search>
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
               <template v-for="option in optionGroup.stus" :key="option.value">
@@ -19,11 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import McSelect from "../../../components/mc-select/mc-select.vue";
-import McSelectGroup from "../../../components/mc-select/mc-select-group.vue";
-import McSelectOption from "../../../components/mc-select/mc-select-option.vue";
-import McForm from "../../../components/mc-form/mc-form.vue";
-import McFormItem from "../../../components/mc-form/mc-form-item.vue";
+import McSelect from "../../../../components/mc-select/mc-select.vue";
+import McSelectGroup from "../../../../components/mc-select/mc-select-group.vue";
+import McSelectOption from "../../../../components/mc-select/mc-select-option.vue";
+import McForm from "../../../../components/mc-form/mc-form.vue";
+import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import { reactive, ref } from "vue";
 import { type FormRules } from "mc-plus";
 
@@ -44,31 +46,29 @@ const options = ref([
     stus: [
       { label: "Nakano Azusa", value: 5 },
       { label: "Hirasawa Ui", value: 6 },
+      { label: "Ayachi Nene", value: 7 },
     ],
   },
 ]);
 
-type FormState = { student: number; teacher: number };
+type FormState = { students: number[]; teacher: number };
 const formState = reactive<FormState>({
-  student: 5,
+  students: [5],
   teacher: 6,
 });
 
 const rules = reactive<FormRules<FormState>>({
-  student: [
+  students: [
     {
       required: true,
       message: "Please select a student",
-      validator: (_, value, callback) => {
-        if (value === 1) {
-          callback(new Error("Please select a student"));
-        } else {
-          callback();
-        }
-      },
     },
   ],
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.student-select {
+  width: 100%;
+}
+</style>

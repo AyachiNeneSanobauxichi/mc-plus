@@ -1,0 +1,17 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color_label: var(--mc-gray-800);
+
+.mc-switch-label-wrapper {
+  padding-top: 4px;
+  box-sizing: border-box;
+  color: $text_color_label;
+  font-size: 16px;
+  font-weight: 400;
+  @include mixin.flex-center(row, start, start, 16px);
+
+  .mc-switch-help {
+    padding-top: 2px;
+    box-sizing: border-box;
+  }
+}
