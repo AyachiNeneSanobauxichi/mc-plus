@@ -33,6 +33,7 @@ import type {
   TabItem,
   TabItemProps,
   TabProps,
+  TabValue,
 } from "./types";
 import {
   computed,
@@ -130,7 +131,7 @@ const handleTabClick = (tab: TabItem) => {
 };
 
 // set active tab line
-const setTabLine = (tabName?: string) => {
+const setTabLine = (tabName?: TabValue) => {
   if (!isPlain.value) return;
   const line = tabLineRef.value!;
   const navContainer = tabNavRef.value!;

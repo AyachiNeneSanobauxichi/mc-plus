@@ -2,14 +2,16 @@ import type { Ref, VNode } from "vue";
 
 export type TabType = "primary" | "plain";
 
+export type TabValue = string | number;
+
 export interface TabProps {
-  modelValue?: string;
+  modelValue?: TabValue | undefined;
   type?: TabType;
 }
 
 export interface TabEmits {
-  (e: "update:modelValue", value: string): void;
-  (e: "change", value: string): void;
+  (e: "update:modelValue", value: TabValue): void;
+  (e: "change", value: TabValue): void;
 }
 
 export interface TabInstance {
