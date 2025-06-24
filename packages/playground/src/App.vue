@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-switch></playground-switch>
+    <playground-tab></playground-tab>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundSwitch from "./views/mc-switch/playground-switch.vue";
+import PlaygroundTab from "./views/mc-tab/playground-tab.vue";
 </script>
 
 <style scoped lang="scss">
@@ -15,7 +15,7 @@ html {
 }
 
 .playground {
-  width: 800px;
+  width: 1800px;
   height: 800px;
   position: fixed;
   top: 50%;

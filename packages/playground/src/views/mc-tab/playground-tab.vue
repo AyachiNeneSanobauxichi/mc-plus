@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-container">
+  <div class="playground-tab">
     <mc-tab v-model="activeTab" type="primary">
       <template v-for="item in tabItems">
         <mc-tab-item
@@ -13,8 +13,8 @@
       </template>
     </mc-tab>
     <div class="tool-bar">
-      <mc-button @click="handleAddTab">Add Tab Item</mc-button>
-      <mc-button @click="handleChangeDisable">Change disabled</mc-button>
+      <mc-button @click="handleAddTab">Add tab</mc-button>
+      <mc-button @click="handleChangeDisable">Change disable</mc-button>
       <mc-button @click="handleAddNumber">Add number</mc-button>
     </div>
   </div>
@@ -23,8 +23,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { McButton } from "mc-plus";
-import McTab from "../../../components/mc-tab/mc-tab.vue";
-import McTabItem from "../../../components/mc-tab/mc-tab-item.vue";
+import McTab from "../../../../components/mc-tab/mc-tab.vue";
+import McTabItem from "../../../../components/mc-tab/mc-tab-item.vue";
 import type { TabItem } from "@mc-plus/components/mc-tab/types";
 
 const activeTab = ref("Mio");
@@ -51,20 +51,13 @@ const handleAddNumber = () => {
 </script>
 
 <style scoped lang="scss">
-.tab-container {
-  width: 1200px;
-  height: 300px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
+.playground-tab {
   .tool-bar {
     position: absolute;
     bottom: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
   }
 }
 </style>
