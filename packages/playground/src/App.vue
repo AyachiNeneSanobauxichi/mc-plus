@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-tab></playground-tab>
+    <playground-secondary-menu></playground-secondary-menu>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundTab from "./views/mc-tab/playground-tab.vue";
+import PlaygroundSecondaryMenu from "./views/mc-secondary-menu/playground-secondary-menu.vue";
 </script>
 
 <style scoped lang="scss">
