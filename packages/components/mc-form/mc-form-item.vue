@@ -30,12 +30,12 @@
     </slot>
     <div class="mc-form-item__content">
       <slot></slot>
+      <transition name="mc-form-item-error">
+        <div class="mc-form-item__error" v-if="errorMessage">
+          {{ errorMessage }}
+        </div>
+      </transition>
     </div>
-    <transition name="mc-form-item-error">
-      <div class="mc-form-item__error" v-if="errorMessage">
-        {{ errorMessage }}
-      </div>
-    </transition>
   </div>
 </template>
 

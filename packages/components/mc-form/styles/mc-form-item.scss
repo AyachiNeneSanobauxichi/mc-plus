@@ -52,6 +52,7 @@ $text-color-error: var(--mc-error);
   .mc-form-item__content {
     width: fit-content;
     margin-top: 8px;
+    position: relative;
   }
 
   .mc-form-item__error {
