@@ -52,10 +52,12 @@ const handleClick = (option: SecondaryMenuItem) => {
 
 // init
 onMounted(() => {
-  if (successLineRef.value) {
-    successLineRef.value.style.transition = "top 0.3s ease-in-out";
-    if (props.modelValue) setSuccessLine(props.modelValue);
-  }
+  if (props.modelValue) setSuccessLine(props.modelValue);
+  setTimeout(() => {
+    if (successLineRef.value) {
+      successLineRef.value.style.transition = "top 0.3s ease-in-out";
+    }
+  });
 });
 
 // active item changed
