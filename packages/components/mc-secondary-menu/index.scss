@@ -30,15 +30,44 @@ $line_color_active: var(--mc-teal-500);
       padding: 0 24px;
       box-sizing: border-box;
       color: $text_color;
-      cursor: pointer;
+      cursor: default;
       @include mixin.flex-center(row, start);
 
-      &.mc-secondary-menu-item-actived {
-        color: $text_color_actived;
+      &:not(.mc-secondary-menu-item-parent) {
+        cursor: pointer;
+
+        &.mc-secondary-menu-item-actived {
+          color: $text_color_actived;
+          .mc-secondary-menu-item-content::before {
+            background-color: $text_color_actived;
+          }
+        }
+        &:hover {
+          color: $text_color_hover;
+          .mc-secondary-menu-item-content::before {
+            background-color: $text_color_hover;
+          }
+        }
       }
 
-      &:hover {
-        color: $text_color_hover;
+      &.mc-secondary-menu-item-child {
+        .mc-secondary-menu-item-content {
+          box-sizing: border-box;
+          padding-left: 8px;
+          font-size: 16px;
+          font-weight: 400;
+          @include mixin.flex-center(row, start, center, 8px);
+
+          &::before {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: $text_color;
+          }
+        }
       }
 
       .mc-secondary-menu-item-content {

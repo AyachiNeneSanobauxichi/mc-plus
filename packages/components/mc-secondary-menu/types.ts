@@ -1,10 +1,14 @@
 export type SecondaryMenuValue = string | number;
 
-export type SecondaryMenuItem = {
+export interface SecondaryMenuItem {
   label?: string;
   name: SecondaryMenuValue;
   children?: SecondaryMenuItem[];
-};
+}
+
+export interface SecondaryMenuDisplayItem extends SecondaryMenuItem {
+  parent?: SecondaryMenuValue;
+}
 
 export interface SecondaryMenuProps {
   modelValue?: SecondaryMenuValue | undefined;

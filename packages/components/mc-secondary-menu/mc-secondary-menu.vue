@@ -4,14 +4,16 @@
       <div
         class="mc-secondary-menu-item"
         :class="{
-          'mc-secondary-menu-item-actived': modelValue === option.name,
+          'mc-secondary-menu-item-actived': modelValue === item.name,
+          'mc-secondary-menu-item-parent': !!item.children?.length,
+          'mc-secondary-menu-item-child': !!item.parent,
         }"
-        v-for="option in options"
-        :key="option.name"
-        @click="handleClick(option)"
+        v-for="item in menuItems"
+        :key="item.name"
+        @click="handleClick(item)"
       >
         <div class="mc-secondary-menu-item-content">
-          {{ option.label }}
+          {{ item.label }}
         </div>
       </div>
       <div class="mc-secondary-menu-success-line" ref="successLineRef"></div>
@@ -20,8 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import type {
+  SecondaryMenuDisplayItem,
   SecondaryMenuEmits,
   SecondaryMenuItem,
   SecondaryMenuProps,
@@ -44,8 +47,24 @@ const emits = defineEmits<SecondaryMenuEmits>();
 const wrapperRef = ref<HTMLDivElement>();
 const successLineRef = ref<HTMLDivElement>();
 
+// menu items
+const menuItems = computed<SecondaryMenuDisplayItem[]>(() => {
+  const _items: SecondaryMenuDisplayItem[] = [];
+  props.options.forEach((item) => {
+    _items.push(item);
+    if (item.children) {
+      item.children.forEach((child) => {
+        _items.push({ ...child, parent: item.name });
+      });
+    }
+  });
+
+  return _items;
+});
+
 // click
 const handleClick = (option: SecondaryMenuItem) => {
+  if (option.children?.length) return;
   emits("update:modelValue", option.name);
   emits("change", option.name);
 };
@@ -72,7 +91,7 @@ watch(
 
 // set success line
 const setSuccessLine = (menu: SecondaryMenuValue) => {
-  const index = findIndex(props.options, { name: menu });
+  const index = findIndex(menuItems.value, { name: menu });
   if (index < 0 || !successLineRef.value || !wrapperRef.value) return;
   const items = Array.from(wrapperRef.value.children);
   const { top: wrapperTop } = wrapperRef.value.getBoundingClientRect();
