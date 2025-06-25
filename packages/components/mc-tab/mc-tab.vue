@@ -1,28 +1,35 @@
 <template>
   <div class="mc-tab" :class="`mc-tab-${type}`" ref="_ref">
-    <div class="mc-tab-nav" ref="tabNavRef">
-      <div
-        class="mc-tab-nav-item"
-        :class="{
-          'mc-tab-nav-item-active': tab.name === modelValue,
-          'mc-tab-nav-item-disabled': tab.disabled,
-        }"
-        v-for="tab in tabItems"
-        :key="tab.name"
-        @click="handleTabClick(tab)"
-      >
-        <span>
-          {{ tab.label }}
-        </span>
-        <span v-if="tab.count" class="mc-tab-nav-item-count">
-          {{ tab.count }}
-        </span>
+    <div class="mc-tab-nav" :style="{ paddingLeft, paddingRight }">
+      <div class="mc-tab-nav-wrapper" ref="tabNavRef">
+        <div
+          class="mc-tab-nav-item"
+          :class="{
+            'mc-tab-nav-item-active': tab.name === modelValue,
+            'mc-tab-nav-item-disabled': tab.disabled,
+          }"
+          v-for="tab in tabItems"
+          :key="tab.name"
+          @click="handleTabClick(tab)"
+        >
+          <span>
+            {{ tab.label }}
+          </span>
+          <span v-if="tab.count" class="mc-tab-nav-item-count">
+            {{ tab.count }}
+          </span>
+        </div>
       </div>
       <div class="mc-tab-line" ref="tabLineRef" v-if="isPlain"></div>
     </div>
     <template v-if="activeTab?._vnode">
-      <div class="mc-tab-actived-component">
-        <component :key="activeTab.name" :is="activeTab._vnode"></component>
+      <div
+        class="mc-tab-actived-component"
+        :style="{ paddingLeft, paddingRight }"
+      >
+        <div class="mc-tab-actived-component-wrapper">
+          <component :key="activeTab.name" :is="activeTab._vnode"></component>
+        </div>
       </div>
     </template>
   </div>
@@ -57,6 +64,7 @@ defineOptions({ name: "McTab" });
 // props
 const props = withDefaults(defineProps<TabProps>(), {
   type: "plain",
+  wrapperPadding: "0",
 });
 
 // emit
@@ -171,6 +179,18 @@ watch(
     setTabLine(newValue);
   }
 );
+
+// padding left
+const paddingLeft = computed(() => {
+  if (typeof props.wrapperPadding === "string") return props.wrapperPadding;
+  return props.wrapperPadding?.left ?? "0";
+});
+
+// padding right
+const paddingRight = computed(() => {
+  if (typeof props.wrapperPadding === "string") return props.wrapperPadding;
+  return props.wrapperPadding?.right ?? "0";
+});
 
 // expose
 defineExpose<TabInstance>({
