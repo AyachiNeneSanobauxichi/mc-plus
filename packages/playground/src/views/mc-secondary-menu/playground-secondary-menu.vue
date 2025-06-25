@@ -9,8 +9,15 @@
         ></mc-secondary-menu>
       </div>
       <div class="walletx-content">
-        <component :is="currentComponent" :key="activeTab" />
+        <component
+          :is="currentComponent"
+          :key="activeTab"
+          :ref="setComponentRef"
+        />
       </div>
+    </div>
+    <div class="tool-bar">
+      <mc-button @click="initMethod">Init Method</mc-button>
     </div>
   </div>
 </template>
@@ -20,7 +27,16 @@ import type {
   SecondaryMenuItem,
   SecondaryMenuValue,
 } from "@mc-plus/components/mc-secondary-menu";
-import { computed, ref, type Component } from "vue";
+import {
+  computed,
+  ref,
+  watch,
+  shallowRef,
+  type Component,
+  type ShallowRef,
+  onMounted,
+} from "vue";
+import { McButton } from "mc-plus";
 import McSecondaryMenu from "../../../../components/mc-secondary-menu/mc-secondary-menu.vue";
 import Wallets from "./components/wallets.vue";
 import LedgerOverview from "./components/ledger-overview.vue";
@@ -30,12 +46,12 @@ import UserManagement from "./components/user-management.vue";
 
 const activeTab = ref<string>("3-1");
 
-const components = ref<Record<string, Component>>({
-  "1": Wallets,
-  "2-1": LedgerOverview,
-  "2-2": LedgerTransactionDetails,
-  "3-1": PaymentRequestSettings,
-  "4": UserManagement,
+const components = ref<Record<string, ShallowRef<Component>>>({
+  "1": shallowRef(Wallets),
+  "2-1": shallowRef(LedgerOverview),
+  "2-2": shallowRef(LedgerTransactionDetails),
+  "3-1": shallowRef(PaymentRequestSettings),
+  "4": shallowRef(UserManagement),
 });
 
 const currentComponent = computed(() => {
@@ -80,6 +96,24 @@ const options = ref<SecondaryMenuItem[]>([
 const handleChange = (value: SecondaryMenuValue) => {
   console.log("Value: ", value);
 };
+
+const componentRef = ref<Component>();
+
+const setComponentRef = (el: Component) => {
+  componentRef.value = el;
+};
+
+const initMethod = () => {
+  (componentRef.value as any)?.initPage();
+};
+
+onMounted(() => {
+  initMethod();
+});
+
+watch(activeTab, () => {
+  initMethod();
+});
 </script>
 
 <style scoped lang="scss">
@@ -87,6 +121,15 @@ const handleChange = (value: SecondaryMenuValue) => {
   .walletx-container {
     display: flex;
     gap: 24px;
+  }
+
+  .tool-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
 }
 </style>
