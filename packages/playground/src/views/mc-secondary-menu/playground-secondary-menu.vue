@@ -12,7 +12,7 @@ import type { SecondaryMenuItem } from "@mc-plus/components/mc-secondary-menu";
 import { ref } from "vue";
 import McSecondaryMenu from "../../../../components/mc-secondary-menu/mc-secondary-menu.vue";
 
-const activeTab = ref<number>(1);
+const activeTab = ref<number>(3);
 
 const options = ref<SecondaryMenuItem[]>([
   {
@@ -24,11 +24,11 @@ const options = ref<SecondaryMenuItem[]>([
     label: "Ledger",
   },
   {
-    name: 1,
+    name: 3,
     label: "Settings",
   },
   {
-    name: 2,
+    name: 4,
     label: "User Management",
   },
 ]);
