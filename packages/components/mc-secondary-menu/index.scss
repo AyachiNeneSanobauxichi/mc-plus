@@ -53,7 +53,7 @@ $line_color_active: var(--mc-teal-500);
       &.mc-secondary-menu-item-child {
         .mc-secondary-menu-item-content {
           box-sizing: border-box;
-          padding-left: 8px;
+          padding-left: 4px;
           font-size: 16px;
           font-weight: 400;
           @include mixin.flex-center(row, start, center, 8px);
