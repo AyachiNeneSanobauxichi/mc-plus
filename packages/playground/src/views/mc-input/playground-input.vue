@@ -1,6 +1,6 @@
 <template>
   <div class="playground-input">
-    <mc-input v-model="inputValue" />
+    <mc-input v-model="inputValue" :maxlength="10" />
   </div>
 </template>
 

@@ -75,6 +75,7 @@ import {
   numberFormatter,
   numberParser,
 } from "./formatter";
+import { useCursor } from "./hooks";
 
 // options
 defineOptions({ name: "McInput" });
@@ -236,13 +237,18 @@ watch(
   }
 );
 
+// cursor hook
+const { recordCursor, setCursor } = useCursor(inputRef);
+
 // input event
-const handleInput = (e: Event) => {
+const handleInput = async (e: Event) => {
   const { value } = e.target as HTMLInputElement;
+  recordCursor();
   emit("update:modelValue", handleParser(value));
   emit("input", handleParser(value));
-
+  await nextTick();
   setNativeValue();
+  setCursor();
 };
 
 // change event
