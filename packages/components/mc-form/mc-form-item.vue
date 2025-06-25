@@ -1,41 +1,47 @@
 <template>
-  <div class="mc-form-item">
+  <div
+    class="mc-form-item"
+    :class="{ 'mc-form-item-horizontal': isHorizontal }"
+  >
     <slot name="label" :required="isRequired">
-      <div class="mc-form-item-label-wrapper">
-        <label class="mc-form-item-label" v-if="label">
-          <span
-            class="mc-form-item-lable-text"
-            :class="{ 'mc-form-item-label-required': isRequired }"
-          >
-            {{ label }}
-          </span>
-          <div class="mc-form-item-help" v-if="help || $slots.help">
-            <slot name="help">
-              <mc-tooltip :content="help" :icon-size="20" />
-            </slot>
-          </div>
-        </label>
-        <slot name="tool"></slot>
-      </div>
-      <div class="mc-form-item-desc" v-if="desc || $slots.desc">
-        <slot name="desc">
-          {{ desc }}
-        </slot>
+      <div>
+        <div class="mc-form-item-label-wrapper">
+          <label class="mc-form-item-label" v-if="label">
+            <span
+              class="mc-form-item-lable-text"
+              :class="{ 'mc-form-item-label-required': isRequired }"
+            >
+              {{ label }}
+            </span>
+            <div class="mc-form-item-help" v-if="help || $slots.help">
+              <slot name="help">
+                <mc-tooltip :content="help" :icon-size="20" />
+              </slot>
+            </div>
+          </label>
+          <slot name="tool"></slot>
+        </div>
+        <div class="mc-form-item-desc" v-if="desc || $slots.desc">
+          <slot name="desc">
+            {{ desc }}
+          </slot>
+        </div>
       </div>
     </slot>
     <div class="mc-form-item__content">
       <slot></slot>
+      <transition name="mc-form-item-error">
+        <div class="mc-form-item__error" v-if="errorMessage">
+          {{ errorMessage }}
+        </div>
+      </transition>
     </div>
-    <transition name="mc-form-item-error">
-      <div class="mc-form-item__error" v-if="errorMessage">
-        {{ errorMessage }}
-      </div>
-    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import type {
+  FormItemContext,
   FormItemInstance,
   FormItemProps,
   FormItemRule,
@@ -287,8 +293,11 @@ const formItemCtx = reactive({
   clearValidate,
 });
 
+// horizontal item
+const isHorizontal = computed(() => formContext?.direction === "horizontal");
+
 // provide
-provide(FORM_ITEM_CTX_KEY, formItemCtx);
+provide<FormItemContext>(FORM_ITEM_CTX_KEY, formItemCtx);
 
 // add form item
 onMounted(() => {

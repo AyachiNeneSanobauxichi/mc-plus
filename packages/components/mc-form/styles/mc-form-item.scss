@@ -2,12 +2,22 @@ $text-color: var(--mc-gray-500);
 $text-color-error: var(--mc-error);
 
 .mc-form-item {
+  width: fit-content;
   margin-bottom: 24px;
   position: relative;
+
+  &.mc-form-item-horizontal {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
 
   .mc-form-item-label-wrapper {
     display: flex;
     justify-content: space-between;
+    gap: 8px;
     .mc-form-item-label {
       display: flex;
       align-items: center;
@@ -40,7 +50,9 @@ $text-color-error: var(--mc-error);
   }
 
   .mc-form-item__content {
+    width: fit-content;
     margin-top: 8px;
+    position: relative;
   }
 
   .mc-form-item__error {

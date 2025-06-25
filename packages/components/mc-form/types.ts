@@ -5,6 +5,8 @@ import type {
 } from "async-validator";
 import type { Ref } from "vue";
 
+export type FormDirection = "horizontal" | "vertical";
+
 export type FormItemTrigger = "change" | "blur";
 
 export interface FormItemRule extends RuleItem {
@@ -31,6 +33,7 @@ export interface FormProps {
   model: Record<string, any>;
   rules?: FormRules;
   disabled?: boolean;
+  direction?: FormDirection;
 }
 
 export interface FormEmits {

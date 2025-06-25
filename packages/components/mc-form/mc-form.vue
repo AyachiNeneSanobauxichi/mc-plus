@@ -26,6 +26,7 @@ defineOptions({ name: "McForm" });
 // props
 const props = withDefaults(defineProps<FormProps>(), {
   rules: () => ({}),
+  direction: "vertical",
 });
 
 // emit

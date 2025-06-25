@@ -1,7 +1,7 @@
 <template>
-  <div class="form-container">
+  <div class="playground-form">
     <div>
-      <div>
+      <div class="form-container">
         <mc-form :model="formState" ref="FormRef" :rules="rules">
           <mc-form-item prop="amount" label="Amount" help="Please Input Amount">
             <template #tool>{{ "Clear" }}</template>
@@ -19,7 +19,7 @@
           </mc-form-item>
         </mc-form>
       </div>
-      <div class="button-group">
+      <div class="tool-bar">
         <mc-button @click="handleSubmit">Validate</mc-button>
         <mc-button @click="handleClear">Clear</mc-button>
       </div>
@@ -28,10 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import McForm from "../../../components/mc-form/mc-form.vue";
-import McFormItem from "../../../components/mc-form/mc-form-item.vue";
+import McForm from "../../../../components/mc-form/mc-form.vue";
+import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import { reactive, ref } from "vue";
-import McInput from "../../../components/mc-input/mc-input.vue";
+import McInput from "../../../../components/mc-input/mc-input.vue";
 import { McButton, type FormRules } from "mc-plus";
 
 type FormState = {
@@ -76,21 +76,18 @@ const handleClear = () => {
 </script>
 
 <style scoped lang="scss">
-.form-container {
-  position: fixed;
-  top: 0;
+.playground-form {
+  .form-container {
+    width: 500px;
+  }
+}
+
+.tool-bar {
+  position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  .button-group {
-    margin-top: 200px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  gap: 16px;
 }
 </style>
