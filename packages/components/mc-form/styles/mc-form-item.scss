@@ -2,7 +2,7 @@ $text-color: var(--mc-gray-500);
 $text-color-error: var(--mc-error);
 
 .mc-form-item {
-  width: fit-content;
+  width: 100%;
   margin-bottom: 24px;
   position: relative;
 
@@ -50,7 +50,7 @@ $text-color-error: var(--mc-error);
   }
 
   .mc-form-item__content {
-    width: fit-content;
+    width: 100%;
     margin-top: 8px;
     position: relative;
   }

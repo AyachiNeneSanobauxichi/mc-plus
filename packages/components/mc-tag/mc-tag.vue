@@ -17,7 +17,9 @@
       class="mc-tag-left-icon"
       :size="16"
     />
-    <slot></slot>
+    <div class="mc-tag-content">
+      <slot>{{ content }}</slot>
+    </div>
     <mc-icon
       v-if="rightIcon"
       :name="rightIcon"

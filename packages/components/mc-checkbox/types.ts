@@ -6,6 +6,7 @@ export interface CheckboxProps {
   content?: string;
   remarks?: string;
   partial?: boolean;
+  formValidate?: boolean;
 }
 
 export interface CheckboxEmits {

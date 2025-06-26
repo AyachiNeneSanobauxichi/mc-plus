@@ -3,8 +3,32 @@
     <div>Students: {{ formState.students }}</div>
     <div>Teacher: {{ formState.teacher }}</div>
     <mc-form :model="formState" :rules="rules">
-      <mc-form-item label="Student" prop="teacher" required>
-        <mc-select class="student-select" v-model="formState.teacher" search>
+      <mc-form-item label="Student" prop="students" class="form-item">
+        <mc-select
+          class="student-select"
+          v-model="formState.students"
+          search
+          multiple
+          placeholder="Please select a student"
+        >
+          <template v-for="optionGroup in options" :key="optionGroup.value">
+            <mc-select-group :label="optionGroup.label">
+              <template v-for="option in optionGroup.stus" :key="option.value">
+                <mc-select-option :value="option.value" :label="option.label">
+                  {{ option.label }}
+                </mc-select-option>
+              </template>
+            </mc-select-group>
+          </template>
+        </mc-select>
+      </mc-form-item>
+      <mc-form-item label="Teacher" prop="teacher" class="form-item">
+        <mc-select
+          class="student-select"
+          v-model="formState.teacher"
+          search
+          placeholder="Please select a teacher"
+        >
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
               <template v-for="option in optionGroup.stus" :key="option.value">
@@ -51,10 +75,9 @@ const options = ref([
   },
 ]);
 
-type FormState = { students: number[]; teacher: number };
+type FormState = { students?: number[]; teacher?: number };
 const formState = reactive<FormState>({
   students: [5],
-  teacher: 6,
 });
 
 const rules = reactive<FormRules<FormState>>({
@@ -68,7 +91,12 @@ const rules = reactive<FormRules<FormState>>({
 </script>
 
 <style scoped lang="scss">
-.student-select {
-  width: 100%;
+.playground-select {
+  .form-item {
+    width: 600px;
+    .student-select {
+      width: 100%;
+    }
+  }
 }
 </style>

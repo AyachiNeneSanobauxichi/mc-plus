@@ -9,15 +9,18 @@
         [`mc-select--${validateStyle}`]: validateStyle,
         'mc-select--input-group-prefix': isPrefix,
         'mc-select--input-group-suffix': isSuffix,
+        'mc-select--hover': isHover,
       },
     ]"
     ref="wrapperRef"
     :style="style"
+    @mouseenter="isHover = true"
+    @mouseleave="isHover = false"
   >
-    <div class="mc-select-trigger" @click="handleClick">
+    <div class="mc-select-trigger" @click="handleClick" ref="triggerRef">
       <div
         class="mc-select-selected-content"
-        v-if="selectedOptions.length && !searchValue"
+        v-if="selectedOptions.length && !hasSearch"
       >
         <template v-if="!isMulti">
           <component
@@ -26,27 +29,33 @@
           />
         </template>
         <template v-else>
-          <div class="mc-select-multi-wrapper">
+          <div class="mc-select-multi-wrapper" ref="tagsWrapperRef">
             <mc-tag
-              v-for="label in selectedLables"
-              :key="label"
+              v-for="item in selectedTags"
+              :key="item.value"
               size="x-small"
               type="selectable"
               :emphasis="tagStyle"
               :disabled="isDisabled"
+              @delete="handleDeleteTag(item)"
             >
-              {{ label }}
+              {{ item.label }}
             </mc-tag>
           </div>
         </template>
       </div>
-      <div class="mc-select-input-wrapper">
+      <div
+        class="mc-select-input-wrapper"
+        :class="{
+          'mc-select-input-wrapper-search': hasSearch || showPlaceholder,
+        }"
+      >
         <input
           class="mc-select-input"
           :class="{ 'mc-select-input-readonly': !search }"
           ref="inputRef"
           type="text"
-          :placeholder="placeholderDisplay"
+          :placeholder="showPlaceholder ? placeholder : ''"
           v-model="searchValue"
           @input="handleSearch"
           @focus="handleFocus"
@@ -76,8 +85,27 @@
       <div
         class="mc-select-dropdown-wrapper"
         v-show="isExpand && !isDisabled"
-        :style="{ paddingBottom: showDropdownFooter ? '48px' : '0' }"
+        :style="{
+          paddingTop: showDropdownHeader ? '40px' : '0',
+          paddingBottom: showDropdownFooter ? '48px' : '0',
+        }"
       >
+        <mc-title
+          v-if="showDropdownHeader"
+          class="mc-select-dropdown-header"
+          :show-tool-bar="false"
+          height="40px"
+        >
+          <div class="mc-select-dropdown-header-content">
+            <mc-checkbox
+              v-model="selectAll"
+              content="Select All"
+              :form-validate="false"
+              :partial="selectPartial"
+              @change="handleSelectAllChange"
+            />
+          </div>
+        </mc-title>
         <div class="mc-select-dropdown-content">
           <div class="mc-select-dropdown">
             <slot></slot>
@@ -106,6 +134,7 @@ import type {
   SelectEmits,
   SelectOptionProps,
   SelectProps,
+  SelectTag,
   SelectValue,
 } from "./types";
 import type { TagEmphasis } from "../mc-tag";
@@ -118,15 +147,20 @@ import { useInputGroupAffix } from "../mc-input-group/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McButton from "../mc-button/mc-button.vue";
 import McTag from "../mc-tag/mc-tag.vue";
+import McCheckbox from "../mc-checkbox/mc-checkbox.vue";
+import McTitle from "../mc-title/mc-title.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
+// import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
 defineOptions({ name: "McSelect" });
 
 // props
 const props = withDefaults(defineProps<SelectProps>(), {
-  type: "single",
   placeholder: "Please select",
+  multiple: false,
+  allowReset: true,
+  allowSelectAll: true,
 });
 
 // emits
@@ -134,12 +168,14 @@ const emits = defineEmits<SelectEmits>();
 
 // ref
 const inputRef = ref<HTMLInputElement>();
+const tagsWrapperRef = ref<HTMLDivElement>();
+const triggerRef = ref<HTMLDivElement>();
 
 // disabled
 const isDisabled = useFormDisabled();
 
 // multi
-const isMulti = computed(() => props.type === "multi-choice");
+const isMulti = computed(() => props.multiple);
 
 // multi value
 const isMultiValue = (
@@ -187,9 +223,14 @@ const noData = computed(() => {
   return filterOptions.value.length === 0;
 });
 
+// show dropdown header
+const showDropdownHeader = computed(() => {
+  return isMulti.value && props.allowSelectAll && !noData.value;
+});
+
 // show dropdown footer
 const showDropdownFooter = computed(() => {
-  return !noData.value && isMulti.value;
+  return isMulti.value && props.allowReset && !noData.value;
 });
 
 // expand
@@ -215,6 +256,7 @@ watch(
   () => props.modelValue,
   () => {
     selectValues.value = getSelectValues();
+    formItem?.validate("change");
   }
 );
 
@@ -230,15 +272,18 @@ const selectedSingleOption = computed<SelectOptionProps | undefined>(() => {
   return isMulti.value ? undefined : selectedOptions.value?.[0];
 });
 
-// selected multi option labels
-const selectedLables = computed<string[]>(() => {
+// selected multi option tags
+const selectedTags = computed<SelectTag[]>(() => {
   if (!isMulti.value) return [];
-  return map(selectedOptions.value, (item) => item.label ?? "");
+  return map(selectedOptions.value, (item) => ({
+    label: item.label ?? "",
+    value: item.value,
+  }));
 });
 
 // selected tag style
 const tagStyle = computed<TagEmphasis>(() => {
-  if (isFocused.value) return "minimal";
+  if (isFocused.value || isHover.value) return "minimal";
   else return "bold";
 });
 
@@ -287,7 +332,6 @@ const handleSingleSelect = (item: SelectOptionProps) => {
   const newValue = props.modelValue === item.value ? void 0 : item.value;
   emits("update:modelValue", newValue);
   emits("change", newValue);
-  formItem?.validate("change");
 };
 
 // old selected values
@@ -309,20 +353,22 @@ const handleMultiSelect = (item: SelectOptionProps) => {
 const handleReset = () => {
   emits("update:modelValue", [...oldSelectedValues]);
   emits("change", [...oldSelectedValues]);
-  formItem?.validate("change");
 };
 
 // apply
 const handleApply = () => {
   isExpand.value = false;
   emits("change", [...(props.modelValue as SelectValue[])]);
-  formItem?.validate("change");
 };
 
-// placeholder display
-const placeholderDisplay = computed(() =>
-  selectOptions.value.length ? "" : props.placeholder
-);
+// placeholder
+const showPlaceholder = computed(() => {
+  if (isMultiValue(props.modelValue)) {
+    return !props.modelValue?.length;
+  } else {
+    return !props.modelValue;
+  }
+});
 
 // search value
 const searchValue = ref<string>("");
@@ -330,6 +376,11 @@ const searchValue = ref<string>("");
 const handleSearch = () => {
   isExpand.value = true;
 };
+
+// has search
+const hasSearch = computed(() => {
+  return props.search && searchValue.value.length > 0;
+});
 
 // style
 const style = computed(() => {
@@ -365,6 +416,62 @@ watch(
     flush: "post",
   }
 );
+
+// hover
+const isHover = ref<boolean>(false);
+
+// delete tag
+const handleDeleteTag = (tag: SelectTag) => {
+  if (isMultiValue(props.modelValue)) {
+    const newValues = [...(props.modelValue as SelectValue[])];
+    newValues.splice(newValues.indexOf(tag.value), 1);
+    emits("update:modelValue", newValues);
+  }
+};
+
+// select all
+const selectAll = ref<boolean>(false);
+
+// select all by model value
+watch(
+  () => props.modelValue,
+  (val) => {
+    if (!isMultiValue(val)) {
+      selectAll.value = false;
+    } else {
+      selectAll.value = val.length === selectOptions.value.length;
+    }
+  }
+);
+
+// select partial
+const selectPartial = computed(() => {
+  if (!isMultiValue(props.modelValue)) return false;
+  return (
+    props.modelValue.length > 0 &&
+    props.modelValue.length < selectOptions.value.length
+  );
+});
+
+// select all change
+const handleSelectAllChange = (val: boolean) => {
+  if (val) {
+    emits(
+      "update:modelValue",
+      selectOptions.value.map((item) => item.value)
+    );
+  } else {
+    emits("update:modelValue", []);
+  }
+};
+
+// // tags wrapper observer
+// useResizeObserver(tagsWrapperRef, ({ width }) => {
+//   const trigger = triggerRef.value;
+//   if (!trigger) return;
+//   console.log("Width: ", width);
+//   console.log("Trigger Width: ", trigger.offsetWidth - 8 - 56 - 100);
+// });
 
 // provide
 provide(SELECT_INJECTION_KEY, {

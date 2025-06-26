@@ -39,7 +39,9 @@ import type { CheckboxProps, CheckboxEmits } from "./types";
 defineOptions({ name: "McCheckbox" });
 
 // props
-const props = defineProps<CheckboxProps>();
+const props = withDefaults(defineProps<CheckboxProps>(), {
+  formValidate: true,
+});
 
 // emits
 const emits = defineEmits<CheckboxEmits>();
@@ -55,7 +57,10 @@ const isDisabled = computed(() => disabled.value);
 
 // error
 const isError = computed(
-  () => !isDisabled.value && formItem?.validateStatus === "error"
+  () =>
+    !isDisabled.value &&
+    formItem?.validateStatus === "error" &&
+    props.formValidate
 );
 
 // click
@@ -69,7 +74,9 @@ const handleClick = () => {
 watch(
   () => props.modelValue,
   () => {
-    formItem?.validate("change");
+    if (props.formValidate) {
+      formItem?.validate("change");
+    }
   }
 );
 </script>

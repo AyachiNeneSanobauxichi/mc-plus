@@ -1,8 +1,8 @@
 import type { ComputedRef, Ref, VNode } from "vue";
 
-export type SelectType = "single" | "multi-choice";
-
 export type SelectValue = number | string;
+
+export type SelectTag = { label: string; value: SelectValue };
 
 export interface SelectOptionProps {
   value: SelectValue;
@@ -28,10 +28,12 @@ export interface SelectProps {
   modelValue?: SelectValue | SelectValue[] | undefined;
   placeholder?: string;
   disabled?: boolean;
-  type?: SelectType;
+  multiple?: boolean;
   width?: string;
   height?: string;
   search?: boolean;
+  allowReset?: boolean;
+  allowSelectAll?: boolean;
 }
 
 export interface SelectEmits {
