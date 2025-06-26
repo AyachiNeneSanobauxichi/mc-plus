@@ -41,9 +41,9 @@
           </div>
         </div>
       </li>
-      <div ref="unsuccessLineRef" class="mc-step-line mc-step-unsuccess-line">
+      <!-- <div ref="unsuccessLineRef" class="mc-step-line mc-step-unsuccess-line">
         <div ref="successLineRef" class="mc-step-success-line"></div>
-      </div>
+      </div> -->
     </ul>
     <div class="mc-step-item-component" v-if="showHorizontalComponent">
       <component :is="showHorizontalComponent" />
