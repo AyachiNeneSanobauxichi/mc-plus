@@ -1,0 +1,24 @@
+export type StepV2Value = string | number;
+
+export interface StepV2Props {
+  modelValue?: StepV2Value | undefined;
+}
+
+export interface StepV2Emits {
+  (e: "update:modelValue", value: StepV2Value): void;
+  (e: "change", value: StepV2Value): void;
+}
+
+export type StepItemV2SuccessCondition = "all" | "any";
+
+export interface StepChildItemV2Props {
+  name: StepV2Value;
+  label?: string;
+  desc?: string;
+  disabled?: boolean;
+  succeed?: boolean;
+}
+
+export interface StepItemV2Props extends StepChildItemV2Props {
+  successCondition?: StepItemV2SuccessCondition;
+}

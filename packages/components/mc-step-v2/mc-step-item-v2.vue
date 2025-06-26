@@ -3,8 +3,13 @@
 </template>
 
 <script setup lang="ts">
+import type { StepItemV2Props } from "./types";
+
 // options
 defineOptions({ name: "McStepItemV2" });
+
+// props
+const props = withDefaults(defineProps<StepItemV2Props>(), {});
 </script>
 
 <style scoped lang="scss">
