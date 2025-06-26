@@ -14,6 +14,7 @@ $number_color: var(--mc-gray-800);
 $number_color_active: var(--mc-white);
 $number_color_disabled: var(--mc-gray-500);
 $unsuccess_line_color: var(--mc-gray-400);
+$active_line_color: var(--mc-purple-500);
 $success_line_color: var(--mc-success);
 
 .mc-step-item-v2 {
@@ -52,6 +53,18 @@ $success_line_color: var(--mc-success);
         cursor: default;
         @include mixin.flex-center();
       }
+    }
+
+    &::before {
+      content: "";
+      width: 1.5px;
+      height: 0%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      box-sizing: border-box;
+      z-index: -1;
+      transition: height 0.3s ease-in-out;
     }
 
     &::after {
@@ -103,6 +116,11 @@ $success_line_color: var(--mc-success);
           background-color: $bg_color_active;
           color: $number_color_active;
         }
+      }
+
+      &::before {
+        height: 100%;
+        background-color: $active_line_color;
       }
     }
 
