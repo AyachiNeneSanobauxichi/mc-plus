@@ -48,13 +48,12 @@ $bg_color_disabled: var(--mc-gray-200);
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
+      width: 10px;
       height: 100%;
       background-color: transparent;
-      padding: 0 56px 0 8px;
       .mc-select-input {
         margin: 0;
-        padding: 0;
+        padding: 0 0 0 8px;
         width: 100%;
         height: 100%;
         outline: none;
@@ -71,6 +70,10 @@ $bg_color_disabled: var(--mc-gray-200);
         &.mc-select-input-readonly {
           cursor: pointer;
         }
+      }
+
+      &.mc-select-input-wrapper-search {
+        width: calc(100% - 56px);
       }
     }
 

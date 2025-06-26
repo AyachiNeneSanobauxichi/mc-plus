@@ -3,7 +3,25 @@
     <div>Students: {{ formState.students }}</div>
     <div>Teacher: {{ formState.teacher }}</div>
     <mc-form :model="formState" :rules="rules">
-      <mc-form-item label="Student" prop="teacher" required>
+      <mc-form-item label="Student" prop="students" class="form-item">
+        <mc-select
+          class="student-select"
+          v-model="formState.students"
+          search
+          type="multi-choice"
+        >
+          <template v-for="optionGroup in options" :key="optionGroup.value">
+            <mc-select-group :label="optionGroup.label">
+              <template v-for="option in optionGroup.stus" :key="option.value">
+                <mc-select-option :value="option.value" :label="option.label">
+                  {{ option.label }}
+                </mc-select-option>
+              </template>
+            </mc-select-group>
+          </template>
+        </mc-select>
+      </mc-form-item>
+      <mc-form-item label="Teacher" prop="teacher" class="form-item">
         <mc-select class="student-select" v-model="formState.teacher" search>
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
@@ -68,7 +86,12 @@ const rules = reactive<FormRules<FormState>>({
 </script>
 
 <style scoped lang="scss">
-.student-select {
-  width: 100%;
+.playground-select {
+  .form-item {
+    width: 100%;
+    .student-select {
+      width: 100%;
+    }
+  }
 }
 </style>

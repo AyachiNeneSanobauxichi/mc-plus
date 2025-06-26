@@ -9,15 +9,18 @@
         [`mc-select--${validateStyle}`]: validateStyle,
         'mc-select--input-group-prefix': isPrefix,
         'mc-select--input-group-suffix': isSuffix,
+        'mc-select--hover': isHover,
       },
     ]"
     ref="wrapperRef"
     :style="style"
+    @mouseenter="isHover = true"
+    @mouseleave="isHover = false"
   >
     <div class="mc-select-trigger" @click="handleClick">
       <div
         class="mc-select-selected-content"
-        v-if="selectedOptions.length && !searchValue"
+        v-if="selectedOptions.length && !hasSearch"
       >
         <template v-if="!isMulti">
           <component
@@ -28,19 +31,23 @@
         <template v-else>
           <div class="mc-select-multi-wrapper">
             <mc-tag
-              v-for="label in selectedLables"
-              :key="label"
+              v-for="item in selectedTags"
+              :key="item.value"
               size="x-small"
               type="selectable"
               :emphasis="tagStyle"
               :disabled="isDisabled"
+              @delete="handleDeleteTag(item)"
             >
-              {{ label }}
+              {{ item.label }}
             </mc-tag>
           </div>
         </template>
       </div>
-      <div class="mc-select-input-wrapper">
+      <div
+        class="mc-select-input-wrapper"
+        :class="{ 'mc-select-input-wrapper-search': hasSearch }"
+      >
         <input
           class="mc-select-input"
           :class="{ 'mc-select-input-readonly': !search }"
@@ -106,6 +113,7 @@ import type {
   SelectEmits,
   SelectOptionProps,
   SelectProps,
+  SelectTag,
   SelectValue,
 } from "./types";
 import type { TagEmphasis } from "../mc-tag";
@@ -230,15 +238,18 @@ const selectedSingleOption = computed<SelectOptionProps | undefined>(() => {
   return isMulti.value ? undefined : selectedOptions.value?.[0];
 });
 
-// selected multi option labels
-const selectedLables = computed<string[]>(() => {
+// selected multi option tags
+const selectedTags = computed<SelectTag[]>(() => {
   if (!isMulti.value) return [];
-  return map(selectedOptions.value, (item) => item.label ?? "");
+  return map(selectedOptions.value, (item) => ({
+    label: item.label ?? "",
+    value: item.value,
+  }));
 });
 
 // selected tag style
 const tagStyle = computed<TagEmphasis>(() => {
-  if (isFocused.value) return "minimal";
+  if (isFocused.value || isHover.value) return "minimal";
   else return "bold";
 });
 
@@ -331,6 +342,11 @@ const handleSearch = () => {
   isExpand.value = true;
 };
 
+// has search
+const hasSearch = computed(() => {
+  return props.search && searchValue.value.length > 0;
+});
+
 // style
 const style = computed(() => {
   return {
@@ -365,6 +381,18 @@ watch(
     flush: "post",
   }
 );
+
+// hover
+const isHover = ref<boolean>(false);
+
+// delete tag
+const handleDeleteTag = (tag: SelectTag) => {
+  if (isMultiValue(props.modelValue)) {
+    const newValues = [...(props.modelValue as SelectValue[])];
+    newValues.splice(newValues.indexOf(tag.value), 1);
+    emits("update:modelValue", newValues);
+  }
+};
 
 // provide
 provide(SELECT_INJECTION_KEY, {

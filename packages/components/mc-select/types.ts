@@ -4,6 +4,8 @@ export type SelectType = "single" | "multi-choice";
 
 export type SelectValue = number | string;
 
+export type SelectTag = { label: string; value: SelectValue };
+
 export interface SelectOptionProps {
   value: SelectValue;
   label?: string;
