@@ -253,6 +253,7 @@ watch(
   () => props.modelValue,
   () => {
     selectValues.value = getSelectValues();
+    formItem?.validate("change");
   }
 );
 
@@ -328,7 +329,6 @@ const handleSingleSelect = (item: SelectOptionProps) => {
   const newValue = props.modelValue === item.value ? void 0 : item.value;
   emits("update:modelValue", newValue);
   emits("change", newValue);
-  formItem?.validate("change");
 };
 
 // old selected values
@@ -350,14 +350,12 @@ const handleMultiSelect = (item: SelectOptionProps) => {
 const handleReset = () => {
   emits("update:modelValue", [...oldSelectedValues]);
   emits("change", [...oldSelectedValues]);
-  formItem?.validate("change");
 };
 
 // apply
 const handleApply = () => {
   isExpand.value = false;
   emits("change", [...(props.modelValue as SelectValue[])]);
-  formItem?.validate("change");
 };
 
 // placeholder display
