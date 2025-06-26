@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-step-item-v2">
+  <div class="mc-step-item-v2" :class="{ 'mc-step-item-actived': isActive }">
     <div class="mc-step-item-step-bar">
       <div class="mc-step-item-step-bar-number">
         <span class="mc-step-item-step-bar-number-text">
@@ -12,7 +12,7 @@
         <span class="mc-step-item-label-title">{{ props.label }}</span>
         <p class="mc-step-item-label-desc">{{ props.desc }}</p>
       </div>
-      <div class="mc-step-item-slot">
+      <div class="mc-step-item-slot" v-if="isActive">
         <slot></slot>
       </div>
     </div>
@@ -37,7 +37,6 @@ const stepCtx = inject<StepV2Context>(STEP_V2_INJECTION_KEY);
 // add step item
 onMounted(() => {
   stepCtx?.addStepItem(props);
-  console.log("Step Items: ", stepCtx?.stepItems);
 });
 
 // remove step item
@@ -48,6 +47,11 @@ onBeforeUnmount(() => {
 // current step index
 const currentStepIndex = computed(() => {
   return indexOf(stepCtx?.stepItems, props) + 1;
+});
+
+// is active
+const isActive = computed(() => {
+  return stepCtx?.activeStep?.value === props.name;
 });
 </script>
 

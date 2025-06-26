@@ -1,3 +1,5 @@
+import type { ComputedRef } from "vue";
+
 export type StepV2Value = string | number;
 
 export interface StepV2Props {
@@ -24,6 +26,7 @@ export interface StepItemV2Props extends StepChildItemV2Props {
 }
 
 export interface StepV2Context {
+  activeStep?: ComputedRef<StepV2Value | undefined>;
   stepItems: StepItemV2Props[];
   addStepItem(item: StepItemV2Props): void;
   removeStepItem(item: StepItemV2Props): void;

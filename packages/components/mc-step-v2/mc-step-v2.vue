@@ -11,7 +11,7 @@ import type {
   StepV2Emits,
   StepV2Props,
 } from "./types";
-import { provide, ref } from "vue";
+import { computed, provide, ref } from "vue";
 import { indexOf } from "lodash-es";
 import { STEP_V2_INJECTION_KEY } from "./constant";
 
@@ -40,6 +40,7 @@ const removeStepItem = (item: StepItemV2Props) => {
 
 // provide
 provide<StepV2Context>(STEP_V2_INJECTION_KEY, {
+  activeStep: computed(() => props.modelValue),
   stepItems: stepItems.value,
   addStepItem,
   removeStepItem,
