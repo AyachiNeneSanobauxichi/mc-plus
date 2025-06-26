@@ -32,6 +32,8 @@ export interface SelectProps {
   width?: string;
   height?: string;
   search?: boolean;
+  allowReset?: boolean;
+  allowSelectAll?: boolean;
 }
 
 export interface SelectEmits {

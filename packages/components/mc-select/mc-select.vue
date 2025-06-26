@@ -83,8 +83,26 @@
       <div
         class="mc-select-dropdown-wrapper"
         v-show="isExpand && !isDisabled"
-        :style="{ paddingBottom: showDropdownFooter ? '48px' : '0' }"
+        :style="{
+          paddingTop: showDropdownHeader ? '40px' : '0',
+          paddingBottom: showDropdownFooter ? '48px' : '0',
+        }"
       >
+        <mc-title
+          v-if="showDropdownHeader"
+          class="mc-select-dropdown-header"
+          :show-tool-bar="false"
+          height="40px"
+        >
+          <div class="mc-select-dropdown-header-content">
+            <mc-checkbox
+              v-model="selectAll"
+              content="Select All"
+              @change="handleSelectAllChange"
+              :form-validate="false"
+            />
+          </div>
+        </mc-title>
         <div class="mc-select-dropdown-content">
           <div class="mc-select-dropdown">
             <slot></slot>
@@ -126,6 +144,8 @@ import { useInputGroupAffix } from "../mc-input-group/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McButton from "../mc-button/mc-button.vue";
 import McTag from "../mc-tag/mc-tag.vue";
+import McCheckbox from "../mc-checkbox/mc-checkbox.vue";
+import McTitle from "../mc-title/mc-title.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
 
 // options
@@ -135,6 +155,8 @@ defineOptions({ name: "McSelect" });
 const props = withDefaults(defineProps<SelectProps>(), {
   placeholder: "Please select",
   multiple: false,
+  allowReset: true,
+  allowSelectAll: true,
 });
 
 // emits
@@ -195,9 +217,14 @@ const noData = computed(() => {
   return filterOptions.value.length === 0;
 });
 
+// show dropdown header
+const showDropdownHeader = computed(() => {
+  return isMulti.value && props.allowSelectAll && !noData.value;
+});
+
 // show dropdown footer
 const showDropdownFooter = computed(() => {
-  return !noData.value && isMulti.value;
+  return isMulti.value && props.allowReset && !noData.value;
 });
 
 // expand
@@ -394,6 +421,20 @@ const handleDeleteTag = (tag: SelectTag) => {
   }
 };
 
+// select all
+const selectAll = ref<boolean>(false);
+
+// select all change
+const handleSelectAllChange = (val: boolean) => {
+  if (val) {
+    emits(
+      "update:modelValue",
+      selectOptions.value.map((item) => item.value)
+    );
+  } else {
+    emits("update:modelValue", []);
+  }
+};
 // provide
 provide(SELECT_INJECTION_KEY, {
   filterOptions,

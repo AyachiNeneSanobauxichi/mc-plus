@@ -190,6 +190,22 @@ $bg_color_disabled: var(--mc-gray-200);
         color: $text_color;
       }
     }
+
+    .mc-select-dropdown-header {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      .mc-select-dropdown-header-content {
+        width: 100%;
+        height: 100%;
+        padding: 0 8px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+      }
+    }
+
     .mc-select-dropdown-footer {
       width: 100%;
       min-height: 0;
