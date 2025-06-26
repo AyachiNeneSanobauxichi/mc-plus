@@ -1,5 +1,7 @@
 <template>
-  <div class="mc-step-v2">Mc Step V2</div>
+  <div class="mc-step-v2">
+    <slot></slot>
+  </div>
 </template>
 
 <script setup lang="ts">
