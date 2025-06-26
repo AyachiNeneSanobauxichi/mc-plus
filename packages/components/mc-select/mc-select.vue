@@ -98,8 +98,9 @@
             <mc-checkbox
               v-model="selectAll"
               content="Select All"
-              @change="handleSelectAllChange"
               :form-validate="false"
+              :partial="selectPartial"
+              @change="handleSelectAllChange"
             />
           </div>
         </mc-title>
@@ -424,6 +425,27 @@ const handleDeleteTag = (tag: SelectTag) => {
 
 // select all
 const selectAll = ref<boolean>(false);
+
+// select all by model value
+watch(
+  () => props.modelValue,
+  (val) => {
+    if (!isMultiValue(val)) {
+      selectAll.value = false;
+    } else {
+      selectAll.value = val.length === selectOptions.value.length;
+    }
+  }
+);
+
+// select partial
+const selectPartial = computed(() => {
+  if (!isMultiValue(props.modelValue)) return false;
+  return (
+    props.modelValue.length > 0 &&
+    props.modelValue.length < selectOptions.value.length
+  );
+});
 
 // select all change
 const handleSelectAllChange = (val: boolean) => {
