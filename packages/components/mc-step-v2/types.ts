@@ -22,3 +22,9 @@ export interface StepChildItemV2Props {
 export interface StepItemV2Props extends StepChildItemV2Props {
   successCondition?: StepItemV2SuccessCondition;
 }
+
+export interface StepV2Context {
+  stepItems: StepItemV2Props[];
+  addStepItem(item: StepItemV2Props): void;
+  removeStepItem(item: StepItemV2Props): void;
+}
