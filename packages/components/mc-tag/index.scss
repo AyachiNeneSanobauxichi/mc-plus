@@ -132,4 +132,9 @@ $text_color_status: var(--mc-white);
       border-color: $text_color_disabled_subtle;
     }
   }
+
+  .mc-tag-content {
+    word-wrap: nowrap;
+    text-wrap: nowrap;
+  }
 }
