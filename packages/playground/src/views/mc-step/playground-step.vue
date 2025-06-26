@@ -1,5 +1,5 @@
 <template>
-  <div class="step-container">
+  <div class="playground-step">
     <div class="step-wrapper">
       <mc-step v-model="step" :steps="stepConfig" type="horizontal"></mc-step>
     </div>
@@ -64,7 +64,7 @@ const handleNextStep = () => {
 </script>
 
 <style scoped lang="scss">
-.step-container {
+.playground-step {
   .step-wrapper {
     width: 1300px;
     height: 800px;
