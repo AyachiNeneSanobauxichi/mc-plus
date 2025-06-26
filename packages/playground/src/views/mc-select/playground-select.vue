@@ -9,6 +9,7 @@
           v-model="formState.students"
           search
           multiple
+          placeholder="Please select a student"
         >
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
@@ -22,7 +23,12 @@
         </mc-select>
       </mc-form-item>
       <mc-form-item label="Teacher" prop="teacher" class="form-item">
-        <mc-select class="student-select" v-model="formState.teacher" search>
+        <mc-select
+          class="student-select"
+          v-model="formState.teacher"
+          search
+          placeholder="Please select a teacher"
+        >
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
               <template v-for="option in optionGroup.stus" :key="option.value">
@@ -69,10 +75,9 @@ const options = ref([
   },
 ]);
 
-type FormState = { students: number[]; teacher: number };
+type FormState = { students?: number[]; teacher?: number };
 const formState = reactive<FormState>({
   students: [5],
-  teacher: 6,
 });
 
 const rules = reactive<FormRules<FormState>>({

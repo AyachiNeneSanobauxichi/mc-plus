@@ -46,14 +46,16 @@
       </div>
       <div
         class="mc-select-input-wrapper"
-        :class="{ 'mc-select-input-wrapper-search': hasSearch }"
+        :class="{
+          'mc-select-input-wrapper-search': hasSearch || showPlaceholder,
+        }"
       >
         <input
           class="mc-select-input"
           :class="{ 'mc-select-input-readonly': !search }"
           ref="inputRef"
           type="text"
-          :placeholder="placeholderDisplay"
+          :placeholder="showPlaceholder ? placeholder : ''"
           v-model="searchValue"
           @input="handleSearch"
           @focus="handleFocus"
@@ -359,10 +361,14 @@ const handleApply = () => {
   emits("change", [...(props.modelValue as SelectValue[])]);
 };
 
-// placeholder display
-const placeholderDisplay = computed(() =>
-  selectOptions.value.length ? "" : props.placeholder
-);
+// placeholder
+const showPlaceholder = computed(() => {
+  if (isMultiValue(props.modelValue)) {
+    return !props.modelValue?.length;
+  } else {
+    return !props.modelValue;
+  }
+});
 
 // search value
 const searchValue = ref<string>("");
