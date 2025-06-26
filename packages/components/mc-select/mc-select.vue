@@ -17,7 +17,7 @@
     @mouseenter="isHover = true"
     @mouseleave="isHover = false"
   >
-    <div class="mc-select-trigger" @click="handleClick">
+    <div class="mc-select-trigger" @click="handleClick" ref="triggerRef">
       <div
         class="mc-select-selected-content"
         v-if="selectedOptions.length && !hasSearch"
@@ -29,7 +29,7 @@
           />
         </template>
         <template v-else>
-          <div class="mc-select-multi-wrapper">
+          <div class="mc-select-multi-wrapper" ref="tagsWrapperRef">
             <mc-tag
               v-for="item in selectedTags"
               :key="item.value"
@@ -147,6 +147,7 @@ import McTag from "../mc-tag/mc-tag.vue";
 import McCheckbox from "../mc-checkbox/mc-checkbox.vue";
 import McTitle from "../mc-title/mc-title.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
+// import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -164,6 +165,8 @@ const emits = defineEmits<SelectEmits>();
 
 // ref
 const inputRef = ref<HTMLInputElement>();
+const tagsWrapperRef = ref<HTMLDivElement>();
+const triggerRef = ref<HTMLDivElement>();
 
 // disabled
 const isDisabled = useFormDisabled();
@@ -435,6 +438,15 @@ const handleSelectAllChange = (val: boolean) => {
     emits("update:modelValue", []);
   }
 };
+
+// // tags wrapper observer
+// useResizeObserver(tagsWrapperRef, ({ width }) => {
+//   const trigger = triggerRef.value;
+//   if (!trigger) return;
+//   console.log("Width: ", width);
+//   console.log("Trigger Width: ", trigger.offsetWidth - 8 - 56 - 100);
+// });
+
 // provide
 provide(SELECT_INJECTION_KEY, {
   filterOptions,

@@ -25,6 +25,7 @@ export interface TagProps {
   deletable?: boolean;
   leftIcon?: IconType;
   rightIcon?: IconType;
+  content?: string;
 }
 
 export interface TagEmits {

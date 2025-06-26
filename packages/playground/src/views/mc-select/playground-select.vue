@@ -88,7 +88,7 @@ const rules = reactive<FormRules<FormState>>({
 <style scoped lang="scss">
 .playground-select {
   .form-item {
-    width: 100%;
+    width: 600px;
     .student-select {
       width: 100%;
     }

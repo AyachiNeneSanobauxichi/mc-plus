@@ -37,7 +37,12 @@ $bg_color_disabled: var(--mc-gray-200);
     }
 
     .mc-select-selected-content {
+      overflow-x: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       .mc-select-multi-wrapper {
+        width: fit-content;
         display: flex;
         align-items: center;
         gap: 8px;
