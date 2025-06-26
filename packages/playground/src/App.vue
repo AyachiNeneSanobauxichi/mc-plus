@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-input></playground-input>
+    <playground-step></playground-step>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundInput from "./views/mc-step/playground-step.vue";
+import PlaygroundStep from "./views/mc-step/playground-step.vue";
 </script>
 
 <style scoped lang="scss">
