@@ -133,8 +133,8 @@ defineOptions({ name: "McSelect" });
 
 // props
 const props = withDefaults(defineProps<SelectProps>(), {
-  type: "single",
   placeholder: "Please select",
+  multiple: false,
 });
 
 // emits
@@ -147,7 +147,7 @@ const inputRef = ref<HTMLInputElement>();
 const isDisabled = useFormDisabled();
 
 // multi
-const isMulti = computed(() => props.type === "multi-choice");
+const isMulti = computed(() => props.multiple);
 
 // multi value
 const isMultiValue = (

@@ -8,7 +8,7 @@
           class="student-select"
           v-model="formState.students"
           search
-          type="multi-choice"
+          multiple
         >
           <template v-for="optionGroup in options" :key="optionGroup.value">
             <mc-select-group :label="optionGroup.label">
