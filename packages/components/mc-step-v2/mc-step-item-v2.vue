@@ -9,9 +9,14 @@
     <div class="mc-step-item-step-bar">
       <div class="mc-step-item-step-bar-number">
         <template v-if="!isSuccess">
-          <span class="mc-step-item-step-bar-number-text">
-            {{ currentStepIndex + 1 }}
-          </span>
+          <div class="mc-step-item-step-bar-number-text">
+            <template v-if="icon">
+              <mc-icon :name="icon" class="mc-step-item-step-bar-icon" />
+            </template>
+            <template v-else>
+              <slot name="step-number">{{ currentStepIndex + 1 }}</slot>
+            </template>
+          </div>
         </template>
         <template v-else>
           <mc-success-icon class="mc-step-item-step-bar-success-icon" />
@@ -20,8 +25,12 @@
     </div>
     <div class="mc-step-item-content">
       <div class="mc-step-item-label" v-if="label || desc">
-        <span class="mc-step-item-label-title">{{ label }}</span>
-        <p class="mc-step-item-label-desc">{{ desc }}</p>
+        <slot name="label">
+          <span class="mc-step-item-label-title">{{ label }}</span>
+        </slot>
+        <slot name="desc">
+          <p class="mc-step-item-label-desc">{{ desc }}</p>
+        </slot>
       </div>
       <div class="mc-step-item-slot" v-if="isActive">
         <slot></slot>
@@ -39,6 +48,7 @@ import type {
 import { computed, inject, onBeforeUnmount, onMounted, provide } from "vue";
 import { indexOf, isNil } from "lodash-es";
 import { STEP_ITEM_V2_INJECTION_KEY, STEP_V2_INJECTION_KEY } from "./constant";
+import McIcon from "../mc-icon/mc-icon.vue";
 import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 
 // options

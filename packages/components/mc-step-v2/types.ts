@@ -1,4 +1,5 @@
 import type { ComputedRef, Ref } from "vue";
+import type { IconType } from "../mc-icon";
 
 export type StepV2Value = string | number;
 
@@ -20,7 +21,9 @@ export interface StepChildItemV2Props {
   succeed?: boolean;
 }
 
-export interface StepItemV2Props extends StepChildItemV2Props {}
+export interface StepItemV2Props extends StepChildItemV2Props {
+  icon?: IconType;
+}
 
 export interface StepV2Context {
   successStepIndex: Ref<number>;

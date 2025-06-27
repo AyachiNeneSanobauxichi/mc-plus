@@ -13,7 +13,7 @@
       <mc-step-item-v2 :name="4" label="Label 4" desc="desc4">
         <Step4 />
       </mc-step-item-v2>
-      <mc-step-item-v2 :name="5" label="Label 5" desc="desc5">
+      <mc-step-item-v2 :name="5" label="Label 5" desc="desc5" icon="Hourglass">
         <mc-step-child-item-v2 :name="51" label="Child 1" desc="child desc1">
           <child-steps1 />
         </mc-step-child-item-v2>
@@ -43,7 +43,7 @@ import Step4 from "./steps/step4.vue";
 import ChildSteps1 from "./child-steps/child-steps1.vue";
 import ChildSteps2 from "./child-steps/child-steps2.vue";
 
-const currentStep = ref<number>(3);
+const currentStep = ref<number>(5);
 
 // handle previous
 const handlePrevious = () => {
