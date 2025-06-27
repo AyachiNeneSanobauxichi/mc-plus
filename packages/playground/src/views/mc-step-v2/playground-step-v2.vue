@@ -14,7 +14,12 @@
         <Step4 />
       </mc-step-item-v2>
       <mc-step-item-v2 :name="5" label="Label 5" desc="desc5">
-        <Step5 />
+        <mc-step-child-item-v2 :name="51" label="Child 1" desc="child desc1">
+          <child-steps1 />
+        </mc-step-child-item-v2>
+        <mc-step-child-item-v2 :name="52" label="Child 2" desc="child desc2">
+          <child-steps2 />
+        </mc-step-child-item-v2>
       </mc-step-item-v2>
     </mc-step-v2>
   </div>
@@ -30,11 +35,13 @@ import { ref } from "vue";
 import { McButton } from "mc-plus";
 import McStepV2 from "../../../../components/mc-step-v2/mc-step-v2.vue";
 import McStepItemV2 from "../../../../components/mc-step-v2/mc-step-item-v2.vue";
+import McStepChildItemV2 from "../../../../components/mc-step-v2/mc-step-child-item-v2.vue";
 import Step1 from "./steps/step1.vue";
 import Step2 from "./steps/step2.vue";
 import Step3 from "./steps/step3.vue";
 import Step4 from "./steps/step4.vue";
-import Step5 from "./steps/step5.vue";
+import ChildSteps1 from "./child-steps/child-steps1.vue";
+import ChildSteps2 from "./child-steps/child-steps2.vue";
 
 const currentStep = ref<number>(3);
 

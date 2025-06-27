@@ -43,6 +43,7 @@ defineOptions({ name: "McStepItemV2" });
 // props
 const props = withDefaults(defineProps<StepItemV2Props>(), {
   succeed: void 0,
+  successCondition: "all",
 });
 
 // step context

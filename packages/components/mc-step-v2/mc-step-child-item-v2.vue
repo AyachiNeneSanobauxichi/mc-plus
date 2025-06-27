@@ -1,5 +1,7 @@
 <template>
-  <div class="mc-step-child-item-v2"></div>
+  <div class="mc-step-child-item-v2">
+    <slot></slot>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -9,9 +11,11 @@ import type { StepChildItemV2Props } from "./types";
 defineOptions({ name: "McStepChildItemV2" });
 
 // props
-const props = withDefaults(defineProps<StepChildItemV2Props>(), {});
+const props = withDefaults(defineProps<StepChildItemV2Props>(), {
+  succeed: void 0,
+});
 </script>
 
 <style scoped lang="scss">
-@use "./mc-step-child-item-v2.vue";
+@use "./styles/mc-step-child-item-v2.scss";
 </style>
