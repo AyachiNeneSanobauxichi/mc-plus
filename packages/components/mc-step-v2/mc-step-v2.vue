@@ -21,7 +21,9 @@ import { STEP_V2_INJECTION_KEY } from "./constant";
 defineOptions({ name: "McStepV2" });
 
 // props
-const props = withDefaults(defineProps<StepV2Props>(), {});
+const props = withDefaults(defineProps<StepV2Props>(), {
+  succeed: void 0,
+});
 
 // emits
 defineEmits<StepV2Emits>();
@@ -91,6 +93,7 @@ watch(
 provide<StepV2Context>(STEP_V2_INJECTION_KEY, {
   successStepIndex,
   activeStep: computed(() => props.modelValue),
+  succeed: computed(() => props.succeed),
   stepItems: stepItems.value,
   addStepItem,
   removeStepItem,

@@ -70,8 +70,13 @@ const isActive = computed(() => {
 
 // is success
 const isSuccess = computed(() => {
-  if (!isNil(props.succeed)) return props.succeed;
-  return (stepCtx?.successStepIndex?.value ?? -1) >= currentStepIndex.value;
+  if (!isNil(stepCtx?.succeed?.value)) {
+    return stepCtx?.succeed?.value;
+  } else if (!isNil(props.succeed)) {
+    return props.succeed;
+  } else {
+    return (stepCtx?.successStepIndex?.value ?? -1) >= currentStepIndex.value;
+  }
 });
 </script>
 

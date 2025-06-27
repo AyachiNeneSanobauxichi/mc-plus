@@ -4,6 +4,7 @@ export type StepV2Value = string | number;
 
 export interface StepV2Props {
   modelValue?: StepV2Value | undefined;
+  succeed?: boolean;
 }
 
 export interface StepV2Emits {
@@ -28,6 +29,7 @@ export interface StepItemV2Props extends StepChildItemV2Props {
 export interface StepV2Context {
   successStepIndex: Ref<number>;
   activeStep?: ComputedRef<StepV2Value | undefined>;
+  succeed?: ComputedRef<boolean | undefined>;
   stepItems: StepItemV2Props[];
   addStepItem(item: StepItemV2Props): void;
   removeStepItem(item: StepItemV2Props): void;
