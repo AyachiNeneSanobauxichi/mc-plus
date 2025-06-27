@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-step-v2></playground-step-v2>
+    <playground-select></playground-select>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundStepV2 from "./views/mc-step-v2/playground-step-v2.vue";
+import PlaygroundSelect from "./views/mc-select/playground-select.vue";
 </script>
 
 <style scoped lang="scss">
@@ -21,6 +21,5 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  overflow: auto;
 }
 </style>

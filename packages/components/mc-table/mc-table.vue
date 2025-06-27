@@ -21,7 +21,7 @@
     <!-- 表体组件 -->
     <mc-table-body ref="bodyRef" :data="finalData" :columns="columnsWithFixed" :row-key="rowKey" :empty-text="emptyText" :height="height" :max-height="maxHeight" :span-method="spanMethod" :pagination="pagination" :get-row-class="getRowClass" :selectable="selectable" :selected-rows="internalSelectedRows" :select-on-row-click="selectOnRowClick" @row-click="handleRowClick" @select="handleSelect">
       <template v-for="name in Object.keys($slots)" :key="name" #[name]="slotProps">
-        <slot :name="name" v-bind="slotProps"></slot>
+        <slot :name="name" v-bind="slotProps" />
       </template>
     </mc-table-body>
 
@@ -31,14 +31,13 @@
     <!-- Loading 组件 -->
     <mc-table-loading class="mc-table__loading" :loading="loading" :loading-text="loadingText" :loading-config="loadingConfig">
       <template #loading="loadingProps">
-        <slot name="loading" v-bind="loadingProps"></slot>
+        <slot name="loading" v-bind="loadingProps" />
       </template>
     </mc-table-loading>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { RowData, TableColumn, TableEmits, TableInstance, TableProps } from "./types";
 import { computed, nextTick, onMounted, ref, toRefs, watch } from "vue";
 import McTableBody from "./components/mc-table-body.vue";
 import McTableHeader from "./components/mc-table-header.vue";
@@ -49,9 +48,12 @@ import { useTableCurrentRow } from "./composables/useTableCurrentRow";
 import { useTableScroll } from "./composables/useTableScroll";
 import { useTableSelection } from "./composables/useTableSelection";
 import { useTableSort } from "./composables/useTableSort";
+import type { RowData, TableColumn, TableEmits, TableInstance, TableProps } from "./types";
 
 // options
-defineOptions({ name: "McTable" });
+defineOptions({
+  name: "McTable",
+});
 
 // props
 const props = withDefaults(defineProps<TableProps>(), {

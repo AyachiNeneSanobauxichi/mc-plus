@@ -1,7 +1,7 @@
 <template>
-  <div class="playground-step">
+  <div class="step-container">
     <div class="step-wrapper">
-      <mc-step v-model="step" :steps="stepConfig" type="vertical"></mc-step>
+      <mc-step v-model="step" :steps="stepConfig" type="horizontal"></mc-step>
     </div>
     <div class="tool-bar">
       <mc-button @click="handleNextStep">Next Step</mc-button>
@@ -64,7 +64,7 @@ const handleNextStep = () => {
 </script>
 
 <style scoped lang="scss">
-.playground-step {
+.step-container {
   .step-wrapper {
     width: 1300px;
     height: 800px;
