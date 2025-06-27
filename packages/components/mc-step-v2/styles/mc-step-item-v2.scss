@@ -40,6 +40,7 @@ $success_line_color: var(--mc-success);
       border-radius: 50%;
       background-color: $bg_color_white;
       box-shadow: 0px 2px 4px 0px rgba(4, 20, 124, 0.15);
+      position: relative;
       @include mixin.flex-center();
 
       .mc-step-item-step-bar-number-text {
@@ -52,6 +53,13 @@ $success_line_color: var(--mc-success);
         color: $number_color;
         cursor: default;
         @include mixin.flex-center();
+      }
+
+      .mc-step-item-step-bar-success-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
     }
 
@@ -128,6 +136,32 @@ $success_line_color: var(--mc-success);
       .mc-step-item-label {
         .mc-step-item-label-title {
           color: $text_color_active;
+        }
+      }
+    }
+  }
+
+  /* success */
+  &.mc-step-item-success {
+    .mc-step-item-step-bar {
+      .mc-step-item-step-bar-number {
+        background-color: $bg_color_success;
+        .mc-step-item-step-bar-number-text {
+          background-color: $bg_color_success;
+          color: $number_color_active;
+        }
+      }
+
+      &::before {
+        height: 100%;
+        background-color: $success_line_color;
+      }
+    }
+
+    .mc-step-item-content {
+      .mc-step-item-label {
+        .mc-step-item-label-title {
+          color: $text_color_success;
         }
       }
     }

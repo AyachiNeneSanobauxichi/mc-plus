@@ -8,18 +8,20 @@
   >
     <div class="mc-step-item-step-bar">
       <div class="mc-step-item-step-bar-number">
-        <span class="mc-step-item-step-bar-number-text">
-          {{ currentStepIndex + 1 }}
-        </span>
+        <template v-if="!isSuccess">
+          <span class="mc-step-item-step-bar-number-text">
+            {{ currentStepIndex + 1 }}
+          </span>
+        </template>
+        <template v-else>
+          <mc-success-icon class="mc-step-item-step-bar-success-icon" />
+        </template>
       </div>
     </div>
     <div class="mc-step-item-content">
       <div class="mc-step-item-label" v-if="label || desc">
         <span class="mc-step-item-label-title">{{ props.label }}</span>
-        <p class="mc-step-item-label-desc">
-          {{ stepCtx?.successStepIndex.value }}
-        </p>
-        <!-- <p class="mc-step-item-label-desc">{{ props.desc }}</p> -->
+        <p class="mc-step-item-label-desc">{{ props.desc }}</p>
       </div>
       <div class="mc-step-item-slot" v-if="isActive">
         <slot></slot>
@@ -33,6 +35,7 @@ import type { StepItemV2Props, StepV2Context } from "./types";
 import { computed, inject, onBeforeUnmount, onMounted } from "vue";
 import { indexOf, isNil } from "lodash-es";
 import { STEP_V2_INJECTION_KEY } from "./constant";
+import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 
 // options
 defineOptions({ name: "McStepItemV2" });
