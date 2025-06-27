@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <mc-button-playground></mc-button-playground>
+    <lightbox-container></lightbox-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import McButtonPlayground from "./views/mc-button/mc-button.vue";
+import LightboxContainer from "./views/lightbox-container.vue";
 </script>
 
 <style scoped lang="scss">

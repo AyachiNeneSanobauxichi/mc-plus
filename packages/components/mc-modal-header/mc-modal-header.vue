@@ -2,7 +2,7 @@
   <div class="mc-modal-header">
     <mc-title
       :title="title"
-      show-border
+      :show-border="showBorder"
       height="100%"
       class="mc-modal-header-title"
     >
@@ -30,6 +30,7 @@ defineOptions({ name: "McModalHeader" });
 // props
 withDefaults(defineProps<ModalHeaderProps>(), {
   showClose: true,
+  showBorder: true,
 });
 
 // emit
