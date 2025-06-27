@@ -12,7 +12,6 @@ import {
   McAlert,
   McMessage,
   McToast,
-  McStep,
   McForm,
   McFormItem,
   McInput,
@@ -36,6 +35,10 @@ import {
   McTag,
   McStatus,
   McSwitch,
+  McStep,
+  McStepV2,
+  McStepItemV2,
+  McStepChildItemV2,
 } from "@mc-plus/components";
 
 export default [
@@ -51,7 +54,6 @@ export default [
   McAlert,
   McMessage,
   McToast,
-  McStep,
   McForm,
   McFormItem,
   McInput,
@@ -75,4 +77,8 @@ export default [
   McTag,
   McStatus,
   McSwitch,
+  McStep,
+  McStepV2,
+  McStepItemV2,
+  McStepChildItemV2,
 ] as Plugin[];
