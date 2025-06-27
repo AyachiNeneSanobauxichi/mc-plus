@@ -147,11 +147,11 @@ watch(
   }
 );
 
-// set content height
-const setContentHeight = () => {
+// set wrapper height
+const setWrapperHeight = () => {
   if (!wrapperRef.value || !footerRef.value) return;
   const maxHeight =
-    window.innerHeight * 0.7 - 56 - footerRef.value.offsetHeight;
+    window.innerHeight * 0.7 - 84 - footerRef.value.offsetHeight;
   const height = contentRef.value?.offsetHeight ?? 40;
 
   wrapperRef.value.style.height = `${
@@ -161,7 +161,7 @@ const setContentHeight = () => {
 
 // window resize
 useWindowResize(() => {
-  setContentHeight();
+  setWrapperHeight();
 });
 
 // footer resize
@@ -172,7 +172,12 @@ useResizeObserver(footerRef, async ({ height }) => {
   lightbox.style.paddingBottom = `${height}px`;
   await nextTick();
   // set content height
-  setContentHeight();
+  setWrapperHeight();
+});
+
+// content resize
+useResizeObserver(contentRef, () => {
+  setWrapperHeight();
 });
 
 // expose

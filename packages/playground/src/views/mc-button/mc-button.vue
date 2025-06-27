@@ -6,6 +6,7 @@
           :disabled="disabled"
           :loading="loading"
           size="medium"
+          width="320px"
           @click="handleClick"
         >
           Primary
