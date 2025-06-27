@@ -16,7 +16,11 @@
             >
               <div class="mc-lightbox-header">
                 <slot name="header">
-                  <mc-modal-header :title="title" @close="handleCloseIconClick">
+                  <mc-modal-header
+                    :title="title"
+                    :show-border="showBorder"
+                    @close="handleCloseIconClick"
+                  >
                     <template #default>
                       <slot name="header-title"></slot>
                     </template>
@@ -78,6 +82,7 @@ const props = withDefaults(defineProps<LightboxProps>(), {
   fixed: true,
   portCssSelector: "body",
   hideFooter: false,
+  showBorder: false,
 });
 
 // emits
@@ -142,11 +147,11 @@ watch(
   }
 );
 
-// set content height
-const setContentHeight = () => {
+// set wrapper height
+const setWrapperHeight = () => {
   if (!wrapperRef.value || !footerRef.value) return;
   const maxHeight =
-    window.innerHeight * 0.7 - 56 - footerRef.value.offsetHeight;
+    window.innerHeight * 0.7 - 84 - footerRef.value.offsetHeight;
   const height = contentRef.value?.offsetHeight ?? 40;
 
   wrapperRef.value.style.height = `${
@@ -156,7 +161,7 @@ const setContentHeight = () => {
 
 // window resize
 useWindowResize(() => {
-  setContentHeight();
+  setWrapperHeight();
 });
 
 // footer resize
@@ -167,7 +172,12 @@ useResizeObserver(footerRef, async ({ height }) => {
   lightbox.style.paddingBottom = `${height}px`;
   await nextTick();
   // set content height
-  setContentHeight();
+  setWrapperHeight();
+});
+
+// content resize
+useResizeObserver(contentRef, () => {
+  setWrapperHeight();
 });
 
 // expose
