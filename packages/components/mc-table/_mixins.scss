@@ -26,12 +26,11 @@
   white-space: nowrap;
   overflow: hidden;
   user-select: none;
-  font-weight: 600;
+  font-weight: 700;
   font-size: $table-header-font-size;
   line-height: $table-header-line-height;
   color: var(--mc-gray-500);
   border-bottom: 1px solid var(--mc-gray-500);
-  box-sizing: border-box;
   cursor: pointer;
 }
 

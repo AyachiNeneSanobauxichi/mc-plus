@@ -48,7 +48,7 @@ $success_line_color: var(--mc-success);
       .mc-step-success-line {
         position: absolute;
         height: 0;
-        left: -0.5px;
+        left: -1.5px;
         border: 1.5px solid $success_line_color;
         z-index: 10;
         transition: height 0.5s ease-in-out;
