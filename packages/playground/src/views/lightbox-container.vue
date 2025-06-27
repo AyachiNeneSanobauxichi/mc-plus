@@ -2,6 +2,9 @@
   <div class="lightbox-container">
     <div>Visible: {{ visible }}</div>
     <mc-lightbox v-model="visible" title="McLightbox" size="large">
+      <template #default>
+        <div class="light-box-content">Content</div>
+      </template>
       <template #footer-desc>Please Check</template>
       <template #footer-left>
         <mc-button>Previous Step</mc-button>

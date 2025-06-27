@@ -16,7 +16,11 @@
             >
               <div class="mc-lightbox-header">
                 <slot name="header">
-                  <mc-modal-header :title="title" @close="handleCloseIconClick">
+                  <mc-modal-header
+                    :title="title"
+                    :show-border="showBorder"
+                    @close="handleCloseIconClick"
+                  >
                     <template #default>
                       <slot name="header-title"></slot>
                     </template>
@@ -78,6 +82,7 @@ const props = withDefaults(defineProps<LightboxProps>(), {
   fixed: true,
   portCssSelector: "body",
   hideFooter: false,
+  showBorder: false,
 });
 
 // emits

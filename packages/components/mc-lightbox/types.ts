@@ -10,6 +10,7 @@ export interface LightboxProps {
   fixed?: boolean;
   portCssSelector?: string;
   hideFooter?: boolean;
+  showBorder?: boolean;
 }
 
 export interface LightboxEmits {
