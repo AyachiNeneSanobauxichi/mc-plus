@@ -9,6 +9,7 @@ export interface DrawerProps {
   maskClosable?: boolean;
   fixed?: boolean;
   portCssSelector?: string;
+  showBorder?: boolean;
 }
 
 export interface DrawerEmits {
