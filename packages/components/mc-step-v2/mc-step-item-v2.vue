@@ -20,8 +20,8 @@
     </div>
     <div class="mc-step-item-content">
       <div class="mc-step-item-label" v-if="label || desc">
-        <span class="mc-step-item-label-title">{{ props.label }}</span>
-        <p class="mc-step-item-label-desc">{{ props.desc }}</p>
+        <span class="mc-step-item-label-title">{{ label }}</span>
+        <p class="mc-step-item-label-desc">{{ desc }}</p>
       </div>
       <div class="mc-step-item-slot" v-if="isActive">
         <slot></slot>
@@ -43,7 +43,6 @@ defineOptions({ name: "McStepItemV2" });
 // props
 const props = withDefaults(defineProps<StepItemV2Props>(), {
   succeed: void 0,
-  successCondition: "all",
 });
 
 // step context

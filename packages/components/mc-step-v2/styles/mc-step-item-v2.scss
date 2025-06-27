@@ -100,6 +100,7 @@ $success_line_color: var(--mc-success);
     box-sizing: border-box;
 
     .mc-step-item-label {
+      margin-bottom: 16px;
       .mc-step-item-label-title {
         color: $text_color;
         font-size: 16px;
@@ -111,7 +112,6 @@ $success_line_color: var(--mc-success);
         font-weight: 400;
         color: $text_color_desc;
       }
-      margin-bottom: 16px;
     }
   }
 

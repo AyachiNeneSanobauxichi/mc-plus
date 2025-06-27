@@ -12,8 +12,6 @@ export interface StepV2Emits {
   (e: "change", value: StepV2Value): void;
 }
 
-export type StepItemV2SuccessCondition = "all" | "any";
-
 export interface StepChildItemV2Props {
   name: StepV2Value;
   label?: string;
@@ -22,9 +20,7 @@ export interface StepChildItemV2Props {
   succeed?: boolean;
 }
 
-export interface StepItemV2Props extends StepChildItemV2Props {
-  successCondition?: StepItemV2SuccessCondition;
-}
+export interface StepItemV2Props extends StepChildItemV2Props {}
 
 export interface StepV2Context {
   successStepIndex: Ref<number>;
