@@ -31,10 +31,14 @@
 </template>
 
 <script setup lang="ts">
-import type { StepItemV2Props, StepV2Context } from "./types";
-import { computed, inject, onBeforeUnmount, onMounted } from "vue";
+import type {
+  StepItemV2Context,
+  StepItemV2Props,
+  StepV2Context,
+} from "./types";
+import { computed, inject, onBeforeUnmount, onMounted, provide } from "vue";
 import { indexOf, isNil } from "lodash-es";
-import { STEP_V2_INJECTION_KEY } from "./constant";
+import { STEP_ITEM_V2_INJECTION_KEY, STEP_V2_INJECTION_KEY } from "./constant";
 import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 
 // options
@@ -77,6 +81,12 @@ const isSuccess = computed(() => {
   } else {
     return (stepCtx?.successStepIndex?.value ?? -1) >= currentStepIndex.value;
   }
+});
+
+// provide
+provide<StepItemV2Context>(STEP_ITEM_V2_INJECTION_KEY, {
+  succeed: computed(() => isSuccess.value),
+  actived: computed(() => isActive.value),
 });
 </script>
 

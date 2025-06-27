@@ -31,6 +31,11 @@ export interface StepV2Context {
   removeStepItem(item: StepItemV2Props): void;
 }
 
+export interface StepItemV2Context {
+  succeed?: ComputedRef<boolean | undefined>;
+  actived?: ComputedRef<boolean | undefined>;
+}
+
 export interface StepV2Instance {
   setSuccessIndex(index: number): void;
   setSuccessStep(step: StepV2Value): void;

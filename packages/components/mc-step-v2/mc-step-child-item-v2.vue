@@ -2,8 +2,8 @@
   <div
     class="mc-step-child-item-v2"
     :class="{
-      'mc-step-child-item-actived': false,
-      'mc-step-child-item-success': false,
+      'mc-step-child-item-actived': isActive,
+      'mc-step-child-item-success': isSuccess,
     }"
   >
     <div class="mc-step-child-item-content">
@@ -19,7 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import type { StepChildItemV2Props } from "./types";
+import type { StepChildItemV2Props, StepItemV2Context } from "./types";
+import { computed, inject } from "vue";
+import { STEP_ITEM_V2_INJECTION_KEY } from "./constant";
 
 // options
 defineOptions({ name: "McStepChildItemV2" });
@@ -27,6 +29,23 @@ defineOptions({ name: "McStepChildItemV2" });
 // props
 const props = withDefaults(defineProps<StepChildItemV2Props>(), {
   succeed: void 0,
+});
+
+// step item context
+const stepItemCtx = inject<StepItemV2Context>(STEP_ITEM_V2_INJECTION_KEY);
+
+// is active
+const isActive = computed(() => {
+  return stepItemCtx?.actived?.value;
+});
+
+// is success
+const isSuccess = computed(() => {
+  if (stepItemCtx?.succeed?.value) {
+    return stepItemCtx?.succeed?.value;
+  } else {
+    return props.succeed;
+  }
 });
 </script>
 

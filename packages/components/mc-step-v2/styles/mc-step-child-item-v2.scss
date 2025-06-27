@@ -56,4 +56,14 @@ $bg_color_white: var(--mc-white);
     top: 4px;
     left: -40px;
   }
+
+  &.mc-step-child-item-actived::before {
+    background-color: $bg_color_active;
+    border-color: $bg_color_active;
+  }
+
+  &.mc-step-child-item-success::before {
+    background-color: $bg_color_success;
+    border-color: $bg_color_success;
+  }
 }
