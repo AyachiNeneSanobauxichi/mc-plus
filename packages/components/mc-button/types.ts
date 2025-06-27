@@ -3,7 +3,7 @@ import type { IconType } from "../mc-icon/types";
 
 export type ButtonType = "primary" | "plain" | "link";
 export type NativeType = "button" | "submit" | "reset";
-export type ButtonSize = "medium" | "large" | "small";
+export type ButtonSize = "medium" | "small";
 
 export interface ButtonProps {
   type?: ButtonType;
