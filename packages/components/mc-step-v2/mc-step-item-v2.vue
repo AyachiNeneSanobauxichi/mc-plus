@@ -6,7 +6,7 @@
       'mc-step-item-success': isSuccess,
     }"
   >
-    <div class="mc-step-item-step-bar">
+    <div class="mc-step-item-step-bar" ref="stepBarRef">
       <div class="mc-step-item-step-bar-number">
         <template v-if="!isSuccess">
           <div class="mc-step-item-step-bar-number-text">
@@ -23,7 +23,7 @@
         </template>
       </div>
     </div>
-    <div class="mc-step-item-content">
+    <div class="mc-step-item-content" ref="contentRef">
       <div class="mc-step-item-label" v-if="label || desc">
         <slot name="label">
           <span class="mc-step-item-label-title">{{ label }}</span>
@@ -45,11 +45,19 @@ import type {
   StepItemV2Props,
   StepV2Context,
 } from "./types";
-import { computed, inject, onBeforeUnmount, onMounted, provide } from "vue";
+import {
+  computed,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  ref,
+} from "vue";
 import { indexOf, isNil } from "lodash-es";
 import { STEP_ITEM_V2_INJECTION_KEY, STEP_V2_INJECTION_KEY } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
+import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
 defineOptions({ name: "McStepItemV2" });
@@ -58,6 +66,10 @@ defineOptions({ name: "McStepItemV2" });
 const props = withDefaults(defineProps<StepItemV2Props>(), {
   succeed: void 0,
 });
+
+// refs
+const contentRef = ref<HTMLDivElement>();
+const stepBarRef = ref<HTMLDivElement>();
 
 // step context
 const stepCtx = inject<StepV2Context>(STEP_V2_INJECTION_KEY);
@@ -90,6 +102,31 @@ const isSuccess = computed(() => {
     return props.succeed;
   } else {
     return (stepCtx?.successStepIndex?.value ?? -1) >= currentStepIndex.value;
+  }
+});
+
+// is last step
+const isLastStep = computed(() => {
+  return stepCtx?.stepItems?.length === currentStepIndex.value + 1;
+});
+
+/* set currenct line height when is last step */
+// content resize observer
+useResizeObserver(contentRef, () => {
+  if (isLastStep.value && contentRef.value && stepBarRef.value) {
+    const childItems = Array.from(
+      contentRef.value.querySelectorAll(".mc-step-child-item-v2") ?? []
+    );
+
+    if (childItems.length > 0) {
+      const lastChildItem = childItems[childItems.length - 1];
+      const { top } = lastChildItem.getBoundingClientRect();
+      const { top: stepBarTop } = stepBarRef.value.getBoundingClientRect();
+      const lineHeight = top - stepBarTop;
+      stepBarRef.value.style.height = `${lineHeight + 4}px`;
+    } else {
+      stepBarRef.value.style.height = `${40}px`;
+    }
   }
 });
 

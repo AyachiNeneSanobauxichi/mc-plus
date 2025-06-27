@@ -11,7 +11,7 @@
         <span class="mc-step-child-item-label-title">{{ label }}</span>
         <p class="mc-step-child-item-label-desc">{{ desc }}</p>
       </div>
-      <div class="mc-step-child-item-slot">
+      <div class="mc-step-child-item-slot" v-if="$slots.default">
         <slot></slot>
       </div>
     </div>
