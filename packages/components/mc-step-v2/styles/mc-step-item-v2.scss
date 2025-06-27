@@ -1,0 +1,169 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color: var(--mc-gray-500);
+$text_color_desc: var(--mc-gray-800);
+$text_color_active: var(--mc-purple-500);
+$text_color_success: var(--mc-success);
+$text_color_disabled: var(--mc-gray-500);
+$bg_color: var(--mc-gray-200);
+$bg_color_active: var(--mc-purple-500);
+$bg_color_success: var(--mc-success);
+$bg_color_disabled: var(--mc-gray-100);
+$bg_color_white: var(--mc-white);
+$number_color: var(--mc-gray-800);
+$number_color_active: var(--mc-white);
+$number_color_disabled: var(--mc-gray-500);
+$unsuccess_line_color: var(--mc-gray-400);
+$active_line_color: var(--mc-purple-500);
+$success_line_color: var(--mc-success);
+
+.mc-step-item-v2 {
+  span,
+  p {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+  }
+
+  min-height: 92px;
+  @include mixin.flex-center(row, space-between, start, 8px);
+
+  .mc-step-item-step-bar {
+    width: 48px;
+    align-self: stretch;
+    position: relative;
+    @include mixin.flex-center(row, center, start);
+
+    .mc-step-item-step-bar-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: $bg_color_white;
+      box-shadow: 0px 2px 4px 0px rgba(4, 20, 124, 0.15);
+      position: relative;
+      @include mixin.flex-center();
+
+      .mc-step-item-step-bar-number-text {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: $bg_color;
+        font-weight: 600;
+        font-size: 16px;
+        color: $number_color;
+        cursor: default;
+        @include mixin.flex-center();
+      }
+
+      .mc-step-item-step-bar-success-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &::before {
+      content: "";
+      width: 1.5px;
+      height: 0%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      box-sizing: border-box;
+      z-index: -1;
+      transition: height 0.3s ease-in-out;
+    }
+
+    &::after {
+      content: "";
+      height: 100%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      box-sizing: border-box;
+      border: 1.5px solid transparent;
+      border-image: repeating-linear-gradient(
+          to bottom,
+          $unsuccess_line_color 0,
+          $unsuccess_line_color 4px,
+          transparent 4px,
+          transparent 8px
+        )
+        1;
+      z-index: -10;
+    }
+  }
+  .mc-step-item-content {
+    flex: 1;
+    padding-top: 8px;
+    box-sizing: border-box;
+
+    .mc-step-item-label {
+      margin-bottom: 16px;
+      .mc-step-item-label-title {
+        color: $text_color;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .mc-step-item-label-desc {
+        font-size: 14px;
+        font-weight: 400;
+        color: $text_color_desc;
+      }
+    }
+  }
+
+  /* actived */
+  &.mc-step-item-actived {
+    .mc-step-item-step-bar {
+      .mc-step-item-step-bar-number {
+        background-color: $bg_color_active;
+        .mc-step-item-step-bar-number-text {
+          background-color: $bg_color_active;
+          color: $number_color_active;
+        }
+      }
+
+      &::before {
+        height: 100%;
+        background-color: $active_line_color;
+      }
+    }
+
+    .mc-step-item-content {
+      .mc-step-item-label {
+        .mc-step-item-label-title {
+          color: $text_color_active;
+        }
+      }
+    }
+  }
+
+  /* success */
+  &.mc-step-item-success {
+    .mc-step-item-step-bar {
+      .mc-step-item-step-bar-number {
+        background-color: $bg_color_success;
+        .mc-step-item-step-bar-number-text {
+          background-color: $bg_color_success;
+          color: $number_color_active;
+        }
+      }
+
+      &::before {
+        height: 100%;
+        background-color: $success_line_color;
+      }
+    }
+
+    .mc-step-item-content {
+      .mc-step-item-label {
+        .mc-step-item-label-title {
+          color: $text_color_success;
+        }
+      }
+    }
+  }
+}
