@@ -78,7 +78,7 @@
         class="mc-select-icon-wrapper"
         :class="{ 'mc-select-icon-wrapper-expand': isExpand && !isDisabled }"
       >
-        <mc-icon name="Down-Chevron" />
+        <mc-icon name="Down-Chevron" class="mc-select-icon" />
       </div>
     </div>
     <transition name="mc-select-dropdown-transition">
