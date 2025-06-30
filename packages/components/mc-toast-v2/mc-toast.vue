@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="mc-toast-content-container">
+    <div class="mc-toast-content-container" v-if="content || $slots.content">
       <slot name="content">{{ content }}</slot>
     </div>
   </div>

@@ -1,10 +1,6 @@
 <template>
   <div>
-    <mc-toast message="Mc Toast">
-      <template #content>
-        <div>Mc Toast Content</div>
-      </template>
-    </mc-toast>
+    <mc-toast message="Mc Toast"> </mc-toast>
   </div>
 </template>
 
