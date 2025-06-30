@@ -8,6 +8,7 @@ export interface ToastProps {
   autoClose?: boolean;
   duration?: number;
   hideIcon?: boolean;
+  onClose?: () => void;
 }
 
 export interface ToastEmits {

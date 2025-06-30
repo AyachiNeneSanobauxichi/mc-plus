@@ -1,20 +1,31 @@
 <template>
-  <div>
-    <mc-toast
-      message="Mc Toast"
-      type="warning"
-      @close="handleClose"
-      :duration="3000"
-    ></mc-toast>
+  <div class="playground-toast">
+    <div class="tool-bar">
+      <mc-button @click="toastSuccess('Success')">Success</mc-button>
+      <mc-button @click="toastError('Error')">Error</mc-button>
+      <mc-button @click="toastWarning('Warning')">Warning</mc-button>
+      <mc-button @click="toastInfo('Info')">Info</mc-button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import McToast from "../../../../components/mc-toast-v2/mc-toast.vue";
-
-const handleClose = () => {
-  console.log("Toast Close");
-};
+import {
+  toastSuccess,
+  toastError,
+  toastWarning,
+  toastInfo,
+} from "../../../../components/mc-toast-v2/toast";
+import McButton from "../../../../components/mc-button/mc-button.vue";
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.playground-toast {
+  .tool-bar {
+    position: absolute;
+    display: flex;
+    gap: 16px;
+    bottom: 0;
+  }
+}
+</style>

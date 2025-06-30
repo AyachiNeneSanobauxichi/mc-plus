@@ -67,7 +67,7 @@ const iconName = computed<IconType | undefined>(() => {
 });
 
 // duration time
-const durationTime = computed(() => props.duration || 5000);
+const durationTime = computed(() => props.duration || 3000);
 
 // count down
 const countDown = ref(Math.floor(durationTime.value / 1000));
