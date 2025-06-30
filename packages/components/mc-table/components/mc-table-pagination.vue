@@ -60,7 +60,18 @@
     </div>
     <div class="mc-table__pagination-size">
       <label class="mc-table__pagination-size-label">View per page</label>
-      <select
+      <div class="mc-table-pagination-size-group">
+        <div
+          class="mc-table-pagination-size-group-item"
+          :class="{ 'is-active': size === pageSize }"
+          v-for="size in pageSizeList"
+          :key="size"
+          @click="handlePageSizeChange(size)"
+        >
+          {{ size }}
+        </div>
+      </div>
+      <!-- <select
         v-if="pageSizeList && pageSizeList.length > 0"
         class="mc-table__pagination-select"
         v-model="pageSize"
@@ -69,7 +80,7 @@
         <option v-for="size in pageSizeList" :key="size" :value="size">
           {{ size }}
         </option>
-      </select>
+      </select> -->
     </div>
   </div>
 </template>
@@ -180,7 +191,8 @@ const handlePageChange = (page: number, disabled: boolean) => {
   emit("page-change", { pageSize: pageSize.value, pageNum: page });
 };
 
-const handlePageSizeChange = () => {
+const handlePageSizeChange = (size: number) => {
+  pageSize.value = size;
   currentPage.value = 1; // 切换每页条数时重置为第一页
   emit("page-change", { pageSize: pageSize.value, pageNum: 1 });
 };
