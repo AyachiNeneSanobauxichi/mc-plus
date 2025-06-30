@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-upload></playground-upload>
+    <playground-toast></playground-toast>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundUpload from "./views/mc-upload/playground-upload.vue";
+import PlaygroundToast from "./views/mc-toast/playground-toast.vue";
 </script>
 
 <style scoped lang="scss">
