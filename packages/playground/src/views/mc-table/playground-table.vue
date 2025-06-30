@@ -9,9 +9,9 @@ import type { RowData, TableColumn } from "mc-plus";
 import McTable from "../../../../components/mc-table/mc-table.vue";
 
 const columns: TableColumn[] = [
-  { prop: "name", label: "Name" },
-  { prop: "age", label: "Age" },
-  { prop: "gender", label: "Gender" },
+  { prop: "name", label: "Name", sortable: true },
+  { prop: "age", label: "Age", sortable: true },
+  { prop: "gender", label: "Gender", sortable: true },
 ];
 
 const data: RowData[] = [
