@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import type { ToastEmits } from "mc-plus";
-import type { ToastProps } from "./types";
+import type { ToastInstance, ToastProps } from "./types";
 import type { IconType } from "../mc-icon";
 import { computed, onUnmounted, ref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
@@ -98,6 +98,11 @@ const clearTimer = () => {
 
 onUnmounted(() => {
   clearTimer();
+});
+
+// expose
+defineExpose<ToastInstance>({
+  close: handleClose,
 });
 </script>
 

@@ -14,3 +14,7 @@ export interface ToastProps {
 export interface ToastEmits {
   (e: "close"): void;
 }
+
+export interface ToastInstance {
+  close: () => void;
+}

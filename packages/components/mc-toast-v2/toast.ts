@@ -22,8 +22,9 @@ const createContainer = () => {
   container = document.createElement("div");
   container.className = "mc-toast-container";
   container.style.position = "fixed";
-  container.style.top = "20px";
-  container.style.right = "20px";
+  container.style.top = "32px";
+  container.style.left = "50%";
+  container.style.transform = "translateX(-50%)";
   container.style.zIndex = "9999";
   container.style.display = "flex";
   container.style.flexDirection = "column";
@@ -143,7 +144,7 @@ const createToast = (options: ToastProps | string) => {
     close: () => {
       const component = toastVNode.component;
       if (component && component.exposed) {
-        (component.exposed as any).handleClose();
+        (component.exposed as any)?.close();
       }
     },
   };
@@ -205,22 +206,22 @@ const addToastStyles = () => {
   style.textContent = `
     @keyframes toast-slide-in {
       from {
-        transform: translateX(100%);
+        transform: translateY(100%);
         opacity: 0;
       }
       to {
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
       }
     }
     
     @keyframes toast-slide-out {
       from {
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
       }
       to {
-        transform: translateX(100%);
+        transform: translateY(100%);
         opacity: 0;
       }
     }
