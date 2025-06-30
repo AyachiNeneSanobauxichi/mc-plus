@@ -71,16 +71,6 @@
           {{ size }}
         </div>
       </div>
-      <!-- <select
-        v-if="pageSizeList && pageSizeList.length > 0"
-        class="mc-table__pagination-select"
-        v-model="pageSize"
-        @change="handlePageSizeChange"
-      >
-        <option v-for="size in pageSizeList" :key="size" :value="size">
-          {{ size }}
-        </option>
-      </select> -->
     </div>
   </div>
 </template>
