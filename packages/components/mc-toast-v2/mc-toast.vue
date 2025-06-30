@@ -13,7 +13,9 @@
         </div>
       </div>
       <div class="mc-toast-msg-close-container">
-        <div class="mc-toast-countdown" v-if="duration"></div>
+        <div class="mc-toast-countdown" v-if="duration">
+          {{ countDown }}
+        </div>
         <div class="mc-toast-msg-close" v-if="closable">
           <mc-icon name="Cross" :size="24" @click="handleClose"></mc-icon>
         </div>
@@ -29,7 +31,7 @@
 import type { ToastEmits } from "mc-plus";
 import type { ToastProps } from "./types";
 import type { IconType } from "../mc-icon";
-import { computed } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
@@ -47,11 +49,6 @@ const props = withDefaults(defineProps<ToastProps>(), {
 // emits
 const emits = defineEmits<ToastEmits>();
 
-// close
-const handleClose = () => {
-  emits("close");
-};
-
 // icon
 const iconName = computed<IconType | undefined>(() => {
   if (props.hideIcon) return void 0;
@@ -67,6 +64,49 @@ const iconName = computed<IconType | undefined>(() => {
     default:
       return void 0;
   }
+});
+
+// duration time
+const durationTime = computed(() => props.duration || 5000);
+
+// count down
+const countDown = ref(Math.floor(durationTime.value / 1000));
+
+// auto close
+let timeOutTimer: NodeJS.Timeout | null = null;
+let countDownTimer: NodeJS.Timeout | null = null;
+if (props.autoClose) {
+  // count down
+  countDownTimer = setInterval(() => {
+    if (countDown.value > 0) {
+      countDown.value--;
+    }
+  }, 1000);
+
+  // auto close after duration time
+  timeOutTimer = setTimeout(() => {
+    handleClose();
+  }, durationTime.value);
+}
+
+// close
+const handleClose = () => {
+  clearTimer();
+  emits("close");
+};
+
+// clear timer
+const clearTimer = () => {
+  if (timeOutTimer) {
+    clearTimeout(timeOutTimer);
+  }
+  if (countDownTimer) {
+    clearInterval(countDownTimer);
+  }
+};
+
+onUnmounted(() => {
+  clearTimer();
 });
 </script>
 

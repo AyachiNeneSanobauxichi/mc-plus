@@ -47,6 +47,15 @@ $text_color_content: var(--mc-gray-800);
       font-size: 16px;
     }
 
+    .mc-toast-countdown {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      box-sizing: border-box;
+      border: 2px solid;
+      @include mixin.flex-center;
+    }
+
     .mc-toast-msg-close {
       cursor: pointer;
       transition: transform 0.3s ease-in-out;
