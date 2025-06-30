@@ -28,8 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ToastEmits } from "mc-plus";
-import type { ToastInstance, ToastProps } from "./types";
+import type { ToastInstance, ToastProps, ToastEmits } from "./types";
 import type { IconType } from "../mc-icon";
 import { computed, onUnmounted, ref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
