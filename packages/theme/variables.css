@@ -35,10 +35,10 @@
   --mc-warning: #ffba30;
   --mc-info: #4b82f1;
   --mc-error: #f53d3d;
-  --mc-success-background: #def4e0;
-  --mc-warning-background: #fff5e0;
-  --mc-info-background: #e4edfd;
-  --mc-error-background: #fee2e2;
+  --mc-success-background: #edf9ee;
+  --mc-warning-background: #fff9ee;
+  --mc-info-background: #f1f5fe;
+  --mc-error-background: #feefef;
   --mc-success-light-background: #eff9ef;
   --mc-warning-light-background: #fffaef;
   --mc-info-light-background: #f1f6fe;

@@ -1,4 +1,19 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
+$bg_color_success_msg: var(--mc-success);
+$bg_color_success_content: var(--mc-success-background);
+$bg_color_error_msg: var(--mc-error);
+$bg_color_error_content: var(--mc-error-background);
+$bg_color_warning_msg: var(--mc-warning);
+$bg_color_warning_content: var(--mc-warning-background);
+$bg_color_info_msg: var(--mc-info);
+$bg_color_info_content: var(--mc-info-background);
+
+$text_color_msg_success: var(--mc-white);
+$text_color_msg_error: var(--mc-white);
+$text_color_msg_warning: var(--mc-gray-800);
+$text_color_msg_info: var(--mc-gray-800);
+$text_color_content: var(--mc-gray-800);
+
 .mc-toast {
 }

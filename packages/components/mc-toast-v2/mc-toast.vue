@@ -7,4 +7,6 @@
 defineOptions({ name: "McToast" });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@use "./index.scss";
+</style>
