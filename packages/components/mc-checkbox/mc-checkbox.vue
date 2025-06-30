@@ -10,7 +10,7 @@
     <input
       type="checkbox"
       class="mc-checkbox__input"
-      :value="modelValue"
+      :value="checkboxGroupValue"
       :disabled="isDisabled"
     />
     <label class="mc-checkbox__wrapper">
@@ -18,7 +18,7 @@
         class="mc-checkbox__checkbox"
         @click="handleClick"
         :class="{
-          'mc-checkbox__checkbox--checked': modelValue,
+          'mc-checkbox__checkbox--checked': !!checkboxGroupValue,
           'mc-checkbox__checkbox--partial': partial,
         }"
       ></span>
@@ -31,9 +31,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import type {
+  CheckboxProps,
+  CheckboxEmits,
+  CheckboxGroupContext,
+} from "./types";
+import { computed, inject, watch } from "vue";
+import { includes } from "lodash-es";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import type { CheckboxProps, CheckboxEmits } from "./types";
+import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
 
 // options
 defineOptions({ name: "McCheckbox" });
@@ -52,8 +58,15 @@ const { formItem } = useFormItem();
 // form item disable
 const disabled = useFormDisabled();
 
+// checkbox group
+const checkboxGroupCtx = inject<CheckboxGroupContext>(
+  CHECKBOX_GROUP_INJECTION_KEY
+);
+
 // disable
-const isDisabled = computed(() => disabled.value);
+const isDisabled = computed(
+  () => disabled.value || checkboxGroupCtx?.disabled?.value
+);
 
 // error
 const isError = computed(
@@ -63,16 +76,37 @@ const isError = computed(
     props.formValidate
 );
 
+// checkbox group
+const isCheckboxGroup = computed(
+  () =>
+    !!checkboxGroupCtx && typeof checkboxGroupCtx?.handleSelect === "function"
+);
+
+// checkbox group value
+const checkboxGroupValue = computed(() => {
+  if (isCheckboxGroup.value) {
+    return (
+      props.value && includes(checkboxGroupCtx?.modelValue?.value, props.value)
+    );
+  } else {
+    return props.modelValue;
+  }
+});
+
 // click
 const handleClick = () => {
   if (props.disabled) return;
-  emits("update:modelValue", !props.modelValue);
-  emits("change", !props.modelValue);
+  if (isCheckboxGroup.value) {
+    checkboxGroupCtx?.handleSelect(props.value);
+  } else {
+    emits("update:modelValue", !props.modelValue);
+    emits("change", !props.modelValue);
+  }
 };
 
 // model value changed
 watch(
-  () => props.modelValue,
+  () => checkboxGroupValue.value,
   () => {
     if (props.formValidate) {
       formItem?.validate("change");

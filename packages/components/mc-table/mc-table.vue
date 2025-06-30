@@ -91,7 +91,7 @@ const { setCurrentRow, getRowClass } = useTableCurrentRow(highlightCurrentRow);
 
 // 监听数据变化
 watch(
-  data,
+  () => data.value,
   (newData) => {
     tableData.value = newData;
   },

@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <lightbox-container></lightbox-container>
+    <playground-select></playground-select>
   </div>
 </template>
 
 <script setup lang="ts">
-import LightboxContainer from "./views/lightbox-container.vue";
+import PlaygroundSelect from "./views/mc-select/playground-select.vue";
 </script>
 
 <style scoped lang="scss">
