@@ -1,21 +1,16 @@
 <template>
   <div class="playground-toast">
     <div class="tool-bar">
-      <mc-button @click="toastSuccess('Success')">Success</mc-button>
-      <mc-button @click="toastError('Error')">Error</mc-button>
-      <mc-button @click="toastWarning('Warning')">Warning</mc-button>
-      <mc-button @click="toastInfo('Info')">Info</mc-button>
+      <mc-button @click="toast.success('Success')">Success</mc-button>
+      <mc-button @click="toast.error('Error')">Error</mc-button>
+      <mc-button @click="toast.warning('Warning')">Warning</mc-button>
+      <mc-button @click="toast.info('Info')">Info</mc-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  toastSuccess,
-  toastError,
-  toastWarning,
-  toastInfo,
-} from "@mc-plus/components/mc-toast/toast";
+import { toast } from "@mc-plus/components/mc-toast/toast";
 import McButton from "../../../../components/mc-button/mc-button.vue";
 </script>
 

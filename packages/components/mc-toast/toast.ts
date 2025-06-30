@@ -82,8 +82,10 @@ const removeOldestToast = () => {
   }
 };
 
+type CreateToastFunction = (options: ToastProps | string) => ToastInstance;
+
 // 创建 toast 实例
-const createToast = (options: ToastProps | string) => {
+const createToast: CreateToastFunction = (options: ToastProps | string) => {
   let props: ToastProps = {};
 
   // 处理字符串输入
@@ -153,37 +155,40 @@ const createToast = (options: ToastProps | string) => {
   toastInstances.push(instance);
 
   return {
-    id: instanceId,
-    close: instance.close,
+    ...instance,
   };
 };
 
-// 主要的 toast 函数
-export const toast = createToast;
+type Toast = {
+  success: CreateToastFunction;
+  error: CreateToastFunction;
+  warning: CreateToastFunction;
+  info: CreateToastFunction;
+  closeAll: () => void;
+};
 
-// 便捷方法
-export const toastSuccess = (options: ToastProps | string) => {
+const success: CreateToastFunction = (options: ToastProps | string) => {
   if (typeof options === "string") {
     return createToast({ message: options, type: "success" });
   }
   return createToast({ ...options, type: "success" });
 };
 
-export const toastError = (options: ToastProps | string) => {
+const error: CreateToastFunction = (options: ToastProps | string) => {
   if (typeof options === "string") {
     return createToast({ message: options, type: "error" });
   }
   return createToast({ ...options, type: "error" });
 };
 
-export const toastWarning = (options: ToastProps | string) => {
+const warning: CreateToastFunction = (options: ToastProps | string) => {
   if (typeof options === "string") {
     return createToast({ message: options, type: "warning" });
   }
   return createToast({ ...options, type: "warning" });
 };
 
-export const toastInfo = (options: ToastProps | string) => {
+const info: CreateToastFunction = (options: ToastProps | string) => {
   if (typeof options === "string") {
     return createToast({ message: options, type: "info" });
   }
@@ -191,10 +196,19 @@ export const toastInfo = (options: ToastProps | string) => {
 };
 
 // 关闭所有 toast
-export const closeAllToasts = () => {
+const closeAll = () => {
   toastInstances.forEach((instance) => {
     instance.close();
   });
+};
+
+// 主要的 toast 函数
+export const toast: Toast = {
+  success,
+  error,
+  warning,
+  info,
+  closeAll,
 };
 
 // 添加CSS动画样式
