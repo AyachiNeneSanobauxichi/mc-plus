@@ -1,175 +1,233 @@
-import { createVNode, isVNode, render } from "vue";
-import McToast from "./mc-toast.vue";
 import type { ToastProps } from "./types";
+import { createVNode, render } from "vue";
+import McToast from "./mc-toast.vue";
 
-// Container and overlay instances
-const containers: Record<string, HTMLDivElement> = {};
-let overlay: HTMLDivElement | null = null;
+// Toast 实例接口
+interface ToastInstance {
+  id: string;
+  wrapper: HTMLDivElement;
+  close: () => void;
+}
 
-// Create overlay
-const createOverlay = () => {
-  if (overlay) return overlay;
-  overlay = document.createElement("div");
-  overlay.className = "mc-toast-overlay";
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-  overlay.style.zIndex = "9998";
-  overlay.style.transition = "opacity 0.1s ease";
-  overlay.style.opacity = "0"; // Start transparent
-  document.body.appendChild(overlay);
-  // Force a reflow to ensure the opacity transition works
-  overlay.getBoundingClientRect();
+// Toast 实例队列
+const toastInstances: ToastInstance[] = [];
+const MAX_TOASTS = 5;
 
-  // Fade in
-  overlay.style.opacity = "1";
-  return overlay;
-};
+// 创建容器
+let container: HTMLDivElement | null = null;
 
-// Remove overlay with fade-out animation
-const removeOverlay = () => {
-  if (overlay && document.body.contains(overlay)) {
-    overlay.style.opacity = "0";
-    setTimeout(() => {
-      if (overlay && document.body.contains(overlay)) {
-        document.body.removeChild(overlay);
-        console.log("removeOverlay", new Date().getTime());
-        overlay = null;
-      }
-    }, 300); // Same duration as the toast animation
-  }
-};
+const createContainer = () => {
+  if (container) return container;
 
-// Get or create container
-const getContainer = (position: string) => {
-  if (containers[position]) return containers[position];
-  const container = document.createElement("div");
+  container = document.createElement("div");
   container.className = "mc-toast-container";
   container.style.position = "fixed";
+  container.style.top = "32px";
   container.style.left = "50%";
-  if (position === "bottom") {
-    container.style.bottom = "10%";
-    container.style.transform = "translate(-50%, -10%)";
-  } else {
-    container.style.top = position === "top" ? "10%" : "50%";
-    container.style.transform = `translate(-50%, ${position === "top" ? "-10%" : "-50%"})`;
-  }
+  container.style.transform = "translateX(-50%)";
   container.style.zIndex = "9999";
   container.style.display = "flex";
-  ``;
   container.style.flexDirection = "column";
-  container.style.alignItems = "center";
+  container.style.gap = "12px";
+  container.style.pointerEvents = "none";
+
   document.body.appendChild(container);
-  containers[position] = container;
   return container;
 };
 
-// Create a toast instance
-export const createToast = (options: ToastProps | string) => {
+// 移除容器
+const removeContainer = () => {
+  if (
+    container &&
+    document.body.contains(container) &&
+    toastInstances.length === 0
+  ) {
+    document.body.removeChild(container);
+    container = null;
+  }
+};
+
+// 生成唯一ID
+const generateId = () => {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
+
+// 移除指定的 toast 实例
+const removeToastInstance = (instanceId: string) => {
+  const index = toastInstances.findIndex(
+    (instance) => instance.id === instanceId
+  );
+  if (index !== -1) {
+    const instance = toastInstances[index];
+
+    // 移除 DOM 元素
+    render(null, instance.wrapper);
+    if (container && container.contains(instance.wrapper)) {
+      container.removeChild(instance.wrapper);
+    }
+
+    // 从队列中移除
+    toastInstances.splice(index, 1);
+
+    // 检查是否需要移除容器
+    removeContainer();
+  }
+};
+
+// 移除最早的 toast（FIFO策略）
+const removeOldestToast = () => {
+  if (toastInstances.length > 0) {
+    const oldestInstance = toastInstances[0];
+    oldestInstance.close();
+  }
+};
+
+// 创建 toast 实例
+const createToast = (options: ToastProps | string) => {
   let props: ToastProps = {};
 
-  // Handle string input
+  // 处理字符串输入
   if (typeof options === "string") {
     props = { message: options };
-  }
-  // Handle VNode
-  else if (isVNode(options)) {
-    props = { message: "" };
-  }
-  // Handle props object
-  else {
+  } else {
     props = { ...options };
   }
 
-  // Set defaults
-  props.position = props.position || "top";
+  // 设置默认值
+  props.type = props.type || "info";
+  props.autoClose = props.autoClose !== false;
+  props.closable = props.closable !== false;
 
-  // Create overlay
-  createOverlay();
+  // 如果已达到最大数量，移除最早的 toast
+  if (toastInstances.length >= MAX_TOASTS) {
+    removeOldestToast();
+  }
 
-  // Create container
-  const container = getContainer(props.position);
+  // 创建容器
+  const toastContainer = createContainer();
 
-  // Create wrapper div
+  // 创建包装元素
   const toastWrapper = document.createElement("div");
+  toastWrapper.style.pointerEvents = "auto";
+  toastWrapper.style.animation = "toast-slide-in 0.3s ease-out";
 
-  // Create toast VNode
+  // 生成实例ID
+  const instanceId = generateId();
+
+  // 创建 toast VNode
   const toastVNode = createVNode(McToast, {
     ...props,
     onClose: () => {
-      // Handle close
+      // 添加关闭动画
+      toastWrapper.style.animation = "toast-slide-out 0.3s ease-in";
 
-      // Start overlay fade-out at the same time as toast fade-out
-      if (container.childNodes.length <= 1) {
-        removeOverlay();
-      }
-
+      // 调用用户自定义的关闭回调
       if (props.onClose) {
         props.onClose();
       }
 
-      // Remove toast from DOM
+      // 延迟移除实例
       setTimeout(() => {
-        render(null, toastWrapper);
-        if (container.contains(toastWrapper)) {
-          container.removeChild(toastWrapper);
-        }
-
-        // Clean up container if empty
-        if (container.childNodes.length === 0) {
-          if (document.body.contains(container)) {
-            document.body.removeChild(container);
-          }
-          delete containers[props.position as string];
-        }
+        removeToastInstance(instanceId);
       }, 300);
     },
   });
 
-  // Render toast
+  // 渲染 toast
   render(toastVNode, toastWrapper);
-  container.appendChild(toastWrapper);
+  toastContainer.appendChild(toastWrapper);
 
-  // Get component instance
-  const toastInstance = toastVNode.component?.exposed as { close: () => void };
+  // 创建实例对象
+  const instance: ToastInstance = {
+    id: instanceId,
+    wrapper: toastWrapper,
+    close: () => {
+      const component = toastVNode.component;
+      if (component && component.exposed) {
+        (component.exposed as any)?.close();
+      }
+    },
+  };
+
+  // 添加到队列
+  toastInstances.push(instance);
 
   return {
-    close: () => {
-      toastInstance?.close();
-    },
+    id: instanceId,
+    close: instance.close,
   };
 };
 
-// Shorthand methods
+// 主要的 toast 函数
 export const toast = createToast;
 
-export const toastPrimary = (options: ToastProps | string) => {
-  if (typeof options === "string") {
-    return createToast({ message: options, type: "info", title: "Info", icon: "Info" });
-  }
-  return createToast({ title: "Info", icon: "Info", ...options, type: "info" });
-};
-
+// 便捷方法
 export const toastSuccess = (options: ToastProps | string) => {
   if (typeof options === "string") {
-    return createToast({ message: options, type: "success", title: "Success", icon: "Tick" });
+    return createToast({ message: options, type: "success" });
   }
-  return createToast({ title: "Success", icon: "Tick", ...options, type: "success" });
-};
-
-export const toastWarning = (options: ToastProps | string) => {
-  if (typeof options === "string") {
-    return createToast({ message: options, type: "warning", title: "Warning", icon: "Error_02" });
-  }
-  return createToast({ title: "Warning", icon: "Error_02", ...options, type: "warning" });
+  return createToast({ ...options, type: "success" });
 };
 
 export const toastError = (options: ToastProps | string) => {
   if (typeof options === "string") {
-    return createToast({ message: options, type: "error", title: "Error", icon: "Error" });
+    return createToast({ message: options, type: "error" });
   }
-  return createToast({ title: "Error", icon: "Error", ...options, type: "error" });
+  return createToast({ ...options, type: "error" });
 };
+
+export const toastWarning = (options: ToastProps | string) => {
+  if (typeof options === "string") {
+    return createToast({ message: options, type: "warning" });
+  }
+  return createToast({ ...options, type: "warning" });
+};
+
+export const toastInfo = (options: ToastProps | string) => {
+  if (typeof options === "string") {
+    return createToast({ message: options, type: "info" });
+  }
+  return createToast({ ...options, type: "info" });
+};
+
+// 关闭所有 toast
+export const closeAllToasts = () => {
+  toastInstances.forEach((instance) => {
+    instance.close();
+  });
+};
+
+// 添加CSS动画样式
+const addToastStyles = () => {
+  if (document.getElementById("mc-toast-v2-styles")) return;
+
+  const style = document.createElement("style");
+  style.id = "mc-toast-v2-styles";
+  style.textContent = `
+    @keyframes toast-slide-in {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes toast-slide-out {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+};
+
+// 初始化样式
+addToastStyles();

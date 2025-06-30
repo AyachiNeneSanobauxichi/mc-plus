@@ -1,90 +1,108 @@
-<!--
- * @Author: Tieju yang
- * @Date: 2025-05-21 09:34:05
- * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-23 17:50:45
--->
 <template>
-  <div ref="_ref" class="mc-toast" :class="[entering ? 'mc-toast--entering' : '', leaving ? 'mc-toast--leaving' : '']">
-    <div class="mc-toast__header" :class="`mc-toast__header--${type}`">
-      <mc-icon v-if="icon" class="mc-toast__icon" :name="icon" :size="24"></mc-icon>
-      <div class="mc-toast__title">{{ title }}</div>
-      <mc-icon name="Cross" class="mc-toast__close" :size="24" v-if="showClose" @click="close"></mc-icon>
+  <div class="mc-toast" :class="[`mc-toast-${type}`]">
+    <div
+      class="mc-toast-msg-container"
+      :class="{ 'mc-toast-has-content': content || $slots.content }"
+    >
+      <div class="mc-toast-msg-text-container">
+        <div class="mc-toast-msg-icon" v-if="iconName">
+          <mc-icon :name="iconName" :size="22"></mc-icon>
+        </div>
+        <div class="mc-toast-msg-text" v-if="message || $slots.default">
+          <slot>{{ message }}</slot>
+        </div>
+      </div>
+      <div class="mc-toast-msg-close-container">
+        <div class="mc-toast-countdown" v-if="duration">
+          {{ countDown }}
+        </div>
+        <div class="mc-toast-msg-close" v-if="closable">
+          <mc-icon name="Cross" :size="24" @click="handleClose"></mc-icon>
+        </div>
+      </div>
     </div>
-    <div class="mc-toast__body" :class="`mc-toast__body--${type}`">
-      <div class="mc-toast__message">{{ message }}</div>
+    <div class="mc-toast-content-container" v-if="content || $slots.content">
+      <slot name="content">{{ content }}</slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
+import type { ToastEmits } from "mc-plus";
+import type { ToastInstance, ToastProps } from "./types";
+import type { IconType } from "../mc-icon";
+import { computed, onUnmounted, ref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
-import type { ToastEmits, ToastInstance, ToastProps } from "./types";
 
 // options
-defineOptions({
-  name: "McToast",
-});
+defineOptions({ name: "McToast" });
 
 // props
 const props = withDefaults(defineProps<ToastProps>(), {
-  type: "success",
-  message: "",
-  title: "",
-  showClose: true,
-  duration: 0,
+  type: "info",
+  closable: true,
+  autoClose: true,
+  duration: void 0,
+  hideIcon: false,
 });
 
 // emits
-const emit = defineEmits<ToastEmits>();
+const emits = defineEmits<ToastEmits>();
 
-// refs
-const _ref = ref<HTMLDivElement>();
-const entering = ref(true);
-const leaving = ref(false);
-
-// timer
-let timer: NodeJS.Timeout | null = null;
-
-// methods
-const close = () => {
-  if (timer) {
-    clearTimeout(timer);
-    timer = null;
-  }
-
-  leaving.value = true;
-  setTimeout(() => {
-    emit("close");
-    if (props.onClose) props.onClose();
-  }, 300);
-};
-
-// lifecycle
-onMounted(() => {
-  setTimeout(() => {
-    entering.value = false;
-  }, 20);
-
-  if (props.duration > 0) {
-    timer = setTimeout(() => {
-      close();
-    }, props.duration);
+// icon
+const iconName = computed<IconType | undefined>(() => {
+  if (props.hideIcon) return void 0;
+  switch (props.type) {
+    case "success":
+      return "Accept_02";
+    case "error":
+      return "Error_04";
+    case "warning":
+      return "Error_02";
+    case "info":
+      return "Info_02";
+    default:
+      return void 0;
   }
 });
 
+// duration time
+const durationTime = computed(() => props.duration || 3000);
+
+// count down
+const countDown = ref(Math.floor(durationTime.value / 1000));
+
+// auto close
+let countDownTimer: NodeJS.Timeout | null = null;
+if (props.autoClose) {
+  // count down
+  countDownTimer = setInterval(() => {
+    if (countDown.value > 0) {
+      countDown.value--;
+    } else {
+      handleClose();
+    }
+  }, 1000);
+}
+
+// close
+const handleClose = () => {
+  clearTimer();
+  emits("close");
+};
+
+// clear timer
+const clearTimer = () => {
+  if (countDownTimer) clearInterval(countDownTimer);
+};
+
 onUnmounted(() => {
-  if (timer) {
-    clearTimeout(timer);
-    timer = null;
-  }
+  clearTimer();
 });
 
 // expose
 defineExpose<ToastInstance>({
-  ref: _ref,
-  close,
+  close: handleClose,
 });
 </script>
 

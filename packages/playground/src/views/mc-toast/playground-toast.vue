@@ -15,7 +15,7 @@ import {
   toastError,
   toastWarning,
   toastInfo,
-} from "../../../../components/mc-toast-v2/toast";
+} from "@mc-plus/components/mc-toast/toast";
 import McButton from "../../../../components/mc-button/mc-button.vue";
 </script>
 
