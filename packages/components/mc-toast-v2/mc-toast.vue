@@ -73,20 +73,16 @@ const durationTime = computed(() => props.duration || 5000);
 const countDown = ref(Math.floor(durationTime.value / 1000));
 
 // auto close
-let timeOutTimer: NodeJS.Timeout | null = null;
 let countDownTimer: NodeJS.Timeout | null = null;
 if (props.autoClose) {
   // count down
   countDownTimer = setInterval(() => {
     if (countDown.value > 0) {
       countDown.value--;
+    } else {
+      handleClose();
     }
   }, 1000);
-
-  // auto close after duration time
-  timeOutTimer = setTimeout(() => {
-    handleClose();
-  }, durationTime.value);
 }
 
 // close
@@ -97,12 +93,7 @@ const handleClose = () => {
 
 // clear timer
 const clearTimer = () => {
-  if (timeOutTimer) {
-    clearTimeout(timeOutTimer);
-  }
-  if (countDownTimer) {
-    clearInterval(countDownTimer);
-  }
+  if (countDownTimer) clearInterval(countDownTimer);
 };
 
 onUnmounted(() => {
