@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide } from "vue";
+import { computed, provide, watch } from "vue";
 import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
 import type {
   CheckboxGroupContext,
@@ -13,7 +13,7 @@ import type {
   CheckboxGroupProps,
   CheckboxValue,
 } from "./types";
-import { useFormDisabled } from "../mc-form/hooks";
+import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { indexOf } from "lodash-es";
 
 // options
@@ -50,10 +50,21 @@ const handleSelect = (val?: CheckboxValue) => {
 
 // provide
 provide<CheckboxGroupContext>(CHECKBOX_GROUP_INJECTION_KEY, {
-  modelValue: props.modelValue,
-  disabled: props.disabled,
+  modelValue: computed(() => props.modelValue),
+  disabled: computed(() => props.disabled),
   handleSelect,
 });
+
+// form item
+const { formItem } = useFormItem();
+
+// model value changed
+watch(
+  () => props.modelValue,
+  () => {
+    formItem?.validate("change");
+  }
+);
 </script>
 
 <style scoped lang="scss"></style>
