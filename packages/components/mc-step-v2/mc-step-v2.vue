@@ -105,7 +105,3 @@ defineExpose<StepV2Instance>({
   setSuccessStep,
 });
 </script>
-
-<style scoped lang="scss">
-@use "./styles/mc-step-v2.scss";
-</style>
