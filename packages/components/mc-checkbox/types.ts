@@ -1,4 +1,4 @@
-import type { Ref } from "vue";
+import type { ComputedRef, Ref } from "vue";
 
 export type CheckboxValue = string | number;
 
@@ -32,7 +32,7 @@ export interface CheckboxGroupEmits {
 }
 
 export interface CheckboxGroupContext {
-  modelValue?: CheckboxValue[];
-  disabled?: boolean;
+  modelValue?: ComputedRef<CheckboxValue[] | undefined>;
+  disabled?: ComputedRef<boolean | undefined>;
   handleSelect: (val?: CheckboxValue) => void;
 }
