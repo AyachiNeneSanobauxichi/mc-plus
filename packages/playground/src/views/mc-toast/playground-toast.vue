@@ -1,5 +1,11 @@
 <template>
-  <div>Toast</div>
+  <div>
+    <mc-toast message="Mc Toast">
+      <template #content>
+        <div>Mc Toast Content</div>
+      </template>
+    </mc-toast>
+  </div>
 </template>
 
 <script setup lang="ts">
