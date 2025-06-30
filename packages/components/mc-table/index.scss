@@ -154,6 +154,11 @@
       color: var(--mc-gray-600);
       font-size: $table-font-size;
       font-weight: 400;
+
+      &-number {
+        color: var(--mc-gray-800);
+        font-weight: 600;
+      }
     }
 
     &-controls {

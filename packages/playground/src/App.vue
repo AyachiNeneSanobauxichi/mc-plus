@@ -16,7 +16,7 @@ html {
 
 .playground {
   width: 1800px;
-  height: 800px;
+  height: 1000px;
   position: fixed;
   top: 50%;
   left: 50%;

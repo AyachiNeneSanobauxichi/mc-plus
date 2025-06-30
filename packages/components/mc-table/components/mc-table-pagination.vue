@@ -1,25 +1,74 @@
 <template>
   <div class="mc-table__pagination" v-if="pagination">
-    <div class="mc-table__pagination-info">Showing {{ getShowingStart }}-{{ getShowingEnd }} of {{ pagination.total }}</div>
+    <div class="mc-table__pagination-info">
+      Showing
+      <span class="mc-table__pagination-info-number">
+        {{ getShowingStart }}-{{ getShowingEnd }}
+      </span>
+      of
+      <span class="mc-table__pagination-info-number">
+        {{ pagination.total }}
+      </span>
+    </div>
     <div class="mc-table__pagination-controls">
-      <mc-icon name="First" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }" :size="24" @click="handlePageChange(1, currentPage <= 1)" />
-      <mc-icon name="Left-Chevron" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }" :size="24" @click="handlePageChange(currentPage - 1, currentPage <= 1)" />
+      <mc-icon
+        name="First"
+        :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }"
+        :size="24"
+        @click="handlePageChange(1, currentPage <= 1)"
+      />
+      <mc-icon
+        name="Left-Chevron"
+        :class="{ 'mc-table__icon': true, 'is-disabled': currentPage <= 1 }"
+        :size="24"
+        @click="handlePageChange(currentPage - 1, currentPage <= 1)"
+      />
 
       <!-- 页码按钮 -->
       <template v-for="page in visiblePages" :key="page">
-        <button v-if="page !== '...'" class="mc-table__pagination-button mc-table__pagination-button--page" :class="{ 'is-active': page === currentPage }" @click="typeof page === 'number' ? handlePageChange(page, false) : undefined">
+        <button
+          v-if="page !== '...'"
+          class="mc-table__pagination-button mc-table__pagination-button--page"
+          :class="{ 'is-active': page === currentPage }"
+          @click="
+            typeof page === 'number' ? handlePageChange(page, false) : undefined
+          "
+        >
           {{ page }}
         </button>
         <span v-else class="mc-table__pagination-ellipsis">...</span>
       </template>
 
-      <mc-icon name="Right-Chevron" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage >= totalPages }" :size="24" @click="handlePageChange(currentPage + 1, currentPage >= totalPages)" />
-      <mc-icon name="Last" :class="{ 'mc-table__icon': true, 'is-disabled': currentPage >= totalPages }" :size="24" @click="handlePageChange(totalPages, currentPage >= totalPages)" />
+      <mc-icon
+        name="Right-Chevron"
+        :class="{
+          'mc-table__icon': true,
+          'is-disabled': currentPage >= totalPages,
+        }"
+        :size="24"
+        @click="handlePageChange(currentPage + 1, currentPage >= totalPages)"
+      />
+      <mc-icon
+        name="Last"
+        :class="{
+          'mc-table__icon': true,
+          'is-disabled': currentPage >= totalPages,
+        }"
+        :size="24"
+        @click="handlePageChange(totalPages, currentPage >= totalPages)"
+      />
     </div>
     <div class="mc-table__pagination-size">
       <label class="mc-table__pagination-size-label">View per page</label>
-      <select v-if="pageSizeList && pageSizeList.length > 0" class="mc-table__pagination-select" v-model="pageSize" @change="handlePageSizeChange">
-        <option v-for="size in pageSizeList" :key="size" :value="size">{{ size }}</option>
+      <select
+        v-if="pageSizeList && pageSizeList.length > 0"
+        class="mc-table__pagination-select"
+        v-model="pageSize"
+        @change="handlePageSizeChange"
+      >
+        <option v-for="size in pageSizeList" :key="size" :value="size">
+          {{ size }}
+        </option>
       </select>
     </div>
   </div>
