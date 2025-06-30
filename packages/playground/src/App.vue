@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-checkbox></playground-checkbox>
+    <playground-input></playground-input>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundCheckbox from "./views/mc-checkbox/playground-checkbox.vue";
+import PlaygroundInput from "./views/mc-input/playground-input.vue";
 </script>
 
 <style scoped lang="scss">

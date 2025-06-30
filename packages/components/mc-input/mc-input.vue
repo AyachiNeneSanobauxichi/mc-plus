@@ -14,7 +14,12 @@
   >
     <div class="mc-input__prefix" v-if="$slots.prefix || prefixIcon">
       <slot name="prefix">
-        <mc-icon v-if="prefixIcon" :name="prefixIcon" :size="24" />
+        <mc-icon
+          class="mc-input-icon"
+          v-if="prefixIcon"
+          :name="prefixIcon"
+          :size="24"
+        />
       </slot>
     </div>
     <input
@@ -45,6 +50,7 @@
     <template v-if="type === 'password'">
       <div class="mc-input__password">
         <mc-icon
+          class="mc-input-icon"
           :name="passwordVisible ? 'Review-Hidden' : 'Review'"
           :size="24"
           @click="togglePassword"

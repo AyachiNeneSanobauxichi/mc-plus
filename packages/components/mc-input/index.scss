@@ -43,6 +43,10 @@ $font_size: var(--mc-font-size-base);
     }
   }
 
+  .mc-input-icon {
+    color: $icon_color;
+  }
+
   // input group style
   &.mc-input--input-group-prefix {
     border-top-right-radius: 0;
