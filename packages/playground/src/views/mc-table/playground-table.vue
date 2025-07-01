@@ -1,10 +1,11 @@
 <template>
   <div class="playground-table">
     <mc-table
-      :height="700"
+      :data="displayData"
       :columns="columns"
-      :data="data"
+      :height="700"
       :pagination="pagination"
+      @page-change="handlePageChange"
     ></mc-table>
   </div>
 </template>
@@ -35,6 +36,22 @@ const pagination = ref<PaginationConfig>({
   total: 100,
   pageSizes: [10, 20, 50, 100],
 });
+
+const displayData = ref<RowData[]>([
+  ...data.slice(0, pagination.value.pageSize),
+]);
+
+const handlePageChange = ({
+  pageSize,
+  pageNum,
+}: {
+  pageSize: number;
+  pageNum: number;
+}) => {
+  displayData.value = [
+    ...data.slice(pageSize * (pageNum - 1), pageSize * pageNum),
+  ];
+};
 </script>
 
 <style scoped lang="scss"></style>

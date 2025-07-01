@@ -40,13 +40,24 @@ export interface TableProps {
   selectOnRowClick?: boolean;
 
   // 方法类配置
-  spanMethod?: (params: { row: RowData; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+  spanMethod?: (params: {
+    row: RowData;
+    column: TableColumn;
+    rowIndex: number;
+    columnIndex: number;
+  }) => { rowspan?: number; colspan?: number } | [number, number];
 
   // 是否执行初始化数据
   isInitTableData?: boolean;
 
   // 初始化数据
-  initTableData?: (params: { pageSize: number; pageNum: number }) => Promise<{ data: RowData[]; total: number }>;
+  initTableData?: (params: {
+    pageSize: number;
+    pageNum: number;
+  }) => Promise<{ data: RowData[]; total: number }>;
+
+  // 是否开启前端分页
+  isFrontPagination?: boolean;
 
   // 状态管理
   defaultSort?: SortConfig;
@@ -85,7 +96,12 @@ export interface TableColumn {
   /** 固定列位置 */
   fixed?: ColumnFixed;
   /** 单元格格式化函数 */
-  formatter?: (row: RowData, column: TableColumn, cellValue: unknown, index: number) => unknown;
+  formatter?: (
+    row: RowData,
+    column: TableColumn,
+    cellValue: unknown,
+    index: number
+  ) => unknown;
   /** 列对齐方式 */
   align?: AlignType;
   /** 表头对齐方式 */
@@ -97,9 +113,13 @@ export interface TableColumn {
   /** 自定义列插槽名称 */
   slot?: string;
   /** 列合并策略 */
-  colSpan?: number | ((row: RowData, column: TableColumn, index: number) => number);
+  colSpan?:
+    | number
+    | ((row: RowData, column: TableColumn, index: number) => number);
   /** 行合并策略 */
-  rowSpan?: number | ((row: RowData, column: TableColumn, index: number) => number);
+  rowSpan?:
+    | number
+    | ((row: RowData, column: TableColumn, index: number) => number);
   /** 是否支持排序 */
   sortable?: boolean;
   /** 当前排序状态 */
@@ -178,7 +198,12 @@ export interface TableCellProps {
     pageSize?: number;
     total: number;
   };
-  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+  spanMethod?: (data: {
+    row: Record<string, unknown>;
+    column: TableColumn;
+    rowIndex: number;
+    columnIndex: number;
+  }) => { rowspan?: number; colspan?: number } | [number, number];
 }
 
 export interface McTableHeaderProps {
@@ -204,7 +229,12 @@ export interface McTableBodyProps {
   height?: string | number;
   maxHeight?: string | number;
   pagination?: PaginationConfig;
-  spanMethod?: (data: { row: Record<string, unknown>; column: TableColumn; rowIndex: number; columnIndex: number }) => { rowspan?: number; colspan?: number } | [number, number];
+  spanMethod?: (data: {
+    row: Record<string, unknown>;
+    column: TableColumn;
+    rowIndex: number;
+    columnIndex: number;
+  }) => { rowspan?: number; colspan?: number } | [number, number];
   getRowClass?: (row: Record<string, unknown>, index: number) => string[];
   selectable?: boolean;
   selectedRows?: RowData[];

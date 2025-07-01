@@ -7,7 +7,11 @@
 import { computed, ref, type Ref } from "vue";
 import type { SortConfig, SortOrder, TableColumn } from "../types";
 
-export function useTableSort(data: Ref<Record<string, unknown>[]>, columns: Ref<TableColumn[]>, defaultSort?: SortConfig) {
+export function useTableSort(
+  data: Ref<Record<string, unknown>[]>,
+  columns: Ref<TableColumn[]>,
+  defaultSort?: SortConfig
+) {
   const currentSort = ref<SortConfig | null>(defaultSort || null);
 
   // 排序后的数据
