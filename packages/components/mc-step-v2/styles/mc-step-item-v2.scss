@@ -40,8 +40,9 @@ $success_line_color: var(--mc-success);
       border-radius: 50%;
       background-color: $bg_color_white;
       box-shadow: 0px 2px 4px 0px rgba(4, 20, 124, 0.15);
-      position: relative;
+      position: absolute;
       @include mixin.flex-center();
+      z-index: 20;
 
       .mc-step-item-step-bar-number-text {
         width: 36px;
@@ -71,8 +72,8 @@ $success_line_color: var(--mc-success);
       left: 50%;
       transform: translateX(-50%);
       box-sizing: border-box;
-      z-index: -1;
       transition: height 0.3s ease-in-out;
+      z-index: 10;
     }
 
     &::after {
@@ -91,7 +92,7 @@ $success_line_color: var(--mc-success);
           transparent 8px
         )
         1;
-      z-index: -10;
+      z-index: 1;
     }
   }
   .mc-step-item-content {
