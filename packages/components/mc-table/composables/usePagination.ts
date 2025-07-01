@@ -7,7 +7,11 @@
 import { computed, ref, watch, type Ref } from "vue";
 import type { PaginationConfig, RowData } from "../types";
 
-export function usePagination(data: Ref<RowData[]>, pagination: Ref<PaginationConfig | undefined>) {
+export function usePagination(
+  data: Ref<RowData[]>,
+  pagination: Ref<PaginationConfig | undefined>,
+  isFrontPagination: Ref<boolean>
+) {
   const currentPage = ref(pagination.value?.currentPage || 1);
   const pageSize = ref(pagination.value?.pageSize || 50);
 
@@ -39,7 +43,9 @@ export function usePagination(data: Ref<RowData[]>, pagination: Ref<PaginationCo
     const startIndex = (currentPage.value - 1) * pageSize.value;
     const endIndex = startIndex + pageSize.value;
 
-    return data.value.slice(startIndex, endIndex);
+    return isFrontPagination.value
+      ? data.value.slice(startIndex, endIndex)
+      : data.value;
   });
 
   // 更新分页参数

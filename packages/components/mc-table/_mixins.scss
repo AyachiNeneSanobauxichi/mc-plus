@@ -22,7 +22,8 @@
 
 // 表头单元格样式
 @mixin table-header-cell {
-  padding: $table-header-padding;
+  height: 40px;
+  padding: 0 8px;
   white-space: nowrap;
   overflow: hidden;
   user-select: none;
@@ -146,18 +147,6 @@
     height: 100%;
     background-color: var(--mc-gray-300);
     z-index: $table-border-z-index;
-  }
-}
-
-// 排序图标样式
-@mixin sort-icon-base {
-  display: block;
-  font-size: $sort-icon-size;
-  color: var(--mc-gray-400);
-  transition: $table-color-transition;
-
-  &.is-active {
-    color: var(--mc-purple-500);
   }
 }
 

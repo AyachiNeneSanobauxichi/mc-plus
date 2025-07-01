@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-select></playground-select>
+    <playground-step-v2></playground-step-v2>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundSelect from "./views/mc-select/playground-select.vue";
+import PlaygroundStepV2 from "./views/mc-step-v2/playground-step-v2.vue";
 </script>
 
 <style scoped lang="scss">
@@ -16,7 +16,7 @@ html {
 
 .playground {
   width: 1800px;
-  height: 800px;
+  height: 1000px;
   position: fixed;
   top: 50%;
   left: 50%;
