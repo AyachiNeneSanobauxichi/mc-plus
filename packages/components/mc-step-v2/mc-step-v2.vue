@@ -23,6 +23,7 @@ defineOptions({ name: "McStepV2" });
 // props
 const props = withDefaults(defineProps<StepV2Props>(), {
   succeed: void 0,
+  showContent: false,
 });
 
 // emits
@@ -94,6 +95,7 @@ provide<StepV2Context>(STEP_V2_INJECTION_KEY, {
   successStepIndex,
   activeStep: computed(() => props.modelValue),
   succeed: computed(() => props.succeed),
+  showContent: computed(() => props.showContent),
   stepItems: stepItems.value,
   addStepItem,
   removeStepItem,

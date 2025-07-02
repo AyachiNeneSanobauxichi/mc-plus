@@ -55,6 +55,7 @@ $bg_color_white: var(--mc-white);
     position: absolute;
     top: 4px;
     left: -40px;
+    z-index: 20;
   }
 
   &.mc-step-child-item-actived {

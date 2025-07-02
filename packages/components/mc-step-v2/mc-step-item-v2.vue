@@ -32,7 +32,7 @@
           <p class="mc-step-item-label-desc">{{ desc }}</p>
         </slot>
       </div>
-      <div class="mc-step-item-slot" v-if="isActive">
+      <div class="mc-step-item-slot" v-if="showContent">
         <slot></slot>
       </div>
     </div>
@@ -65,6 +65,7 @@ defineOptions({ name: "McStepItemV2" });
 // props
 const props = withDefaults(defineProps<StepItemV2Props>(), {
   succeed: void 0,
+  showContent: false,
 });
 
 // refs
@@ -92,6 +93,11 @@ const currentStepIndex = computed(() => {
 // is active
 const isActive = computed(() => {
   return stepCtx?.activeStep?.value === props.name;
+});
+
+// show content
+const showContent = computed(() => {
+  return stepCtx?.showContent?.value || props.showContent || isActive.value;
 });
 
 // is success
