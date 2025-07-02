@@ -9,7 +9,6 @@ export interface ToastProps {
   duration?: number;
   hideIcon?: boolean;
   width?: string;
-  height?: string;
   onClose?: () => void;
 }
 

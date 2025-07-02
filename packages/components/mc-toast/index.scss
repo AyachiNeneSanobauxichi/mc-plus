@@ -18,11 +18,10 @@ $text_color_content: var(--mc-gray-800);
 .mc-toast {
   width: fit-content;
   min-width: 180px;
-  height: 40px;
 
   .mc-toast-msg-container {
     width: 100%;
-    height: 100%;
+    height: 40px;
     padding: 0 16px;
     border-radius: 4px;
     box-sizing: border-box;
