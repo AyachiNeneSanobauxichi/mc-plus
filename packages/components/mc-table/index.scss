@@ -9,7 +9,7 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
-  background-color: var(--mc-white);
+  background-color: transparent;
   font-size: $table-font-size;
   color: var(--mc-gray-800);
 
@@ -131,14 +131,6 @@
     cursor: pointer;
 
     @include table-row-state(current, --mc-teal-50, --mc-teal-100);
-
-    // 当前行高亮状态下的固定列
-    &.is-current {
-      .is-fixed-left,
-      .is-fixed-right {
-        background-color: var(--mc-teal-50) !important;
-      }
-    }
   }
 
   // 分页组件样式

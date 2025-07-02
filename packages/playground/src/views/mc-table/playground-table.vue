@@ -54,4 +54,8 @@ const handlePageChange = ({
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.playground-table {
+  background-color: lightblue;
+}
+</style>
