@@ -93,6 +93,14 @@
     align-items: center;
     justify-content: start;
     width: 100%;
+
+    &-center {
+      justify-content: center;
+    }
+
+    &-right {
+      justify-content: end;
+    }
   }
 
   // 选择列样式
