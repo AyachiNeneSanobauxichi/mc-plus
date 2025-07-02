@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-toast></playground-toast>
+    <playground-alert-message></playground-alert-message>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundToast from "./views/mc-toast/playground-toast.vue";
+import PlaygroundAlertMessage from "./views/mc-alert-message/playground-alert-message.vue";
 </script>
 
 <style scoped lang="scss">
