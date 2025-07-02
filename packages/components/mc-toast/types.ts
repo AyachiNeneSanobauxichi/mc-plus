@@ -8,6 +8,8 @@ export interface ToastProps {
   autoClose?: boolean;
   duration?: number;
   hideIcon?: boolean;
+  width?: string;
+  height?: string;
   onClose?: () => void;
 }
 

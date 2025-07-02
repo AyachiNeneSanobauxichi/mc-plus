@@ -1,5 +1,9 @@
 <template>
-  <div class="mc-toast" :class="[`mc-toast-${type}`]">
+  <div
+    class="mc-toast"
+    :class="[`mc-toast-${type}`]"
+    :style="{ width, height }"
+  >
     <div
       class="mc-toast-msg-container"
       :class="{ 'mc-toast-has-content': content || $slots.content }"
