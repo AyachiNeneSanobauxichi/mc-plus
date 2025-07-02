@@ -1,6 +1,10 @@
 <template>
   <div class="playground-alert-message">
-    <mc-alert-message></mc-alert-message>
+    <mc-alert-message
+      message="Mc Alert Message"
+      content="This is an alert message."
+      expandable
+    ></mc-alert-message>
   </div>
 </template>
 
