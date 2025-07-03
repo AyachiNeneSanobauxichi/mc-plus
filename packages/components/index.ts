@@ -36,3 +36,4 @@ export * from "./mc-status";
 export * from "./mc-switch";
 export * from "./mc-step";
 export * from "./mc-step-v2";
+export * from "./mc-alert-message";

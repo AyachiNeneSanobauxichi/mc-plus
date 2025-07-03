@@ -9,29 +9,59 @@
     <table class="mc-table__header" cellspacing="0" cellpadding="0" border="0">
       <colgroup>
         <col v-if="selectable" width="50" />
-        <col v-for="(column, index) in columns" :key="index" :width="column.width" />
+        <col
+          v-for="(column, index) in columns"
+          :key="index"
+          :width="column.width"
+        />
       </colgroup>
       <thead>
         <tr>
           <!-- 选择列表头 -->
           <th v-if="selectable" class="mc-table__selection-column">
             <div class="mc-table__header-cell">
-              <mc-checkbox :model-value="isAllSelected" :partial="isIndeterminate" @change="handleSelectAll" />
+              <mc-checkbox
+                :model-value="isAllSelected"
+                :partial="isIndeterminate"
+                @change="handleSelectAll"
+              />
             </div>
           </th>
 
-          <th v-for="(column, index) in columns" :key="index" :class="getHeaderCellClasses(column)" @click="handleHeaderClick(column, $event)">
-            <div class="mc-table__header-cell">
+          <th
+            v-for="(column, index) in columns"
+            :key="index"
+            :class="getHeaderCellClasses(column)"
+            @click="handleHeaderClick(column, $event)"
+          >
+            <div
+              class="mc-table__header-cell"
+              :class="`mc-table__header-cell-${column.align}`"
+            >
               <span class="mc-table__header-label">
-                <slot :name="`header-${column.slot || column.prop}`" :column="column" :index="index">
+                <slot
+                  :name="`header-${column.slot || column.prop}`"
+                  :column="column"
+                  :index="index"
+                >
                   {{ column.label }}
                 </slot>
               </span>
 
               <!-- 排序图标 -->
               <span v-if="column.sortable" class="mc-table__sort-caret">
-                <mc-icon v-if="getSortOrder(column.prop) === 'asc'" name="Up-Chevron02" class="mc-table__sort-icon" :class="{ 'is-active': getSortOrder(column.prop) === 'asc' }"></mc-icon>
-                <mc-icon v-else name="Down-Chevron02" class="mc-table__sort-icon" :class="{ 'is-active': getSortOrder(column.prop) === 'desc' }"></mc-icon>
+                <mc-icon
+                  v-if="getSortOrder(column.prop) === 'asc'"
+                  name="Up-Chevron02"
+                  class="mc-table__sort-icon"
+                  :class="{ 'is-active': getSortOrder(column.prop) === 'asc' }"
+                ></mc-icon>
+                <mc-icon
+                  v-else
+                  name="Down-Chevron02"
+                  class="mc-table__sort-icon"
+                  :class="{ 'is-active': getSortOrder(column.prop) === 'desc' }"
+                ></mc-icon>
               </span>
             </div>
           </th>
@@ -45,7 +75,11 @@
 import { ref } from "vue";
 import { McCheckbox } from "../../mc-checkbox";
 import mcIcon from "../../mc-icon/mc-icon.vue";
-import type { McTableHeaderProps, TableColumn, TableHeaderEmits } from "../types";
+import type {
+  McTableHeaderProps,
+  TableColumn,
+  TableHeaderEmits,
+} from "../types";
 
 const props = withDefaults(defineProps<McTableHeaderProps>(), {
   showHeader: true,
@@ -72,7 +106,8 @@ const getHeaderCellClasses = (column: TableColumn): string[] => {
   }
 
   if (column.fixed) {
-    const fixedPosition = typeof column.fixed === "boolean" ? "left" : column.fixed;
+    const fixedPosition =
+      typeof column.fixed === "boolean" ? "left" : column.fixed;
     classes.push(`is-fixed-${fixedPosition}`);
   }
 

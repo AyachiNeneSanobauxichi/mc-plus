@@ -1,7 +1,7 @@
 <template>
   <div class="playground-step-v2">
     <mc-step-v2 v-model="currentStep">
-      <mc-step-item-v2 :name="1" label="Label 1" desc="desc1">
+      <mc-step-item-v2 :name="1" label="Label 1" desc="desc1" show-content>
         <Step1 />
       </mc-step-item-v2>
       <mc-step-item-v2 :name="2" label="Label 2" desc="desc2">

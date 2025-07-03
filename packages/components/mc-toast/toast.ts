@@ -22,7 +22,7 @@ const createContainer = () => {
   container = document.createElement("div");
   container.className = "mc-toast-container";
   container.style.position = "fixed";
-  container.style.top = "32px";
+  container.style.top = "5vh";
   container.style.left = "50%";
   container.style.transform = "translateX(-50%)";
   container.style.zIndex = "9999";

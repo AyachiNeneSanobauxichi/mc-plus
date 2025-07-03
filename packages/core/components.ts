@@ -40,6 +40,7 @@ import {
   McStepV2,
   McStepItemV2,
   McStepChildItemV2,
+  McAlertMessage,
 } from "@mc-plus/components";
 
 export default [
@@ -83,4 +84,5 @@ export default [
   McStepV2,
   McStepItemV2,
   McStepChildItemV2,
+  McAlertMessage,
 ] as Plugin[];

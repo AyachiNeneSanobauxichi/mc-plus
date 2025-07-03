@@ -1,0 +1,120 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$bg_color_success: var(--mc-success-background);
+$bg_color_error: var(--mc-error-background);
+$bg_color_warning: var(--mc-warning-background);
+$bg_color_info: var(--mc-info-background);
+$text_color: var(--mc-gray-800);
+$icon_color_success: var(--mc-success);
+$icon_color_error: var(--mc-error);
+$icon_color_warning: var(--mc-warning);
+$icon_color_info: var(--mc-info);
+
+.mc-alert-message {
+  width: 100%;
+  border-radius: 4px;
+
+  .mc-alert-message-header {
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    @include mixin.flex-center(row, space-between);
+
+    .mc-alert-message-title-container {
+      @include mixin.flex-center(row, flex-start, center, 8px);
+      .mc-alert-message-icon {
+        width: 24px;
+        height: 24px;
+        @include mixin.flex-center;
+      }
+
+      .mc-alert-message-title {
+        font-size: 16px;
+        font-weight: 400;
+        color: $text_color;
+      }
+    }
+  }
+
+  .mc-alert-message-body {
+    width: 100%;
+    .mc-alert-message-content {
+      width: 100%;
+      padding: 8px 16px;
+      padding-top: 0;
+      box-sizing: border-box;
+    }
+
+    .mc-alert-message-content-transition-enter-active,
+    .mc-alert-message-content-transition-leave-active {
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      transform-origin: top;
+    }
+
+    .mc-alert-message-content-transition-enter-from,
+    .mc-alert-message-content-transition-leave-to {
+      opacity: 0;
+      transform: scaleY(0);
+    }
+
+    .mc-alert-message-content-transition-enter-to,
+    .mc-alert-message-content-transition-leave-from {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  .mc-alert-message-icon-group {
+    @include mixin.flex-center(row, flex-end, center, 8px);
+
+    .mc-alert-message-tool-icon {
+      cursor: pointer;
+      color: $text_color;
+
+      &.mc-alert-message-tool-icon-close {
+        transition: transform 0.3s ease-in-out;
+        &:hover {
+          transform: rotate(180deg);
+        }
+      }
+
+      &.mc-alert-message-tool-icon-expand {
+        transition: transform 0.3s ease-in-out;
+        transform-origin: center;
+      }
+    }
+  }
+
+  /* info */
+  &.mc-alert-message-info {
+    background-color: $bg_color_info;
+    .mc-alert-message-icon {
+      color: $icon_color_info;
+    }
+  }
+
+  /* success */
+  &.mc-alert-message-success {
+    background-color: $bg_color_success;
+    .mc-alert-message-icon {
+      color: $icon_color_success;
+    }
+  }
+
+  /* warning */
+  &.mc-alert-message-warning {
+    background-color: $bg_color_warning;
+    .mc-alert-message-icon {
+      color: $icon_color_warning;
+    }
+  }
+
+  /* error */
+  &.mc-alert-message-error {
+    background-color: $bg_color_error;
+    .mc-alert-message-icon {
+      color: $icon_color_error;
+    }
+  }
+}

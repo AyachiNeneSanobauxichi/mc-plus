@@ -16,9 +16,9 @@ import McTable from "../../../../components/mc-table/mc-table.vue";
 import { ref } from "vue";
 
 const columns: TableColumn[] = [
-  { prop: "name", label: "Name", sortable: true },
-  { prop: "age", label: "Age", sortable: true },
-  { prop: "gender", label: "Gender", sortable: true },
+  { prop: "name", label: "Name", sortable: true, align: "left" },
+  { prop: "age", label: "Age", sortable: true, align: "right" },
+  { prop: "gender", label: "Gender", sortable: true, align: "center" },
 ];
 
 const data: RowData[] = [
@@ -54,4 +54,8 @@ const handlePageChange = ({
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.playground-table {
+  background-color: lightblue;
+}
+</style>
