@@ -39,9 +39,30 @@ $icon_color_info: var(--mc-info);
 
   .mc-alert-message-body {
     width: 100%;
-    padding: 8px 16px;
-    padding-top: 0;
-    box-sizing: border-box;
+    .mc-alert-message-content {
+      width: 100%;
+      padding: 8px 16px;
+      padding-top: 0;
+      box-sizing: border-box;
+    }
+
+    .mc-alert-message-content-transition-enter-active,
+    .mc-alert-message-content-transition-leave-active {
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      transform-origin: top;
+    }
+
+    .mc-alert-message-content-transition-enter-from,
+    .mc-alert-message-content-transition-leave-to {
+      opacity: 0;
+      transform: scaleY(0);
+    }
+
+    .mc-alert-message-content-transition-enter-to,
+    .mc-alert-message-content-transition-leave-from {
+      opacity: 1;
+      transform: scaleY(1);
+    }
   }
 
   .mc-alert-message-icon-group {
@@ -60,6 +81,7 @@ $icon_color_info: var(--mc-info);
 
       &.mc-alert-message-tool-icon-expand {
         transition: transform 0.3s ease-in-out;
+        transform-origin: center;
       }
     }
   }

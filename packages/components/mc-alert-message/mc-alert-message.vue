@@ -3,7 +3,7 @@
     ref="_ref"
     class="mc-alert-message"
     :class="[`mc-alert-message-${type}`]"
-    :style="{ width, height }"
+    :style="{ width, height, cursor: expandable ? 'pointer' : 'default' }"
     @click="handleClick"
   >
     <div class="mc-alert-message-header">
@@ -25,26 +25,33 @@
       </div>
       <div class="mc-alert-message-icon-group" v-if="closable || expandable">
         <mc-icon
+          name="Down-Chevron"
+          :size="24"
+          v-if="expandable"
+          class="mc-alert-message-tool-icon mc-alert-message-tool-icon-expand"
+          :style="{
+            transform: isExpand ? 'rotate(180deg)' : 'rotate(0deg)',
+          }"
+        />
+        <mc-icon
           name="Cross"
           :size="24"
           v-if="closable"
           class="mc-alert-message-tool-icon mc-alert-message-tool-icon-close"
           @click.stop="handleClose"
         />
-        <mc-icon
-          name="Down-Chevron"
-          :size="24"
-          v-if="expandable"
-          class="mc-alert-message-tool-icon mc-alert-message-tool-icon-expand"
-        />
       </div>
     </div>
-    <div
-      class="mc-alert-message-body"
-      :style="{ paddingLeft: hasIcon ? '48px' : '16px' }"
-      v-if="hasContent"
-    >
-      <slot name="content">{{ content }}</slot>
+    <div class="mc-alert-message-body" v-if="hasContent">
+      <transition name="mc-alert-message-content-transition">
+        <div
+          class="mc-alert-message-content"
+          :style="{ paddingLeft: hasIcon ? '48px' : '16px' }"
+          v-if="isExpand"
+        >
+          <slot name="content">{{ content }}</slot>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -91,7 +98,11 @@ const hasIcon = computed(() => {
 });
 
 // is expand
-const isExpand = ref<boolean>(false);
+const _isExpand = ref<boolean>(false);
+const isExpand = computed<boolean>(() => {
+  if (!props.expandable) return true;
+  return _isExpand.value;
+});
 
 // icon
 const iconName = computed<IconType | undefined>(() => {
@@ -118,13 +129,16 @@ const handleClose = () => {
 
 // handle expand
 const handleExpand = () => {
-  isExpand.value = !isExpand.value;
-  emits("expand", isExpand.value);
+  _isExpand.value = !_isExpand.value;
+  emits("expand", _isExpand.value);
 };
 
 // handle click
 const handleClick = () => {
   emits("click");
+  if (props.expandable) {
+    handleExpand();
+  }
 };
 
 // expose

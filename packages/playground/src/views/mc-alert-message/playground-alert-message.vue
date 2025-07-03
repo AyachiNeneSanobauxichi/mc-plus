@@ -1,6 +1,7 @@
 <template>
   <div class="playground-alert-message">
     <mc-alert-message
+      type="success"
       message="Mc Alert Message"
       content="This is an alert message."
       expandable
