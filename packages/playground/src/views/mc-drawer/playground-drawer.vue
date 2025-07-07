@@ -1,20 +1,17 @@
 <template>
-  <div class="playground-drawer">
-    <div class="drawer-container" id="drawer-container">
-      <div class="drawer-content">
-        <mc-drawer
-          v-model="drawerVisible"
-          title="Mc Drawer"
-          :fixed="false"
-          size="medium"
-          :port-css-selector="'#drawer-container'"
-        >
-          <div>Drawer Content</div>
-        </mc-drawer>
-        <div class="tool-bar">
-          <mc-button @click="handleShowDrawer">Show Drawer</mc-button>
-        </div>
-      </div>
+  <div class="page-header">
+    <mc-button @click="handleShowDrawer">Show Drawer</mc-button>
+  </div>
+  <div class="main" id="main-content">
+    <div class="main-content">
+      <div>Content</div>
+      <mc-drawer
+        v-model="drawerVisible"
+        title="Mc Drawer"
+        :fixed="false"
+        size="medium"
+        :port-css-selector="'#main-content'"
+      ></mc-drawer>
     </div>
   </div>
 </template>
@@ -33,27 +30,32 @@ const handleShowDrawer = () => {
 </script>
 
 <style scoped lang="scss">
-.playground-drawer {
+.page-header {
   width: 100%;
-  height: 100%;
-  position: relative;
-  .drawer-container {
+  height: 80px;
+  box-sizing: border-box;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  background-color: lightblue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.main {
+  width: 100%;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  .main-content {
     width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    .drawer-content {
-      width: 100%;
-      height: 3000px;
-      background-color: lightblue;
-      .tool-bar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        background-color: lightcoral;
-      }
-    }
+    height: 6000px;
+    background-color: pink;
   }
 }
 </style>
