@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-alert-message></playground-alert-message>
+    <playground-drawer></playground-drawer>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundAlertMessage from "./views/mc-alert-message/playground-alert-message.vue";
+import PlaygroundDrawer from "./views/mc-drawer/playground-drawer.vue";
 </script>
 
 <style scoped lang="scss">
