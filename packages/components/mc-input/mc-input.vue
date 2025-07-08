@@ -36,6 +36,8 @@
       @change="handleChange"
       @focus="handleFocus"
       @blur="handleBlur"
+      @keydown.delete="handleDelete"
+      @paste="handlePaste"
     />
     <template v-if="showStatusIcon">
       <div
@@ -217,6 +219,16 @@ const clear = () => {
   emit("clear");
   // clear validate
   formItem?.clearValidate();
+};
+
+// delete
+const handleDelete = () => {
+  emit("delete");
+};
+
+// paste
+const handlePaste = (e: ClipboardEvent) => {
+  emit("paste", e);
 };
 
 // focus

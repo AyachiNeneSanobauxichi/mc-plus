@@ -34,7 +34,9 @@ export interface InputEmits {
   (e: "change", value: string): void;
   (e: "focus", value: FocusEvent): void;
   (e: "blur", value: FocusEvent): void;
+  (e: "paste", value: ClipboardEvent): void;
   (e: "clear"): void;
+  (e: "delete"): void;
 }
 
 export interface InputInstance {
