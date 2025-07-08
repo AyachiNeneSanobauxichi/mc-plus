@@ -1,26 +1,22 @@
 <template>
   <div class="playground">
-    <playground-alert-message></playground-alert-message>
+    <playground-step></playground-step>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundAlertMessage from "./views/mc-alert-message/playground-alert-message.vue";
+import PlaygroundStep from "./views/mc-step/playground-step.vue";
 </script>
 
 <style scoped lang="scss">
-body,
-html {
-  height: 100vh;
-}
-
 .playground {
-  width: 1800px;
-  height: 1000px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: auto;
+  :deep(.playground-center) {
+    position: fixed;
+    width: 1200px;
+    height: 800px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 </style>

@@ -72,10 +72,10 @@ defineOptions({ name: "McDrawer" });
 // props
 const props = withDefaults(defineProps<DrawerProps>(), {
   size: "medium",
-  clickOverlayClose: true,
   fixed: true,
   portCssSelector: "body",
   showBorder: true,
+  maskClosable: true,
 });
 
 // show drawer

@@ -36,6 +36,8 @@
       @change="handleChange"
       @focus="handleFocus"
       @blur="handleBlur"
+      @keydown.delete="handleDelete"
+      @paste="handlePaste"
     />
     <template v-if="showStatusIcon">
       <div
@@ -69,11 +71,13 @@
 
 <script setup lang="ts">
 import type { InputEmits, InputProps } from "./types";
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import type { OtpContext } from "../mc-otp/types";
+import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
+import { OTP_CTX_KEY } from "../mc-otp/constant";
 import { useInputGroupAffix } from "../mc-input-group/hooks";
 import {
   currencyFormatter,
@@ -95,6 +99,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   disabled: false,
   placeholder: "Please enter",
   readonly: false,
+  formValidate: true,
 });
 const { formatter, parser } = props;
 
@@ -164,8 +169,13 @@ const passwordVisible = ref<boolean>(false);
 // show clear
 // const showClear = computed(() => props.clearable && !!innerValue.value);
 
+// form item disabled
+const formItemDisabled = useFormDisabled();
+
 // disabled
-const isDisabled = useFormDisabled();
+const isDisabled = computed(() => {
+  return formItemDisabled.value || otpContext?.disabled.value;
+});
 
 // password
 const isPassword = computed(() => props.type === "password");
@@ -175,6 +185,10 @@ const { formItem } = useFormItem();
 
 // form item validate status style
 const validateStyle = computed(() => {
+  if (otpContext?.hasError.value) {
+    return "error";
+  }
+
   switch (formItem?.validateStatus) {
     case "success":
       return "success";
@@ -185,6 +199,9 @@ const validateStyle = computed(() => {
   }
 });
 
+// otp context
+const otpContext = inject<OtpContext>(OTP_CTX_KEY);
+
 // error
 const isError = computed(() => validateStyle.value === "error");
 
@@ -193,7 +210,10 @@ const isSuccess = computed(() => validateStyle.value === "success");
 
 // show status icon
 const showStatusIcon = computed(
-  () => !isDisabled.value && (isError.value || isSuccess.value)
+  () =>
+    props.formValidate &&
+    !isDisabled.value &&
+    (isError.value || isSuccess.value)
 );
 
 // use focus controller
@@ -217,6 +237,16 @@ const clear = () => {
   emit("clear");
   // clear validate
   formItem?.clearValidate();
+};
+
+// delete
+const handleDelete = () => {
+  emit("delete");
+};
+
+// paste
+const handlePaste = (e: ClipboardEvent) => {
+  emit("paste", e);
 };
 
 // focus

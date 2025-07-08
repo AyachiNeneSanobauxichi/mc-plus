@@ -287,7 +287,7 @@ const clearValidate = () => {
 const formItemCtx = reactive({
   ...toRefs(props),
   validateStatus: computed(() => validateStatus.value),
-  disabled: isDisabled.value,
+  disabled: isDisabled,
   validate: handleValidate,
   resetField,
   clearValidate,
