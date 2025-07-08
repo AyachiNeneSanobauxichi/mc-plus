@@ -5,7 +5,10 @@ import useProp from "@mc-plus/hooks/useProp";
 // form item hook
 export function useFormItem() {
   const form = inject(FORM_CTX_KEY, void 0);
-  const formItem = inject(FORM_ITEM_CTX_KEY, void 0);
+  const formItemValidate = useProp<boolean>("formValidate");
+  const formItem = formItemValidate.value
+    ? inject(FORM_ITEM_CTX_KEY, void 0)
+    : void 0;
 
   return { form, formItem };
 }

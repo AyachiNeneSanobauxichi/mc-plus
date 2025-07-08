@@ -14,6 +14,7 @@
           width="40px"
           height="40px"
           :maxlength="1"
+          :form-validate="false"
           :ref="(el) => setRef(index - 1, el as unknown as InputInstance)"
           @input="handleInput(index - 1, $event)"
           @delete="handleBackspace(index - 1)"
