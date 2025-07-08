@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-otp></playground-otp>
+    <playground-button></playground-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundOtp from "./views/mc-otp/playground-otp.vue";
+import playgroundButton from "./views/mc-button/playground-button.vue";
 </script>
 
 <style scoped lang="scss">

@@ -73,7 +73,7 @@ const handleClear = () => {
   formRef.value?.clearValidate();
 };
 
-const isDisabled = ref(true);
+const isDisabled = ref(false);
 
 const handleDisable = () => {
   isDisabled.value = !isDisabled.value;
