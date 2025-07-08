@@ -2,7 +2,7 @@
   <div
     class="mc-otp"
     :class="{
-      'mc-otp-disabled': props.disabled,
+      'mc-otp-disabled': isDisabled,
       [`mc-otp-${validateStyle}`]: validateStyle,
     }"
   >
@@ -95,9 +95,7 @@ const isSuccess = computed(() => validateStyle.value === "success");
 const isDisabled = useFormDisabled();
 
 // show status icon
-const showStatusIcon = computed(
-  () => !isDisabled.value && (isError.value || isSuccess.value)
-);
+const showStatusIcon = computed(() => isError.value || isSuccess.value);
 
 // set ref
 const setRef = (index: number, el: InputInstance) => {
@@ -161,9 +159,9 @@ const setFocus = (index: number) => {
 
 // set code
 const setCode = (value?: string) => {
-  code.forEach((_, index) => {
-    code[index] = value?.[index] || "";
-  });
+  for (let i = 0; i < props.length; i++) {
+    code[i] = value?.[i] || "";
+  }
 };
 
 // init code
@@ -195,6 +193,7 @@ watchEffect(() => {
 // provide
 provide<OtpContext>(OTP_CTX_KEY, {
   hasError: isError,
+  disabled: computed(() => !!isDisabled.value),
 });
 </script>
 

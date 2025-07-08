@@ -169,8 +169,13 @@ const passwordVisible = ref<boolean>(false);
 // show clear
 // const showClear = computed(() => props.clearable && !!innerValue.value);
 
+// form item disabled
+const formItemDisabled = useFormDisabled();
+
 // disabled
-const isDisabled = useFormDisabled();
+const isDisabled = computed(() => {
+  return formItemDisabled.value || otpContext?.disabled.value;
+});
 
 // password
 const isPassword = computed(() => props.type === "password");

@@ -15,4 +15,5 @@ export interface OtpEmits {
 
 export interface OtpContext {
   hasError: Ref<boolean>;
+  disabled: Ref<boolean>;
 }
