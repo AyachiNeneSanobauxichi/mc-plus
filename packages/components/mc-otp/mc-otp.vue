@@ -38,12 +38,21 @@
 </template>
 
 <script setup lang="ts">
-import type { OtpProps, OtpEmits } from "./types";
+import type { OtpProps, OtpEmits, OtpContext } from "./types";
 import type { InputInstance } from "../mc-input";
-import { computed, onMounted, reactive, ref, watch, watchEffect } from "vue";
+import {
+  computed,
+  onMounted,
+  provide,
+  reactive,
+  ref,
+  watch,
+  watchEffect,
+} from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McInput from "../mc-input/mc-input.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { OTP_CTX_KEY } from "./constant";
 
 // options
 defineOptions({ name: "McOtp" });
@@ -169,6 +178,11 @@ watchEffect(() => {
   if ((props.modelValue?.length ?? 0) > props.length) {
     throw new Error("modelValue length is greater than length.");
   }
+});
+
+// provide
+provide<OtpContext>(OTP_CTX_KEY, {
+  hasError: isError,
 });
 </script>
 
