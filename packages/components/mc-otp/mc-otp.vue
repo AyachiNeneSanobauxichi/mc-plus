@@ -11,7 +11,7 @@
         class="mc-otp-input-item"
         v-for="index in props.length"
         :key="index"
-        @click="handleClick(index - 1)"
+        @click.stop="handleClick(index - 1)"
       >
         <mc-input
           v-model="code[index - 1]"
@@ -136,6 +136,17 @@ const handleBackspace = (index: number) => {
 
 // click
 const handleClick = (index: number) => {
+  // clear value when error
+  if (isError.value && formItem) {
+    setCode();
+    handleValueChanged();
+    // clear validate
+    setTimeout(() => {
+      formItem?.clearValidate();
+    });
+  }
+
+  // set focus
   if (!code[index]) {
     setFocus(props.modelValue?.length ?? 0);
   }
