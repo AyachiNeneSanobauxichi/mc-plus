@@ -7,8 +7,6 @@ import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
 export function useFormItem() {
   const form = inject(FORM_CTX_KEY, void 0);
   const formItemValidate = useProp<boolean>("formValidate");
-
-  console.log("formItemValidate", formItemValidate.value);
   const formItem =
     isBoolean(formItemValidate.value) && !formItemValidate.value
       ? void 0

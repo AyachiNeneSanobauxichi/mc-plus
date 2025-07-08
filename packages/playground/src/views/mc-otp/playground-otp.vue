@@ -38,7 +38,17 @@ const form = ref<FormState>({
 const formRef = ref<FormInstance>();
 
 const rules: FormRules<FormState> = {
-  otp: [{ required: true, message: "Please input otp" }],
+  otp: [
+    {
+      required: true,
+      message: "Please input otp",
+      validator: (_, value, callback) => {
+        if (value.length !== 6) {
+          callback(new Error("Please input 6 digits otp"));
+        }
+      },
+    },
+  ],
   userName: [{ required: true, message: "Please input user name" }],
 };
 

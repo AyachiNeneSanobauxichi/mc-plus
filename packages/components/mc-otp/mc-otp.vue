@@ -42,6 +42,7 @@ import type { OtpProps, OtpEmits, OtpContext } from "./types";
 import type { InputInstance } from "../mc-input";
 import {
   computed,
+  nextTick,
   onMounted,
   provide,
   reactive,
@@ -135,16 +136,17 @@ const handleBackspace = (index: number) => {
 };
 
 // click
-const handleClick = (index: number) => {
+const handleClick = async (index: number) => {
   // clear value when error
   if (isError.value && formItem) {
     setCode();
     handleValueChanged();
     // clear validate
-    setTimeout(() => {
-      formItem?.clearValidate();
-    });
+    await nextTick();
+    formItem?.clearValidate();
   }
+
+  await nextTick();
 
   // set focus
   if (!code[index]) {
@@ -174,7 +176,6 @@ watch(
   () => props.modelValue,
   (value) => {
     setCode(value);
-    formItem?.validate("change");
   }
 );
 
