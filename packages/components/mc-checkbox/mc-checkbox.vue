@@ -95,7 +95,7 @@ const checkboxGroupValue = computed(() => {
 
 // click
 const handleClick = () => {
-  if (props.disabled) return;
+  if (isDisabled.value) return;
   if (isCheckboxGroup.value) {
     checkboxGroupCtx?.handleSelect(props.value);
   } else {
