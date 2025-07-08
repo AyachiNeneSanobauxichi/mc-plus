@@ -1,4 +1,13 @@
 @use "@mc-plus/theme/mixins.scss" as mixins;
 
 .mc-otp {
+  @include mixins.flex-center(row, start, center, 8px);
+
+  :deep(.mc-input__inner) {
+    text-align: center;
+  }
+
+  .mc-otp-input-container {
+    @include mixins.flex-center(row, start, center, 8px);
+  }
 }
