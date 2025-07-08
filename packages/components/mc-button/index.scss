@@ -85,7 +85,8 @@ $transform_distance: var(--mc-transform-distance);
     border: 1px solid $primary_color;
     color: $primary_color;
     &:hover {
-      border: 1px solid $primary_color_hover;
+      padding: 0 15px;
+      border: 2px solid $primary_color_hover;
       color: $primary_color_hover;
     }
     &.is-disabled {
