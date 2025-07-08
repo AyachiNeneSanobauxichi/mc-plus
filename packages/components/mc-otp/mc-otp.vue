@@ -1,5 +1,11 @@
 <template>
-  <div class="mc-otp" :class="{ 'mc-otp-disabled': props.disabled }">
+  <div
+    class="mc-otp"
+    :class="{
+      'mc-otp-disabled': props.disabled,
+      [`mc-otp-${validateStyle}`]: validateStyle,
+    }"
+  >
     <div class="mc-otp-input-container">
       <div
         class="mc-otp-input-item"
@@ -22,16 +28,22 @@
         />
       </div>
     </div>
-    <mc-icon name="Accept_02" :size="24" />
+    <mc-icon
+      class="mc-otp-status-icon"
+      :name="isError ? 'Reject_02' : 'Accept_02'"
+      :size="24"
+      v-if="showStatusIcon"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { OtpProps, OtpEmits } from "./types";
 import type { InputInstance } from "../mc-input";
-import { reactive, ref, watch, watchEffect } from "vue";
+import { computed, onMounted, reactive, ref, watch, watchEffect } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McInput from "../mc-input/mc-input.vue";
+import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McOtp" });
@@ -47,6 +59,35 @@ const emits = defineEmits<OtpEmits>();
 
 // refs
 const inputRefs = ref<InputInstance[]>([]);
+
+// form item
+const { formItem } = useFormItem();
+
+// form item validate status style
+const validateStyle = computed(() => {
+  switch (formItem?.validateStatus) {
+    case "success":
+      return "success";
+    case "error":
+      return "error";
+    default:
+      return "";
+  }
+});
+
+// is error
+const isError = computed(() => validateStyle.value === "error");
+
+// is success
+const isSuccess = computed(() => validateStyle.value === "success");
+
+// disabled
+const isDisabled = useFormDisabled();
+
+// show status icon
+const showStatusIcon = computed(
+  () => !isDisabled.value && (isError.value || isSuccess.value)
+);
 
 // set ref
 const setRef = (index: number, el: InputInstance) => {
@@ -103,13 +144,18 @@ const setCode = (value?: string) => {
   });
 };
 
+// init code
+onMounted(() => {
+  setCode(props.modelValue);
+});
+
 // model value changed
 watch(
   () => props.modelValue,
   (value) => {
     setCode(value);
-  },
-  { immediate: true }
+    formItem?.validate("change");
+  }
 );
 
 // value changed

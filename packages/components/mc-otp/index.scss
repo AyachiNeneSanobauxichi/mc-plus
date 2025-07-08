@@ -1,5 +1,8 @@
 @use "@mc-plus/theme/mixins.scss" as mixins;
 
+$error_color: var(--mc-error);
+$success_color: var(--mc-success);
+
 .mc-otp {
   @include mixins.flex-center(row, start, center, 8px);
 
@@ -9,5 +12,17 @@
 
   .mc-otp-input-container {
     @include mixins.flex-center(row, start, center, 8px);
+  }
+
+  &.mc-otp-success {
+    .mc-otp-status-icon {
+      color: $success_color;
+    }
+  }
+
+  &.mc-otp-error {
+    .mc-otp-status-icon {
+      color: $error_color;
+    }
   }
 }
