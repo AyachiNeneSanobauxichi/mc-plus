@@ -8,4 +8,6 @@ export interface CurrencyIconProps {
   desc?: string;
   cdnUrl?: string;
   suffix?: CurrencyIconSuffix;
+  height?: number | string;
+  width?: number | string;
 }
