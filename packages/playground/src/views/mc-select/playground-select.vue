@@ -26,7 +26,6 @@
         <mc-select
           class="student-select"
           v-model="formState.teacher"
-          search
           placeholder="Please select a teacher"
         >
           <template v-for="optionGroup in options" :key="optionGroup.value">

@@ -5,7 +5,7 @@
       isExpand && !isDisabled ? 'mc-select-expand' : 'mc-select-collapse',
       {
         'mc-select-disabled': isDisabled,
-        'mc-input-focused': isFocused,
+        'mc-input-focused': isFocused && search,
         [`mc-select--${validateStyle}`]: validateStyle,
         'mc-select--input-group-prefix': isPrefix,
         'mc-select--input-group-suffix': isSuffix,
@@ -329,9 +329,8 @@ const handleSelect = (item: SelectOptionProps) => {
 // single select
 const handleSingleSelect = (item: SelectOptionProps) => {
   isExpand.value = false;
-  const newValue = props.modelValue === item.value ? void 0 : item.value;
-  emits("update:modelValue", newValue);
-  emits("change", newValue);
+  emits("update:modelValue", item.value);
+  emits("change", item.value);
 };
 
 // old selected values
