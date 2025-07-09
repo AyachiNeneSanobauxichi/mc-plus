@@ -41,6 +41,7 @@ import {
   McStepItemV2,
   McStepChildItemV2,
   McAlertMessage,
+  McCurrencyIcon,
 } from "@mc-plus/components";
 
 export default [
@@ -85,4 +86,5 @@ export default [
   McStepItemV2,
   McStepChildItemV2,
   McAlertMessage,
+  McCurrencyIcon,
 ] as Plugin[];
