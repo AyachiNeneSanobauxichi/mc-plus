@@ -31,8 +31,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import type { CurrencyIconProps } from "./types";
+import { computed } from "vue";
 import { useCDNPath } from "@mc-plus/hooks";
 
 // options
