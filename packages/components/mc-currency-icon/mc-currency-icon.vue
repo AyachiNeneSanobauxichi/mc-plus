@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="mc-currency-icon"
-    :style="{ width: style.width, height: style.height }"
-  >
+  <div class="mc-currency-icon" :style="{ width: _width, height: _height }">
     <div class="mc-currency-icon-img-wrapper">
       <slot name="icon">
         <img
@@ -32,8 +29,7 @@
 
 <script setup lang="ts">
 import type { CurrencyIconProps } from "./types";
-import { computed } from "vue";
-import { useCDNPath } from "@mc-plus/hooks";
+import { useCDNPath, useWidthHeight } from "@mc-plus/hooks";
 
 // options
 defineOptions({ name: "McCurrencyIcon" });
@@ -47,14 +43,8 @@ const props = withDefaults(defineProps<CurrencyIconProps>(), {
 // use cdn path hook
 const { generateFileUrl } = useCDNPath(props.cdnUrl, props.suffix);
 
-// style
-const style = computed(() => {
-  return {
-    height:
-      typeof props.height === "number" ? `${props.height}px` : props.height,
-    width: typeof props.width === "number" ? `${props.width}px` : props.width,
-  };
-});
+// use width height hook
+const { width: _width, height: _height } = useWidthHeight();
 </script>
 
 <style scoped lang="scss">

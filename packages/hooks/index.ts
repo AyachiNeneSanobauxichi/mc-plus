@@ -5,3 +5,4 @@ export { default as useCDNPath } from "./useCDNPath";
 export { default as useProp } from "./useProp";
 export { default as useResizeObserver } from "./useResizeObserver";
 export { default as useWindowResize } from "./useWindowResize";
+export { default as useWidthHeight } from "./useWidthHeight";
