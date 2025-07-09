@@ -8,7 +8,13 @@
         :label="item.label"
         :desc="item.desc"
       >
-        <component :is="item.component" />
+        <component :is="item.component" v-if="!item.children" />
+        <mc-step-child-item-v2
+          v-for="child in item.children"
+          :key="child.name"
+          :name="child.name"
+          :label="child.label"
+        />
       </mc-step-item-v2>
     </mc-step-v2>
   </div>
@@ -25,14 +31,14 @@ import { computed, ref, type Component } from "vue";
 import { McButton } from "mc-plus";
 import McStepV2 from "../../../../components/mc-step-v2/mc-step-v2.vue";
 import McStepItemV2 from "../../../../components/mc-step-v2/mc-step-item-v2.vue";
-// import McStepChildItemV2 from "../../../../components/mc-step-v2/mc-step-child-item-v2.vue";
+import McStepChildItemV2 from "../../../../components/mc-step-v2/mc-step-child-item-v2.vue";
 import Step1 from "./steps/step1.vue";
 import Step2 from "./steps/step2.vue";
 import Step3 from "./steps/step3.vue";
 import Step4 from "./steps/step4.vue";
 import Step5 from "./steps/step5.vue";
-// import ChildSteps1 from "./child-steps/child-steps1.vue";
-// import ChildSteps2 from "./child-steps/child-steps2.vue";
+import ChildSteps1 from "./child-steps/child-steps1.vue";
+import ChildSteps2 from "./child-steps/child-steps2.vue";
 
 const currentStep = ref<number>(1);
 
@@ -41,6 +47,7 @@ interface StepItem {
   label: string;
   desc: string;
   component: Component;
+  children?: StepItem[];
 }
 
 const stepList1 = ref<StepItem[]>([
@@ -75,7 +82,26 @@ const stepList2 = ref<StepItem[]>([
   { name: 2, label: "Label 2", desc: "desc2", component: Step2 },
   { name: 3, label: "Label 3", desc: "desc3", component: Step3 },
   { name: 4, label: "Label 4", desc: "desc4", component: Step4 },
-  { name: 5, label: "Label 5", desc: "desc5", component: Step5 },
+  {
+    name: 5,
+    label: "Label 5",
+    desc: "desc5",
+    component: Step5,
+    children: [
+      {
+        name: 51,
+        label: "Child 1",
+        desc: "child desc1",
+        component: ChildSteps1,
+      },
+      {
+        name: 52,
+        label: "Child 2",
+        desc: "child desc2",
+        component: ChildSteps2,
+      },
+    ],
+  },
 ]);
 
 const stepList = computed(() => {
