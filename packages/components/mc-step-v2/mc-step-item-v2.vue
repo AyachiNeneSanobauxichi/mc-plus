@@ -5,6 +5,7 @@
       'mc-step-item-actived': isActive,
       'mc-step-item-success': isSuccess,
     }"
+    :style="{ minHeight }"
   >
     <div class="mc-step-item-step-bar" ref="stepBarRef">
       <div class="mc-step-item-step-bar-number">
@@ -67,6 +68,7 @@ defineOptions({ name: "McStepItemV2" });
 const props = withDefaults(defineProps<StepItemV2Props>(), {
   succeed: void 0,
   showContent: false,
+  minHeight: "64px",
 });
 
 // refs
