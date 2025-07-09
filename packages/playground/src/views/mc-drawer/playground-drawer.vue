@@ -11,7 +11,10 @@
         :fixed="false"
         size="medium"
         :port-css-selector="'#main-content'"
-      ></mc-drawer>
+        hide-footer
+      >
+        <div class="drawer-content">Drawer Content</div>
+      </mc-drawer>
     </div>
   </div>
 </template>
@@ -56,6 +59,12 @@ const handleShowDrawer = () => {
     width: 100%;
     height: 6000px;
     background-color: pink;
+  }
+
+  .drawer-content {
+    width: 100%;
+    height: 3000px;
+    background-color: red;
   }
 }
 </style>

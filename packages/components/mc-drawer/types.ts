@@ -10,6 +10,7 @@ export interface DrawerProps {
   fixed?: boolean;
   portCssSelector?: string;
   showBorder?: boolean;
+  hideFooter?: boolean;
 }
 
 export interface DrawerEmits {

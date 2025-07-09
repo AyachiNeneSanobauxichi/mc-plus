@@ -32,7 +32,7 @@
                   <slot></slot>
                 </div>
               </div>
-              <div class="mc-drawer-footer" ref="footerRef">
+              <div class="mc-drawer-footer" ref="footerRef" v-if="!hideFooter">
                 <slot name="footer">
                   <mc-footer>
                     <template #left>
@@ -76,6 +76,7 @@ const props = withDefaults(defineProps<DrawerProps>(), {
   portCssSelector: "body",
   showBorder: true,
   maskClosable: true,
+  hideFooter: false,
 });
 
 // show drawer
