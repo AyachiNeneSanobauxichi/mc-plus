@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-currency-icon></playground-currency-icon>
+    <playground-drawer></playground-drawer>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundCurrencyIcon from "./views/mc-currency-icon/playground-currency-icon.vue";
+import PlaygroundDrawer from "./views/mc-drawer/playground-drawer.vue";
 </script>
 
 <style scoped lang="scss">
