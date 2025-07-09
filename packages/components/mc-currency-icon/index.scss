@@ -1,0 +1,63 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color: var(--mc-gray-800);
+$text_color_desc: var(--mc-gray-500);
+
+.mc-currency-icon {
+  width: 100%;
+  height: 40px;
+  @include mixin.flex-center(row, start, center, 8px);
+
+  .mc-currency-icon-img-wrapper {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    .mc-currency-icon-img {
+      display: block;
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .mc-currency-icon-content {
+    flex: 1;
+    .mc-currency-icon-label {
+      color: $text_color;
+    }
+    .mc-currency-icon-text {
+      color: $text_color_desc;
+    }
+
+    /* vertical */
+    &.mc-currency-icon-content-vertical {
+      height: 28px;
+      @include mixin.flex-center(column, space-between, start);
+
+      .mc-currency-icon-label {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+      }
+      .mc-currency-icon-text {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1;
+      }
+    }
+
+    /* horizontal */
+    &.mc-currency-icon-content-horizontal {
+      @include mixin.flex-center(row, space-between);
+      .mc-currency-icon-label {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      .mc-currency-icon-text {
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 @font-face {
   font-family: "mc-iconfont";
-  src: url("@mc-plus/theme/iconfonts/iconfont.woff2?t=1750671468786")
+  src: url("@mc-plus/theme/iconfonts/iconfont.woff2?t=1752026112209")
     format("woff2");
 }
 
@@ -350,7 +350,7 @@
 }
 
 .mc-icon--Grid:before {
-  content: "\e659";
+  content: "\e6b7";
 }
 
 .mc-icon--Line_Chart:before {
@@ -366,7 +366,7 @@
 }
 
 .mc-icon--List:before {
-  content: "\e65d";
+  content: "\e6b6";
 }
 
 .mc-icon--Location:before {

@@ -25,6 +25,7 @@ export interface StepChildItemV2Props {
 
 export interface StepItemV2Props extends StepChildItemV2Props {
   icon?: IconType;
+  minHeight?: string;
 }
 
 export interface StepV2Context {
