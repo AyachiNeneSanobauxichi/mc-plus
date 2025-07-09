@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Component } from "vue";
+import { computed, ref, type Component } from "vue";
 import { McButton } from "mc-plus";
 import McStepV2 from "../../../../components/mc-step-v2/mc-step-v2.vue";
 import McStepItemV2 from "../../../../components/mc-step-v2/mc-step-item-v2.vue";
@@ -43,7 +43,7 @@ interface StepItem {
   component: Component;
 }
 
-const stepList = ref<StepItem[]>([
+const stepList1 = ref<StepItem[]>([
   {
     name: 1,
     label: "Label 1",
@@ -70,6 +70,18 @@ const stepList = ref<StepItem[]>([
   },
 ]);
 
+const stepList2 = ref<StepItem[]>([
+  { name: 1, label: "Label 1", desc: "desc1", component: Step1 },
+  { name: 2, label: "Label 2", desc: "desc2", component: Step2 },
+  { name: 3, label: "Label 3", desc: "desc3", component: Step3 },
+  { name: 4, label: "Label 4", desc: "desc4", component: Step4 },
+  { name: 5, label: "Label 5", desc: "desc5", component: Step5 },
+]);
+
+const stepList = computed(() => {
+  return changeStep.value ? stepList1.value : stepList2.value;
+});
+
 // handle previous
 const handlePrevious = () => {
   if (currentStep.value > 1) {
@@ -88,15 +100,11 @@ const handleNext = () => {
   }
 };
 
+const changeStep = ref<boolean>(true);
+
 // handle change steps
 const handleChangeSteps = () => {
-  stepList.value = [
-    { name: 1, label: "Label 1", desc: "desc1", component: Step1 },
-    { name: 2, label: "Label 2", desc: "desc2", component: Step2 },
-    { name: 3, label: "Label 3", desc: "desc3", component: Step3 },
-    { name: 4, label: "Label 4", desc: "desc4", component: Step4 },
-    { name: 5, label: "Label 5", desc: "desc5", component: Step5 },
-  ];
+  changeStep.value = !changeStep.value;
 };
 </script>
 

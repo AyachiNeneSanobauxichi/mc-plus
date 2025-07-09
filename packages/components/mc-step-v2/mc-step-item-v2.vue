@@ -52,6 +52,7 @@ import {
   onMounted,
   provide,
   ref,
+  watch,
 } from "vue";
 import { indexOf, isNil } from "lodash-es";
 import { STEP_ITEM_V2_INJECTION_KEY, STEP_V2_INJECTION_KEY } from "./constant";
@@ -129,10 +130,27 @@ useResizeObserver(contentRef, () => {
       const { top } = lastChildItem.getBoundingClientRect();
       const { top: stepBarTop } = stepBarRef.value.getBoundingClientRect();
       const lineHeight = top - stepBarTop;
-      stepBarRef.value.style.height = `${lineHeight + 4}px`;
+      setStepBarHeight(lineHeight + 4);
     } else {
-      stepBarRef.value.style.height = `${40}px`;
+      setStepBarHeight(40);
     }
+  }
+});
+
+// set step bar height
+const setStepBarHeight = (height?: number | string) => {
+  if (stepBarRef.value && height) {
+    stepBarRef.value.style.height =
+      typeof height === "number" ? `${height}px` : height;
+  }
+};
+
+// last step change
+watch(isLastStep, (newVal) => {
+  if (newVal) {
+    setStepBarHeight(40);
+  } else {
+    setStepBarHeight("auto");
   }
 });
 
