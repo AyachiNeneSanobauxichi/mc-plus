@@ -89,7 +89,7 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 });
 
 // form context
-const formContext = inject(FORM_CTX_KEY);
+const formContext = inject(FORM_CTX_KEY, void 0);
 
 // validate status
 const validateStatus = ref<ValidateStatus>("init");

@@ -200,7 +200,7 @@ const validateStyle = computed(() => {
 });
 
 // otp context
-const otpContext = inject<OtpContext>(OTP_CTX_KEY);
+const otpContext = inject<OtpContext | undefined>(OTP_CTX_KEY, void 0);
 
 // error
 const isError = computed(() => validateStyle.value === "error");

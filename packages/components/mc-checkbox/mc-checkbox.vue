@@ -59,8 +59,9 @@ const { formItem } = useFormItem();
 const disabled = useFormDisabled();
 
 // checkbox group
-const checkboxGroupCtx = inject<CheckboxGroupContext>(
-  CHECKBOX_GROUP_INJECTION_KEY
+const checkboxGroupCtx = inject<CheckboxGroupContext | undefined>(
+  CHECKBOX_GROUP_INJECTION_KEY,
+  void 0
 );
 
 // disable

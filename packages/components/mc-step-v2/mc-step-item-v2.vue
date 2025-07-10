@@ -76,7 +76,10 @@ const contentRef = ref<HTMLDivElement>();
 const stepBarRef = ref<HTMLDivElement>();
 
 // step context
-const stepCtx = inject<StepV2Context>(STEP_V2_INJECTION_KEY);
+const stepCtx = inject<StepV2Context | undefined>(
+  STEP_V2_INJECTION_KEY,
+  void 0
+);
 
 // add step item
 onMounted(() => {
