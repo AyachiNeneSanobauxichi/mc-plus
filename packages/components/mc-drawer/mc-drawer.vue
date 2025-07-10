@@ -7,10 +7,10 @@
           :fixed="fixed"
           @click="handleOverlayClick"
         >
-          <transition name="mc-drawer-content">
+          <transition :name="`mc-drawer-content-${position}`">
             <div
               class="mc-drawer"
-              :class="[`mc-drawer-${size}`]"
+              :class="[`mc-drawer-${size}`, `mc-drawer-${position}`]"
               ref="_ref"
               v-if="showDrawerContent"
             >
@@ -77,6 +77,7 @@ const props = withDefaults(defineProps<DrawerProps>(), {
   showBorder: true,
   maskClosable: true,
   hideFooter: false,
+  position: "right",
 });
 
 // show drawer
