@@ -7,10 +7,10 @@
           :fixed="fixed"
           @click="handleOverlayClick"
         >
-          <transition name="mc-drawer-content">
+          <transition :name="`mc-drawer-content-${position}`">
             <div
               class="mc-drawer"
-              :class="[`mc-drawer-${size}`]"
+              :class="[`mc-drawer-${size}`, `mc-drawer-${position}`]"
               ref="_ref"
               v-if="showDrawerContent"
             >
@@ -32,7 +32,7 @@
                   <slot></slot>
                 </div>
               </div>
-              <div class="mc-drawer-footer" ref="footerRef">
+              <div class="mc-drawer-footer" ref="footerRef" v-if="!hideFooter">
                 <slot name="footer">
                   <mc-footer>
                     <template #left>
@@ -76,6 +76,8 @@ const props = withDefaults(defineProps<DrawerProps>(), {
   portCssSelector: "body",
   showBorder: true,
   maskClosable: true,
+  hideFooter: false,
+  position: "right",
 });
 
 // show drawer

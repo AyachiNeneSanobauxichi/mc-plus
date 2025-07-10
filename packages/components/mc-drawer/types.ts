@@ -2,6 +2,8 @@ import type { Ref } from "vue";
 
 export type DrawerSize = "large" | "medium" | "small";
 
+export type DrawerPosition = "right" | "bottom" | "left" | "top";
+
 export interface DrawerProps {
   modelValue?: boolean;
   title?: string;
@@ -10,6 +12,8 @@ export interface DrawerProps {
   fixed?: boolean;
   portCssSelector?: string;
   showBorder?: boolean;
+  hideFooter?: boolean;
+  position?: DrawerPosition;
 }
 
 export interface DrawerEmits {
