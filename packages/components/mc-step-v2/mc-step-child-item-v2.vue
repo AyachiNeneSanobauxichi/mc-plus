@@ -32,7 +32,10 @@ const props = withDefaults(defineProps<StepChildItemV2Props>(), {
 });
 
 // step item context
-const stepItemCtx = inject<StepItemV2Context>(STEP_ITEM_V2_INJECTION_KEY);
+const stepItemCtx = inject<StepItemV2Context | undefined>(
+  STEP_ITEM_V2_INJECTION_KEY,
+  void 0
+);
 
 // is active
 const isActive = computed(() => {

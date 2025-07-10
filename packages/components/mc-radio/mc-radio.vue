@@ -40,7 +40,10 @@ defineOptions({ name: "McRadio" });
 const props = defineProps<RadioProps>();
 
 // inject
-const radioContext = inject<RadioGroupContext>(RADIO_INJECTION_KEY);
+const radioContext = inject<RadioGroupContext | undefined>(
+  RADIO_INJECTION_KEY,
+  void 0
+);
 
 // selected
 const isSelected = computed(() => {
