@@ -13,7 +13,7 @@
           size="medium"
           :port-css-selector="'#main-content'"
           hide-footer
-          position="left"
+          position="bottom"
         >
           <div class="drawer-content">Drawer Content</div>
         </mc-drawer>
