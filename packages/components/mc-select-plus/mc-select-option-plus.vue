@@ -16,8 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import type { SelectOptionPlusProps } from "./types";
-import { computed, ref } from "vue";
+import type {
+  SelectOptionInternalInstance,
+  SelectOptionPlusProps,
+} from "./types";
+import { computed, getCurrentInstance, ref } from "vue";
 import { useWidthHeight } from "@mc-plus/hooks";
 
 // options
@@ -28,6 +31,9 @@ const props = withDefaults(defineProps<SelectOptionPlusProps>(), {
   width: "100%",
   height: 40,
 });
+
+// vm
+const vm = (getCurrentInstance()! as SelectOptionInternalInstance).proxy;
 
 // use height and width
 const { height, width } = useWidthHeight();
@@ -52,6 +58,7 @@ const handleHover = () => {
 // select
 const handleSelect = () => {
   console.log("select");
+  console.log("Vm: ", vm);
 };
 </script>
 
