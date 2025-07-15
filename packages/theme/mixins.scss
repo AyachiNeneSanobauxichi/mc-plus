@@ -36,3 +36,10 @@
 @mixin mask-color {
   background-color: rgba(#211050, 0.2);
 }
+
+/* reset li style */
+@mixin reset-li-style {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

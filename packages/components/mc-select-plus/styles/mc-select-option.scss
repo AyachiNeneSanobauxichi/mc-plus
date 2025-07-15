@@ -1,0 +1,14 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color: var(--mc-gray-800);
+$bg_color_hover: var(--mc-teal-200);
+
+.mc-select-option {
+  @include mixin.reset-li-style;
+  @include mixin.flex-center(row, flex-start);
+
+  color: $text_color;
+  font-size: 16;
+  font-weight: 400;
+  cursor: pointer;
+}
