@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-select-plus"></div>
+  <div class="mc-select-plus">Mc Select Plus</div>
 </template>
 
 <script setup lang="ts">
