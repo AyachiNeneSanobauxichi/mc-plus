@@ -1,6 +1,7 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
 $text_color: var(--mc-gray-800);
+$bg_color: var(--mc-white);
 $bg_color_hover: var(--mc-teal-200);
 
 .mc-select-option {
@@ -10,5 +11,8 @@ $bg_color_hover: var(--mc-teal-200);
   color: $text_color;
   font-size: 16;
   font-weight: 400;
+  box-sizing: border-box;
+  padding: 0 8px;
+  background-color: $bg_color;
   cursor: pointer;
 }
