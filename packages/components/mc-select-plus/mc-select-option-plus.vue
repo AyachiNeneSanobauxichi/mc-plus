@@ -22,9 +22,10 @@ import type {
 } from "./types";
 import { computed, getCurrentInstance, ref } from "vue";
 import { useWidthHeight } from "@mc-plus/hooks";
+import { MC_SELECT_OPTION } from "./constant";
 
 // options
-defineOptions({ name: "McSelectOptionPlus" });
+defineOptions({ name: MC_SELECT_OPTION });
 
 // props
 const props = withDefaults(defineProps<SelectOptionPlusProps>(), {

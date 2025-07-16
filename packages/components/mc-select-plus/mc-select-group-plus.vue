@@ -15,9 +15,10 @@
 import type { SelectGroupPlusProps } from "./types";
 import { ref } from "vue";
 import { useWidthHeight } from "@mc-plus/hooks";
+import { MC_SELECT_OPTION_GROUP } from "./constant";
 
 // options
-defineOptions({ name: "McSelectGroup" });
+defineOptions({ name: MC_SELECT_OPTION_GROUP });
 
 // props
 withDefaults(defineProps<SelectGroupPlusProps>(), {

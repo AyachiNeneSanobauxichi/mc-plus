@@ -1,0 +1,7 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-select-plus {
+  .mc-select-plus-list {
+    @include mixin.reset-ul-style;
+  }
+}

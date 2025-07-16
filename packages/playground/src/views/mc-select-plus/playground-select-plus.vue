@@ -1,21 +1,24 @@
 <template>
   <div class="playground-select-plus">
-    <template v-for="item in currencyList" :key="item.value">
-      <mc-select-group-plus :label="item.label">
-        <mc-select-option-plus
-          v-for="child in item.children"
-          :key="child.value"
-          :value="child.value"
-        >
-          {{ child.label }}
-        </mc-select-option-plus>
-      </mc-select-group-plus>
-    </template>
+    <mc-select-plus>
+      <template v-for="item in currencyList" :key="item.value">
+        <mc-select-group-plus :label="item.label">
+          <mc-select-option-plus
+            v-for="child in item.children"
+            :key="child.value"
+            :label="child.label"
+            :value="child.value"
+          >
+            {{ child.label }}
+          </mc-select-option-plus>
+        </mc-select-group-plus>
+      </template>
+    </mc-select-plus>
   </div>
 </template>
 
 <script setup lang="ts">
-// import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
+import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 import { reactive } from "vue";
