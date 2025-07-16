@@ -1,0 +1,6 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-select-group {
+  @include mixin.reset-ul-style;
+  @include mixin.reset-li-style;
+}
