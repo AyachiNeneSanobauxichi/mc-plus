@@ -20,9 +20,6 @@ export default defineComponent({
         filteredOptions.push(...newOptions);
       }
 
-      console.log("cachedOptions: ", cachedOptions);
-      console.log("filteredOptions: ", filteredOptions);
-
       if (!isSameOptions(filteredOptions, cachedOptions)) {
         cachedOptions = filteredOptions;
         emit("update-options", filteredOptions);

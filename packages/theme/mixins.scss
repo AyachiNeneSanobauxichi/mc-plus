@@ -49,3 +49,12 @@
   margin: 0;
   padding: 0;
 }
+
+/* reset input style */
+@mixin reset-input-style {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
