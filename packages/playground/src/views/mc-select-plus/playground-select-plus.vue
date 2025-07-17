@@ -1,6 +1,6 @@
 <template>
   <div class="playground-select-plus">
-    <mc-select-plus search>
+    <mc-select-plus>
       <template v-for="item in currencyList" :key="item.value">
         <mc-select-group-plus :label="item.label">
           <mc-select-option-plus

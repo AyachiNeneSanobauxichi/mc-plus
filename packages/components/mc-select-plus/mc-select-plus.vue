@@ -15,6 +15,7 @@
           class="mc-select-input"
           :style="{ width: hasSearchValue ? '100%' : '1px' }"
           ref="inputRef"
+          :readonly="!isSearch"
           @focus="handleFocus"
           @blur="handleBlur"
         />
