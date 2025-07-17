@@ -23,5 +23,9 @@ $border_color: var(--mc-gray-400);
         @include mixin.reset-input-style;
       }
     }
+
+    .mc-select-chevron-icon {
+      cursor: pointer;
+    }
   }
 }

@@ -1,14 +1,25 @@
 <template>
   <div class="mc-select">
-    <div class="mc-select-trigger" :style="{ width, height }">
-      <div class="mc-select-input-wrapper">
+    <div
+      class="mc-select-trigger"
+      :class="{ 'mc-select-trigger-focused': isFocused }"
+      :style="{ width, height }"
+      ref="triggerRef"
+    >
+      <div
+        class="mc-select-input-wrapper"
+        :style="{ cursor: isSearch ? 'text' : 'pointer' }"
+      >
         <input
           v-model="searchValue"
           class="mc-select-input"
           :style="{ width: hasSearchValue ? '100%' : '1px' }"
+          ref="inputRef"
+          @focus="handleFocus"
+          @blur="handleBlur"
         />
       </div>
-      <mc-icon name="Down-Chevron" :size="24" />
+      <mc-icon name="Down-Chevron" :size="24" class="mc-select-chevron-icon" />
     </div>
     <ul class="mc-select-list">
       <options @update-options="handleUpdateOptions">
@@ -22,7 +33,7 @@
 import type { SelectPlusProps, SelectPlusValue } from "./types";
 import { computed, ref } from "vue";
 import { isEmpty } from "lodash-es";
-import { useWidthHeight } from "@mc-plus/hooks";
+import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT } from "./constant";
 import Options from "./components/options/options";
 import McIcon from "../mc-icon/mc-icon.vue";
@@ -42,15 +53,31 @@ const props = withDefaults(defineProps<SelectPlusProps>(), {
   modelValue: () => [],
 });
 
+// refs
+const inputRef = ref<HTMLInputElement>();
+
+// use focus controller
+const {
+  wrapperRef: triggerRef,
+  isFocused,
+  handleFocus,
+  handleBlur,
+} = useFocusController(inputRef);
+
 // use width and height
 const { width, height } = useWidthHeight();
 
 // search value
 const searchValue = ref<string>("");
 
+// is search
+const isSearch = computed(() => {
+  return !!props.search;
+});
+
 // has search value
 const hasSearchValue = computed(() => {
-  return !isEmpty(searchValue.value);
+  return isSearch.value && !isEmpty(searchValue.value);
 });
 
 // handle update options
