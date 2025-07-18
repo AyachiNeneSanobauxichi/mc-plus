@@ -1,4 +1,5 @@
 import type { SelectPlusValue } from "./common";
+import type { SelectOptionInternalInstance } from "./mc-select-option";
 
 export interface SelectPlusProps {
   width?: string | number;
@@ -13,5 +14,10 @@ export interface SelectPlusProps {
 }
 
 export interface SelectPlusEmits {
-  "update-modelValue": [value: SelectPlusValue | SelectPlusValue[]];
+  (e: "update:modelValue", value: SelectPlusValue | SelectPlusValue[]): void;
+  (e: "change", value: SelectPlusValue | SelectPlusValue[]): void;
+}
+
+export interface SelectPlusContext {
+  select: (option: SelectOptionInternalInstance["proxy"]) => void;
 }

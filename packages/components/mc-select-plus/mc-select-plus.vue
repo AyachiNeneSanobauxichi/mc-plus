@@ -19,6 +19,12 @@
           @focus="handleFocus"
           @blur="handleBlur"
         />
+        <template v-if="!hasSearchValue && selectedContext?.key">
+          <component
+            :is="selectedContext.component"
+            :key="selectedContext.key"
+          ></component>
+        </template>
       </div>
       <mc-icon name="Down-Chevron" :size="24" class="mc-select-chevron-icon" />
     </div>
@@ -31,11 +37,15 @@
 </template>
 
 <script setup lang="ts">
-import type { SelectPlusProps, SelectPlusValue } from "./types";
-import { computed, ref } from "vue";
+import type {
+  SelectOptionInternalInstance,
+  SelectPlusProps,
+  SelectPlusValue,
+} from "./types";
+import { computed, provide, ref, type Component } from "vue";
 import { isEmpty } from "lodash-es";
 import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
-import { MC_SELECT } from "./constant";
+import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import Options from "./components/options/options";
 import McIcon from "../mc-icon/mc-icon.vue";
 
@@ -83,8 +93,29 @@ const hasSearchValue = computed(() => {
 
 // handle update options
 const handleUpdateOptions = (options: SelectPlusValue[]) => {
-  console.log("Options: ", options);
+  // console.log("Options: ", options);
 };
+
+// selected context
+const selectedContext = ref<{
+  key?: SelectPlusValue;
+  component?: Component;
+}>();
+
+// handle select
+const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
+  console.log("Option: ", option);
+  selectedContext.value = {
+    key: option.value,
+    component: option.$slots?.["default"],
+  };
+  console.log("Selected Context: ", selectedContext.value);
+};
+
+// provide
+provide(SELECT_INJECTION_KEY, {
+  select: handleSelect,
+});
 </script>
 
 <style scoped lang="scss">

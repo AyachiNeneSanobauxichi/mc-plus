@@ -20,9 +20,9 @@ import type {
   SelectOptionInternalInstance,
   SelectOptionPlusProps,
 } from "./types";
-import { computed, getCurrentInstance, ref } from "vue";
+import { computed, getCurrentInstance, inject, ref } from "vue";
 import { useWidthHeight } from "@mc-plus/hooks";
-import { MC_SELECT_OPTION } from "./constant";
+import { MC_SELECT_OPTION, SELECT_INJECTION_KEY } from "./constant";
 
 // options
 defineOptions({ name: MC_SELECT_OPTION });
@@ -38,6 +38,9 @@ const vm = (getCurrentInstance()! as SelectOptionInternalInstance).proxy;
 
 // use height and width
 const { height, width } = useWidthHeight();
+
+// select context
+const selectCtx = inject(SELECT_INJECTION_KEY || void 0);
 
 // visible
 const isVisible = ref<boolean>(true);
@@ -58,8 +61,7 @@ const handleHover = () => {
 
 // select
 const handleSelect = () => {
-  console.log("select");
-  console.log("Vm: ", vm);
+  selectCtx?.select(vm);
 };
 </script>
 
