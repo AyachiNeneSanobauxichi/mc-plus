@@ -1,4 +1,9 @@
-import type { SelectPlusValue } from "./common";
+import type { Ref } from "vue";
+import type {
+  _FilteredOptionNode,
+  _OptionNode,
+  SelectPlusValue,
+} from "./common";
 import type { SelectOptionInternalInstance } from "./mc-select-option";
 
 export interface SelectPlusProps {
@@ -25,4 +30,6 @@ export interface SelectPlusEmits {
 
 export interface SelectPlusContext {
   select: (option: SelectOptionInternalInstance["proxy"]) => void;
+  filteredOptions: Ref<_FilteredOptionNode[]>;
+  filteredGroups: Ref<(string | undefined)[]>;
 }

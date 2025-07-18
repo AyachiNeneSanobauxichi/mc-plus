@@ -21,32 +21,36 @@ const isSameOptions = (
 const filterOptions = (children?: VNodeNormalizedChildren): _OptionNode[] => {
   const filteredOptions: _OptionNode[] = [];
 
-  const processChildren = (children?: VNodeNormalizedChildren) => {
+  const generateOptions = (
+    children?: VNodeNormalizedChildren,
+    group?: string
+  ) => {
     if (!isArray(children)) return;
     (children as VNode[]).forEach((item) => {
       const name = ((item?.type || {}) as Component)?.name;
 
       if (name === MC_SELECT_OPTION_GROUP) {
-        processChildren(
+        const _children =
           !isString(item.children) &&
-            !isArray(item.children) &&
-            isFunction(item.children?.default)
+          !isArray(item.children) &&
+          isFunction(item.children?.default)
             ? item.children?.default()
-            : item.children
-        );
+            : item.children;
+        generateOptions(_children, item.props?.label);
       } else if (name === MC_SELECT_OPTION) {
         filteredOptions.push({
           label: item.props?.label,
           value: item.props?.value,
+          group,
           context: (item.children as { default?: () => Component })?.default,
         });
       } else if (Array.isArray(item.children)) {
-        processChildren(item.children);
+        generateOptions(item.children, group);
       }
     });
   };
 
-  processChildren(children);
+  generateOptions(children);
   return filteredOptions;
 };
 

@@ -13,24 +13,30 @@
 
 <script setup lang="ts">
 import type { SelectGroupPlusProps } from "./types";
-import { ref } from "vue";
+import { computed, inject } from "vue";
 import { useWidthHeight } from "@mc-plus/hooks";
-import { MC_SELECT_OPTION_GROUP } from "./constant";
+import { MC_SELECT_OPTION_GROUP, SELECT_INJECTION_KEY } from "./constant";
+import { includes } from "lodash-es";
 
 // options
 defineOptions({ name: MC_SELECT_OPTION_GROUP });
 
 // props
-withDefaults(defineProps<SelectGroupPlusProps>(), {
+const props = withDefaults(defineProps<SelectGroupPlusProps>(), {
   height: 40,
   width: "100%",
 });
+
+// select context
+const selectCtx = inject(SELECT_INJECTION_KEY || void 0);
 
 // use height and width
 const { height, width } = useWidthHeight();
 
 // visible
-const isVisible = ref<boolean>(true);
+const isVisible = computed<boolean>(() => {
+  return includes(selectCtx?.filteredGroups.value, props.label);
+});
 </script>
 
 <style scoped lang="scss">

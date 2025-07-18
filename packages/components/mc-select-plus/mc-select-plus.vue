@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 import type {
+  _FilteredOptionNode,
   _OptionNode,
   SelectOptionInternalInstance,
   SelectPlusEmits,
@@ -45,7 +46,15 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import { computed, h, onMounted, provide, ref, shallowRef, watch } from "vue";
-import { find, isEmpty } from "lodash-es";
+import {
+  filter,
+  find,
+  includes,
+  isEmpty,
+  map,
+  toLower,
+  uniqBy,
+} from "lodash-es";
 import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McSelectOptions from "./components/options";
@@ -104,6 +113,21 @@ const hasSearchValue = computed(() => {
 
 // select options
 const selectOptions = shallowRef<_OptionNode[]>([]);
+
+// filtered options
+const filteredOptions = computed<_FilteredOptionNode[]>(() => {
+  return map(
+    filter(selectOptions.value, (item) => {
+      return includes(toLower(item.label), toLower(searchValue.value));
+    }),
+    (item) => ({ value: item.value, group: item.group })
+  );
+});
+
+// filtered groups
+const filteredGroups = computed(() => {
+  return map(uniqBy(filteredOptions.value, "group"), (item) => item.group);
+});
 
 // handle update options
 const handleUpdateOptions = (options: _OptionNode[]) => {
@@ -179,6 +203,8 @@ const showSelectedContext = computed(
 // provide
 provide(SELECT_INJECTION_KEY, {
   select: handleSelect,
+  filteredOptions,
+  filteredGroups,
 });
 </script>
 

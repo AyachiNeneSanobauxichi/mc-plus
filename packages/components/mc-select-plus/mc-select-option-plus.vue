@@ -21,6 +21,7 @@ import type {
   SelectOptionPlusProps,
 } from "./types";
 import { computed, getCurrentInstance, inject, ref } from "vue";
+import { find } from "lodash-es";
 import { useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT_OPTION, SELECT_INJECTION_KEY } from "./constant";
 
@@ -43,7 +44,11 @@ const { height, width } = useWidthHeight();
 const selectCtx = inject(SELECT_INJECTION_KEY || void 0);
 
 // visible
-const isVisible = ref<boolean>(true);
+const isVisible = computed<boolean>(() => {
+  return !!find(selectCtx?.filteredOptions.value, (item) => {
+    return item.value === props.value;
+  });
+});
 
 // disabled
 const isDisabled = ref<boolean>(false);
