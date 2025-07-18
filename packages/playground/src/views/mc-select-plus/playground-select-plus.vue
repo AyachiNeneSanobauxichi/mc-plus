@@ -1,6 +1,6 @@
 <template>
   <div class="playground-select-plus">
-    <mc-select-plus v-model="currency">
+    <mc-select-plus v-model="currency" search>
       <template v-for="item in currencyList" :key="item.value">
         <mc-select-group-plus :label="item.label">
           <mc-select-option-plus
@@ -9,7 +9,6 @@
             :label="child.label"
             :value="child.value"
           >
-            {{ child.label }}
           </mc-select-option-plus>
         </mc-select-group-plus>
       </template>

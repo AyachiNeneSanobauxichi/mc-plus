@@ -20,7 +20,9 @@
           @blur="handleBlur"
         />
         <template v-if="showSelectedContext">
-          <component :is="selectedContent" :key="selectedOption"></component>
+          <slot name="selected-content" :selected-option="selectedOption">
+            <component :is="selectedContent" :key="selectedOption"></component>
+          </slot>
         </template>
       </div>
       <mc-icon name="Down-Chevron" :size="24" class="mc-select-chevron-icon" />
@@ -42,15 +44,7 @@ import type {
   SelectPlusValue,
 } from "./types";
 import type { Component } from "vue";
-import {
-  computed,
-  onMounted,
-  provide,
-  ref,
-  shallowRef,
-  watch,
-  watchEffect,
-} from "vue";
+import { computed, h, onMounted, provide, ref, shallowRef, watch } from "vue";
 import { find, isEmpty } from "lodash-es";
 import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
@@ -134,22 +128,42 @@ const selectedOption = ref<SelectPlusValue | SelectPlusValue[]>();
 
 // handle select
 const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
+  // clear search value
+  searchValue.value = "";
+
   if (isMulti(props.modelValue)) {
+    // multi
   } else {
+    // single
     selectedOption.value = option.value;
   }
+
+  // emit event
   emit("update:modelValue", selectedOption.value);
   emit("change", selectedOption.value);
 };
 
 // selected content
 const selectedContent = computed<Component | void>(() => {
-  if (isMulti(props.modelValue)) return void 0;
-  else {
-    return find(
+  if (isMulti(props.modelValue)) {
+    // multi display tags
+    return void 0;
+  } else {
+    // find selected option
+    const _option = find(
       selectOptions.value,
       (item) => item.value === selectedOption.value
-    )?.context;
+    );
+
+    // if option has context, return context
+    if (_option?.context) return _option.context;
+    // else return span with label or value
+    else
+      return h(
+        "span",
+        { class: "mc-selected-option-label" },
+        _option?.label || _option?.value
+      );
   }
 });
 
