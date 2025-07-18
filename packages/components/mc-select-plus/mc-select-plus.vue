@@ -19,34 +19,34 @@
           @focus="handleFocus"
           @blur="handleBlur"
         />
-        <template v-if="!hasSearchValue && selectedContext?.key">
-          <component
-            :is="selectedContext.component"
-            :key="selectedContext.key"
-          ></component>
+        <template v-if="showSelectedContext">
+          <component :is="selectedContent" :key="selectedOption"></component>
         </template>
       </div>
       <mc-icon name="Down-Chevron" :size="24" class="mc-select-chevron-icon" />
     </div>
     <ul class="mc-select-list">
-      <options @update-options="handleUpdateOptions">
+      <mc-select-options @update-options="handleUpdateOptions">
         <slot></slot>
-      </options>
+      </mc-select-options>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
 import type {
+  _OptionNode,
   SelectOptionInternalInstance,
+  SelectPlusEmits,
   SelectPlusProps,
   SelectPlusValue,
 } from "./types";
-import { computed, provide, ref, type Component } from "vue";
-import { isEmpty } from "lodash-es";
+import type { Component } from "vue";
+import { computed, onMounted, provide, ref, shallowRef, watch } from "vue";
+import { find, isEmpty } from "lodash-es";
 import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
-import Options from "./components/options/options";
+import McSelectOptions from "./components/options";
 import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
@@ -61,11 +61,20 @@ const props = withDefaults(defineProps<SelectPlusProps>(), {
   clearable: false,
   multiple: false,
   search: false,
-  modelValue: () => [],
 });
+
+// emits
+const emit = defineEmits<SelectPlusEmits>();
 
 // refs
 const inputRef = ref<HTMLInputElement>();
+
+// is multi
+const isMulti = (
+  moduleValue: SelectPlusValue | SelectPlusValue[] | undefined
+): moduleValue is SelectPlusValue[] => {
+  return props.multiple;
+};
 
 // use focus controller
 const {
@@ -91,26 +100,59 @@ const hasSearchValue = computed(() => {
   return isSearch.value && !isEmpty(searchValue.value);
 });
 
+// select options
+const selectOptions = shallowRef<_OptionNode[]>([]);
+
 // handle update options
-const handleUpdateOptions = (options: SelectPlusValue[]) => {
-  // console.log("Options: ", options);
+const handleUpdateOptions = (options: _OptionNode[]) => {
+  selectOptions.value = options;
 };
 
-// selected context
-const selectedContext = ref<{
-  key?: SelectPlusValue;
-  component?: Component;
-}>();
+// init
+onMounted(() => {
+  selectedOption.value = props.modelValue;
+});
+
+// model value change
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    selectedOption.value = newValue;
+  }
+);
+
+// selected option
+const selectedOption = ref<SelectPlusValue | SelectPlusValue[]>();
 
 // handle select
 const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
-  console.log("Option: ", option);
-  selectedContext.value = {
-    key: option.value,
-    component: option.$slots?.["default"],
-  };
-  console.log("Selected Context: ", selectedContext.value);
+  if (isMulti(props.modelValue)) {
+  } else {
+    selectedOption.value = option.value;
+  }
+  emit("update:modelValue", selectedOption.value);
+  emit("change", selectedOption.value);
 };
+
+// selected content
+const selectedContent = computed<Component | void>(() => {
+  if (isEmpty(props.modelValue) || isMulti(props.modelValue)) return void 0;
+  else {
+    return find(
+      selectOptions.value,
+      (item) => item.value === selectedOption.value
+    )?.context;
+  }
+});
+
+// show selected context
+const showSelectedContext = computed(
+  () =>
+    selectedContent.value &&
+    !hasSearchValue.value &&
+    !!selectedOption.value &&
+    !isMulti(props.modelValue)
+);
 
 // provide
 provide(SELECT_INJECTION_KEY, {

@@ -1,6 +1,5 @@
 import type { SetupContext } from "vue";
-import type { _OptionsEmits } from "./types";
-import type { SelectPlusValue } from "../../types";
+import type { _OptionNode, _OptionsEmits } from "../../types";
 import { defineComponent } from "vue";
 import { filterOptions, isSameOptions } from "../../utils";
 
@@ -9,11 +8,11 @@ export default defineComponent({
   emits: ["update-options"],
   setup(_: unknown, { slots, emit }: SetupContext<_OptionsEmits>) {
     // cache options
-    let cachedOptions: SelectPlusValue[] = [];
+    let cachedOptions: _OptionNode[] = [];
 
     return () => {
       const children = slots.default?.()!;
-      const filteredOptions: SelectPlusValue[] = [];
+      const filteredOptions: _OptionNode[] = [];
 
       if (children.length) {
         const newOptions = filterOptions(children![0]?.children);
@@ -24,7 +23,6 @@ export default defineComponent({
         cachedOptions = filteredOptions;
         emit("update-options", filteredOptions);
       }
-
       return children;
     };
   },

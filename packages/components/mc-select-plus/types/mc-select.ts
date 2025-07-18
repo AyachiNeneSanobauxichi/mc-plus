@@ -14,8 +14,11 @@ export interface SelectPlusProps {
 }
 
 export interface SelectPlusEmits {
-  (e: "update:modelValue", value: SelectPlusValue | SelectPlusValue[]): void;
-  (e: "change", value: SelectPlusValue | SelectPlusValue[]): void;
+  (
+    e: "update:modelValue",
+    value: SelectPlusValue | SelectPlusValue[] | undefined
+  ): void;
+  (e: "change", value: SelectPlusValue | SelectPlusValue[] | undefined): void;
 }
 
 export interface SelectPlusContext {
