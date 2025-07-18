@@ -42,7 +42,15 @@ import type {
   SelectPlusValue,
 } from "./types";
 import type { Component } from "vue";
-import { computed, onMounted, provide, ref, shallowRef, watch } from "vue";
+import {
+  computed,
+  onMounted,
+  provide,
+  ref,
+  shallowRef,
+  watch,
+  watchEffect,
+} from "vue";
 import { find, isEmpty } from "lodash-es";
 import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
@@ -71,7 +79,7 @@ const inputRef = ref<HTMLInputElement>();
 
 // is multi
 const isMulti = (
-  moduleValue: SelectPlusValue | SelectPlusValue[] | undefined
+  moduleValue: SelectPlusValue | SelectPlusValue[]
 ): moduleValue is SelectPlusValue[] => {
   return props.multiple;
 };
@@ -136,7 +144,7 @@ const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
 
 // selected content
 const selectedContent = computed<Component | void>(() => {
-  if (isEmpty(props.modelValue) || isMulti(props.modelValue)) return void 0;
+  if (isMulti(props.modelValue)) return void 0;
   else {
     return find(
       selectOptions.value,

@@ -55,9 +55,7 @@ const isSelected = ref<boolean>(false);
 const currentLabel = computed(() => props.label);
 
 // hover
-const handleHover = () => {
-  console.log("hover");
-};
+const handleHover = () => {};
 
 // select
 const handleSelect = () => {

@@ -1,6 +1,6 @@
 import type { Component } from "vue";
 
-export type SelectPlusValue = string | number | boolean;
+export type SelectPlusValue = string | number | boolean | undefined;
 
 export interface _OptionNode {
   label?: string;
