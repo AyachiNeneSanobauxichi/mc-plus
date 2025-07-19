@@ -57,14 +57,30 @@
               </slot>
             </p>
           </div>
-          <mc-icon
-            name="Up-Chevron"
-            :size="24"
-            class="mc-select-chevron-icon"
-            :class="{
-              'mc-select-chevron-icon-rotate': isExpanded,
-            }"
-          />
+          <div
+            class="mc-select-icon-wrapper"
+            @mouseenter="mouseOverIcon(true)"
+            @mouseleave="mouseOverIcon(false)"
+          >
+            <template v-if="showClearIcon">
+              <mc-icon
+                name="Reject"
+                :size="20"
+                class="mc-select-clear-icon"
+                @click.stop="clear"
+              />
+            </template>
+            <template v-else>
+              <mc-icon
+                name="Down-Chevron"
+                :size="24"
+                class="mc-select-chevron-icon"
+                :class="{
+                  'mc-select-chevron-icon-rotate': isExpanded,
+                }"
+              />
+            </template>
+          </div>
         </div>
       </template>
       <template #content>
@@ -102,6 +118,7 @@ import useSearch from "./hooks/useSearch";
 import useSelectWidthHeight from "./hooks/useSelectWidthHeight";
 import useExpand from "./hooks/useExpand";
 import useHover from "./hooks/useHover";
+import useClear from "./hooks/useClear";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -155,6 +172,30 @@ const {
   clearSearchValue,
 } = useSearch(selectOptions);
 
+// use expand
+const { isExpanded, popperRef, popperOptions, toggleExpand } = useExpand();
+
+// use hover
+const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
+  useHover(filteredOptions);
+
+// use clear
+const {
+  showClearIcon: _showClearIcon,
+  mouseOverIcon,
+  clear,
+} = useClear(() => {
+  selectedOption.value = isMulti(props.modelValue) ? [] : void 0;
+  clearSearchValue();
+  toggleExpand(false);
+});
+
+// use click outside
+useClickOutside(selectRef, () => {
+  clearSearchValue();
+  toggleExpand(false);
+});
+
 // init value
 onMounted(() => {
   selectedOption.value = props.modelValue;
@@ -186,9 +227,8 @@ const handleSelect = (value: SelectPlusValue) => {
   // close expand
   toggleExpand(false);
 
-  // emit event
-  emit("update:modelValue", selectedOption.value);
-  emit("change", selectedOption.value);
+  // dispatch events
+  dispatchEvents();
 };
 
 // selected content
@@ -229,13 +269,6 @@ const showPlaceholder = computed<boolean>(() => {
   return !!props.placeholder && !selectedOption.value && !hasSearchValue.value;
 });
 
-// use expand
-const { isExpanded, popperRef, popperOptions, toggleExpand } = useExpand();
-
-// use hover
-const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
-  useHover(filteredOptions);
-
 // watch expand
 watch(isExpanded, () => {
   clearHoverOption();
@@ -265,11 +298,16 @@ const handleEnter = () => {
   }
 };
 
-// click outside
-useClickOutside(selectRef, () => {
-  clearSearchValue();
-  toggleExpand(false);
+// show clear icon
+const showClearIcon = computed<boolean>(() => {
+  return _showClearIcon.value && !!selectedOption.value;
 });
+
+// dispatch events
+const dispatchEvents = () => {
+  emit("update:modelValue", selectedOption.value);
+  emit("change", selectedOption.value);
+};
 
 // provide
 provide<SelectPlusContext>(SELECT_INJECTION_KEY, {

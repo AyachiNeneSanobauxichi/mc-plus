@@ -53,13 +53,19 @@ $text_color_placeholder: var(--mc-gray-400);
       }
     }
 
-    .mc-select-chevron-icon {
+    .mc-select-icon-wrapper {
+      @include mixin.flex-center;
       cursor: pointer;
-      transform-origin: center;
-      transition: transform 0.3s;
+      width: 24px;
+      height: 24px;
 
-      &-rotate {
-        transform: rotate(-180deg);
+      .mc-select-chevron-icon {
+        transform-origin: center;
+        transition: transform 0.3s;
+
+        &-rotate {
+          transform: rotate(180deg);
+        }
       }
     }
 
