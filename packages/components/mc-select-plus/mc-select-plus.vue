@@ -178,6 +178,9 @@ const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
     selectedOption.value = option.value;
   }
 
+  // close expand
+  toggleExpand(false);
+
   // emit event
   emit("update:modelValue", selectedOption.value);
   emit("change", selectedOption.value);

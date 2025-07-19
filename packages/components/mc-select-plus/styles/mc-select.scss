@@ -61,8 +61,14 @@ $text_color_placeholder: var(--mc-gray-400);
     &:not(.mc-select-trigger-disabled):hover {
       @include actived-border;
     }
+
     &:not(.mc-select-trigger-disabled).mc-select-trigger-focused {
       @include actived-border;
+    }
+
+    &.mc-select-trigger-expanded {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }
