@@ -27,6 +27,10 @@ $text_color_placeholder: var(--mc-gray-400);
       position: relative;
       overflow-x: auto;
 
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
       .mc-select-input {
         @include mixin.reset-input-style;
         width: 100%;

@@ -105,14 +105,48 @@
         </div>
       </template>
       <template #content>
+        <template v-if="hasFilteredOptions">
+          <slot name="option-header">
+            <mc-title
+              v-if="isMulti"
+              class="mc-select-dropdown-header"
+              :show-tool-bar="false"
+              height="40px"
+            >
+              <div class="mc-select-dropdown-header-content">
+                <mc-checkbox
+                  v-model="selectAll"
+                  content="Select All"
+                  :form-validate="false"
+                  :partial="selectPartial"
+                  @change="handleSelectAll"
+                />
+              </div>
+            </mc-title>
+          </slot>
+        </template>
         <ul class="mc-select-list">
           <slot></slot>
-          <li v-if="filteredOptions.length <= 0" class="mc-select-empty">
+          <li v-if="!hasFilteredOptions" class="mc-select-empty">
             <slot name="empty">
               <p class="mc-select-text">No results found</p>
             </slot>
           </li>
         </ul>
+        <template v-if="hasFilteredOptions">
+          <slot name="option-footer">
+            <mc-footer v-if="isMulti" class="mc-select-dropdown-footer">
+              <template #right-button-group>
+                <mc-button type="link" size="small" @click="handleReset">
+                  Reset
+                </mc-button>
+                <mc-button type="plain" size="small" @click="handleApply">
+                  Apply
+                </mc-button>
+              </template>
+            </mc-footer>
+          </slot>
+        </template>
       </template>
     </mc-popper>
   </div>
@@ -129,7 +163,7 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import type { TagEmphasis } from "../mc-tag";
-import { computed, h, onMounted, provide, ref, watch } from "vue";
+import { computed, h, onMounted, provide, ref, watch, watchEffect } from "vue";
 import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import {
@@ -144,6 +178,10 @@ import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
 import McTag from "../mc-tag/mc-tag.vue";
+import McTitle from "../mc-title/mc-title.vue";
+import McFooter from "../mc-footer/mc-footer.vue";
+import McCheckbox from "../mc-checkbox/mc-checkbox.vue";
+import McButton from "../mc-button/mc-button.vue";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -232,6 +270,11 @@ watch(
 
 // selected option
 const selectedOption = ref<SelectPlusValue | SelectPlusValue[]>();
+
+// has filtered options
+const hasFilteredOptions = computed<boolean>(() => {
+  return filteredOptions.value.length > 0;
+});
 
 // get option label by value
 const getOptionLabel = (value: SelectPlusValue) => {
@@ -342,6 +385,66 @@ const handleEnter = () => {
   } else {
     toggleExpand(true);
   }
+};
+
+// select all
+const selectAll = ref<boolean>(false);
+
+// select partial
+const selectPartial = ref<boolean>(false);
+
+// watch select partial
+watchEffect(() => {
+  if (!isMulti.value) return;
+  const _selectedOption = selectedOption.value as SelectPlusValue[];
+  if (
+    _selectedOption?.length &&
+    selectOptions.value?.length &&
+    _selectedOption?.length === selectOptions.value?.length
+  ) {
+    selectAll.value = true;
+  } else if (_selectedOption?.length > 0) {
+    selectAll.value = false;
+    selectPartial.value = true;
+  } else {
+    selectAll.value = false;
+    selectPartial.value = false;
+  }
+});
+
+// handle select all
+const handleSelectAll = () => {
+  if (selectAll.value) {
+    // select all
+    selectedOption.value = selectOptions.value.map((item) => item.value);
+  } else {
+    // clear selected option
+    selectedOption.value = [];
+  }
+  dispatchEvents();
+};
+
+// cache selected option
+const cacheSelectedOption = ref<SelectPlusValue[]>([]);
+
+// watch expand
+watch(isExpanded, () => {
+  if (isExpanded.value && isMulti.value) {
+    cacheSelectedOption.value = selectedOption.value as SelectPlusValue[];
+  }
+});
+
+// handle reset
+const handleReset = () => {
+  if (!isMulti.value) return;
+  selectedOption.value = cacheSelectedOption.value;
+  dispatchEvents();
+};
+
+// handle apply
+const handleApply = () => {
+  if (!isMulti.value) return;
+  toggleExpand(false);
 };
 
 // selected option empty
