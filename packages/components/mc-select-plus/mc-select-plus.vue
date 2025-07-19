@@ -39,9 +39,9 @@
               @focus="handleFocus"
               @blur="handleBlur"
               @input="handleInput"
-              @keydown.enter="handleEnter"
-              @keydown.arrow-down="handlePressArrow"
-              @keydown.arrow-up="handlePressArrow"
+              @keydown.enter.stop="handleEnter"
+              @keydown.arrow-down.stop="handlePressArrow"
+              @keydown.arrow-up.stop="handlePressArrow"
             />
             <template v-if="showSelectedContext">
               <slot
