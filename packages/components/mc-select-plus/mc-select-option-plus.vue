@@ -4,7 +4,7 @@
     role="option"
     class="mc-select-option"
     :class="{
-      'mc-select-option-actived': isActived,
+      'mc-select-option-actived': isActived && !isMulti,
       'mc-select-option-disabled': isDisabled,
       'mc-select-option-hover': isHover,
     }"
@@ -14,8 +14,16 @@
     @mouseenter="handleHover"
     @click.stop="handleSelect"
   >
-    <slot>
-      <span class="mc-select-option-label">{{ currentLabel }}</span>
+    <slot :is-actived="isActived">
+      <template v-if="isMulti">
+        <mc-select-multi-option
+          :model-value="isActived"
+          :label="currentLabel"
+        ></mc-select-multi-option>
+      </template>
+      <template v-else>
+        <span class="mc-select-option-label">{{ currentLabel }}</span>
+      </template>
     </slot>
   </li>
 </template>
@@ -30,6 +38,7 @@ import { computed, inject, ref } from "vue";
 import { find, includes } from "lodash-es";
 import { useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT_OPTION, SELECT_INJECTION_KEY } from "./constant";
+import McSelectMultiOption from "./mc-select-multi-option.vue";
 
 // options
 defineOptions({ name: MC_SELECT_OPTION });
@@ -53,9 +62,12 @@ const isVisible = computed<boolean>(() => {
   });
 });
 
+// is multi
+const isMulti = computed<boolean>(() => !!selectCtx?.isMulti.value);
+
 // actived
 const isActived = computed<boolean>(() => {
-  if (selectCtx?.isMulti.value) {
+  if (isMulti.value) {
     const _selectedOption = selectCtx?.selectedOption
       .value as SelectPlusValue[];
     return includes(_selectedOption, props.value);

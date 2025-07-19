@@ -257,8 +257,10 @@ const handleSelect = (value: SelectPlusValue) => {
     selectedOption.value = value;
   }
 
-  // close expand
-  toggleExpand(false);
+  if (!isMulti.value) {
+    // close expand
+    toggleExpand(false);
+  }
 
   // dispatch events
   dispatchEvents();

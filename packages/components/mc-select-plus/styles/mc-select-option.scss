@@ -17,11 +17,11 @@ $bg_color_hover: var(--mc-teal-50);
   background-color: $bg_color;
   cursor: pointer;
 
-  &.mc-select-option-hover {
-    background-color: $bg_color_hover;
-  }
-
   &.mc-select-option-actived {
     background-color: $bg_color_actived;
+  }
+  
+  &.mc-select-option-hover {
+    background-color: $bg_color_hover;
   }
 }
