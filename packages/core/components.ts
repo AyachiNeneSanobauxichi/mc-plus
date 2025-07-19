@@ -43,6 +43,10 @@ import {
   McAlertMessage,
   McCurrencyIcon,
   McOtp,
+  McSelectPlus,
+  McSelectOptionPlus,
+  McSelectGroupPlus,
+  McSelectMultiOption,
 } from "@mc-plus/components";
 
 export default [
@@ -89,4 +93,8 @@ export default [
   McAlertMessage,
   McCurrencyIcon,
   McOtp,
+  McSelectPlus,
+  McSelectOptionPlus,
+  McSelectGroupPlus,
+  McSelectMultiOption,
 ] as Plugin[];

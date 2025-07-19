@@ -29,7 +29,3 @@ const handleUpdateModelValue = (value: boolean) => {
   emit("update:modelValue", value);
 };
 </script>
-
-<style scoped lang="scss">
-@use "./styles/mc-select-multi-option.scss";
-</style>
