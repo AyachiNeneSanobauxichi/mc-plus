@@ -1,4 +1,8 @@
-import type { Ref } from "vue";
+import type {
+  ComponentInternalInstance,
+  ComponentPublicInstance,
+  Ref,
+} from "vue";
 import type {
   _FilteredOptionNode,
   _OptionNode,
@@ -33,3 +37,9 @@ export interface SelectPlusContext {
   filteredOptions: Ref<_FilteredOptionNode[]>;
   filteredGroups: Ref<(string | undefined)[]>;
 }
+
+export type SelectPublicInstance = ComponentPublicInstance<SelectPlusProps>;
+
+export type SelectInternalInstance = ComponentInternalInstance & {
+  proxy: SelectPublicInstance;
+};

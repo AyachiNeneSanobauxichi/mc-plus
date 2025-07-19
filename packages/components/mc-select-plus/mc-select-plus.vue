@@ -67,9 +67,7 @@
       </template>
       <template #content>
         <ul class="mc-select-list">
-          <mc-select-options @update-options="handleUpdateOptions">
-            <slot></slot>
-          </mc-select-options>
+          <slot></slot>
           <li v-if="filteredOptions.length <= 0" class="mc-select-empty">
             <slot name="empty">
               <p class="mc-select-text">No results found</p>
@@ -93,7 +91,7 @@ import type {
 import type { Component } from "vue";
 import type { Options } from "@popperjs/core";
 import type { PopperInstance } from "../mc-popper";
-import { computed, h, onMounted, provide, ref, shallowRef, watch } from "vue";
+import { computed, h, onMounted, provide, ref, watch } from "vue";
 import {
   filter,
   find,
@@ -109,9 +107,9 @@ import {
   useWidthHeight,
 } from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
-import McSelectOptions from "./components/options";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
+import useSelectOptions from "./hooks/useSelectOptions";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -184,8 +182,8 @@ const hasSearchValue = computed(() => {
   return isSearch.value && !isEmpty(searchValue.value);
 });
 
-// select options
-const selectOptions = shallowRef<_OptionNode[]>([]);
+// use select options
+const { selectOptions } = useSelectOptions();
 
 // filtered options
 const filteredOptions = computed<_FilteredOptionNode[]>(() => {
@@ -201,11 +199,6 @@ const filteredOptions = computed<_FilteredOptionNode[]>(() => {
 const filteredGroups = computed(() => {
   return map(uniqBy(filteredOptions.value, "group"), (item) => item.group);
 });
-
-// handle update options
-const handleUpdateOptions = (options: _OptionNode[]) => {
-  selectOptions.value = options;
-};
 
 // init
 onMounted(() => {

@@ -17,14 +17,11 @@ const isSameOptions = (
   return true;
 };
 
-// filter options
-const filterOptions = (children?: VNodeNormalizedChildren): _OptionNode[] => {
-  const filteredOptions: _OptionNode[] = [];
+// generate options
+const generateOptions = (children?: VNodeNormalizedChildren): _OptionNode[] => {
+  const optionNodes: _OptionNode[] = [];
 
-  const generateOptions = (
-    children?: VNodeNormalizedChildren,
-    group?: string
-  ) => {
+  const flattenNodes = (children?: VNodeNormalizedChildren, group?: string) => {
     if (!isArray(children)) return;
     (children as VNode[]).forEach((item) => {
       const name = ((item?.type || {}) as Component)?.name;
@@ -36,22 +33,22 @@ const filterOptions = (children?: VNodeNormalizedChildren): _OptionNode[] => {
           isFunction(item.children?.default)
             ? item.children?.default()
             : item.children;
-        generateOptions(_children, item.props?.label);
+        flattenNodes(_children, item.props?.label);
       } else if (name === MC_SELECT_OPTION) {
-        filteredOptions.push({
+        optionNodes.push({
           label: item.props?.label,
           value: item.props?.value,
           group,
           context: (item.children as { default?: () => Component })?.default,
         });
       } else if (Array.isArray(item.children)) {
-        generateOptions(item.children, group);
+        flattenNodes(item.children, group);
       }
     });
   };
 
-  generateOptions(children);
-  return filteredOptions;
+  flattenNodes(children);
+  return optionNodes;
 };
 
-export { isSameOptions, filterOptions };
+export { isSameOptions, generateOptions };
