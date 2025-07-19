@@ -7,6 +7,7 @@
       width="400px"
       search
       clearable
+      multiple
     >
       <template v-for="item in currencyList" :key="item.value">
         <mc-select-group-plus :label="item.label">
@@ -29,7 +30,7 @@ import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-g
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 import { reactive, ref } from "vue";
 
-const currency = ref<string>("JPY");
+const currency = ref<string[]>([]);
 
 const currencyList = reactive([
   {

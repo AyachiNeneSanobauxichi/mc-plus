@@ -21,9 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import type { SelectOptionPlusProps, SelectPlusContext } from "./types";
+import type {
+  SelectOptionPlusProps,
+  SelectPlusContext,
+  SelectPlusValue,
+} from "./types";
 import { computed, inject, ref } from "vue";
-import { find } from "lodash-es";
+import { find, includes } from "lodash-es";
 import { useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT_OPTION, SELECT_INJECTION_KEY } from "./constant";
 
@@ -51,7 +55,13 @@ const isVisible = computed<boolean>(() => {
 
 // actived
 const isActived = computed<boolean>(() => {
-  return selectCtx?.selectedOption.value === props.value;
+  if (selectCtx?.isMulti.value) {
+    const _selectedOption = selectCtx?.selectedOption
+      .value as SelectPlusValue[];
+    return includes(_selectedOption, props.value);
+  } else {
+    return selectCtx?.selectedOption.value === props.value;
+  }
 });
 
 // disabled

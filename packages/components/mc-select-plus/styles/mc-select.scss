@@ -25,6 +25,8 @@ $text_color_placeholder: var(--mc-gray-400);
       flex: 1;
       height: 100%;
       position: relative;
+      overflow-x: auto;
+
       .mc-select-input {
         @include mixin.reset-input-style;
         width: 100%;
@@ -50,6 +52,22 @@ $text_color_placeholder: var(--mc-gray-400);
         color: $text_color_placeholder;
         font-size: 16px;
         font-weight: 400;
+      }
+
+      .mc-select-multi-options-wrapper {
+        @include mixin.reset-ul-style;
+        @include mixin.flex-center(row, start, center, 8px);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        .mc-select-multi-option {
+          @include mixin.reset-li-style;
+          @include mixin.flex-center(row, start);
+          height: 100%;
+        }
       }
     }
 

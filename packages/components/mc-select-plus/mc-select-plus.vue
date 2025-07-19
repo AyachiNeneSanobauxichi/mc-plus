@@ -45,10 +45,24 @@
             />
             <template v-if="showSelectedContext">
               <slot name="selected-content" :selected-option="selectedOption">
-                <component
-                  :is="selectedContent"
-                  :key="selectedOption"
-                ></component>
+                <template v-if="isMulti">
+                  <ul class="mc-select-multi-options-wrapper">
+                    <li
+                      v-for="item in selectedOption"
+                      :key="item"
+                      class="mc-select-multi-option"
+                    >
+                      {{ item }}
+                    </li>
+                  </ul>
+                </template>
+                <template v-else>
+                  <component
+                    v-if="selectedContent"
+                    :is="selectedContent"
+                    :key="selectedOption"
+                  ></component>
+                </template>
               </slot>
             </template>
             <p v-if="showPlaceholder" class="mc-select-placeholder">
@@ -108,7 +122,7 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import { computed, h, onMounted, provide, ref, watch } from "vue";
-import { find } from "lodash-es";
+import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import {
   useClear,
@@ -140,12 +154,7 @@ const props = withDefaults(defineProps<SelectPlusProps>(), {
 const emit = defineEmits<SelectPlusEmits>();
 
 // is multi
-const isMulti = (
-  // @ts-ignore
-  modelValue: SelectPlusValue | SelectPlusValue[]
-): modelValue is SelectPlusValue[] => {
-  return props.multiple;
-};
+const isMulti = computed<boolean>(() => props.multiple);
 
 // input ref
 const inputRef = ref<HTMLInputElement>();
@@ -187,9 +196,10 @@ const {
   mouseOverIcon,
   clear,
 } = useClear(() => {
-  selectedOption.value = isMulti(props.modelValue) ? [] : void 0;
+  selectedOption.value = isMulti.value ? [] : void 0;
   clearSearchValue();
   toggleExpand(false);
+  dispatchEvents();
 });
 
 // use click outside
@@ -219,8 +229,14 @@ const handleSelect = (value: SelectPlusValue) => {
   // clear search value
   clearSearchValue();
 
-  if (isMulti(props.modelValue)) {
+  if (isMulti.value) {
+    const _selectedOption = selectedOption.value as SelectPlusValue[];
     // multi
+    if (includes(_selectedOption, value)) {
+      selectedOption.value = difference(_selectedOption, [value]);
+    } else {
+      selectedOption.value = [..._selectedOption, value];
+    }
   } else {
     // single
     selectedOption.value = value;
@@ -235,7 +251,7 @@ const handleSelect = (value: SelectPlusValue) => {
 
 // selected content
 const selectedContent = computed<Component | void>(() => {
-  if (isMulti(props.modelValue)) {
+  if (isMulti.value) {
     // multi display tags
     return void 0;
   } else {
@@ -259,16 +275,18 @@ const selectedContent = computed<Component | void>(() => {
 
 // show selected context
 const showSelectedContext = computed(
-  () =>
-    selectedContent.value &&
-    !hasSearchValue.value &&
-    !!selectedOption.value &&
-    !isMulti(props.modelValue)
+  () => !hasSearchValue.value && !!selectedOption.value
 );
 
 // show placeholder
 const showPlaceholder = computed<boolean>(() => {
-  return !!props.placeholder && !selectedOption.value && !hasSearchValue.value;
+  return (
+    !!props.placeholder &&
+    !hasSearchValue.value &&
+    (isMulti.value
+      ? (selectedOption.value as SelectPlusValue[])?.length <= 0
+      : !selectedOption.value)
+  );
 });
 
 // watch expand
@@ -313,6 +331,7 @@ const dispatchEvents = () => {
 
 // provide
 provide<SelectPlusContext>(SELECT_INJECTION_KEY, {
+  isMulti,
   selectedOption,
   filteredOptions,
   filteredGroups,

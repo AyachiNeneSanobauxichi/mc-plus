@@ -32,6 +32,7 @@ export interface SelectPlusEmits {
 }
 
 export interface SelectPlusContext {
+  isMulti: Ref<boolean>;
   selectedOption: Ref<SelectPlusValue | SelectPlusValue[]>;
   filteredOptions: Ref<_FilteredOptionNode[]>;
   filteredGroups: Ref<(string | undefined)[]>;
