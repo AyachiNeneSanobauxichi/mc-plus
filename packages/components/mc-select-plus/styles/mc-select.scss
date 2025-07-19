@@ -11,6 +11,9 @@ $text_color_placeholder: var(--mc-gray-400);
 }
 
 .mc-select {
+  --mc-select-width: 100%;
+  width: var(--mc-select-width);
+
   .mc-select-trigger {
     @include mixin.flex-center(row, space-between, center, 8px);
     padding: 0 8px;
@@ -102,12 +105,12 @@ $text_color_placeholder: var(--mc-gray-400);
   }
 
   :deep(.mc-popper.mc-select-popper) {
-    width: 100%;
+    width: var(--mc-select-width);
     .mc-popper-trigger {
-      width: 100%;
+      width: var(--mc-select-width);
     }
     .mc-popper-popper {
-      width: 100%;
+      width: var(--mc-select-width);
     }
   }
 }

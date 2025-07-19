@@ -9,6 +9,7 @@
       placement="bottom-start"
       trigger="manual"
       class="mc-select-popper"
+      :style="{ width }"
       :show-arrow="false"
       :popper-options="popperOptions"
       :hide-timeout="100"
@@ -147,8 +148,28 @@ const {
   handleBlur,
 } = useFocusController(inputRef);
 
+// select ref
+const selectRef = ref<HTMLDivElement>();
+
 // use width and height
 const { width, height } = useWidthHeight();
+
+// set width
+const setWidth = () => {
+  if (!selectRef.value) return;
+  selectRef.value.style.setProperty("--mc-select-width", width.value);
+};
+
+// init width
+onMounted(() => {
+  setWidth();
+});
+
+// width changed
+watch(
+  () => width.value,
+  () => setWidth()
+);
 
 // search value
 const searchValue = ref<string>("");
@@ -301,9 +322,6 @@ watch(isExpanded, (expand) => {
     popperRef.value?.hide();
   }
 });
-
-// select ref
-const selectRef = ref<HTMLDivElement>();
 
 // click outside
 useClickOutside(selectRef, () => {
