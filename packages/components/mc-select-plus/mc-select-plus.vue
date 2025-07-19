@@ -40,6 +40,8 @@
               @blur="handleBlur"
               @input="handleInput"
               @keydown.enter="handleEnter"
+              @keydown.arrow-down="handlePressArrow"
+              @keydown.arrow-up="handlePressArrow"
             />
             <template v-if="showSelectedContext">
               <slot name="selected-content" :selected-option="selectedOption">
@@ -99,6 +101,7 @@ import useSelectOptions from "./hooks/useSelectOptions";
 import useSearch from "./hooks/useSearch";
 import useSelectWidthHeight from "./hooks/useSelectWidthHeight";
 import useExpand from "./hooks/useExpand";
+import useHover from "./hooks/useHover";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -229,13 +232,14 @@ const showPlaceholder = computed<boolean>(() => {
 // use expand
 const { isExpanded, popperRef, popperOptions, toggleExpand } = useExpand();
 
-// hover option
-const hoverOption = ref<SelectPlusValue>();
+// use hover
+const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
+  useHover(filteredOptions);
 
-// handle hover
-const handleHover = (value: SelectPlusValue) => {
-  hoverOption.value = value;
-};
+// watch expand
+watch(isExpanded, () => {
+  clearHoverOption();
+});
 
 // handle trigger click
 const handleTriggerClick = () => {
@@ -244,12 +248,21 @@ const handleTriggerClick = () => {
 
 // handle input
 const handleInput = () => {
+  clearHoverOption();
   toggleExpand(true);
 };
 
 // press enter
 const handleEnter = () => {
-  toggleExpand(!isExpanded.value);
+  if (isExpanded.value) {
+    if (hoverOption.value) {
+      handleSelect(hoverOption.value);
+    } else {
+      toggleExpand(false);
+    }
+  } else {
+    toggleExpand(true);
+  }
 };
 
 // click outside
@@ -265,7 +278,7 @@ provide<SelectPlusContext>(SELECT_INJECTION_KEY, {
   filteredGroups,
   hoverOption,
   select: handleSelect,
-  hover: handleHover,
+  hover: setHoverOption,
 });
 </script>
 
