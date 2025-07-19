@@ -7,10 +7,17 @@ $text_color_placeholder: var(--mc-gray-400);
 $text_color_disabled: var(--mc-gray-500);
 $bg_color: var(--mc-white);
 $bg_color_disabled: var(--mc-gray-200);
+$success_color: var(--mc-success);
+$error_color: var(--mc-error);
 
 @mixin actived-border {
   border-color: $border_color;
   outline: 1px solid $border_color;
+}
+
+@mixin error-border {
+  border-color: $error_color;
+  outline-color: $error_color;
 }
 
 .mc-select {
@@ -113,6 +120,28 @@ $bg_color_disabled: var(--mc-gray-200);
         cursor: not-allowed;
       }
     }
+
+    &.mc-select-trigger-error {
+      .mc-select-status-icon-wrapper {
+        color: $error_color;
+      }
+    }
+
+    &.mc-select-trigger-success {
+      .mc-select-status-icon-wrapper {
+        color: $success_color;
+      }
+    }
+  }
+
+  &:not(.mc-select-expanded) {
+    .mc-select-trigger-error:not(.mc-select-trigger-disabled) {
+      @include error-border;
+      &:hover,
+      &.mc-select-trigger-focused {
+        @include error-border;
+      }
+    }
   }
 
   .mc-select-list {
@@ -180,6 +209,7 @@ $bg_color_disabled: var(--mc-gray-200);
     }
     .mc-popper-popper {
       width: var(--mc-select-width);
+      z-index: 999;
     }
   }
 }

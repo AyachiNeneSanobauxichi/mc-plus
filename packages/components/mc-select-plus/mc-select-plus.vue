@@ -21,6 +21,8 @@
           :class="{
             'mc-select-trigger-focused': isFocused,
             'mc-select-trigger-disabled': isDisabled,
+            'mc-select-trigger-error': isError,
+            'mc-select-trigger-success': isSuccess,
           }"
           :style="{ width, height }"
           @click="handleTriggerClick"
@@ -80,6 +82,9 @@
                 {{ placeholder }}
               </slot>
             </p>
+          </div>
+          <div class="mc-select-status-icon-wrapper" v-if="statusIcon">
+            <mc-icon v-if="statusIcon" :name="statusIcon" :size="24" />
           </div>
           <div
             class="mc-select-icon-wrapper"
@@ -194,6 +199,7 @@ import McTitle from "../mc-title/mc-title.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
 import McCheckbox from "../mc-checkbox/mc-checkbox.vue";
 import McButton from "../mc-button/mc-button.vue";
+import { useFormValidate } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -270,6 +276,18 @@ const {
   toggleExpand(false);
   dispatchEvents();
 }, isDisabled);
+
+// use form validate
+const { formItem, isError, isSuccess, statusIcon } = useFormValidate();
+
+// watch model value
+watch(
+  () => props.modelValue,
+  () => {
+    // validate form item
+    formItem?.validate("change");
+  }
+);
 
 // use click outside
 useClickOutside(selectRef, () => {
@@ -403,7 +421,7 @@ const handleEnter = () => {
   if (isExpanded.value) {
     if (hoverOption.value) {
       handleSelect(hoverOption.value);
-    } else {
+    } else if (!isMulti.value) {
       toggleExpand(false);
     }
   } else {

@@ -3,6 +3,7 @@
     <mc-checkbox
       :model-value="modelValue"
       :content="label"
+      :form-validate="false"
       @update:model-value="handleUpdateModelValue"
     />
   </div>

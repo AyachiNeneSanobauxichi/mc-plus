@@ -23,3 +23,36 @@ export function useFormDisabled() {
 
   return computed(() => disabled.value || form?.disabled || formItem?.disabled);
 }
+
+// form validate hook
+export function useFormValidate() {
+  // form item context
+  const { formItem } = useFormItem();
+
+  // form item validate status style
+  const validateStyle = computed<"success" | "error" | "validating">(() => {
+    switch (formItem?.validateStatus) {
+      case "success":
+        return "success";
+      case "error":
+        return "error";
+      default:
+        return "validating";
+    }
+  });
+
+  // error
+  const isError = computed<boolean>(() => validateStyle.value === "error");
+
+  // success
+  const isSuccess = computed<boolean>(() => validateStyle.value === "success");
+
+  // status icon
+  const statusIcon = computed<"Accept_02" | "Reject_02" | undefined>(() => {
+    if (isError.value) return "Reject_02";
+    if (isSuccess.value) return "Accept_02";
+    return void 0;
+  });
+
+  return { formItem, validateStyle, isError, isSuccess, statusIcon };
+}
