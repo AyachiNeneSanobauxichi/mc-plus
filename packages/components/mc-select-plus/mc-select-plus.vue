@@ -93,16 +93,13 @@ import type { Options } from "@popperjs/core";
 import type { PopperInstance } from "../mc-popper";
 import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { find } from "lodash-es";
-import {
-  useClickOutside,
-  useFocusController,
-  useWidthHeight,
-} from "@mc-plus/hooks";
+import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
 import useSelectOptions from "./hooks/useSelectOptions";
 import useSearch from "./hooks/useSearch";
+import useSelectWidthHeight from "./hooks/useSelectWidthHeight";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -139,28 +136,8 @@ const {
   handleBlur,
 } = useFocusController(inputRef);
 
-// select ref
-const selectRef = ref<HTMLDivElement>();
-
-// use width and height
-const { width, height } = useWidthHeight();
-
-// set width
-const setWidth = () => {
-  if (!selectRef.value) return;
-  selectRef.value.style.setProperty("--mc-select-width", width.value);
-};
-
-// init width
-onMounted(() => {
-  setWidth();
-});
-
-// width changed
-watch(
-  () => width.value,
-  () => setWidth()
-);
+// use select width  height
+const { selectRef, width, height } = useSelectWidthHeight();
 
 // use select options
 const { selectOptions } = useSelectOptions();
