@@ -83,7 +83,6 @@
 import type {
   _FilteredOptionNode,
   _OptionNode,
-  SelectOptionInternalInstance,
   SelectPlusEmits,
   SelectPlusProps,
   SelectPlusValue,
@@ -168,7 +167,7 @@ watch(
 const selectedOption = ref<SelectPlusValue | SelectPlusValue[]>();
 
 // handle select
-const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
+const handleSelect = (value: SelectPlusValue) => {
   // clear search value
   clearSearchValue();
 
@@ -176,7 +175,7 @@ const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
     // multi
   } else {
     // single
-    selectedOption.value = option.value;
+    selectedOption.value = value;
   }
 
   // close expand

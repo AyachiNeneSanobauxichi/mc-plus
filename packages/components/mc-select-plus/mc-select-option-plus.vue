@@ -4,7 +4,7 @@
     class="mc-select-option"
     :style="{ height, width }"
     role="option"
-    :aria-disabled="isDisabled || undefined"
+    :aria-disabled="isDisabled"
     :aria-selected="isSelected"
     @mousemove="handleHover"
     @click.stop="handleSelect"
@@ -16,11 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  SelectOptionInternalInstance,
-  SelectOptionPlusProps,
-} from "./types";
-import { computed, getCurrentInstance, inject, ref } from "vue";
+import type { SelectOptionPlusProps } from "./types";
+import { computed, inject, ref } from "vue";
 import { find } from "lodash-es";
 import { useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT_OPTION, SELECT_INJECTION_KEY } from "./constant";
@@ -33,9 +30,6 @@ const props = withDefaults(defineProps<SelectOptionPlusProps>(), {
   width: "100%",
   height: 40,
 });
-
-// vm
-const vm = (getCurrentInstance()! as SelectOptionInternalInstance).proxy;
 
 // use height and width
 const { height, width } = useWidthHeight();
@@ -64,7 +58,7 @@ const handleHover = () => {};
 
 // select
 const handleSelect = () => {
-  selectCtx?.select(vm);
+  selectCtx?.select(props.value);
 };
 </script>
 

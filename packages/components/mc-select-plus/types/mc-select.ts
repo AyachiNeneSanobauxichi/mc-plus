@@ -8,7 +8,6 @@ import type {
   _OptionNode,
   SelectPlusValue,
 } from "./common";
-import type { SelectOptionInternalInstance } from "./mc-select-option";
 
 export interface SelectPlusProps {
   width?: string | number;
@@ -33,7 +32,7 @@ export interface SelectPlusEmits {
 }
 
 export interface SelectPlusContext {
-  select: (option: SelectOptionInternalInstance["proxy"]) => void;
+  select: (option: SelectPlusValue) => void;
   filteredOptions: Ref<_FilteredOptionNode[]>;
   filteredGroups: Ref<(string | undefined)[]>;
 }
