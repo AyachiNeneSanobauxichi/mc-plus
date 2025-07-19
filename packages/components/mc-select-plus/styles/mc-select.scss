@@ -1,8 +1,14 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
 $border_color: var(--mc-gray-400);
+$border_color: var(--mc-gray-800);
 $text_color_selected: var(--mc-gray-800);
 $text_color_placeholder: var(--mc-gray-400);
+
+@mixin actived-border {
+  border-color: $border_color;
+  outline: 1px solid $border_color;
+}
 
 .mc-select {
   .mc-select-list {
@@ -50,6 +56,13 @@ $text_color_placeholder: var(--mc-gray-400);
 
     .mc-select-chevron-icon {
       cursor: pointer;
+    }
+
+    &:not(.mc-select-trigger-disabled):hover {
+      @include actived-border;
+    }
+    &:not(.mc-select-trigger-disabled).mc-select-trigger-focused {
+      @include actived-border;
     }
   }
 }

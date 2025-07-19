@@ -1,10 +1,15 @@
 <template>
   <div class="mc-select">
     <div
-      class="mc-select-trigger"
-      :class="{ 'mc-select-trigger-focused': isFocused }"
-      :style="{ width, height }"
       ref="triggerRef"
+      class="mc-select-trigger"
+      :class="{
+        'mc-select-trigger-focused': isFocused,
+        'mc-select-trigger-disabled': false,
+        'mc-select-trigger-expanded': isExpanded,
+      }"
+      :style="{ width, height }"
+      @click="handleTriggerClick"
     >
       <div
         class="mc-select-input-wrapper"
@@ -19,6 +24,7 @@
           :readonly="!isSearch"
           @focus="handleFocus"
           @blur="handleBlur"
+          @input="handleInput"
         />
         <template v-if="showSelectedContext">
           <slot name="selected-content" :selected-option="selectedOption">
@@ -31,7 +37,11 @@
           </slot>
         </p>
       </div>
-      <mc-icon name="Down-Chevron" :size="24" class="mc-select-chevron-icon" />
+      <mc-icon
+        :name="isExpanded ? 'Up-Chevron' : 'Down-Chevron'"
+        :size="24"
+        class="mc-select-chevron-icon"
+      />
     </div>
     <ul class="mc-select-list">
       <mc-select-options @update-options="handleUpdateOptions">
@@ -210,6 +220,24 @@ const showSelectedContext = computed(
 const showPlaceholder = computed<boolean>(() => {
   return !!props.placeholder && !selectedOption.value && !hasSearchValue.value;
 });
+
+// is expanded
+const isExpanded = ref<boolean>(false);
+
+// toggle expand
+const toggleExpand = (expand: boolean) => {
+  isExpanded.value = expand;
+};
+
+// handle trigger click
+const handleTriggerClick = () => {
+  toggleExpand(!isExpanded.value);
+};
+
+// handle input
+const handleInput = () => {
+  toggleExpand(true);
+};
 
 // provide
 provide(SELECT_INJECTION_KEY, {
