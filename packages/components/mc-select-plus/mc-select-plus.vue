@@ -1,6 +1,13 @@
 <template>
   <div class="mc-select">
-    <mc-popper placement="bottom-start" trigger="click">
+    <mc-popper
+      placement="bottom-start"
+      trigger="click"
+      class="mc-select-popper"
+      :show-arrow="false"
+      :popper-options="popperOptions"
+      :hide-timeout="100"
+    >
       <template #default>
         <div
           ref="triggerRef"
@@ -70,6 +77,7 @@ import type {
   SelectPlusValue,
 } from "./types";
 import type { Component } from "vue";
+import type { Options } from "@popperjs/core";
 import { computed, h, onMounted, provide, ref, shallowRef, watch } from "vue";
 import {
   filter,
@@ -250,6 +258,18 @@ const handleTriggerClick = () => {
 // handle input
 const handleInput = () => {
   toggleExpand(true);
+};
+
+// popper options
+const popperOptions: Partial<Options> = {
+  modifiers: [
+    {
+      name: "offset",
+      options: {
+        offset: [0, 0],
+      },
+    },
+  ],
 };
 
 // provide
