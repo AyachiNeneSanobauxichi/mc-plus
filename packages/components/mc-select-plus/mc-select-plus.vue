@@ -110,15 +110,17 @@ import type { Component } from "vue";
 import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { find } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
+import {
+  useClear,
+  useExpand,
+  useHover,
+  useSearch,
+  useSelectOptions,
+  useSelectWidthHeight,
+} from "./hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
-import useSelectOptions from "./hooks/useSelectOptions";
-import useSearch from "./hooks/useSearch";
-import useSelectWidthHeight from "./hooks/useSelectWidthHeight";
-import useExpand from "./hooks/useExpand";
-import useHover from "./hooks/useHover";
-import useClear from "./hooks/useClear";
 
 // options
 defineOptions({ name: MC_SELECT });
