@@ -115,11 +115,11 @@
             <slot name="option-header">
               <div class="mc-select-dropdown-header-content">
                 <mc-checkbox
-                  v-model="selectAll"
+                  v-model="isSelectAll"
                   content="Select All"
                   :form-validate="false"
-                  :partial="selectPartial"
-                  @change="handleSelectAll"
+                  :partial="isSelectPartial"
+                  @change="selectAll"
                 />
               </div>
             </slot>
@@ -169,7 +169,7 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import type { TagEmphasis } from "../mc-tag";
-import { computed, h, onMounted, provide, ref, watch, watchEffect } from "vue";
+import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import {
@@ -177,6 +177,7 @@ import {
   useExpand,
   useHover,
   useSearch,
+  useSelectAll,
   useSelectOptions,
   useSelectWidthHeight,
 } from "./hooks";
@@ -395,42 +396,22 @@ const handleEnter = () => {
   }
 };
 
-// select all
-const selectAll = ref<boolean>(false);
-
-// select partial
-const selectPartial = ref<boolean>(false);
-
-// watch select partial
-watchEffect(() => {
-  if (!isMulti.value) return;
-  const _selectedOption = selectedOption.value as SelectPlusValue[];
-  if (
-    _selectedOption?.length &&
-    selectOptions.value?.length &&
-    _selectedOption?.length === selectOptions.value?.length
-  ) {
-    selectAll.value = true;
-  } else if (_selectedOption?.length > 0) {
-    selectAll.value = false;
-    selectPartial.value = true;
-  } else {
-    selectAll.value = false;
-    selectPartial.value = false;
+// use select all
+const { isSelectAll, isSelectPartial, selectAll } = useSelectAll(
+  isMulti,
+  selectedOption,
+  selectOptions,
+  () => {
+    if (isSelectAll.value) {
+      // select all
+      selectedOption.value = selectOptions.value.map((item) => item.value);
+    } else {
+      // clear selected option
+      selectedOption.value = [];
+    }
+    dispatchEvents();
   }
-});
-
-// handle select all
-const handleSelectAll = () => {
-  if (selectAll.value) {
-    // select all
-    selectedOption.value = selectOptions.value.map((item) => item.value);
-  } else {
-    // clear selected option
-    selectedOption.value = [];
-  }
-  dispatchEvents();
-};
+);
 
 // cache selected option
 const cacheSelectedOption = ref<SelectPlusValue[]>([]);

@@ -8,6 +8,8 @@
       search
       clearable
       multiple
+      show-header
+      show-footer
     >
       <template v-for="item in currencyList" :key="item.value">
         <mc-select-group-plus :label="item.label">
