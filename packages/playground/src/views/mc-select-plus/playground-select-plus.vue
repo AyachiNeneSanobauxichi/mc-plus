@@ -35,27 +35,27 @@ const currencyList = reactive([
     children: [
       { label: "USD", value: "USD" },
       { label: "EUR", value: "EUR" },
-      { label: "GBP", value: "GBP" },
-      { label: "JPY", value: "JPY" },
-      { label: "KRW", value: "KRW" },
-      { label: "CNY", value: "CNY" },
-      { label: "HKD", value: "HKD" },
-      { label: "AUD", value: "AUD" },
-      { label: "CAD", value: "CAD" },
-      { label: "CHF", value: "CHF" },
+      // { label: "GBP", value: "GBP" },
+      // { label: "JPY", value: "JPY" },
+      // { label: "KRW", value: "KRW" },
+      // { label: "CNY", value: "CNY" },
+      // { label: "HKD", value: "HKD" },
+      // { label: "AUD", value: "AUD" },
+      // { label: "CAD", value: "CAD" },
+      // { label: "CHF", value: "CHF" },
     ],
   },
-  {
-    label: "Crypto",
-    value: "crypto",
-    children: [
-      { label: "BTC", value: "BTC" },
-      { label: "ETH", value: "ETH" },
-      { label: "SOL", value: "SOL" },
-      { label: "XRP", value: "XRP" },
-      { label: "ADA", value: "ADA" },
-    ],
-  },
+  // {
+  //   label: "Crypto",
+  //   value: "crypto",
+  //   children: [
+  //     { label: "BTC", value: "BTC" },
+  //     { label: "ETH", value: "ETH" },
+  //     { label: "SOL", value: "SOL" },
+  //     { label: "XRP", value: "XRP" },
+  //     { label: "ADA", value: "ADA" },
+  //   ],
+  // },
 ]);
 </script>
 

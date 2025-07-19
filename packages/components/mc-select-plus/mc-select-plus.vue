@@ -1,5 +1,9 @@
 <template>
-  <div class="mc-select" ref="selectRef">
+  <div
+    ref="selectRef"
+    class="mc-select"
+    :class="{ 'mc-select-expanded': isExpanded }"
+  >
     <mc-popper
       ref="popperRef"
       placement="bottom-start"
@@ -16,7 +20,6 @@
           :class="{
             'mc-select-trigger-focused': isFocused,
             'mc-select-trigger-disabled': false,
-            'mc-select-trigger-expanded': isExpanded,
           }"
           :style="{ width, height }"
           @click="handleTriggerClick"
