@@ -1,6 +1,6 @@
 import type { Placement, Options } from "@popperjs/core";
 
-export type PopperTrigger = "hover" | "click";
+export type PopperTrigger = "hover" | "click" | "manual";
 
 export interface PopperProps {
   content?: string;

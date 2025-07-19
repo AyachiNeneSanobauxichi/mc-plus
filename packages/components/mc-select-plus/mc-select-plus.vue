@@ -1,8 +1,9 @@
 <template>
-  <div class="mc-select">
+  <div class="mc-select" ref="selectRef">
     <mc-popper
+      ref="popperRef"
       placement="bottom-start"
-      trigger="click"
+      trigger="manual"
       class="mc-select-popper"
       :show-arrow="false"
       :popper-options="popperOptions"
@@ -34,6 +35,7 @@
               @focus="handleFocus"
               @blur="handleBlur"
               @input="handleInput"
+              @keydown.enter="handleEnter"
             />
             <template v-if="showSelectedContext">
               <slot name="selected-content" :selected-option="selectedOption">
@@ -50,9 +52,12 @@
             </p>
           </div>
           <mc-icon
-            :name="isExpanded ? 'Up-Chevron' : 'Down-Chevron'"
+            name="Up-Chevron"
             :size="24"
             class="mc-select-chevron-icon"
+            :class="{
+              'mc-select-chevron-icon-rotate': isExpanded,
+            }"
           />
         </div>
       </template>
@@ -61,6 +66,11 @@
           <mc-select-options @update-options="handleUpdateOptions">
             <slot></slot>
           </mc-select-options>
+          <li v-if="filteredOptions.length <= 0" class="mc-select-empty">
+            <slot name="empty">
+              <p class="mc-select-text">No results found</p>
+            </slot>
+          </li>
         </ul>
       </template>
     </mc-popper>
@@ -78,6 +88,7 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import type { Options } from "@popperjs/core";
+import type { PopperInstance } from "../mc-popper";
 import { computed, h, onMounted, provide, ref, shallowRef, watch } from "vue";
 import {
   filter,
@@ -88,7 +99,11 @@ import {
   toLower,
   uniqBy,
 } from "lodash-es";
-import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
+import {
+  useClickOutside,
+  useFocusController,
+  useWidthHeight,
+} from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McSelectOptions from "./components/options";
 import McIcon from "../mc-icon/mc-icon.vue";
@@ -111,15 +126,15 @@ const props = withDefaults(defineProps<SelectPlusProps>(), {
 // emits
 const emit = defineEmits<SelectPlusEmits>();
 
-// refs
-const inputRef = ref<HTMLInputElement>();
-
 // is multi
 const isMulti = (
   moduleValue: SelectPlusValue | SelectPlusValue[]
 ): moduleValue is SelectPlusValue[] => {
   return props.multiple;
 };
+
+// input ref
+const inputRef = ref<HTMLInputElement>();
 
 // use focus controller
 const {
@@ -260,6 +275,9 @@ const handleInput = () => {
   toggleExpand(true);
 };
 
+// popper ref
+const popperRef = ref<PopperInstance>();
+
 // popper options
 const popperOptions: Partial<Options> = {
   modifiers: [
@@ -270,6 +288,29 @@ const popperOptions: Partial<Options> = {
       },
     },
   ],
+};
+
+// expand changed
+watch(isExpanded, (expand) => {
+  if (expand) {
+    popperRef.value?.show();
+  } else {
+    popperRef.value?.hide();
+  }
+});
+
+// select ref
+const selectRef = ref<HTMLDivElement>();
+
+// click outside
+useClickOutside(selectRef, () => {
+  searchValue.value = "";
+  toggleExpand(false);
+});
+
+// press enter
+const handleEnter = () => {
+  toggleExpand(!isExpanded.value);
 };
 
 // provide

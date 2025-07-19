@@ -171,7 +171,7 @@ const openPopper = (useDebounce = true) => {
   if (useDebounce) {
     openDebounce?.();
   } else {
-    setVisible(false);
+    setVisible(true);
   }
 };
 
@@ -188,8 +188,9 @@ const closePopper = (useDebounce = true) => {
 // click outside
 useClickOutside(containerNode, () => {
   emits("click:outside");
-  if (props.trigger === "hover") return;
-  visible.value && closePopper(false);
+  if (props.trigger === "click") {
+    visible.value && closePopper(false);
+  }
 });
 
 // expose
