@@ -1,6 +1,10 @@
 <template>
   <div class="playground-select-plus">
-    <mc-select-plus v-model="currency" search>
+    <mc-select-plus
+      v-model="currency"
+      placeholder="Please select currency"
+      search
+    >
       <template v-for="item in currencyList" :key="item.value">
         <mc-select-group-plus :label="item.label">
           <mc-select-option-plus
@@ -22,7 +26,7 @@ import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-g
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 import { reactive, ref } from "vue";
 
-const currency = ref<string>("USD");
+const currency = ref<string>();
 
 const currencyList = reactive([
   {

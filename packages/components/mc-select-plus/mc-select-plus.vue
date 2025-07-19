@@ -13,8 +13,9 @@
         <input
           v-model="searchValue"
           class="mc-select-input"
-          :style="{ width: hasSearchValue ? '100%' : '1px' }"
           ref="inputRef"
+          :style="{ width: hasSearchValue ? '100%' : '1px' }"
+          :placeholder="placeholder"
           :readonly="!isSearch"
           @focus="handleFocus"
           @blur="handleBlur"
@@ -24,6 +25,11 @@
             <component :is="selectedContent" :key="selectedOption"></component>
           </slot>
         </template>
+        <p v-if="showPlaceholder" class="mc-select-placeholder">
+          <slot name="placeholder">
+            {{ placeholder }}
+          </slot>
+        </p>
       </div>
       <mc-icon name="Down-Chevron" :size="24" class="mc-select-chevron-icon" />
     </div>
@@ -199,6 +205,11 @@ const showSelectedContext = computed(
     !!selectedOption.value &&
     !isMulti(props.modelValue)
 );
+
+// show placeholder
+const showPlaceholder = computed<boolean>(() => {
+  return !!props.placeholder && !selectedOption.value && !hasSearchValue.value;
+});
 
 // provide
 provide(SELECT_INJECTION_KEY, {

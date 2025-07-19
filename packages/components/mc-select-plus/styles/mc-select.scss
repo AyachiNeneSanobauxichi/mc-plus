@@ -1,6 +1,8 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
 $border_color: var(--mc-gray-400);
+$text_color_selected: var(--mc-gray-800);
+$text_color_placeholder: var(--mc-gray-400);
 
 .mc-select {
   .mc-select-list {
@@ -17,10 +19,32 @@ $border_color: var(--mc-gray-400);
     .mc-select-input-wrapper {
       flex: 1;
       height: 100%;
+      position: relative;
       .mc-select-input {
+        @include mixin.reset-input-style;
         width: 100%;
         height: 100%;
-        @include mixin.reset-input-style;
+        color: inherit;
+        font-weight: 400;
+        font-size: 16px;
+      }
+
+      :deep(.mc-selected-option-label) {
+        font-size: 16px;
+        font-weight: 400;
+        color: $text_color_selected;
+      }
+
+      .mc-select-placeholder {
+        @include mixin.reset-p-style;
+        @include mixin.flex-center(row, start, center);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: $text_color_placeholder;
+        font-size: 16px;
+        font-weight: 400;
       }
     }
 

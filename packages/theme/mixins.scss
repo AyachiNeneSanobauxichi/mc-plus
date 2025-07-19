@@ -58,3 +58,9 @@
   padding: 0;
   margin: 0;
 }
+
+/* reset p style */
+@mixin reset-p-style {
+  margin: 0;
+  padding: 0;
+}
