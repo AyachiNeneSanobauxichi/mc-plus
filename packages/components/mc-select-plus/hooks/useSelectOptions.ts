@@ -9,7 +9,7 @@ const useSelectOptions = () => {
   // select options
   const selectOptions = ref<_OptionNode[]>([]);
 
-  // vm
+  // current instance
   const vm = (getCurrentInstance()! as SelectInternalInstance).proxy;
 
   watchEffect(() => {

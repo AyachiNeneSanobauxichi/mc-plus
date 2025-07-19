@@ -4,6 +4,7 @@
       v-model="currency"
       placeholder="Please select currency"
       width="400px"
+      search
     >
       <template v-for="item in currencyList" :key="item.value">
         <mc-select-group-plus :label="item.label">

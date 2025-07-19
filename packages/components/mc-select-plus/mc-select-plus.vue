@@ -92,15 +92,7 @@ import type { Component } from "vue";
 import type { Options } from "@popperjs/core";
 import type { PopperInstance } from "../mc-popper";
 import { computed, h, onMounted, provide, ref, watch } from "vue";
-import {
-  filter,
-  find,
-  includes,
-  isEmpty,
-  map,
-  toLower,
-  uniqBy,
-} from "lodash-es";
+import { find } from "lodash-es";
 import {
   useClickOutside,
   useFocusController,
@@ -110,6 +102,7 @@ import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
 import useSelectOptions from "./hooks/useSelectOptions";
+import useSearch from "./hooks/useSearch";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -169,36 +162,18 @@ watch(
   () => setWidth()
 );
 
-// search value
-const searchValue = ref<string>("");
-
-// is search
-const isSearch = computed(() => {
-  return !!props.search;
-});
-
-// has search value
-const hasSearchValue = computed(() => {
-  return isSearch.value && !isEmpty(searchValue.value);
-});
-
 // use select options
 const { selectOptions } = useSelectOptions();
 
-// filtered options
-const filteredOptions = computed<_FilteredOptionNode[]>(() => {
-  return map(
-    filter(selectOptions.value, (item) => {
-      return includes(toLower(item.label), toLower(searchValue.value));
-    }),
-    (item) => ({ value: item.value, group: item.group })
-  );
-});
-
-// filtered groups
-const filteredGroups = computed(() => {
-  return map(uniqBy(filteredOptions.value, "group"), (item) => item.group);
-});
+// use search
+const {
+  searchValue,
+  isSearch,
+  hasSearchValue,
+  filteredOptions,
+  filteredGroups,
+  clearSearchValue,
+} = useSearch(selectOptions);
 
 // init
 onMounted(() => {
@@ -219,7 +194,7 @@ const selectedOption = ref<SelectPlusValue | SelectPlusValue[]>();
 // handle select
 const handleSelect = (option: SelectOptionInternalInstance["proxy"]) => {
   // clear search value
-  searchValue.value = "";
+  clearSearchValue();
 
   if (isMulti(props.modelValue)) {
     // multi
@@ -318,7 +293,7 @@ watch(isExpanded, (expand) => {
 
 // click outside
 useClickOutside(selectRef, () => {
-  searchValue.value = "";
+  clearSearchValue();
   toggleExpand(false);
 });
 
