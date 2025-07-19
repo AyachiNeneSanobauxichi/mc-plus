@@ -1,53 +1,62 @@
 <template>
   <div class="mc-select">
-    <div
-      ref="triggerRef"
-      class="mc-select-trigger"
-      :class="{
-        'mc-select-trigger-focused': isFocused,
-        'mc-select-trigger-disabled': false,
-        'mc-select-trigger-expanded': isExpanded,
-      }"
-      :style="{ width, height }"
-      @click="handleTriggerClick"
-    >
-      <div
-        class="mc-select-input-wrapper"
-        :style="{ cursor: isSearch ? 'text' : 'pointer' }"
-      >
-        <input
-          v-model="searchValue"
-          class="mc-select-input"
-          ref="inputRef"
-          :style="{ width: hasSearchValue ? '100%' : '1px' }"
-          :placeholder="placeholder"
-          :readonly="!isSearch"
-          @focus="handleFocus"
-          @blur="handleBlur"
-          @input="handleInput"
-        />
-        <template v-if="showSelectedContext">
-          <slot name="selected-content" :selected-option="selectedOption">
-            <component :is="selectedContent" :key="selectedOption"></component>
-          </slot>
-        </template>
-        <p v-if="showPlaceholder" class="mc-select-placeholder">
-          <slot name="placeholder">
-            {{ placeholder }}
-          </slot>
-        </p>
-      </div>
-      <mc-icon
-        :name="isExpanded ? 'Up-Chevron' : 'Down-Chevron'"
-        :size="24"
-        class="mc-select-chevron-icon"
-      />
-    </div>
-    <ul class="mc-select-list">
-      <mc-select-options @update-options="handleUpdateOptions">
-        <slot></slot>
-      </mc-select-options>
-    </ul>
+    <mc-popper placement="bottom-start" trigger="click">
+      <template #default>
+        <div
+          ref="triggerRef"
+          class="mc-select-trigger"
+          :class="{
+            'mc-select-trigger-focused': isFocused,
+            'mc-select-trigger-disabled': false,
+            'mc-select-trigger-expanded': isExpanded,
+          }"
+          :style="{ width, height }"
+          @click="handleTriggerClick"
+        >
+          <div
+            class="mc-select-input-wrapper"
+            :style="{ cursor: isSearch ? 'text' : 'pointer' }"
+          >
+            <input
+              v-model="searchValue"
+              class="mc-select-input"
+              ref="inputRef"
+              :style="{ width: hasSearchValue ? '100%' : '1px' }"
+              :placeholder="placeholder"
+              :readonly="!isSearch"
+              @focus="handleFocus"
+              @blur="handleBlur"
+              @input="handleInput"
+            />
+            <template v-if="showSelectedContext">
+              <slot name="selected-content" :selected-option="selectedOption">
+                <component
+                  :is="selectedContent"
+                  :key="selectedOption"
+                ></component>
+              </slot>
+            </template>
+            <p v-if="showPlaceholder" class="mc-select-placeholder">
+              <slot name="placeholder">
+                {{ placeholder }}
+              </slot>
+            </p>
+          </div>
+          <mc-icon
+            :name="isExpanded ? 'Up-Chevron' : 'Down-Chevron'"
+            :size="24"
+            class="mc-select-chevron-icon"
+          />
+        </div>
+      </template>
+      <template #content>
+        <ul class="mc-select-list">
+          <mc-select-options @update-options="handleUpdateOptions">
+            <slot></slot>
+          </mc-select-options>
+        </ul>
+      </template>
+    </mc-popper>
   </div>
 </template>
 
@@ -75,6 +84,7 @@ import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McSelectOptions from "./components/options";
 import McIcon from "../mc-icon/mc-icon.vue";
+import McPopper from "../mc-popper/mc-popper.vue";
 
 // options
 defineOptions({ name: MC_SELECT });
