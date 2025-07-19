@@ -89,8 +89,6 @@ import type {
   SelectPlusValue,
 } from "./types";
 import type { Component } from "vue";
-import type { Options } from "@popperjs/core";
-import type { PopperInstance } from "../mc-popper";
 import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { find } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
@@ -100,6 +98,7 @@ import McPopper from "../mc-popper/mc-popper.vue";
 import useSelectOptions from "./hooks/useSelectOptions";
 import useSearch from "./hooks/useSearch";
 import useSelectWidthHeight from "./hooks/useSelectWidthHeight";
+import useExpand from "./hooks/useExpand";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -120,8 +119,8 @@ const emit = defineEmits<SelectPlusEmits>();
 
 // is multi
 const isMulti = (
-  moduleValue: SelectPlusValue | SelectPlusValue[]
-): moduleValue is SelectPlusValue[] => {
+  modelValue: SelectPlusValue | SelectPlusValue[]
+): modelValue is SelectPlusValue[] => {
   return props.multiple;
 };
 
@@ -152,7 +151,7 @@ const {
   clearSearchValue,
 } = useSearch(selectOptions);
 
-// init
+// init value
 onMounted(() => {
   selectedOption.value = props.modelValue;
 });
@@ -226,13 +225,8 @@ const showPlaceholder = computed<boolean>(() => {
   return !!props.placeholder && !selectedOption.value && !hasSearchValue.value;
 });
 
-// is expanded
-const isExpanded = ref<boolean>(false);
-
-// toggle expand
-const toggleExpand = (expand: boolean) => {
-  isExpanded.value = expand;
-};
+// use expand
+const { isExpanded, popperRef, popperOptions, toggleExpand } = useExpand();
 
 // handle trigger click
 const handleTriggerClick = () => {
@@ -244,40 +238,16 @@ const handleInput = () => {
   toggleExpand(true);
 };
 
-// popper ref
-const popperRef = ref<PopperInstance>();
-
-// popper options
-const popperOptions: Partial<Options> = {
-  modifiers: [
-    {
-      name: "offset",
-      options: {
-        offset: [0, 0],
-      },
-    },
-  ],
+// press enter
+const handleEnter = () => {
+  toggleExpand(!isExpanded.value);
 };
-
-// expand changed
-watch(isExpanded, (expand) => {
-  if (expand) {
-    popperRef.value?.show();
-  } else {
-    popperRef.value?.hide();
-  }
-});
 
 // click outside
 useClickOutside(selectRef, () => {
   clearSearchValue();
   toggleExpand(false);
 });
-
-// press enter
-const handleEnter = () => {
-  toggleExpand(!isExpanded.value);
-};
 
 // provide
 provide(SELECT_INJECTION_KEY, {
