@@ -4,6 +4,7 @@ $border_color: var(--mc-gray-400);
 $border_color: var(--mc-gray-800);
 $text_color_selected: var(--mc-gray-800);
 $text_color_placeholder: var(--mc-gray-400);
+$bg_color: var(--mc-white);
 
 @mixin actived-border {
   border-color: $border_color;
@@ -13,6 +14,7 @@ $text_color_placeholder: var(--mc-gray-400);
 .mc-select {
   --mc-select-width: 100%;
   width: var(--mc-select-width);
+  background-color: $bg_color;
 
   .mc-select-trigger {
     @include mixin.flex-center(row, space-between, center, 8px);
@@ -120,6 +122,31 @@ $text_color_placeholder: var(--mc-gray-400);
         @include mixin.reset-p-style;
       }
     }
+  }
+
+  .mc-select-dropdown-header {
+    width: calc(100% - 2px) !important;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    box-sizing: border-box;
+    padding: 0 8px;
+    background-color: $bg_color;
+    z-index: 1;
+  }
+
+  .mc-select-dropdown-footer {
+    @include mixin.flex-center(row, flex-end, center, 8px);
+    width: calc(100% - 2px);
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+    padding-top: 0;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    min-height: 48px;
+    background-color: $bg_color;
+    z-index: 1;
   }
 
   &.mc-select-expanded {

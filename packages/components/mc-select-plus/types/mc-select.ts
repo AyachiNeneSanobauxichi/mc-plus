@@ -18,6 +18,8 @@ export interface SelectPlusProps {
   multiple?: boolean;
   search?: boolean;
   options?: SelectPlusValue[];
+  showHeader?: boolean;
+  showFooter?: boolean;
   modelValue?: SelectPlusValue | SelectPlusValue[];
 }
 

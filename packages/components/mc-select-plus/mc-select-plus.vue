@@ -105,14 +105,14 @@
         </div>
       </template>
       <template #content>
-        <template v-if="hasFilteredOptions">
-          <slot name="option-header">
-            <mc-title
-              v-if="isMulti"
-              class="mc-select-dropdown-header"
-              :show-tool-bar="false"
-              height="40px"
-            >
+        <template v-if="hasFilteredOptions && showHeader">
+          <mc-title
+            v-if="isMulti"
+            class="mc-select-dropdown-header"
+            :show-tool-bar="false"
+            height="40px"
+          >
+            <slot name="option-header">
               <div class="mc-select-dropdown-header-content">
                 <mc-checkbox
                   v-model="selectAll"
@@ -122,10 +122,16 @@
                   @change="handleSelectAll"
                 />
               </div>
-            </mc-title>
-          </slot>
+            </slot>
+          </mc-title>
         </template>
-        <ul class="mc-select-list">
+        <ul
+          class="mc-select-list"
+          :style="{
+            paddingTop: showHeader ? '40px' : '0',
+            paddingBottom: showFooter ? '48px' : '0',
+          }"
+        >
           <slot></slot>
           <li v-if="!hasFilteredOptions" class="mc-select-empty">
             <slot name="empty">
@@ -133,19 +139,19 @@
             </slot>
           </li>
         </ul>
-        <template v-if="hasFilteredOptions">
-          <slot name="option-footer">
-            <mc-footer v-if="isMulti" class="mc-select-dropdown-footer">
-              <template #right-button-group>
+        <template v-if="hasFilteredOptions && showFooter">
+          <mc-footer v-if="isMulti" class="mc-select-dropdown-footer">
+            <template #right-button-group>
+              <slot name="option-footer">
                 <mc-button type="link" size="small" @click="handleReset">
                   Reset
                 </mc-button>
                 <mc-button type="plain" size="small" @click="handleApply">
                   Apply
                 </mc-button>
-              </template>
-            </mc-footer>
-          </slot>
+              </slot>
+            </template>
+          </mc-footer>
         </template>
       </template>
     </mc-popper>
@@ -195,6 +201,8 @@ const props = withDefaults(defineProps<SelectPlusProps>(), {
   clearable: false,
   multiple: false,
   search: false,
+  showHeader: false,
+  showFooter: false,
 });
 
 // emits
