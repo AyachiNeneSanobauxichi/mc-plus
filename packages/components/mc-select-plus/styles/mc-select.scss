@@ -59,8 +59,8 @@ $text_color_placeholder: var(--mc-gray-400);
         @include mixin.flex-center(row, start, center, 8px);
         position: absolute;
         top: 0;
-        left: 0;
-        width: 100%;
+        left: 1px;
+        width: calc(100% - 2px);
         height: 100%;
 
         .mc-select-multi-option {

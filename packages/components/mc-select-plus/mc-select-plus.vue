@@ -52,7 +52,14 @@
                       :key="item"
                       class="mc-select-multi-option"
                     >
-                      {{ item }}
+                      <mc-tag
+                        size="x-small"
+                        type="selectable"
+                        :emphasis="tagStyle"
+                        @delete="handleDeleteTag(item)"
+                      >
+                        {{ getOptionLabel(item) }}
+                      </mc-tag>
                     </li>
                   </ul>
                 </template>
@@ -121,6 +128,7 @@ import type {
   SelectPlusValue,
 } from "./types";
 import type { Component } from "vue";
+import type { TagEmphasis } from "../mc-tag";
 import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
@@ -135,6 +143,7 @@ import {
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
+import McTag from "../mc-tag/mc-tag.vue";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -224,6 +233,12 @@ watch(
 // selected option
 const selectedOption = ref<SelectPlusValue | SelectPlusValue[]>();
 
+// get option label by value
+const getOptionLabel = (value: SelectPlusValue) => {
+  const _option = find(selectOptions.value, (item) => item.value === value);
+  return _option?.label || _option?.value;
+};
+
 // handle select
 const handleSelect = (value: SelectPlusValue) => {
   // clear search value
@@ -281,13 +296,22 @@ const showSelectedContext = computed(
 // show placeholder
 const showPlaceholder = computed<boolean>(() => {
   return (
-    !!props.placeholder &&
-    !hasSearchValue.value &&
-    (isMulti.value
-      ? (selectedOption.value as SelectPlusValue[])?.length <= 0
-      : !selectedOption.value)
+    !!props.placeholder && !hasSearchValue.value && selectedOptionEmpty.value
   );
 });
+
+// selected tag style
+const tagStyle = computed<TagEmphasis>(() => {
+  if (isFocused.value) return "minimal";
+  else return "bold";
+});
+
+// delete tag
+const handleDeleteTag = (value: SelectPlusValue) => {
+  const _selectedOption = selectedOption.value as SelectPlusValue[];
+  selectedOption.value = difference(_selectedOption, [value]);
+  dispatchEvents();
+};
 
 // watch expand
 watch(isExpanded, () => {
@@ -318,9 +342,16 @@ const handleEnter = () => {
   }
 };
 
+// selected option empty
+const selectedOptionEmpty = computed<boolean>(() => {
+  return isMulti.value
+    ? (selectedOption.value as SelectPlusValue[])?.length <= 0
+    : !selectedOption.value;
+});
+
 // show clear icon
 const showClearIcon = computed<boolean>(() => {
-  return _showClearIcon.value && !!selectedOption.value;
+  return _showClearIcon.value && !selectedOptionEmpty.value;
 });
 
 // dispatch events
