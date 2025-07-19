@@ -5,3 +5,4 @@ export { default as useSelectOptions } from "./useSelectOptions";
 export { default as useSelectWidthHeight } from "./useSelectWidthHeight";
 export { default as useExpand } from "./useExpand";
 export { default as useSelectAll } from "./useSelectAll";
+export { default as useSelectDisable } from "./useSelectDisable";

@@ -5,11 +5,9 @@
     class="mc-select-option"
     :class="{
       'mc-select-option-actived': isActived && !isMulti,
-      'mc-select-option-disabled': isDisabled,
       'mc-select-option-hover': isHover,
     }"
     :style="{ height, width }"
-    :aria-disabled="isDisabled"
     :aria-selected="isSelected"
     @mouseenter="handleHover"
     @click.stop="handleSelect"
@@ -75,9 +73,6 @@ const isActived = computed<boolean>(() => {
     return selectCtx?.selectedOption.value === props.value;
   }
 });
-
-// disabled
-const isDisabled = ref<boolean>(false);
 
 // selected
 const isSelected = ref<boolean>(false);

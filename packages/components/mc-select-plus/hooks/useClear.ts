@@ -1,8 +1,9 @@
+import type { Ref } from "vue";
 import { computed, ref } from "vue";
 import { useProp } from "@mc-plus/hooks";
 import { isFunction } from "lodash-es";
 
-const useClear = (clearFunc: () => void) => {
+const useClear = (clearFunc: () => void, disabled: Ref<boolean>) => {
   // mouse over icon
   const _overIcon = ref<boolean>(false);
 
@@ -11,7 +12,7 @@ const useClear = (clearFunc: () => void) => {
 
   // show clear icon
   const showClearIcon = computed<boolean>(() => {
-    return !!clearable.value && _overIcon.value;
+    return !!clearable.value && _overIcon.value && !disabled.value;
   });
 
   // mouse over icon

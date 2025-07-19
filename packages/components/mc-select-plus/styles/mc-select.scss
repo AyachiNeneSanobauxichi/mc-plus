@@ -4,7 +4,9 @@ $border_color: var(--mc-gray-400);
 $border_color: var(--mc-gray-800);
 $text_color_selected: var(--mc-gray-800);
 $text_color_placeholder: var(--mc-gray-400);
+$text_color_disabled: var(--mc-gray-500);
 $bg_color: var(--mc-white);
+$bg_color_disabled: var(--mc-gray-200);
 
 @mixin actived-border {
   border-color: $border_color;
@@ -99,6 +101,17 @@ $bg_color: var(--mc-white);
 
     &:not(.mc-select-trigger-disabled):hover {
       @include actived-border;
+    }
+
+    &.mc-select-trigger-disabled {
+      background-color: $bg_color_disabled;
+      .mc-select-input-wrapper {
+        color: $text_color_disabled;
+      }
+
+      .mc-select-icon-wrapper {
+        cursor: not-allowed;
+      }
     }
   }
 

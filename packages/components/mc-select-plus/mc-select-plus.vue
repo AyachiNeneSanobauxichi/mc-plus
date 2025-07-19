@@ -20,22 +20,20 @@
           class="mc-select-trigger"
           :class="{
             'mc-select-trigger-focused': isFocused,
-            'mc-select-trigger-disabled': false,
+            'mc-select-trigger-disabled': isDisabled,
           }"
           :style="{ width, height }"
           @click="handleTriggerClick"
         >
-          <div
-            class="mc-select-input-wrapper"
-            :style="{ cursor: isSearch ? 'text' : 'pointer' }"
-          >
+          <div class="mc-select-input-wrapper" :style="{ cursor }">
             <input
               v-model="searchValue"
               class="mc-select-input"
               ref="inputRef"
               :style="{ width: hasSearchValue ? '100%' : '1px' }"
               :placeholder="placeholder"
-              :readonly="!isSearch"
+              :readonly="!isSearch || isDisabled"
+              :disabled="isDisabled"
               @focus="handleFocus"
               @blur="handleBlur"
               @input="handleInput"
@@ -44,7 +42,11 @@
               @keydown.arrow-up="handlePressArrow"
             />
             <template v-if="showSelectedContext">
-              <slot name="selected-content" :selected-option="selectedOption">
+              <slot
+                name="selected-content"
+                :selected-option="selectedOption"
+                :is-disabled="isDisabled"
+              >
                 <template v-if="isMulti">
                   <ul class="mc-select-multi-options-wrapper">
                     <li
@@ -56,6 +58,7 @@
                         size="x-small"
                         type="selectable"
                         :emphasis="tagStyle"
+                        :disabled="isDisabled"
                         @delete="handleDeleteTag(item)"
                       >
                         {{ getOptionLabel(item) }}
@@ -107,13 +110,12 @@
       <template #content>
         <template v-if="hasFilteredOptions && showHeader">
           <mc-title
-            v-if="isMulti"
             class="mc-select-dropdown-header"
             :show-tool-bar="false"
             height="40px"
           >
             <slot name="option-header">
-              <div class="mc-select-dropdown-header-content">
+              <div class="mc-select-dropdown-header-content" v-if="isMulti">
                 <mc-checkbox
                   v-model="isSelectAll"
                   content="Select All"
@@ -140,15 +142,17 @@
           </li>
         </ul>
         <template v-if="hasFilteredOptions && showFooter">
-          <mc-footer v-if="isMulti" class="mc-select-dropdown-footer">
+          <mc-footer class="mc-select-dropdown-footer">
             <template #right-button-group>
               <slot name="option-footer">
-                <mc-button type="link" size="small" @click="handleReset">
-                  Reset
-                </mc-button>
-                <mc-button type="plain" size="small" @click="handleApply">
-                  Apply
-                </mc-button>
+                <template v-if="isMulti">
+                  <mc-button type="link" size="small" @click="handleReset">
+                    Reset
+                  </mc-button>
+                  <mc-button type="plain" size="small" @click="handleApply">
+                    Apply
+                  </mc-button>
+                </template>
               </slot>
             </template>
           </mc-footer>
@@ -180,6 +184,7 @@ import {
   useSelectAll,
   useSelectOptions,
   useSelectWidthHeight,
+  useSelectDisable,
 } from "./hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
@@ -239,8 +244,15 @@ const {
   clearSearchValue,
 } = useSearch(selectOptions);
 
+// use select disable
+const { isDisabled } = useSelectDisable(() => {
+  toggleExpand(false);
+  clearSearchValue();
+});
+
 // use expand
-const { isExpanded, popperRef, popperOptions, toggleExpand } = useExpand();
+const { isExpanded, popperRef, popperOptions, toggleExpand } =
+  useExpand(isDisabled);
 
 // use hover
 const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
@@ -252,11 +264,12 @@ const {
   mouseOverIcon,
   clear,
 } = useClear(() => {
+  if (isDisabled.value) return;
   selectedOption.value = isMulti.value ? [] : void 0;
   clearSearchValue();
   toggleExpand(false);
   dispatchEvents();
-});
+}, isDisabled);
 
 // use click outside
 useClickOutside(selectRef, () => {
@@ -296,9 +309,11 @@ const handleSelect = (value: SelectPlusValue) => {
   // clear search value
   clearSearchValue();
 
+  if (isDisabled.value) return;
+
   if (isMulti.value) {
-    const _selectedOption = selectedOption.value as SelectPlusValue[];
     // multi
+    const _selectedOption = selectedOption.value as SelectPlusValue[];
     if (includes(_selectedOption, value)) {
       selectedOption.value = difference(_selectedOption, [value]);
     } else {
@@ -336,7 +351,7 @@ const selectedContent = computed<Component | void>(() => {
     else
       return h(
         "span",
-        { class: "mc-selected-option-label" },
+        { class: "mc-selected-option-label", style: { color: "inherit" } },
         _option?.label || _option?.value
       );
   }
@@ -446,6 +461,13 @@ const selectedOptionEmpty = computed<boolean>(() => {
 // show clear icon
 const showClearIcon = computed<boolean>(() => {
   return _showClearIcon.value && !selectedOptionEmpty.value;
+});
+
+// cursor style
+const cursor = computed<string>(() => {
+  if (isDisabled.value) return "not-allowed";
+  else if (isSearch.value) return "text";
+  else return "pointer";
 });
 
 // dispatch events

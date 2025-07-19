@@ -1,15 +1,16 @@
 <template>
   <div class="playground-select-plus">
-    <div>currency: {{ currency }}</div>
+    <div class="tool-bar">
+      <span>currency: {{ currency }}</span>
+      <mc-button @click="handleDisabled">Disabled</mc-button>
+    </div>
     <mc-select-plus
       v-model="currency"
       placeholder="Please select currency"
       width="400px"
       search
       clearable
-      multiple
-      show-header
-      show-footer
+      :disabled="isDisabled"
     >
       <template v-for="item in currencyList" :key="item.value">
         <mc-select-group-plus :label="item.label">
@@ -31,8 +32,9 @@ import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.v
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 import { reactive, ref } from "vue";
+import { McButton } from "mc-plus";
 
-const currency = ref<string[]>([]);
+const currency = ref<string>("USD");
 
 const currencyList = reactive([
   {
@@ -63,6 +65,12 @@ const currencyList = reactive([
     ],
   },
 ]);
+
+const isDisabled = ref<boolean>(false);
+
+const handleDisabled = () => {
+  isDisabled.value = !isDisabled.value;
+};
 </script>
 
 <style scoped lang="scss">
@@ -73,5 +81,9 @@ const currencyList = reactive([
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  .tool-bar {
+    margin-bottom: 32px;
+  }
 }
 </style>
