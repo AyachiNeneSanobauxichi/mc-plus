@@ -83,6 +83,7 @@
 import type {
   _FilteredOptionNode,
   _OptionNode,
+  SelectPlusContext,
   SelectPlusEmits,
   SelectPlusProps,
   SelectPlusValue,
@@ -118,6 +119,7 @@ const emit = defineEmits<SelectPlusEmits>();
 
 // is multi
 const isMulti = (
+  // @ts-ignore
   modelValue: SelectPlusValue | SelectPlusValue[]
 ): modelValue is SelectPlusValue[] => {
   return props.multiple;
@@ -227,6 +229,14 @@ const showPlaceholder = computed<boolean>(() => {
 // use expand
 const { isExpanded, popperRef, popperOptions, toggleExpand } = useExpand();
 
+// hover option
+const hoverOption = ref<SelectPlusValue>();
+
+// handle hover
+const handleHover = (value: SelectPlusValue) => {
+  hoverOption.value = value;
+};
+
 // handle trigger click
 const handleTriggerClick = () => {
   toggleExpand(!isExpanded.value);
@@ -249,10 +259,13 @@ useClickOutside(selectRef, () => {
 });
 
 // provide
-provide(SELECT_INJECTION_KEY, {
-  select: handleSelect,
+provide<SelectPlusContext>(SELECT_INJECTION_KEY, {
+  selectedOption,
   filteredOptions,
   filteredGroups,
+  hoverOption,
+  select: handleSelect,
+  hover: handleHover,
 });
 </script>
 

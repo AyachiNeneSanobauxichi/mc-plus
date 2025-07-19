@@ -1,12 +1,17 @@
 <template>
   <li
     v-show="isVisible"
-    class="mc-select-option"
-    :style="{ height, width }"
     role="option"
+    class="mc-select-option"
+    :class="{
+      'mc-select-option-actived': isActived,
+      'mc-select-option-disabled': isDisabled,
+      'mc-select-option-hover': isHover,
+    }"
+    :style="{ height, width }"
     :aria-disabled="isDisabled"
     :aria-selected="isSelected"
-    @mousemove="handleHover"
+    @mouseenter="handleHover"
     @click.stop="handleSelect"
   >
     <slot>
@@ -16,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SelectOptionPlusProps } from "./types";
+import type { SelectOptionPlusProps, SelectPlusContext } from "./types";
 import { computed, inject, ref } from "vue";
 import { find } from "lodash-es";
 import { useWidthHeight } from "@mc-plus/hooks";
@@ -35,13 +40,18 @@ const props = withDefaults(defineProps<SelectOptionPlusProps>(), {
 const { height, width } = useWidthHeight();
 
 // select context
-const selectCtx = inject(SELECT_INJECTION_KEY || void 0);
+const selectCtx = inject<SelectPlusContext>(SELECT_INJECTION_KEY || void 0);
 
 // visible
 const isVisible = computed<boolean>(() => {
   return !!find(selectCtx?.filteredOptions.value, (item) => {
     return item.value === props.value;
   });
+});
+
+// actived
+const isActived = computed<boolean>(() => {
+  return selectCtx?.selectedOption.value === props.value;
 });
 
 // disabled
@@ -54,7 +64,14 @@ const isSelected = ref<boolean>(false);
 const currentLabel = computed(() => props.label);
 
 // hover
-const handleHover = () => {};
+const handleHover = () => {
+  selectCtx?.hover(props.value);
+};
+
+// is hover
+const isHover = computed<boolean>(() => {
+  return selectCtx?.hoverOption.value === props.value;
+});
 
 // select
 const handleSelect = () => {

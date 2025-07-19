@@ -1,5 +1,6 @@
 <template>
   <div class="playground-select-plus">
+    <div>currency: {{ currency }}</div>
     <mc-select-plus
       v-model="currency"
       placeholder="Please select currency"

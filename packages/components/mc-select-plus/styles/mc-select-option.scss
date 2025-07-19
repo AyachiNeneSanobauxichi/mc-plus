@@ -2,7 +2,8 @@
 
 $text_color: var(--mc-gray-800);
 $bg_color: var(--mc-white);
-$bg_color_hover: var(--mc-teal-200);
+$bg_color_actived: var(--mc-teal-200);
+$bg_color_hover: var(--mc-teal-50);
 
 .mc-select-option {
   @include mixin.reset-li-style;
@@ -15,4 +16,12 @@ $bg_color_hover: var(--mc-teal-200);
   padding: 0 8px;
   background-color: $bg_color;
   cursor: pointer;
+
+  &.mc-select-option-hover {
+    background-color: $bg_color_hover;
+  }
+
+  &.mc-select-option-actived {
+    background-color: $bg_color_actived;
+  }
 }

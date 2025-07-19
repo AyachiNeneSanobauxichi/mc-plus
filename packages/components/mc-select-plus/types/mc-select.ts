@@ -32,9 +32,12 @@ export interface SelectPlusEmits {
 }
 
 export interface SelectPlusContext {
-  select: (option: SelectPlusValue) => void;
+  selectedOption: Ref<SelectPlusValue | SelectPlusValue[]>;
   filteredOptions: Ref<_FilteredOptionNode[]>;
   filteredGroups: Ref<(string | undefined)[]>;
+  hoverOption: Ref<SelectPlusValue | undefined>;
+  select: (option: SelectPlusValue) => void;
+  hover: (option: SelectPlusValue) => void;
 }
 
 export type SelectPublicInstance = ComponentPublicInstance<SelectPlusProps>;
