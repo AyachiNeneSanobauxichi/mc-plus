@@ -33,6 +33,7 @@ export interface SelectPlusEmits {
   (e: "change", value: SelectPlusValue | SelectPlusValue[] | undefined): void;
   (e: "focus"): void;
   (e: "blur"): void;
+  (e: "expand", expand: boolean): void;
 }
 
 export interface SelectPlusContext {

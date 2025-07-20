@@ -1,12 +1,17 @@
 import type { Ref } from "vue";
 import type { Options } from "@popperjs/core";
 import type { PopperInstance } from "../../mc-popper";
-import { ref, watch } from "vue";
+import { getCurrentInstance, ref, watch } from "vue";
 
 // use expand
 const useExpand = (disabled: Ref<boolean>) => {
   // is expanded
   const isExpanded = ref<boolean>(false);
+
+  // vue instance
+  const instance = getCurrentInstance()!;
+  // emit
+  const { emit } = instance;
 
   // toggle expand
   const toggleExpand = (expand: boolean) => {
@@ -15,6 +20,9 @@ const useExpand = (disabled: Ref<boolean>) => {
     } else {
       isExpanded.value = expand;
     }
+
+    // emit expand event
+    emit("expand", expand);
   };
 
   // popper ref
