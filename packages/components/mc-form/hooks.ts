@@ -30,9 +30,13 @@ export function useFormValidate() {
   // form item context
   const { formItem } = useFormItem();
 
+  // form validate style prop
+  const formValidateStyle = useProp<boolean>("formValidateStyle");
+
   // form item validate status
   const validateStatus = computed<ValidateStatus>(() => {
-    return formItem?.validateStatus || "init";
+    if (!formValidateStyle.value) return "init";
+    else return formItem?.validateStatus || "init";
   });
 
   // form item validate status style

@@ -218,6 +218,7 @@ const props = withDefaults(defineProps<SelectPlusProps>(), {
   showHeader: false,
   showFooter: false,
   placement: "bottom-start",
+  formValidate: true,
 });
 
 // emits

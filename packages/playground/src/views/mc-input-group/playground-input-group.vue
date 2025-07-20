@@ -27,6 +27,7 @@
               clearable
               placement="bottom-end"
               input-group-position="suffix"
+              :form-validate="false"
             >
               <template v-for="item in currencyList" :key="item.value">
                 <mc-select-group-plus :label="item.label">
