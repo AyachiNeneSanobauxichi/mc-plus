@@ -106,7 +106,7 @@ $error_color: var(--mc-error);
       @include actived-border;
     }
 
-    &:not(.mc-select-trigger-disabled):hover {
+    &:not(.mc-select-trigger-disabled).mc-select-trigger-hovering {
       @include actived-border;
     }
 
@@ -137,7 +137,7 @@ $error_color: var(--mc-error);
   &:not(.mc-select-expanded) {
     .mc-select-trigger-error:not(.mc-select-trigger-disabled) {
       @include error-border;
-      &:hover,
+      &.mc-select-trigger-hovering,
       &.mc-select-trigger-focused {
         @include error-border;
       }

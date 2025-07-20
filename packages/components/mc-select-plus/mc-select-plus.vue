@@ -23,6 +23,7 @@
             'mc-select-trigger-disabled': isDisabled,
             'mc-select-trigger-error': isError,
             'mc-select-trigger-success': isSuccess,
+            'mc-select-trigger-hovering': isHovering,
           }"
           :style="{ width, height }"
           @click="handleTriggerClick"
@@ -180,7 +181,7 @@ import type { Component } from "vue";
 import type { TagEmphasis } from "../mc-tag";
 import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
-import { useClickOutside, useFocusController } from "@mc-plus/hooks";
+import { useClickOutside, useFocusController, useHover } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
 import {
   useClear,
@@ -234,6 +235,9 @@ const {
   handleFocus,
   handleBlur,
 } = useFocusController(inputRef);
+
+// use hover
+const { isHovering } = useHover(triggerRef);
 
 // use select width  height
 const { selectRef, width, height } = useSelectWidthHeight();
