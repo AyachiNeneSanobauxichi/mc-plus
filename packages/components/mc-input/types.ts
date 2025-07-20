@@ -1,5 +1,6 @@
 import type { Ref } from "vue";
 import type { IconType } from "../mc-icon";
+import type { InputGroupPosition } from "../mc-input-group/types";
 
 export type InputType = "text" | "password" | "number" | "email" | "currency";
 
@@ -25,6 +26,7 @@ export interface InputProps {
   maxlength?: number;
   currencyAccuracy?: number;
   formValidate?: boolean;
+  inputGroupPosition?: InputGroupPosition;
   formatter?: InputFormatter;
   parser?: InputParser;
 }

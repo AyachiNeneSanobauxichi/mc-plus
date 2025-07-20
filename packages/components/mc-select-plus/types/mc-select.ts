@@ -4,6 +4,7 @@ import type {
   Ref,
 } from "vue";
 import type { Placement } from "@popperjs/core";
+import type { InputGroupPosition } from "../../mc-input-group/types";
 import type {
   _FilteredOptionNode,
   _OptionNode,
@@ -23,6 +24,7 @@ export interface SelectPlusProps {
   showFooter?: boolean;
   modelValue?: SelectPlusValue | SelectPlusValue[];
   placement?: Placement;
+  inputGroupPosition?: InputGroupPosition;
 }
 
 export interface SelectPlusEmits {
