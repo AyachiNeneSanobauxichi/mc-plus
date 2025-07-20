@@ -7,8 +7,6 @@
         'mc-select-disabled': isDisabled,
         'mc-input-focused': isFocused && search,
         [`mc-select--${validateStyle}`]: validateStyle,
-        'mc-select--input-group-prefix': isPrefix,
-        'mc-select--input-group-suffix': isSuffix,
         'mc-select--hover': isHover,
       },
     ]"
@@ -143,14 +141,12 @@ import { SELECT_INJECTION_KEY } from "./constant";
 import { filter, includes, isNil, lowerCase, map, toString } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import { useInputGroupAffix } from "../mc-input-group-old/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McButton from "../mc-button/mc-button.vue";
 import McTag from "../mc-tag/mc-tag.vue";
 import McCheckbox from "../mc-checkbox/mc-checkbox.vue";
 import McTitle from "../mc-title/mc-title.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
-// import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
 
 // options
 defineOptions({ name: "McSelect" });
@@ -310,11 +306,7 @@ const isSuccess = computed(() => validateStyle.value === "success");
 
 // show status icon
 const showStatusIcon = computed(
-  () =>
-    !isDisabled.value &&
-    (isError.value || isSuccess.value) &&
-    !isPrefix.value &&
-    !isSuffix.value
+  () => !isDisabled.value && (isError.value || isSuccess.value)
 );
 
 // select event
@@ -464,14 +456,6 @@ const handleSelectAllChange = (val: boolean) => {
   }
 };
 
-// // tags wrapper observer
-// useResizeObserver(tagsWrapperRef, ({ width }) => {
-//   const trigger = triggerRef.value;
-//   if (!trigger) return;
-//   console.log("Width: ", width);
-//   console.log("Trigger Width: ", trigger.offsetWidth - 8 - 56 - 100);
-// });
-
 // provide
 provide(SELECT_INJECTION_KEY, {
   filterOptions,
@@ -480,9 +464,6 @@ provide(SELECT_INJECTION_KEY, {
   removeOption,
   addOption,
 });
-
-// input group
-const { isPrefix, isSuffix } = useInputGroupAffix("select");
 </script>
 
 <style scoped lang="scss">
