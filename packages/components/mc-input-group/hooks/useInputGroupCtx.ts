@@ -28,7 +28,7 @@ const useInputGroupCtx = (status: _InputGroupStatus) => {
   }
 
   // status
-  const { validateStatus, isExpanded, isFocused, isHovered } = status;
+  const { validateStatus, isExpanded, isFocused, isHovering } = status;
 
   // watch validate status
   watch(validateStatus, (val) => {
@@ -41,10 +41,10 @@ const useInputGroupCtx = (status: _InputGroupStatus) => {
   });
 
   // judge actived
-  watch([isFocused, isHovered], ([focused, hovered]) => {
+  watch([isFocused, isHovering], ([focused, hovering]) => {
     if (focused) {
       inputGroupCtx.setInputGroupActived(true, position.value!);
-    } else if (hovered) {
+    } else if (hovering) {
       inputGroupCtx.setInputGroupActived(true, position.value!);
     } else {
       inputGroupCtx.setInputGroupActived(false, position.value!);

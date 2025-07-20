@@ -7,7 +7,7 @@ export type _InputGroupStatus = {
   validateStatus: Ref<ValidateStatus>;
   isExpanded: Ref<boolean>;
   isFocused: Ref<boolean>;
-  isHovered: Ref<boolean>;
+  isHovering: Ref<boolean>;
 };
 
 export interface InputGroupContext {

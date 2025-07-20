@@ -301,7 +301,7 @@ useInputGroupCtx({
   validateStatus,
   isExpanded,
   isFocused,
-  isHovered: isHovering,
+  isHovering,
 });
 
 // use click outside
