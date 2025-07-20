@@ -6,7 +6,7 @@
   >
     <mc-popper
       ref="popperRef"
-      placement="bottom-start"
+      :placement="placement"
       trigger="manual"
       class="mc-select-popper"
       :style="{ width }"
@@ -215,6 +215,7 @@ const props = withDefaults(defineProps<SelectPlusProps>(), {
   search: false,
   showHeader: false,
   showFooter: false,
+  placement: "bottom-start",
 });
 
 // emits

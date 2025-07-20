@@ -3,6 +3,7 @@ import type {
   ComponentPublicInstance,
   Ref,
 } from "vue";
+import type { Placement } from "@popperjs/core";
 import type {
   _FilteredOptionNode,
   _OptionNode,
@@ -21,6 +22,7 @@ export interface SelectPlusProps {
   showHeader?: boolean;
   showFooter?: boolean;
   modelValue?: SelectPlusValue | SelectPlusValue[];
+  placement?: Placement;
 }
 
 export interface SelectPlusEmits {
