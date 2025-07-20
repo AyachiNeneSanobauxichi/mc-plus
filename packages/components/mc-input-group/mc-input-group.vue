@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <p>isError: {{ isError }}</p>
+    <p>isExpanded: {{ isExpanded }}</p>
+    <p>isPrefixActived: {{ isPrefixActived }}</p>
+    <p>isSuffixActived: {{ isSuffixActived }}</p>
+  </div>
   <div class="mc-input-group" :class="{ 'mc-input-group-error': isError }">
     <div
       class="mc-input-group-prefix"

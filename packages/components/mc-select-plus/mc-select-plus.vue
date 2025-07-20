@@ -178,10 +178,10 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import type { TagEmphasis } from "../mc-tag";
-import type { InputGroupContext } from "../mc-input-group/types";
-import { computed, h, inject, onMounted, provide, ref, watch } from "vue";
+import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
+import { useFormValidate } from "../mc-form/hooks";
 import {
   useClear,
   useExpand,
@@ -193,7 +193,6 @@ import {
   useSelectDisable,
 } from "./hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
-import { INPUT_GROUP_INJECTION_KEY } from "../mc-input-group/constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
 import McTag from "../mc-tag/mc-tag.vue";
@@ -201,7 +200,6 @@ import McTitle from "../mc-title/mc-title.vue";
 import McFooter from "../mc-footer/mc-footer.vue";
 import McCheckbox from "../mc-checkbox/mc-checkbox.vue";
 import McButton from "../mc-button/mc-button.vue";
-import { useFormValidate } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: MC_SELECT });
@@ -262,18 +260,6 @@ const { isDisabled } = useSelectDisable(() => {
 // use expand
 const { isExpanded, popperRef, popperOptions, toggleExpand } =
   useExpand(isDisabled);
-
-// input group context
-const inputGroupCtx = inject<InputGroupContext>(
-  INPUT_GROUP_INJECTION_KEY || void 0
-);
-
-// watch expand
-if (inputGroupCtx) {
-  watch(isExpanded, (expand) => {
-    inputGroupCtx?.setInputGroupExpanded(expand);
-  });
-}
 
 // use hover
 const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =

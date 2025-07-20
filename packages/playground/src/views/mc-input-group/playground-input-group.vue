@@ -6,6 +6,7 @@
           width="100%"
           v-model="amount"
           placeholder="Please enter amount"
+          input-group-position="prefix"
         />
       </template>
       <template #suffix>
@@ -15,6 +16,7 @@
           search
           clearable
           placement="bottom-end"
+          input-group-position="suffix"
         >
           <template v-for="item in currencyList" :key="item.value">
             <mc-select-group-plus :label="item.label">
