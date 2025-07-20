@@ -84,6 +84,7 @@ import {
   numberParser,
 } from "./formatter";
 import { useCursor } from "./hooks";
+import { useInputGroupCtx } from "../mc-input-group/hooks";
 
 // options
 defineOptions({ name: "McInput" });
@@ -227,6 +228,13 @@ const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
 
 // use hover
 const { isHovering } = useHover(wrapperRef);
+
+// use input group ctx
+useInputGroupCtx({
+  validateStatus: computed(() => formItem?.validateStatus || "init"),
+  isFocused,
+  isHovering,
+});
 
 // clear
 const clear = () => {

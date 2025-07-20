@@ -35,10 +35,13 @@ const useInputGroupCtx = (status: _InputGroupStatus) => {
     inputGroupCtx.setInputGroupValidate(val);
   });
 
-  // watch expanded
-  watch(isExpanded, (val) => {
-    inputGroupCtx.setInputGroupExpanded(val);
-  });
+  // if expanded is provided watch expanded
+  if (isExpanded) {
+    // watch expanded
+    watch(isExpanded, (val) => {
+      inputGroupCtx.setInputGroupExpanded(val);
+    });
+  }
 
   // judge actived
   watch([isFocused, isHovering], ([focused, hovering]) => {

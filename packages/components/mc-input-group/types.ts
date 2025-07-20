@@ -5,7 +5,7 @@ export type InputGroupPosition = "prefix" | "suffix";
 
 export type _InputGroupStatus = {
   validateStatus: Ref<ValidateStatus>;
-  isExpanded: Ref<boolean>;
+  isExpanded?: Ref<boolean>;
   isFocused: Ref<boolean>;
   isHovering: Ref<boolean>;
 };
