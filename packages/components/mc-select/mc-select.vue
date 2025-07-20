@@ -143,7 +143,7 @@ import { SELECT_INJECTION_KEY } from "./constant";
 import { filter, includes, isNil, lowerCase, map, toString } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import { useInputGroupAffix } from "../mc-input-group/hooks";
+import { useInputGroupAffix } from "../mc-input-group-old/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McButton from "../mc-button/mc-button.vue";
 import McTag from "../mc-tag/mc-tag.vue";

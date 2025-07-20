@@ -1,6 +1,9 @@
-export type InputGroupAffix = "prefix" | "suffix" | undefined;
+import type { Ref } from "vue";
 
 export interface InputGroupContext {
-  select: InputGroupAffix;
-  input: InputGroupAffix;
+  disabled?: Ref<boolean>;
+}
+
+export interface InputGroupProps {
+  disabled?: boolean;
 }

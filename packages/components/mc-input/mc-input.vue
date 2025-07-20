@@ -78,7 +78,7 @@ import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
 import { OTP_CTX_KEY } from "../mc-otp/constant";
-import { useInputGroupAffix } from "../mc-input-group/hooks";
+import { useInputGroupAffix } from "../mc-input-group-old/hooks";
 import {
   currencyFormatter,
   currencyParser,

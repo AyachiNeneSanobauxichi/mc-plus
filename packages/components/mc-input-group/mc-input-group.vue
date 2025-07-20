@@ -1,60 +1,23 @@
 <template>
-  <div class="mc-input-group">
-    <slot></slot>
-  </div>
+  <div class="mc-input-group">Input Group</div>
 </template>
 
 <script setup lang="ts">
-import {
-  reactive,
-  useSlots,
-  watchEffect,
-  provide,
-  type VNode,
-  type Component,
-} from "vue";
-import type { InputGroupAffix } from "./types";
-import { INPUT_GROUP_INJECTION_KEY } from "./constant";
+import type { InputGroupContext, InputGroupProps } from "./types";
+import { computed, provide } from "vue";
+import { INPUT_GROUP_INJECTION_KEY, MC_INPUT_GROUP } from "./constant";
 
 // options
-defineOptions({ name: "McInputGroup" });
+defineOptions({ name: MC_INPUT_GROUP });
 
-// slots
-const slots = useSlots();
-
-// group
-const group = reactive<{
-  select: InputGroupAffix;
-  input: InputGroupAffix;
-}>({
-  select: void 0,
-  input: void 0,
-});
-
-// slots changed
-watchEffect(() => {
-  const content = slots?.default?.({});
-  if (!content) return;
-  const [fistNode, secNode] = content as VNode[];
-  if (
-    (fistNode?.type as Component)?.name === "McInput" &&
-    (secNode?.type as Component)?.name === "McSelect"
-  ) {
-    group.input = "prefix";
-    group.select = "suffix";
-  }
-  if (
-    (fistNode?.type as Component)?.name === "McSelect" &&
-    (secNode?.type as Component)?.name === "McInput"
-  ) {
-    group.input = "suffix";
-    group.select = "prefix";
-  }
+// props
+const props = withDefaults(defineProps<InputGroupProps>(), {
+  disabled: false,
 });
 
 // provide
-provide(INPUT_GROUP_INJECTION_KEY, {
-  ...group,
+provide<InputGroupContext>(INPUT_GROUP_INJECTION_KEY, {
+  disabled: computed(() => props.disabled),
 });
 </script>
 
