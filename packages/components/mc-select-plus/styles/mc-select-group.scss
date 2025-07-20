@@ -1,0 +1,24 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+$text_color: var(--mc-gray-500);
+$bg_color: var(--mc-gray-200);
+
+.mc-select-group {
+  @include mixin.reset-ul-style;
+  @include mixin.reset-li-style;
+
+  ul {
+    @include mixin.reset-ul-style;
+  }
+  cursor: default;
+
+  .mc-select-group-label {
+    width: 100%;
+    color: $text_color;
+    background-color: $bg_color;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 8px;
+    box-sizing: border-box;
+    @include mixin.flex-center(row, flex-start);
+  }
+}

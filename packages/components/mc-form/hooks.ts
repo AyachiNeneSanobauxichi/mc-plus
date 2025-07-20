@@ -2,6 +2,7 @@ import { computed, inject } from "vue";
 import { isBoolean } from "lodash-es";
 import useProp from "@mc-plus/hooks/useProp";
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
+import type { ValidateStatus } from "./types";
 
 // form item hook
 export function useFormItem() {
@@ -22,4 +23,53 @@ export function useFormDisabled() {
   const disabled = useProp<boolean>("disabled");
 
   return computed(() => disabled.value || form?.disabled || formItem?.disabled);
+}
+
+// form validate hook
+export function useFormValidate() {
+  // form item context
+  const { formItem } = useFormItem();
+
+  // form validate style prop
+  const formValidateStyle = useProp<boolean>("formValidateStyle");
+
+  // form item validate status
+  const validateStatus = computed<ValidateStatus>(() => {
+    if (!formValidateStyle.value) return "init";
+    else return formItem?.validateStatus || "init";
+  });
+
+  // form item validate status style
+  const validateStyle = computed<"success" | "error" | "validating">(() => {
+    switch (validateStatus.value) {
+      case "success":
+        return "success";
+      case "error":
+        return "error";
+      default:
+        return "validating";
+    }
+  });
+
+  // error
+  const isError = computed<boolean>(() => validateStyle.value === "error");
+
+  // success
+  const isSuccess = computed<boolean>(() => validateStyle.value === "success");
+
+  // status icon
+  const statusIcon = computed<"Accept_02" | "Reject_02" | undefined>(() => {
+    if (isError.value) return "Reject_02";
+    if (isSuccess.value) return "Accept_02";
+    return void 0;
+  });
+
+  return {
+    formItem,
+    validateStatus,
+    validateStyle,
+    isError,
+    isSuccess,
+    statusIcon,
+  };
 }

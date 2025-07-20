@@ -5,9 +5,8 @@
       'mc-input--disabled': isDisabled,
       'mc-input--focused': isFocused,
       'mc-input--inputed': modelValue,
+      'mc-input-hovering': isHovering,
       [`mc-input--${validateStyle}`]: validateStyle,
-      'mc-input--input-group-prefix': isPrefix,
-      'mc-input--input-group-suffix': isSuffix,
     }"
     :style="{ width, height }"
     ref="wrapperRef"
@@ -76,9 +75,8 @@ import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import { useFocusController } from "@mc-plus/hooks";
+import { useFocusController, useHover } from "@mc-plus/hooks";
 import { OTP_CTX_KEY } from "../mc-otp/constant";
-import { useInputGroupAffix } from "../mc-input-group/hooks";
 import {
   currencyFormatter,
   currencyParser,
@@ -86,6 +84,7 @@ import {
   numberParser,
 } from "./formatter";
 import { useCursor } from "./hooks";
+import { useInputGroupCtx } from "../mc-input-group/hooks";
 
 // options
 defineOptions({ name: "McInput" });
@@ -174,7 +173,11 @@ const formItemDisabled = useFormDisabled();
 
 // disabled
 const isDisabled = computed(() => {
-  return formItemDisabled.value || otpContext?.disabled.value;
+  return (
+    formItemDisabled.value ||
+    !!otpContext?.disabled.value ||
+    !!inputGroupCtx?.inputGroupDisabled.value
+  );
 });
 
 // password
@@ -226,6 +229,16 @@ const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
     },
   }
 );
+
+// use hover
+const { isHovering } = useHover(wrapperRef);
+
+// use input group ctx
+const inputGroupCtx = useInputGroupCtx({
+  validateStatus: computed(() => formItem?.validateStatus || "init"),
+  isFocused,
+  isHovering,
+});
 
 // clear
 const clear = () => {
@@ -313,9 +326,6 @@ watch(nativeValue, () => {
   setNativeValue();
   formItem?.validate("change");
 });
-
-// input group
-const { isPrefix, isSuffix } = useInputGroupAffix("input");
 
 // expose
 defineExpose({

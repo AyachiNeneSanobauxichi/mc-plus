@@ -1,6 +1,6 @@
 <template>
   <div class="mc-form">
-    <form>
+    <form @submit.prevent>
       <slot></slot>
     </form>
   </div>

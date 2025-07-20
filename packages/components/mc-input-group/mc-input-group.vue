@@ -1,60 +1,77 @@
 <template>
-  <div class="mc-input-group">
-    <slot></slot>
+  <div
+    class="mc-input-group"
+    :class="{ 'mc-input-group-disabled': isDisabled }"
+  >
+    <div
+      class="mc-input-group-prefix"
+      :class="{
+        'mc-input-group-prefix-expanded': isExpanded,
+        'mc-input-group-prefix-actived': isPrefixActived,
+        'mc-input-group-prefix-error': isError,
+      }"
+      :style="{ flex: prefixFlex }"
+    >
+      <slot name="prefix">prefix</slot>
+    </div>
+    <div class="mc-input-group-divider" v-if="showDivider"></div>
+    <div
+      class="mc-input-group-suffix"
+      :class="{
+        'mc-input-group-suffix-expanded': isExpanded,
+        'mc-input-group-suffix-actived': isSuffixActived,
+        'mc-input-group-suffix-error': isError,
+      }"
+      :style="{ flex: suffixFlex }"
+    >
+      <slot name="suffix">suffix</slot>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  reactive,
-  useSlots,
-  watchEffect,
-  provide,
-  type VNode,
-  type Component,
-} from "vue";
-import type { InputGroupAffix } from "./types";
-import { INPUT_GROUP_INJECTION_KEY } from "./constant";
+import type { InputGroupContext, InputGroupProps } from "./types";
+import { computed, provide } from "vue";
+import { INPUT_GROUP_INJECTION_KEY, MC_INPUT_GROUP } from "./constant";
+import { useInputGroupDisabled, useStatus } from "./hooks";
 
 // options
-defineOptions({ name: "McInputGroup" });
+defineOptions({ name: MC_INPUT_GROUP });
 
-// slots
-const slots = useSlots();
-
-// group
-const group = reactive<{
-  select: InputGroupAffix;
-  input: InputGroupAffix;
-}>({
-  select: void 0,
-  input: void 0,
+// props
+const props = withDefaults(defineProps<InputGroupProps>(), {
+  disabled: false,
+  suffixFlex: 1,
+  prefixFlex: 1,
 });
 
-// slots changed
-watchEffect(() => {
-  const content = slots?.default?.({});
-  if (!content) return;
-  const [fistNode, secNode] = content as VNode[];
-  if (
-    (fistNode?.type as Component)?.name === "McInput" &&
-    (secNode?.type as Component)?.name === "McSelect"
-  ) {
-    group.input = "prefix";
-    group.select = "suffix";
-  }
-  if (
-    (fistNode?.type as Component)?.name === "McSelect" &&
-    (secNode?.type as Component)?.name === "McInput"
-  ) {
-    group.input = "suffix";
-    group.select = "prefix";
-  }
-});
+// use status
+const {
+  isError,
+  isExpanded,
+  isPrefixActived,
+  isSuffixActived,
+  setInputGroupValidate,
+  setInputGroupExpanded,
+  setInputGroupActived,
+} = useStatus();
+
+// use input group disabled
+const { isDisabled } = useInputGroupDisabled();
+
+// show divider
+const showDivider = computed<boolean>(
+  () =>
+    (!isPrefixActived.value && !isSuffixActived.value && !isExpanded.value) ||
+    isDisabled.value
+);
 
 // provide
-provide(INPUT_GROUP_INJECTION_KEY, {
-  ...group,
+provide<InputGroupContext>(INPUT_GROUP_INJECTION_KEY, {
+  disabled: computed(() => props.disabled),
+  setInputGroupExpanded,
+  setInputGroupValidate,
+  setInputGroupActived,
 });
 </script>
 
