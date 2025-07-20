@@ -1,4 +1,21 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
+$divider_color: var(--mc-gray-400);
+
 .mc-input-group {
+  width: 100%;
+  height: 40px;
+  @include mixin.flex-center();
+
+  .mc-input-group-divider {
+    width: 1px;
+    height: 60%;
+    background-color: $divider_color;
+  }
+
+  .mc-input-group-prefix {
+  }
+
+  .mc-input-group-suffix {
+  }
 }

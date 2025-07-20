@@ -1,5 +1,13 @@
 <template>
-  <div class="mc-input-group">Input Group</div>
+  <div class="mc-input-group">
+    <div class="mc-input-group-prefix" :style="{ flex: prefixFlex }">
+      <slot name="prefix">prefix</slot>
+    </div>
+    <div class="mc-input-group-divider"></div>
+    <div class="mc-input-group-suffix" :style="{ flex: suffixFlex }">
+      <slot name="suffix">suffix</slot>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -13,6 +21,8 @@ defineOptions({ name: MC_INPUT_GROUP });
 // props
 const props = withDefaults(defineProps<InputGroupProps>(), {
   disabled: false,
+  suffixFlex: 1,
+  prefixFlex: 1,
 });
 
 // provide

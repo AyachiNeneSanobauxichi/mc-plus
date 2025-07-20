@@ -6,4 +6,6 @@ export interface InputGroupContext {
 
 export interface InputGroupProps {
   disabled?: boolean;
+  suffixFlex?: number;
+  prefixFlex?: number;
 }
