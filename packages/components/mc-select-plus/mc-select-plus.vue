@@ -183,6 +183,7 @@ import { computed, h, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController, useHover } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
+import { useInputGroupCtx } from "../mc-input-group/hooks";
 import {
   useClear,
   useExpand,
@@ -283,7 +284,8 @@ const {
 }, isDisabled);
 
 // use form validate
-const { formItem, isError, isSuccess, statusIcon } = useFormValidate();
+const { formItem, validateStatus, isError, isSuccess, statusIcon } =
+  useFormValidate();
 
 // watch model value
 watch(
@@ -293,6 +295,14 @@ watch(
     formItem?.validate("change");
   }
 );
+
+// use input group ctx
+useInputGroupCtx({
+  validateStatus,
+  isExpanded,
+  isFocused,
+  isHovered: isHovering,
+});
 
 // use click outside
 useClickOutside(selectRef, () => {

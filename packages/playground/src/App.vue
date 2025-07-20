@@ -1,11 +1,11 @@
 <template>
   <div class="playground">
-    <playground-select-plus></playground-select-plus>
+    <playground-input-group></playground-input-group>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundSelectPlus from "./views/mc-select-plus/playground-select-plus.vue";
+import PlaygroundInputGroup from "./views/mc-input-group/playground-input-group.vue";
 </script>
 
 <style scoped lang="scss">

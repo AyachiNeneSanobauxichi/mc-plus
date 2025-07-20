@@ -2,6 +2,7 @@ import { computed, inject } from "vue";
 import { isBoolean } from "lodash-es";
 import useProp from "@mc-plus/hooks/useProp";
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
+import type { ValidateStatus } from "./types";
 
 // form item hook
 export function useFormItem() {
@@ -29,9 +30,14 @@ export function useFormValidate() {
   // form item context
   const { formItem } = useFormItem();
 
+  // form item validate status
+  const validateStatus = computed<ValidateStatus>(() => {
+    return formItem?.validateStatus || "init";
+  });
+
   // form item validate status style
   const validateStyle = computed<"success" | "error" | "validating">(() => {
-    switch (formItem?.validateStatus) {
+    switch (validateStatus.value) {
       case "success":
         return "success";
       case "error":
@@ -54,5 +60,12 @@ export function useFormValidate() {
     return void 0;
   });
 
-  return { formItem, validateStyle, isError, isSuccess, statusIcon };
+  return {
+    formItem,
+    validateStatus,
+    validateStyle,
+    isError,
+    isSuccess,
+    statusIcon,
+  };
 }
