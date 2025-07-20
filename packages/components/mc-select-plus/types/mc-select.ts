@@ -25,6 +25,7 @@ export interface SelectPlusProps {
   modelValue?: SelectPlusValue | SelectPlusValue[];
   placement?: Placement;
   inputGroupPosition?: InputGroupPosition;
+  formValidateStyle?: boolean;
 }
 
 export interface SelectPlusEmits {
