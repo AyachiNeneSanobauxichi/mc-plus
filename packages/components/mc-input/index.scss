@@ -12,6 +12,11 @@ $bg_color_disabled: var(--mc-gray-200);
 $border_radius: var(--mc-radius);
 $font_size: var(--mc-font-size-base);
 
+@mixin actived-border {
+  border-color: $border_color_hover;
+  outline: 1px solid $border_color_hover;
+}
+
 .mc-input {
   width: 320px;
   height: 40px;
@@ -49,14 +54,12 @@ $font_size: var(--mc-font-size-base);
 
   // hover
   &:hover {
-    border: 2px solid $border_color_hover;
-    padding: 0 7px;
+    @include actived-border;
   }
 
   // focus
   &.mc-input--focused {
-    border: 2px solid $border_color_hover;
-    padding: 0 7px;
+    @include actived-border;
     color: $text_color_active;
   }
 
@@ -67,10 +70,8 @@ $font_size: var(--mc-font-size-base);
 
   // disabled
   &.mc-input--disabled {
-    border: 1px solid $border_color;
     color: $text_color_disabled;
     background-color: $bg_color_disabled;
-    padding: 0 8px;
     cursor: not-allowed;
 
     .mc-input__password {
@@ -86,6 +87,7 @@ $font_size: var(--mc-font-size-base);
   // error
   &.mc-input--error:not(.mc-input--disabled) {
     border-color: $border_color_error;
+    outline-color: $border_color_error;
   }
 
   // status icon
