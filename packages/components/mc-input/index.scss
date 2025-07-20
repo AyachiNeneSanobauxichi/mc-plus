@@ -53,7 +53,7 @@ $font_size: var(--mc-font-size-base);
   }
 
   // hover
-  &:hover {
+  &:not(.mc-input--disabled).mc-input-hovering {
     @include actived-border;
   }
 

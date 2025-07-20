@@ -5,6 +5,7 @@
       'mc-input--disabled': isDisabled,
       'mc-input--focused': isFocused,
       'mc-input--inputed': modelValue,
+      'mc-input-hovering': isHovering,
       [`mc-input--${validateStyle}`]: validateStyle,
     }"
     :style="{ width, height }"
@@ -74,7 +75,7 @@ import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import { useFocusController } from "@mc-plus/hooks";
+import { useFocusController, useHover } from "@mc-plus/hooks";
 import { OTP_CTX_KEY } from "../mc-otp/constant";
 import {
   currencyFormatter,
@@ -223,6 +224,9 @@ const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
     },
   }
 );
+
+// use hover
+const { isHovering } = useHover(wrapperRef);
 
 // clear
 const clear = () => {
