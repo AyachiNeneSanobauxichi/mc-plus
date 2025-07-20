@@ -269,9 +269,11 @@ const inputGroupCtx = inject<InputGroupContext>(
 );
 
 // watch expand
-watch(isExpanded, (expand) => {
-  inputGroupCtx?.setInputGroupExpanded(expand);
-});
+if (inputGroupCtx) {
+  watch(isExpanded, (expand) => {
+    inputGroupCtx?.setInputGroupExpanded(expand);
+  });
+}
 
 // use hover
 const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =

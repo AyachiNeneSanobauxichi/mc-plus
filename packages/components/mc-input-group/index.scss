@@ -6,35 +6,15 @@ $divider_color: var(--mc-gray-400);
 .mc-input-group {
   width: 100%;
   height: 40px;
+  box-sizing: border-box;
   @include mixin.flex-center();
 
-  .mc-input-group-prefix {
-    :deep(.mc-input) {
-      border-right: none;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &.mc-input-group-prefix-expanded {
-      :deep(.mc-input) {
-        border-bottom-left-radius: 0;
-      }
-    }
+  :deep(.mc-input) {
+    border: none !important;
+    outline: none !important;
   }
-
-  .mc-input-group-suffix {
-    :deep(.mc-select) {
-      .mc-select-trigger {
-        border-left: none;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-    }
-
-    &.mc-input-group-suffix-expanded {
-      :deep(.mc-input) {
-        border-top-right-radius: 0;
-      }
-    }
+  :deep(.mc-select) .mc-select-trigger {
+    border: none !important;
+    outline: none !important;
   }
 }
