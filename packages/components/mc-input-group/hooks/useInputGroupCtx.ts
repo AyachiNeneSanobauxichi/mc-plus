@@ -1,8 +1,4 @@
-import type {
-  _InputGroupStatus,
-  InputGroupContext,
-  InputGroupPosition,
-} from "../types";
+import type { _InputGroupStatus, InputGroupPosition } from "../types";
 import { inject, watch } from "vue";
 import { useProp } from "@mc-plus/hooks";
 import { INPUT_GROUP_INJECTION_KEY } from "../constant";
@@ -10,9 +6,7 @@ import { INPUT_GROUP_INJECTION_KEY } from "../constant";
 // use input group context hook
 const useInputGroupCtx = (status: _InputGroupStatus) => {
   // input group context
-  const inputGroupCtx = inject<InputGroupContext>(
-    INPUT_GROUP_INJECTION_KEY || void 0
-  );
+  const inputGroupCtx = inject(INPUT_GROUP_INJECTION_KEY, void 0);
 
   // context not found return
   if (!inputGroupCtx) {

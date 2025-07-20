@@ -5,12 +5,13 @@
     <p>isPrefixActived: {{ isPrefixActived }}</p>
     <p>isSuffixActived: {{ isSuffixActived }}</p>
   </div>
-  <div class="mc-input-group" :class="{ 'mc-input-group-error': isError }">
+  <div class="mc-input-group">
     <div
       class="mc-input-group-prefix"
       :class="{
         'mc-input-group-prefix-expanded': isExpanded,
         'mc-input-group-prefix-actived': isPrefixActived,
+        'mc-input-group-prefix-error': isError,
       }"
       :style="{ flex: prefixFlex }"
     >
@@ -22,6 +23,7 @@
       :class="{
         'mc-input-group-suffix-expanded': isExpanded,
         'mc-input-group-suffix-actived': isSuffixActived,
+        'mc-input-group-suffix-error': isError,
       }"
       :style="{ flex: suffixFlex }"
     >
