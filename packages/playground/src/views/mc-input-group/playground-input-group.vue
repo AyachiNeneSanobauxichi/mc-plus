@@ -22,7 +22,7 @@
               width="100%"
               height="100%"
               v-model="formState.currency"
-              placeholder="Please select currency"
+              placeholder="Select currency"
               search
               clearable
               placement="bottom-end"

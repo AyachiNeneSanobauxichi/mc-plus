@@ -2,12 +2,22 @@
 
 $border_color: var(--mc-gray-400);
 $border_color_hover: var(--mc-gray-800);
+$border_color_error: var(--mc-error);
 $divider_color: var(--mc-gray-400);
 $bg_color_disabled: var(--mc-gray-200);
 
 @mixin actived-border {
   border-color: $border_color_hover;
   outline: 1px solid $border_color_hover;
+}
+
+@mixin error-border {
+  border-color: $border_color_error;
+  outline-color: $border_color_error;
+  &.mc-input-group-prefix-actived,
+  &.mc-input-group-suffix-actived {
+    border-color: $border_color_error;
+  }
 }
 
 .mc-input-group {
@@ -58,6 +68,11 @@ $bg_color_disabled: var(--mc-gray-200);
     &.mc-input-group-prefix-expanded {
       border-bottom-left-radius: 0;
     }
+
+    &:not(.mc-input-group-prefix-expanded).mc-input-group-prefix-error {
+      @include error-border;
+      border-right-color: transparent;
+    }
   }
 
   .mc-input-group-suffix {
@@ -75,7 +90,12 @@ $bg_color_disabled: var(--mc-gray-200);
     }
 
     &.mc-input-group-suffix-expanded {
-      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:not(.mc-input-group-suffix-expanded).mc-input-group-suffix-error {
+      @include error-border;
+      border-left-color: transparent;
     }
   }
 
