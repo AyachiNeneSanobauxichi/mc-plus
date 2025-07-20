@@ -4,6 +4,7 @@
       <template #prefix>
         <mc-input
           width="100%"
+          height="100%"
           v-model="amount"
           placeholder="Please enter amount"
           input-group-position="prefix"
@@ -11,6 +12,8 @@
       </template>
       <template #suffix>
         <mc-select-plus
+          width="100%"
+          height="100%"
           v-model="currency"
           placeholder="Please select currency"
           search
