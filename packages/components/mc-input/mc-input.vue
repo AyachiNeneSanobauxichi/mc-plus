@@ -6,8 +6,6 @@
       'mc-input--focused': isFocused,
       'mc-input--inputed': modelValue,
       [`mc-input--${validateStyle}`]: validateStyle,
-      'mc-input--input-group-prefix': isPrefix,
-      'mc-input--input-group-suffix': isSuffix,
     }"
     :style="{ width, height }"
     ref="wrapperRef"
@@ -78,7 +76,6 @@ import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 import { useFocusController } from "@mc-plus/hooks";
 import { OTP_CTX_KEY } from "../mc-otp/constant";
-import { useInputGroupAffix } from "../mc-input-group-old/hooks";
 import {
   currencyFormatter,
   currencyParser,
@@ -313,9 +310,6 @@ watch(nativeValue, () => {
   setNativeValue();
   formItem?.validate("change");
 });
-
-// input group
-const { isPrefix, isSuffix } = useInputGroupAffix("input");
 
 // expose
 defineExpose({

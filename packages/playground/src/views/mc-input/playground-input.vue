@@ -1,11 +1,6 @@
 <template>
   <div class="playground-input">
-    <mc-input
-      v-model="inputValue"
-      :maxlength="10"
-      type="password"
-      prefix-icon="Search"
-    />
+    <mc-input v-model="inputValue" :maxlength="10" prefix-icon="Search" />
   </div>
 </template>
 
