@@ -1,10 +1,17 @@
 <template>
   <div class="mc-input-group">
-    <div class="mc-input-group-prefix" :style="{ flex: prefixFlex }">
+    <div
+      class="mc-input-group-prefix"
+      :class="{ 'mc-input-group-prefix-expanded': isExpanded }"
+      :style="{ flex: prefixFlex }"
+    >
       <slot name="prefix">prefix</slot>
     </div>
-    <div class="mc-input-group-divider"></div>
-    <div class="mc-input-group-suffix" :style="{ flex: suffixFlex }">
+    <div
+      class="mc-input-group-suffix"
+      :class="{ 'mc-input-group-suffix-expanded': isExpanded }"
+      :style="{ flex: suffixFlex }"
+    >
       <slot name="suffix">suffix</slot>
     </div>
   </div>
@@ -12,7 +19,7 @@
 
 <script setup lang="ts">
 import type { InputGroupContext, InputGroupProps } from "./types";
-import { computed, provide } from "vue";
+import { computed, provide, ref } from "vue";
 import { INPUT_GROUP_INJECTION_KEY, MC_INPUT_GROUP } from "./constant";
 
 // options
@@ -25,9 +32,18 @@ const props = withDefaults(defineProps<InputGroupProps>(), {
   prefixFlex: 1,
 });
 
+// is expanded
+const isExpanded = ref<boolean>(false);
+
+// set input group expanded
+const setInputGroupExpanded = (expanded: boolean) => {
+  isExpanded.value = expanded;
+};
+
 // provide
 provide<InputGroupContext>(INPUT_GROUP_INJECTION_KEY, {
   disabled: computed(() => props.disabled),
+  setInputGroupExpanded,
 });
 </script>
 

@@ -178,7 +178,8 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import type { TagEmphasis } from "../mc-tag";
-import { computed, h, onMounted, provide, ref, watch } from "vue";
+import type { InputGroupContext } from "../mc-input-group/types";
+import { computed, h, inject, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
 import {
@@ -192,6 +193,7 @@ import {
   useSelectDisable,
 } from "./hooks";
 import { MC_SELECT, SELECT_INJECTION_KEY } from "./constant";
+import { INPUT_GROUP_INJECTION_KEY } from "../mc-input-group/constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
 import McTag from "../mc-tag/mc-tag.vue";
@@ -260,6 +262,16 @@ const { isDisabled } = useSelectDisable(() => {
 // use expand
 const { isExpanded, popperRef, popperOptions, toggleExpand } =
   useExpand(isDisabled);
+
+// input group context
+const inputGroupCtx = inject<InputGroupContext>(
+  INPUT_GROUP_INJECTION_KEY || void 0
+);
+
+// watch expand
+watch(isExpanded, (expand) => {
+  inputGroupCtx?.setInputGroupExpanded(expand);
+});
 
 // use hover
 const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
