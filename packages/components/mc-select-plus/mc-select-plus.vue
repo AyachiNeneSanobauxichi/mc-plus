@@ -70,11 +70,13 @@
                   </ul>
                 </template>
                 <template v-else>
-                  <component
-                    v-if="selectedContent"
-                    :is="selectedContent"
-                    :key="selectedOption"
-                  ></component>
+                  <div class="mc-select-selected-content-wrapper">
+                    <component
+                      v-if="selectedContent"
+                      :is="selectedContent"
+                      :key="selectedOption"
+                    ></component>
+                  </div>
                 </template>
               </slot>
             </template>

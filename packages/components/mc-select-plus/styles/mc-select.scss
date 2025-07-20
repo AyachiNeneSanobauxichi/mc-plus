@@ -36,6 +36,7 @@ $error_color: var(--mc-error);
     box-sizing: border-box;
 
     .mc-select-input-wrapper {
+      @include mixin.flex-center(row, start, center);
       flex: 1;
       height: 100%;
       position: relative;
@@ -43,6 +44,17 @@ $error_color: var(--mc-error);
 
       &::-webkit-scrollbar {
         display: none;
+      }
+
+      .mc-select-selected-content-wrapper {
+        @include mixin.flex-center(row, start, center);
+        height: 100%;
+        flex: 1;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
 
       .mc-select-input {
