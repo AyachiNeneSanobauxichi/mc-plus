@@ -16,4 +16,13 @@ import McInput from "../../../../components/mc-input/mc-input.vue";
 const inputValue = ref("");
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.playground-input {
+  width: 100%;
+  margin-top: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>
