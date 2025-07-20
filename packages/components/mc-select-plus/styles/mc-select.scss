@@ -22,8 +22,11 @@ $error_color: var(--mc-error);
 
 .mc-select {
   --mc-select-width: 100%;
+  --mc-select-height: 40px;
   width: var(--mc-select-width);
+  height: var(--mc-select-height);
   background-color: $bg_color;
+  border-radius: 4px;
 
   .mc-select-trigger {
     @include mixin.flex-center(row, space-between, center, 8px);
@@ -204,8 +207,10 @@ $error_color: var(--mc-error);
 
   :deep(.mc-popper.mc-select-popper) {
     width: var(--mc-select-width);
+    height: var(--mc-select-height);
     .mc-popper-trigger {
       width: var(--mc-select-width);
+      height: var(--mc-select-height);
     }
     .mc-popper-popper {
       width: var(--mc-select-width);

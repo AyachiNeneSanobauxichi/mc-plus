@@ -13,7 +13,8 @@
         <mc-select-plus
           v-model="formState.currency"
           placeholder="Please select currency"
-          width="400px"
+          width="100%"
+          height="40px"
           search
           clearable
         >

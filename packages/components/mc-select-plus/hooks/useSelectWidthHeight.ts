@@ -12,6 +12,7 @@ const useSelectWidthHeight = () => {
   const setWidth = () => {
     if (!selectRef.value) return;
     selectRef.value.style.setProperty("--mc-select-width", width.value);
+    selectRef.value.style.setProperty("--mc-select-height", height.value);
   };
 
   // init width
