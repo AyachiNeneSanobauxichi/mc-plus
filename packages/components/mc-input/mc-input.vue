@@ -173,7 +173,11 @@ const formItemDisabled = useFormDisabled();
 
 // disabled
 const isDisabled = computed(() => {
-  return formItemDisabled.value || otpContext?.disabled.value;
+  return (
+    formItemDisabled.value ||
+    !!otpContext?.disabled.value ||
+    !!inputGroupCtx?.inputGroupDisabled.value
+  );
 });
 
 // password
@@ -230,7 +234,7 @@ const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
 const { isHovering } = useHover(wrapperRef);
 
 // use input group ctx
-useInputGroupCtx({
+const inputGroupCtx = useInputGroupCtx({
   validateStatus: computed(() => formItem?.validateStatus || "init"),
   isFocused,
   isHovering,

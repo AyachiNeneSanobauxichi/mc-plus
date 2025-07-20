@@ -1,5 +1,5 @@
 import type { _InputGroupStatus, InputGroupPosition } from "../types";
-import { inject, watch } from "vue";
+import { computed, inject, watch } from "vue";
 import { useProp } from "@mc-plus/hooks";
 import { INPUT_GROUP_INJECTION_KEY } from "../constant";
 
@@ -12,6 +12,11 @@ const useInputGroupCtx = (status: _InputGroupStatus) => {
   if (!inputGroupCtx) {
     return;
   }
+
+  // input group disabled
+  const inputGroupDisabled = computed(() => {
+    return inputGroupCtx.disabled.value;
+  });
 
   // position
   const position = useProp<InputGroupPosition>("inputGroupPosition");
@@ -47,6 +52,10 @@ const useInputGroupCtx = (status: _InputGroupStatus) => {
       inputGroupCtx.setInputGroupActived(false, position.value!);
     }
   });
+
+  return {
+    inputGroupDisabled,
+  };
 };
 
 export default useInputGroupCtx;

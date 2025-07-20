@@ -4,8 +4,12 @@
     <p>isExpanded: {{ isExpanded }}</p>
     <p>isPrefixActived: {{ isPrefixActived }}</p>
     <p>isSuffixActived: {{ isSuffixActived }}</p>
+    <p>disabled: {{ isDisabled }}</p>
   </div>
-  <div class="mc-input-group">
+  <div
+    class="mc-input-group"
+    :class="{ 'mc-input-group-disabled': isDisabled }"
+  >
     <div
       class="mc-input-group-prefix"
       :class="{
@@ -36,7 +40,7 @@
 import type { InputGroupContext, InputGroupProps } from "./types";
 import { computed, provide } from "vue";
 import { INPUT_GROUP_INJECTION_KEY, MC_INPUT_GROUP } from "./constant";
-import { useStatus } from "./hooks";
+import { useInputGroupDisabled, useStatus } from "./hooks";
 
 // options
 defineOptions({ name: MC_INPUT_GROUP });
@@ -59,9 +63,14 @@ const {
   setInputGroupActived,
 } = useStatus();
 
+// use input group disabled
+const { isDisabled } = useInputGroupDisabled();
+
 // show divider
 const showDivider = computed<boolean>(
-  () => !isPrefixActived.value && !isSuffixActived.value && !isExpanded.value
+  () =>
+    (!isPrefixActived.value && !isSuffixActived.value && !isExpanded.value) ||
+    isDisabled.value
 );
 
 // provide
