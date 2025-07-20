@@ -3,7 +3,7 @@ import type { Ref } from "vue";
 import { ref } from "vue";
 import { findIndex } from "lodash-es";
 
-const useHover = (options?: Ref<_FilteredOptionNode[]>) => {
+const useOptionHover = (options?: Ref<_FilteredOptionNode[]>) => {
   // hover option
   const hoverOption = ref<SelectPlusValue>();
 
@@ -55,4 +55,4 @@ const useHover = (options?: Ref<_FilteredOptionNode[]>) => {
   };
 };
 
-export default useHover;
+export default useOptionHover;

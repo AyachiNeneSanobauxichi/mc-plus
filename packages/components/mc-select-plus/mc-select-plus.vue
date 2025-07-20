@@ -185,7 +185,7 @@ import { useFormValidate } from "../mc-form/hooks";
 import {
   useClear,
   useExpand,
-  useHover,
+  useOptionHover,
   useSearch,
   useSelectAll,
   useSelectOptions,
@@ -263,7 +263,7 @@ const { isExpanded, popperRef, popperOptions, toggleExpand } =
 
 // use hover
 const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
-  useHover(filteredOptions);
+  useOptionHover(filteredOptions);
 
 // use clear
 const {
