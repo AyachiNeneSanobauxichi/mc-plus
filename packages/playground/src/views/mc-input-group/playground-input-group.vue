@@ -1,6 +1,6 @@
 <template>
   <div class="playground-input-group">
-    <mc-input-group>
+    <mc-input-group :prefix-flex="3" :suffix-flex="1">
       <template #prefix>
         <mc-input
           width="100%"

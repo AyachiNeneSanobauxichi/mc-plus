@@ -16,6 +16,7 @@
     >
       <slot name="prefix">prefix</slot>
     </div>
+    <div class="mc-input-group-divider" v-if="showDivider"></div>
     <div
       class="mc-input-group-suffix"
       :class="{
@@ -55,6 +56,11 @@ const {
   setInputGroupExpanded,
   setInputGroupActived,
 } = useStatus();
+
+// show divider
+const showDivider = computed<boolean>(
+  () => !isPrefixActived.value && !isSuffixActived.value && !isExpanded.value
+);
 
 // provide
 provide<InputGroupContext>(INPUT_GROUP_INJECTION_KEY, {
