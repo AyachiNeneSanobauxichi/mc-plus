@@ -1,9 +1,10 @@
+import type { Ref } from "vue";
 import type { _OptionNode, SelectInternalInstance } from "../types";
 import { getCurrentInstance, ref, watchEffect } from "vue";
 import { generateOptions, isSameOptions } from "../utils";
 
 // use select options
-const useSelectOptions = () => {
+const useSelectOptions = (): { selectOptions: Ref<_OptionNode[]> } => {
   // cache options
   let _cachedOptions: _OptionNode[] = [];
   // select options
