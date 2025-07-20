@@ -7,11 +7,12 @@
     </div>
     <mc-form :model="formState" :rules="formRules" ref="formRef">
       <mc-form-item label="Amount" prop="amount" :disabled="disabled">
-        <mc-input-group :prefix-flex="3" :suffix-flex="1">
+        <mc-input-group :prefix-flex="4" :suffix-flex="1">
           <template #prefix>
             <mc-input
               width="100%"
               height="100%"
+              type="currency"
               v-model="formState.amount"
               placeholder="Please enter amount"
               input-group-position="prefix"
@@ -29,6 +30,13 @@
               input-group-position="suffix"
               :form-validate-style="false"
             >
+              <template #selected-content="{ selectedOption }">
+                <mc-currency-icon
+                  :currency="`${selectedOption}`"
+                  width="100%"
+                  height="100%"
+                />
+              </template>
               <template v-for="item in currencyList" :key="item.value">
                 <mc-select-group-plus :label="item.label">
                   <mc-select-option-plus
@@ -37,10 +45,60 @@
                     :label="child.label"
                     :value="child.value"
                   >
+                    <mc-currency-icon
+                      :currency="child.value"
+                      :desc="child.desc"
+                      width="100%"
+                      height="100%"
+                    />
                   </mc-select-option-plus>
                 </mc-select-group-plus>
               </template>
             </mc-select-plus>
+          </template>
+        </mc-input-group>
+      </mc-form-item>
+      <mc-form-item
+        label="Phone Number"
+        prop="phoneNumber"
+        :disabled="disabled"
+      >
+        <mc-input-group :prefix-flex="1" :suffix-flex="4">
+          <template #prefix>
+            <mc-select-plus
+              width="100%"
+              height="100%"
+              v-model="formState.areaNumber"
+              placeholder="Area number"
+              input-group-position="prefix"
+              :form-validate-style="false"
+            >
+              <template #selected-content="{ selectedOption }">
+                {{ `+${selectedOption}` }}
+              </template>
+              <template v-for="item in areaNumberList" :key="item.value">
+                <mc-select-option-plus :label="item.label" :value="item.value">
+                  <div class="area-number-option-content">
+                    <span class="area-number-option-content-label">
+                      {{ item.label }}
+                    </span>
+                    <span class="area-number-option-content-desc">
+                      {{ item.desc }}
+                    </span>
+                  </div>
+                </mc-select-option-plus>
+              </template>
+            </mc-select-plus>
+          </template>
+          <template #suffix>
+            <mc-input
+              width="100%"
+              height="100%"
+              type="number"
+              v-model="formState.phoneNumber"
+              placeholder="Please enter phone number"
+              input-group-position="suffix"
+            />
           </template>
         </mc-input-group>
       </mc-form-item>
@@ -56,6 +114,7 @@ import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-g
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
+import McCurrencyIcon from "../../../../components/mc-currency-icon/mc-currency-icon.vue";
 import { reactive, ref } from "vue";
 import type { FormInstance } from "mc-plus";
 import { McButton } from "mc-plus";
@@ -63,10 +122,13 @@ import { McButton } from "mc-plus";
 const formState = reactive({
   amount: "",
   currency: "",
+  areaNumber: "",
+  phoneNumber: "",
 });
 
 const formRules = reactive({
   amount: [{ required: true, message: "Please enter amount" }],
+  phoneNumber: [{ required: true, message: "Please enter phone number" }],
 });
 
 const formRef = ref<FormInstance>();
@@ -101,6 +163,13 @@ const currencyList = reactive([
   },
 ]);
 
+const areaNumberList = reactive([
+  { label: "+86", value: "86", desc: "China" },
+  { label: "+852", value: "852", desc: "Hong Kong" },
+  { label: "+853", value: "853", desc: "Macau" },
+  { label: "+886", value: "886", desc: "Taiwan" },
+]);
+
 const disabled = ref(false);
 
 const handleDisabled = () => {
@@ -129,6 +198,23 @@ const handleClearValidate = () => {
     display: flex;
     gap: 16px;
     margin-bottom: 16px;
+  }
+
+  .area-number-option-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .area-number-option-content-label {
+      font-size: 16px;
+    }
+
+    .area-number-option-content-desc {
+      font-size: 12px;
+      color: #808080;
+    }
   }
 }
 </style>

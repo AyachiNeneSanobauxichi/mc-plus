@@ -1,11 +1,4 @@
 <template>
-  <div>
-    <p>isError: {{ isError }}</p>
-    <p>isExpanded: {{ isExpanded }}</p>
-    <p>isPrefixActived: {{ isPrefixActived }}</p>
-    <p>isSuffixActived: {{ isSuffixActived }}</p>
-    <p>disabled: {{ isDisabled }}</p>
-  </div>
   <div
     class="mc-input-group"
     :class="{ 'mc-input-group-disabled': isDisabled }"
