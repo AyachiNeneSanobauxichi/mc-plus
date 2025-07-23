@@ -13,20 +13,23 @@ $icon_color_info: var(--mc-info);
 .mc-alert-message {
   width: 100%;
   border-radius: 4px;
+  padding: 16px 0;
+  min-height: 40px;
+  box-sizing: border-box;
 
   .mc-alert-message-header {
+    @include mixin.flex-center(row, space-between, center, 8px);
     width: 100%;
-    height: 40px;
     padding: 0 16px;
     box-sizing: border-box;
-    @include mixin.flex-center(row, space-between);
 
     .mc-alert-message-title-container {
-      @include mixin.flex-center(row, flex-start, center, 8px);
+      @include mixin.flex-center(row, flex-start, start, 8px);
+      box-sizing: border-box;
+
       .mc-alert-message-icon {
-        width: 24px;
-        height: 24px;
         @include mixin.flex-center;
+        width: 24px;
       }
 
       .mc-alert-message-title {
@@ -41,8 +44,7 @@ $icon_color_info: var(--mc-info);
     width: 100%;
     .mc-alert-message-content {
       width: 100%;
-      padding: 8px 16px;
-      padding-top: 0;
+      padding: 8px 16px 0;
       box-sizing: border-box;
     }
 
@@ -67,6 +69,12 @@ $icon_color_info: var(--mc-info);
 
   .mc-alert-message-icon-group {
     @include mixin.flex-center(row, flex-end, center, 8px);
+    box-sizing: border-box;
+
+    .mc-alert-message-icon-wrapper {
+      @include mixin.flex-center;
+      align-self: stretch;
+    }
 
     .mc-alert-message-tool-icon {
       cursor: pointer;

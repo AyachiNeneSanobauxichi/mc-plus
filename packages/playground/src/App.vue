@@ -1,13 +1,15 @@
 <template>
   <div class="playground">
-    <playground-input-group></playground-input-group>
+    <!-- <playground-input-group></playground-input-group> -->
     <!-- <playground-select-plus></playground-select-plus> -->
+    <playground-alert-message></playground-alert-message>
   </div>
 </template>
 
 <script setup lang="ts">
-import PlaygroundInputGroup from "./views/mc-input-group/playground-input-group.vue";
+// import PlaygroundInputGroup from "./views/mc-input-group/playground-input-group.vue";
 // import PlaygroundSelectPlus from "./views/mc-select-plus/playground-select-plus.vue";
+import PlaygroundAlertMessage from "./views/mc-alert-message/playground-alert-message.vue";
 </script>
 
 <style scoped lang="scss">
