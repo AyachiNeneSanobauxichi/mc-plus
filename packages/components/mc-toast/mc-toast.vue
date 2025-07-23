@@ -4,20 +4,18 @@
       class="mc-toast-msg-container"
       :class="{ 'mc-toast-has-content': content || $slots.content }"
     >
-      <div class="mc-toast-msg-text-container">
-        <div class="mc-toast-msg-icon" v-if="iconName">
-          <mc-icon :name="iconName" :size="22"></mc-icon>
-        </div>
-        <div class="mc-toast-msg-text" v-if="message || $slots.default">
-          <slot>{{ message }}</slot>
-        </div>
+      <div class="mc-toast-msg-icon" v-if="iconName">
+        <mc-icon :name="iconName"></mc-icon>
+      </div>
+      <div class="mc-toast-msg-text" v-if="message || $slots.default">
+        <slot>{{ message }}</slot>
       </div>
       <div class="mc-toast-msg-close-container">
-        <div class="mc-toast-countdown" v-if="duration">
+        <div class="mc-toast-countdown" v-if="showCountDownIcon">
           {{ countDown }}
         </div>
         <div class="mc-toast-msg-close" v-if="closable">
-          <mc-icon name="Cross" :size="24" @click="handleClose"></mc-icon>
+          <mc-icon name="Cross" @click="handleClose"></mc-icon>
         </div>
       </div>
     </div>
@@ -43,6 +41,7 @@ const props = withDefaults(defineProps<ToastProps>(), {
   autoClose: true,
   duration: void 0,
   hideIcon: false,
+  countDownIcon: true,
 });
 
 // emits
@@ -63,6 +62,11 @@ const iconName = computed<IconType | undefined>(() => {
     default:
       return void 0;
   }
+});
+
+// show count down icon
+const showCountDownIcon = computed<boolean>(() => {
+  return props.countDownIcon && !!props.duration;
 });
 
 // duration time

@@ -8,7 +8,11 @@
   >
     <div class="mc-alert-message-header">
       <div class="mc-alert-message-title-container">
-        <div class="mc-alert-message-icon" v-if="hasIcon">
+        <div
+          class="mc-alert-message-icon"
+          v-if="hasIcon"
+          :style="{ height: hasContent ? '30px' : '24px' }"
+        >
           <slot name="icon">
             <mc-icon :name="iconName!" :size="24" />
           </slot>
@@ -18,28 +22,33 @@
           :style="{
             fontSize: hasContent ? '18px' : '16px',
             fontWeight: hasContent ? '600' : '400',
+            lineHeight: hasContent ? '30px' : '24px',
           }"
         >
           <slot>{{ message }}</slot>
         </div>
       </div>
       <div class="mc-alert-message-icon-group" v-if="closable || expandable">
-        <mc-icon
-          name="Down-Chevron"
-          :size="24"
-          v-if="expandable"
-          class="mc-alert-message-tool-icon mc-alert-message-tool-icon-expand"
-          :style="{
-            transform: isExpand ? 'rotate(180deg)' : 'rotate(0deg)',
-          }"
-        />
-        <mc-icon
-          name="Cross"
-          :size="24"
-          v-if="closable"
-          class="mc-alert-message-tool-icon mc-alert-message-tool-icon-close"
-          @click.stop="handleClose"
-        />
+        <div class="mc-alert-message-icon-wrapper">
+          <mc-icon
+            name="Down-Chevron"
+            :size="24"
+            v-if="expandable"
+            class="mc-alert-message-tool-icon mc-alert-message-tool-icon-expand"
+            :style="{
+              transform: isExpand ? 'rotate(180deg)' : 'rotate(0deg)',
+            }"
+          />
+        </div>
+        <div class="mc-alert-message-icon-wrapper">
+          <mc-icon
+            name="Cross"
+            :size="24"
+            v-if="closable"
+            class="mc-alert-message-tool-icon mc-alert-message-tool-icon-close"
+            @click.stop="handleClose"
+          />
+        </div>
       </div>
     </div>
     <div class="mc-alert-message-body" v-if="hasContent">
@@ -141,11 +150,22 @@ const handleClick = () => {
   }
 };
 
+// handle show
+const handleShow = () => {
+  _isExpand.value = true;
+};
+
+// handle hide
+const handleHide = () => {
+  _isExpand.value = false;
+};
+
 // expose
 defineExpose<AlertMessageInstance>({
   ref: _ref,
   close: handleClose,
-  expand: handleExpand,
+  show: handleShow,
+  hide: handleHide,
 });
 </script>
 

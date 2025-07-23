@@ -24,5 +24,6 @@ export interface AlertMessageEmits {
 export interface AlertMessageInstance {
   ref: Ref<HTMLDivElement | undefined>;
   close: () => void;
-  expand: () => void;
+  show: () => void;
+  hide: () => void;
 }
