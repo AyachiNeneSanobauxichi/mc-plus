@@ -49,7 +49,7 @@ const removeContainer = () => {
 
 // 生成唯一ID
 const generateId = () => {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
 };
 
 // 移除指定的 toast 实例
