@@ -1,0 +1,9 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$bg_color: var(--mc-error);
+$text_color: var(--mc-white);
+$bg_color_gray: var(--mc-gray-200);
+$text_color_gray: var(--mc-gray-500);
+
+.mc-count {
+}
