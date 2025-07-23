@@ -1,7 +1,7 @@
 <template>
   <div class="mc-title-tool-bar" ref="_ref">
     <div class="mc-title-tool-bar-reset">
-      <mc-reset :rotate="isRotate" @reset="handleReset" />
+      <mc-reset :rotate="isRotate" @reset="handleReset" :auto-rotate="false" />
     </div>
     <div class="mc-title-tool-bar-line"></div>
     <div class="mc-title-tool-bar-mandatory">Mandatory</div>
