@@ -4,6 +4,7 @@
       v-model="visible"
       title="Mc Lightbox"
       size="large"
+      :min-height="300"
     ></mc-lightbox>
     <div class="tool-bar">
       <mc-button @click="handleChangeVisible">Change Visible</mc-button>

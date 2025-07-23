@@ -28,7 +28,13 @@
                 </slot>
               </div>
               <div class="mc-lightbox-content-wrapper" ref="wrapperRef">
-                <div class="mc-lightbox-content" ref="contentRef">
+                <div
+                  class="mc-lightbox-content"
+                  :style="{
+                    minHeight: minHeight ? `${minHeight}px` : void 0,
+                  }"
+                  ref="contentRef"
+                >
                   <slot></slot>
                 </div>
               </div>
@@ -83,6 +89,7 @@ const props = withDefaults(defineProps<LightboxProps>(), {
   portCssSelector: "body",
   hideFooter: false,
   showBorder: false,
+  minHeight: undefined,
 });
 
 // emits
