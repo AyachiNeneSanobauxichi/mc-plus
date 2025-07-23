@@ -39,3 +39,4 @@ export * from "./mc-otp";
 export * from "./mc-select-plus";
 export * from "./mc-input-group";
 export * from "./mc-count";
+export * from "./mc-copy";

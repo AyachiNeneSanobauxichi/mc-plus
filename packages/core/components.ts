@@ -46,6 +46,7 @@ import {
   McSelectGroupPlus,
   McSelectMultiOption,
   McCount,
+  McCopy,
 } from "@mc-plus/components";
 
 export default [
@@ -95,4 +96,5 @@ export default [
   McSelectGroupPlus,
   McSelectMultiOption,
   McCount,
+  McCopy,
 ] as Plugin[];
