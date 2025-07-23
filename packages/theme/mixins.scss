@@ -64,3 +64,13 @@
   margin: 0;
   padding: 0;
 }
+
+/* reset i style */
+@mixin reset-i-style {
+  font-style: normal;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+}

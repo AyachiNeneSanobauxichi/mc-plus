@@ -6,4 +6,46 @@ $bg_color_gray: var(--mc-gray-200);
 $text_color_gray: var(--mc-gray-500);
 
 .mc-count {
+  @include mixin.reset-i-style;
+  @include mixin.flex-center;
+  width: fit-content;
+  box-sizing: border-box;
+
+  &.mc-count-red {
+    background-color: $bg_color;
+    color: $text_color;
+  }
+
+  &.mc-count-gray {
+    background-color: $bg_color_gray;
+    color: $text_color_gray;
+  }
+
+  &.mc-count-medium {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    padding: 4px 8px;
+    .mc-count-number {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &.mc-count-small {
+    min-width: 29px;
+    height: 16px;
+    border-radius: 16px;
+    padding: 2px 8px;
+    .mc-count-number {
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+
+  &.mc-count-tiny {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
 }

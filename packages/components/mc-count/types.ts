@@ -9,8 +9,7 @@ interface CountProps {
   theme?: CountTheme;
   type?: CountType;
   hiddenZero?: boolean;
-  width?: string | number;
-  height?: string | number;
+  max?: number;
 }
 
 interface CountEmits {
