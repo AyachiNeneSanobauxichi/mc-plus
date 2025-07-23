@@ -31,6 +31,7 @@
           </template>
         </mc-select-plus>
       </mc-form-item>
+      <div class="other-content"></div>
     </mc-form>
   </div>
 </template>
@@ -107,6 +108,7 @@ const handleClearValidate = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: lightblue;
 
   .tool-bar {
     margin-bottom: 32px;
@@ -116,6 +118,14 @@ const handleClearValidate = () => {
       align-items: center;
       gap: 8px;
     }
+  }
+
+  .other-content {
+    width: 100%;
+    height: 200px;
+    background-color: pink;
+    position: absolute;
+    z-index: 99;
   }
 }
 </style>

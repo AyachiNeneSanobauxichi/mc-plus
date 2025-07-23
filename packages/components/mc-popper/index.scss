@@ -7,6 +7,7 @@ $duration: var(--mc-transition-duration);
   }
 
   .mc-popper-popper {
+    z-index: 9999999;
     // top && right
     .mc-popper-arrow {
       &::after {
