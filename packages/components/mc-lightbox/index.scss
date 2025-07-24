@@ -35,6 +35,11 @@ $bg_color: var(--mc-white);
     width: 100%;
     position: absolute;
     bottom: 0;
+
+    .mc-lightbox-bottom-padding {
+      width: 100%;
+      height: 24px;
+    }
   }
 
   .mc-lightbox-content-wrapper {
@@ -43,7 +48,7 @@ $bg_color: var(--mc-white);
     overflow-y: auto;
     .mc-lightbox-content {
       padding: 24px;
-      padding-top: 0;
+      padding-top: 1px;
       box-sizing: border-box;
     }
   }

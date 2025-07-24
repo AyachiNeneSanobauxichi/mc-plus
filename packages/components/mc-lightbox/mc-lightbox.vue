@@ -28,31 +28,38 @@
                 </slot>
               </div>
               <div class="mc-lightbox-content-wrapper" ref="wrapperRef">
-                <div class="mc-lightbox-content" ref="contentRef">
+                <div
+                  class="mc-lightbox-content"
+                  :style="{
+                    minHeight: minHeight ? `${minHeight}px` : void 0,
+                  }"
+                  ref="contentRef"
+                >
                   <slot></slot>
                 </div>
               </div>
-              <div
-                class="mc-lightbox-footer"
-                ref="footerRef"
-                v-if="!hideFooter"
-              >
-                <slot name="footer">
-                  <mc-footer>
-                    <template #left>
-                      <slot name="footer-left"></slot>
-                    </template>
-                    <template #right>
-                      <slot name="footer-right"></slot>
-                    </template>
-                    <template #right-button-group>
-                      <slot name="footer-right-button-group"></slot>
-                    </template>
-                    <template #desc>
-                      <slot name="footer-desc"></slot>
-                    </template>
-                  </mc-footer>
-                </slot>
+              <div class="mc-lightbox-footer" ref="footerRef">
+                <template v-if="hideFooter">
+                  <div class="mc-lightbox-bottom-padding"></div>
+                </template>
+                <template v-else>
+                  <slot name="footer">
+                    <mc-footer>
+                      <template #left>
+                        <slot name="footer-left"></slot>
+                      </template>
+                      <template #right>
+                        <slot name="footer-right"></slot>
+                      </template>
+                      <template #right-button-group>
+                        <slot name="footer-right-button-group"></slot>
+                      </template>
+                      <template #desc>
+                        <slot name="footer-desc"></slot>
+                      </template>
+                    </mc-footer>
+                  </slot>
+                </template>
               </div>
             </div>
           </transition>
@@ -83,6 +90,7 @@ const props = withDefaults(defineProps<LightboxProps>(), {
   portCssSelector: "body",
   hideFooter: false,
   showBorder: false,
+  minHeight: undefined,
 });
 
 // emits
@@ -149,9 +157,9 @@ watch(
 
 // set wrapper height
 const setWrapperHeight = () => {
-  if (!wrapperRef.value || !footerRef.value) return;
-  const maxHeight =
-    window.innerHeight * 0.7 - 84 - footerRef.value.offsetHeight;
+  if (!wrapperRef.value) return;
+  const footerHeight = footerRef.value?.offsetHeight ?? 0;
+  const maxHeight = window.innerHeight * 0.7 - 84 - footerHeight;
   const height = contentRef.value?.offsetHeight ?? 40;
 
   wrapperRef.value.style.height = `${

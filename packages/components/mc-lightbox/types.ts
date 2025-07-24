@@ -11,6 +11,7 @@ export interface LightboxProps {
   portCssSelector?: string;
   hideFooter?: boolean;
   showBorder?: boolean;
+  minHeight?: number;
 }
 
 export interface LightboxEmits {

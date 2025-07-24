@@ -1,17 +1,9 @@
 <template>
-  <div class="playground-select-plus">
-    <div class="tool-bar">
-      <span>FormState: {{ formState }}</span>
-      <div class="btn-group">
-        <mc-button @click="handleDisabled">Disabled</mc-button>
-        <mc-button @click="handleValidate">Validate</mc-button>
-        <mc-button @click="handleClearValidate">Clear Validate</mc-button>
-      </div>
-    </div>
-    <mc-form :model="formState" :rules="formRules" ref="formRef">
-      <mc-form-item label="currency" prop="currency" :disabled="isDisabled">
+  <div class="playground-lightbox">
+    <mc-lightbox v-model="visible" title="Mc Lightbox" size="large" hide-footer>
+      <div class="lightbox-content">
         <mc-select-plus
-          v-model="formState.currency"
+          v-model="currency"
           placeholder="Please select currency"
           search
           clearable
@@ -28,30 +20,29 @@
             </mc-select-group-plus>
           </template>
         </mc-select-plus>
-      </mc-form-item>
-      <div class="other-content"></div>
-    </mc-form>
+      </div>
+      <template v-if="showExtraContent">
+        <div class="lightbox-extra-content"></div>
+      </template>
+    </mc-lightbox>
+    <div class="tool-bar">
+      <mc-button @click="handleChangeVisible">Change Visible</mc-button>
+      <mc-button @click="handleAddContent">Add/Remove Content</mc-button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { reactive, ref } from "vue";
+import McLightbox from "../../../../components/mc-lightbox/mc-lightbox.vue";
 import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
-import McForm from "../../../../components/mc-form/mc-form.vue";
-import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
-import { reactive, ref } from "vue";
-import { McButton, type FormInstance } from "mc-plus";
+import { McButton } from "mc-plus";
 
-const formState = reactive({
-  currency: "BTC",
-});
+const visible = ref<boolean>(false);
 
-const formRules = reactive({
-  currency: [{ required: true, message: "Please select currency" }],
-});
-
-const formRef = ref<FormInstance>();
+const currency = ref<string>("");
 
 const currencyList = reactive([
   {
@@ -83,47 +74,37 @@ const currencyList = reactive([
   },
 ]);
 
-const isDisabled = ref<boolean>(false);
+const showExtraContent = ref<boolean>(true);
 
-const handleDisabled = () => {
-  isDisabled.value = !isDisabled.value;
+const handleChangeVisible = () => {
+  visible.value = !visible.value;
 };
 
-const handleValidate = () => {
-  formRef.value?.validate();
-};
-
-const handleClearValidate = () => {
-  formRef.value?.clearValidate();
+const handleAddContent = () => {
+  showExtraContent.value = !showExtraContent.value;
 };
 </script>
 
 <style scoped lang="scss">
-.playground-select-plus {
-  width: 1000px;
-  height: 800px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: lightblue;
-
+.playground-lightbox {
   .tool-bar {
-    margin-bottom: 32px;
-
-    .btn-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-  }
-
-  .other-content {
+    position: fixed;
     width: 100%;
-    height: 200px;
-    background-color: pink;
-    position: absolute;
-    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    z-index: 999999;
   }
+}
+.lightbox-content {
+  width: 100%;
+  background-color: pink;
+}
+
+.lightbox-extra-content {
+  width: 100%;
+  height: 1000px;
+  background-color: lightblue;
 }
 </style>

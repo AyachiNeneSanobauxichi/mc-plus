@@ -210,8 +210,8 @@ defineOptions({ name: MC_SELECT });
 
 // props
 const props = withDefaults(defineProps<SelectPlusProps>(), {
-  width: "100%",
-  height: "40px",
+  width: 320,
+  height: 40,
   placeholder: "Please select",
   disabled: false,
   clearable: false,
