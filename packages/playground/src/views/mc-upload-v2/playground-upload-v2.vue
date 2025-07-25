@@ -1,6 +1,6 @@
 <template>
   <div class="playground-upload">
-    <mc-upload-dropzone></mc-upload-dropzone>
+    <mc-upload-dropzone @upload="handleUpload"></mc-upload-dropzone>
   </div>
 </template>
 
@@ -8,6 +8,11 @@
 // import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
 // import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
 import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-dropzone.vue";
+import type { UploadFile } from "mc-plus";
+
+const handleUpload = (files: UploadFile[]) => {
+  console.log("Files: ", files);
+};
 </script>
 
 <style scoped lang="scss">

@@ -6,10 +6,10 @@ import { onMounted, onBeforeUnmount, ref } from "vue";
 const useDragover = (
   wrapper: Ref<HTMLElement | undefined>,
   events: {
-    onDragEnter: (e: DragEvent) => void;
-    onDragLeave: (e: DragEvent) => void;
-    onDragover: (e: DragEvent) => void;
-    onDrop: (e: DragEvent) => void;
+    onDragEnter?: (e: DragEvent) => void;
+    onDragLeave?: (e: DragEvent) => void;
+    onDragover?: (e: DragEvent) => void;
+    onDrop?: (e: DragEvent) => void;
   }
 ) => {
   // is dragover
@@ -17,6 +17,7 @@ const useDragover = (
 
   // set dragover
   const setDragover = (val: boolean) => {
+    if (val === isDragover.value) return;
     isDragover.value = val;
   };
 
@@ -53,7 +54,6 @@ const useDragover = (
   // handle dragover
   const handleDragover = (e: DragEvent) => {
     e.preventDefault();
-    setDragover(true);
     isFunction(events.onDragover) && events.onDragover(e);
   };
 
@@ -61,6 +61,7 @@ const useDragover = (
   const handleDrop = (e: DragEvent) => {
     e.preventDefault();
     setDragover(false);
+    isFunction(events.onDrop) && events.onDrop(e);
   };
 
   // mount
