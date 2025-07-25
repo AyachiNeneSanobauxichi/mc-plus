@@ -1,12 +1,13 @@
 <template>
   <div class="playground-upload">
-    <mc-upload-v2></mc-upload-v2>
+    <mc-upload-dropzone></mc-upload-dropzone>
   </div>
 </template>
 
 <script setup lang="ts">
-import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
-import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
+// import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
+// import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
+import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-dropzone.vue";
 </script>
 
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-file-list"></div>
+  <div class="mc-file-list">Mc File List V2</div>
 </template>
 
 <script setup lang="ts">
