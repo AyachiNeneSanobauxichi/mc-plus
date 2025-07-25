@@ -8,7 +8,8 @@
     <!-- <playground-reset></playground-reset> -->
     <!-- <playground-copy></playground-copy> -->
     <!-- <playground-lightbox></playground-lightbox> -->
-    <playground-upload></playground-upload>
+    <!-- <playground-upload></playground-upload> -->
+    <playground-upload-v2></playground-upload-v2>
   </div>
 </template>
 
@@ -19,7 +20,8 @@
 // import PlaygroundToast from "./views/mc-toast/playground-toast.vue";
 // import PlaygroundCount from "./views/mc-count/playground-count.vue";
 // import PlaygroundReset from "./views/mc-reset/playground-reset.vue";
-import PlaygroundUpload from "./views/mc-upload/playground-upload.vue";
+// import PlaygroundUpload from "./views/mc-upload/playground-upload.vue";
+import PlaygroundUploadV2 from "./views/mc-upload-v2/playground-upload-v2.vue";
 </script>
 
 <style scoped lang="scss">
