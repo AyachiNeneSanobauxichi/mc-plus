@@ -1,5 +1,5 @@
 import type { IconType } from "../../mc-icon";
-import type { UploadFile, UploadLang } from "./common";
+import type { UploadFileMap, UploadLang } from "./common";
 
 export type UploadDropzoneProps = {
   title?: string;
@@ -11,7 +11,7 @@ export type UploadDropzoneProps = {
 };
 
 export type UploadDropzoneEmits = {
-  (e: "upload", files: UploadFile[]): void;
-  (e: "error:type"): void;
-  (e: "error:size"): void;
+  (e: "upload", fileMap: UploadFileMap): void;
+  (e: "error:type", fileName: string): void;
+  (e: "error:size", fileName: string): void;
 };

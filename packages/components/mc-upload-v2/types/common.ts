@@ -2,6 +2,8 @@ export type UploadLang = "en" | "zh";
 
 export type UploadState = "loading" | "failed" | "successed";
 
+export type UploadFileMap = Map<string, UploadFile>;
+
 export interface UploadFile {
   fid?: number;
   name?: string;

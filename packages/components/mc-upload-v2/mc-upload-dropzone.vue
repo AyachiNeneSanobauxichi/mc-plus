@@ -17,8 +17,12 @@
         </div>
         <div class="mc-upload-dropzone-desc">
           <slot name="desc">
-            <span>Max file size: 15MB</span>
-            <span>JPG, JPEG, PNG, DOC, DOCX, XLS, XLSX and PDF only.</span>
+            <span v-if="fileSize > 0">
+              {{ langMap.max_size }} {{ getFileSize(fileSize) }}
+            </span>
+            <span v-if="displayFileTypes">
+              {{ displayFileTypes }}
+            </span>
           </slot>
         </div>
       </slot>
@@ -40,7 +44,7 @@ import type {
   UploadDropzoneProps,
   UploadFile,
 } from "./types";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { filter, includes, map } from "lodash-es";
 import { useDragover } from "@mc-plus/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
@@ -57,7 +61,16 @@ const props = withDefaults(defineProps<UploadDropzoneProps>(), {
   fileSize: 15 * 1024 * 1024,
   uploadUser: "--",
   lang: "en",
-  allowedFileTypes: () => [],
+  allowedFileTypes: () => [
+    "jpg",
+    "jpeg",
+    "png",
+    "doc",
+    "docx",
+    "xls",
+    "xlsx",
+    "pdf",
+  ],
 });
 
 // emits
@@ -68,6 +81,19 @@ const { langMap } = useLang(props.lang);
 
 // cover ref
 const coverRef = ref<HTMLElement>();
+
+// display file types
+const displayFileTypes = computed(() => {
+  if (!props.allowedFileTypes?.length) return void 0;
+  else {
+    return langMap.value.limit_type.replace(
+      WILDCARD,
+      map(props.allowedFileTypes, (type: string) => type.toUpperCase()).join(
+        ", "
+      )
+    );
+  }
+});
 
 // handle drop
 const handleDrop = (e: DragEvent) => {
@@ -111,12 +137,13 @@ const validateFileType = (files: File[]) => {
     const allowedTypes = map(allowTypes, (type: string) => type.toUpperCase());
     const _files = filter(files, (file: File) => {
       const fileType = file.name.split(".").pop()?.toUpperCase() ?? "--";
-      return includes(allowedTypes, fileType);
+      if (!includes(allowedTypes, fileType)) {
+        emit("error:type", file.name);
+        return false;
+      } else {
+        return true;
+      }
     });
-
-    if (_files.length !== files.length) {
-      emit("error:size");
-    }
     files = _files;
   }
 
@@ -145,6 +172,7 @@ const validateFileSize = (
         uploadBy: props.uploadUser,
         uploadTime: Date.now(),
       });
+      emit("error:size", file.name);
     } else {
       res = true;
     }
@@ -177,13 +205,11 @@ const uploadFiles = async (files: FileList) => {
     });
   });
 
-  // // check file size
-  // if (!validateFileSize(fileArray)) {
-  //   if (uploadFileRef.value) {
-  //     uploadFileRef.value.value = "";
-  //   }
-  //   return;
-  // }
+  // check file size
+  if (!validateFileSize(fileArray, uploadFileMap)) {
+    clearUploadInput();
+    return;
+  }
 
   // // upload queue
   // const uploadQueue = [];
@@ -226,7 +252,7 @@ const uploadFiles = async (files: FileList) => {
   //   }
   // }
 
-  // emitUploadEvent();
+  emit("upload", uploadFileMap);
 };
 
 //

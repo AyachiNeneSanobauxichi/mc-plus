@@ -9,7 +9,7 @@ const UPLOAD_TEXT_ZH = {
   uploaded_on: "Uploaded on",
   limit_count: `The number of files cannot exceed ${WILDCARD} .`,
   limit_size: `The file size cannot exceed ${WILDCARD} .`,
-  limit_type: `Please upload only ${WILDCARD} files.`,
+  limit_type: `${WILDCARD} only.`,
 };
 
 export default UPLOAD_TEXT_ZH;
