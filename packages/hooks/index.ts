@@ -7,3 +7,4 @@ export { default as useResizeObserver } from "./useResizeObserver";
 export { default as useWindowResize } from "./useWindowResize";
 export { default as useWidthHeight } from "./useWidthHeight";
 export { default as useHover } from "./useHover";
+export { default as useDragover } from "./useDragover";
