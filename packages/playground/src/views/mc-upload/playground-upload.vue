@@ -90,6 +90,7 @@ const handleChangeTheme = () => {
 
 <style scoped lang="scss">
 .playground-upload {
+  margin-top: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
