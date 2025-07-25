@@ -13,7 +13,7 @@ import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-drop
 <style scoped lang="scss">
 .playground-upload {
   width: 80%;
-  height: 800px;
+  height: 50vh;
   position: fixed;
   top: 50%;
   left: 50%;

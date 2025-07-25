@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-upload-dropzone">
+  <div class="mc-upload-dropzone" @click="handleUploadClick">
     <div class="mc-upload-dropzone-area">
       <slot name="area">
         <div class="mc-upload-dropzone-title">
@@ -16,11 +16,19 @@
         </div>
       </slot>
     </div>
+    <input
+      ref="uploadInputRef"
+      type="file"
+      multiple
+      style="display: none"
+      @change="handleFileChange"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { UploadDropzoneProps } from "./types";
+import { ref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 
 // options
@@ -31,6 +39,17 @@ const props = withDefaults(defineProps<UploadDropzoneProps>(), {
   icon: "Document_Upload",
   title: "Click to upload or drag and drop your files here",
 });
+
+// upload input ref
+const uploadInputRef = ref<HTMLInputElement>();
+
+// handle upload click
+const handleUploadClick = () => {
+  uploadInputRef.value?.click();
+};
+
+// handle file change
+const handleFileChange = (e: Event) => {};
 </script>
 
 <style scoped lang="scss">
