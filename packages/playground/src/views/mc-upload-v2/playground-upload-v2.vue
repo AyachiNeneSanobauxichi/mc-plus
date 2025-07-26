@@ -40,7 +40,10 @@ const handleUpload = (fileMap: UploadFileMap) => {
 
   setTimeout(() => {
     fileList.value = fileList.value.map((file) => {
-      return { ...file, status: "successed" };
+      if (file.status === "loading") {
+        return { ...file, status: "successed" };
+      }
+      return file;
     });
   }, 6000);
 

@@ -77,6 +77,13 @@ $text_color_info: var(--mc-black);
         .mc-file-list-item-file-progress-bar {
           flex: 1;
         }
+
+        .mc-file-list-item-file-error {
+          font-size: 14px;
+          color: $text_color_error;
+          line-height: 20px;
+          font-weight: 600;
+        }
       }
     }
 

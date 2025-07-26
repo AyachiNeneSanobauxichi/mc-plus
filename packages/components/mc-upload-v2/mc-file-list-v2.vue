@@ -1,10 +1,6 @@
 <template>
   <ul class="mc-file-list" :class="`mc-file-list-${theme}`">
-    <li
-      v-for="(file, index) in modelValue"
-      class="mc-file-list-item"
-      :key="file.name"
-    >
+    <li v-for="file in modelValue" class="mc-file-list-item" :key="file.name">
       <div class="mc-file-list-item-file mc-file-list-item-info">
         <div class="mc-file-list-item-file-name" @click="handlePreview(file)">
           <mc-icon name="Document" />
