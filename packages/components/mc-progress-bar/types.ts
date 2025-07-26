@@ -4,6 +4,7 @@ export interface ProgressBarProps {
   width?: number | string;
   remarks?: string;
   showPercentage?: boolean;
+  transitionDuration?: number;
 }
 
 export interface ProgressBarEmits {

@@ -7,12 +7,15 @@
     >
       <div
         class="mc-progress-bar-inner"
-        :style="{ transform: `scaleX(${percentageScale})` }"
+        :style="{
+          transform: `scaleX(${percentageScale})`,
+          transitionDuration: `${transitionDuration}ms`,
+        }"
       ></div>
     </div>
     <div class="mc-progress-bar-remarks" v-if="showRemarks">
       <slot name="remarks">
-        <span>{{ remarks || `${percentageScale * 100}%` }}</span>
+        <span>{{ remarks || `${ceil(percentageScale * 100)}%` }}</span>
       </slot>
     </div>
   </div>
@@ -37,6 +40,7 @@ const props = withDefaults(defineProps<ProgressBarProps>(), {
   width: "100%",
   height: "4px",
   showPercentage: false,
+  transitionDuration: 300,
 });
 
 // emits
@@ -57,7 +61,7 @@ watchEffect(() => {
 
 // percentage
 const percentageScale = computed<number>(() => {
-  const scale = ceil(props.percentage / 100, 2);
+  const scale = props.percentage / 100;
   if (scale > 1) {
     return 1;
   } else if (scale < 0) {

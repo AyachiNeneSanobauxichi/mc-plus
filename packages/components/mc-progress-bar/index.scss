@@ -16,7 +16,7 @@ $bg_color_active: var(--mc-teal-500);
       background-color: $bg_color_active;
       border-radius: var(--border-radius);
       transform-origin: left;
-      transition: transform 0.1s linear;
+      transition: transform linear;
     }
   }
 
