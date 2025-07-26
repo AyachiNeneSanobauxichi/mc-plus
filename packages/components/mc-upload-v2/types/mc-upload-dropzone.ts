@@ -15,3 +15,7 @@ export type UploadDropzoneEmits = {
   (e: "error:type", fileName: string): void;
   (e: "error:size", fileName: string): void;
 };
+
+export interface UploadDropzoneInstance {
+  clearUploadInput: () => void;
+}

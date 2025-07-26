@@ -14,4 +14,5 @@ export interface UploadFile {
   errorMessage?: string;
   uploadBy?: string;
   uploadTime?: string | number;
+  progress?: number;
 }

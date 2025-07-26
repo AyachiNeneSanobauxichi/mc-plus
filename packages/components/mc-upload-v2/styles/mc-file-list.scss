@@ -59,13 +59,24 @@ $text_color_info: var(--mc-black);
         }
       }
 
-      .mc-file-list-item-file-size {
+      .mc-file-list-item-file-desc {
+        @include mixin.flex-center(row, flex-start, center, 4px);
+        width: 100%;
         padding-left: 28px;
         font-size: 12px;
         font-weight: 400;
         line-height: 18px;
         color: $text_color_label;
         box-sizing: border-box;
+
+        .mc-file-list-item-file-size-text {
+          flex: 1;
+          max-width: 60px;
+        }
+
+        .mc-file-list-item-file-progress-bar {
+          flex: 1;
+        }
       }
     }
 

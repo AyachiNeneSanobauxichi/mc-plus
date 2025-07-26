@@ -1,13 +1,35 @@
 <template>
   <ul class="mc-file-list" :class="`mc-file-list-${theme}`">
-    <li v-for="file in modelValue" class="mc-file-list-item" :key="file.name">
+    <li
+      v-for="(file, index) in modelValue"
+      class="mc-file-list-item"
+      :key="file.name"
+    >
       <div class="mc-file-list-item-file mc-file-list-item-info">
         <div class="mc-file-list-item-file-name" @click="handlePreview(file)">
           <mc-icon name="Document" />
           <span class="mc-file-list-item-file-name-text">{{ file.name }}</span>
         </div>
-        <div class="mc-file-list-item-file-size" v-if="file.size">
-          {{ getFileSize(file.size) }}
+        <div class="mc-file-list-item-file-desc">
+          <template v-if="file.status !== 'failed'">
+            <span class="mc-file-list-item-file-size-text">
+              {{ file.size ? getFileSize(file.size) : "--" }}
+            </span>
+            <div
+              class="mc-file-list-item-file-progress-bar"
+              v-if="file.status === 'loading'"
+            >
+              <mc-progress-bar
+                :percentage="file.progress"
+                :transition-duration="1000"
+              />
+            </div>
+          </template>
+          <template v-else>
+            <span class="mc-file-list-item-file-error">
+              {{ file.errorMessage || "failed to upload" }}
+            </span>
+          </template>
         </div>
       </div>
       <div class="mc-file-list-item-info">
@@ -56,6 +78,7 @@
 import type { FileListV2Emits, FileListV2Props } from "./types/mc-file-list";
 import type { UploadFile } from "./types";
 import McIcon from "../mc-icon/mc-icon.vue";
+import McProgressBar from "../mc-progress-bar/mc-progress-bar.vue";
 import { formatDate, getFileSize } from "./utils";
 import { useLang } from "./hooks";
 
@@ -84,6 +107,7 @@ const handlePreview = (file: UploadFile) => {
 // cancel
 const handleCancel = (file: UploadFile) => {
   emit("cancel", file);
+  removeFile(file);
 };
 
 // download
@@ -94,6 +118,15 @@ const handleDownload = (file: UploadFile) => {
 // delete
 const handleDelete = (file: UploadFile) => {
   emit("delete", file);
+  removeFile(file);
+};
+
+// remove file
+const removeFile = (file: UploadFile) => {
+  emit(
+    "update:modelValue",
+    props.modelValue.filter((f) => f.name !== file.name)
+  );
 };
 </script>
 

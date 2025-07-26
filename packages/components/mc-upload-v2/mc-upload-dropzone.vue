@@ -41,6 +41,7 @@
 <script setup lang="ts">
 import type {
   UploadDropzoneEmits,
+  UploadDropzoneInstance,
   UploadDropzoneProps,
   UploadFile,
 } from "./types";
@@ -210,7 +211,10 @@ const uploadFiles = async (files: FileList) => {
   clearUploadInput();
 };
 
-//
+// expose
+defineExpose<UploadDropzoneInstance>({
+  clearUploadInput,
+});
 </script>
 
 <style scoped lang="scss">

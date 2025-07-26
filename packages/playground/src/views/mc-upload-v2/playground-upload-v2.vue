@@ -7,7 +7,7 @@
       @error:size="handleErrorSize"
     ></mc-upload-dropzone>
     <mc-file-list-v2
-      :model-value="fileList"
+      v-model="fileList"
       @preview="handlePreview"
       @delete="handleDelete"
       @download="handleDownload"
@@ -31,6 +31,19 @@ const fileList = ref<UploadFile[]>([]);
 
 const handleUpload = (fileMap: UploadFileMap) => {
   fileList.value = Array.from(fileMap.values());
+
+  setTimeout(() => {
+    fileList.value = fileList.value.map((file) => {
+      return { ...file, progress: 99 };
+    });
+  }, 100);
+
+  setTimeout(() => {
+    fileList.value = fileList.value.map((file) => {
+      return { ...file, status: "successed" };
+    });
+  }, 6000);
+
   console.log("File Map: ", fileMap);
 };
 
