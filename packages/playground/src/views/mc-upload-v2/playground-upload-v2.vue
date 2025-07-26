@@ -1,6 +1,7 @@
 <template>
   <div class="playground-upload">
     <mc-upload-dropzone
+      ref="uploadDropzoneRef"
       upload-user="Hirasawa Yui"
       @upload="handleUpload"
       @error:type="handleErrorType"
@@ -19,6 +20,7 @@
 <script setup lang="ts">
 // import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
 import type {
+  UploadDropzoneInstance,
   UploadFile,
   UploadFileMap,
 } from "../../../../components/mc-upload-v2/types";
@@ -29,8 +31,11 @@ import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-drop
 // file list
 const fileList = ref<UploadFile[]>([]);
 
+// upload dropzone
+const uploadDropzoneRef = ref<UploadDropzoneInstance>();
+
 const handleUpload = (fileMap: UploadFileMap) => {
-  fileList.value = Array.from(fileMap.values());
+  fileList.value = [...fileList.value, ...Array.from(fileMap.values())];
 
   setTimeout(() => {
     fileList.value = fileList.value.map((file) => {
@@ -64,6 +69,7 @@ const handlePreview = (file: UploadFile) => {
 
 const handleDelete = (file: UploadFile) => {
   console.log("Delete: ", file);
+  uploadDropzoneRef.value?.clearUploadInput();
 };
 
 const handleDownload = (file: UploadFile) => {
