@@ -18,7 +18,7 @@ const useSelectOptions = (): { selectOptions: Ref<_OptionNode[]> } => {
     const children = vm.$slots.default?.()!;
     // generate select options
     if (children.length) {
-      const newOptions = generateOptions(children![0]?.children);
+      const newOptions = generateOptions(children);
       selectOptions.value.push(...newOptions);
     }
 
