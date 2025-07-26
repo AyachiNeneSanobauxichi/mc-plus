@@ -4,6 +4,8 @@ export type UploadState = "loading" | "failed" | "successed";
 
 export type UploadFileMap = Map<string, UploadFile>;
 
+export type UploadTheme = "light" | "gray";
+
 export interface UploadFile {
   fid?: number;
   name?: string;
