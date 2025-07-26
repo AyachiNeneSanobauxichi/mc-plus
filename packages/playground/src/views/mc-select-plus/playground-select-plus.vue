@@ -16,7 +16,20 @@
           search
           clearable
         >
-          <template v-for="item in currencyList" :key="item.value">
+          <mc-select-group-plus label="Fiat">
+            <mc-select-option-plus label="USD" value="USD" />
+            <mc-select-option-plus label="EUR" value="EUR" />
+            <mc-select-option-plus label="GBP" value="GBP" />
+            <mc-select-option-plus label="JPY" value="JPY" />
+          </mc-select-group-plus>
+          <mc-select-group-plus label="Crypto">
+            <mc-select-option-plus label="BTC" value="BTC" />
+            <mc-select-option-plus label="ETH" value="ETH" />
+            <mc-select-option-plus label="SOL" value="SOL" />
+            <mc-select-option-plus label="XRP" value="XRP" />
+            <mc-select-option-plus label="ADA" value="ADA" />
+          </mc-select-group-plus>
+          <!-- <template v-for="item in currencyList" :key="item.value">
             <mc-select-group-plus :label="item.label">
               <mc-select-option-plus
                 v-for="child in item.children"
@@ -26,7 +39,7 @@
               >
               </mc-select-option-plus>
             </mc-select-group-plus>
-          </template>
+          </template> -->
         </mc-select-plus>
       </mc-form-item>
       <div class="other-content"></div>
