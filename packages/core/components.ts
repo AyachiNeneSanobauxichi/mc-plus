@@ -47,6 +47,7 @@ import {
   McSelectMultiOption,
   McCount,
   McCopy,
+  McProgressBar,
 } from "@mc-plus/components";
 
 export default [
@@ -97,4 +98,5 @@ export default [
   McSelectMultiOption,
   McCount,
   McCopy,
+  McProgressBar,
 ] as Plugin[];

@@ -18,13 +18,13 @@
 
 <script setup lang="ts">
 // import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
-import { ref } from "vue";
-import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
-import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-dropzone.vue";
 import type {
   UploadFile,
   UploadFileMap,
 } from "../../../../components/mc-upload-v2/types";
+import { ref } from "vue";
+import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
+import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-dropzone.vue";
 
 // file list
 const fileList = ref<UploadFile[]>([]);
