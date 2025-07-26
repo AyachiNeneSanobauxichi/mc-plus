@@ -27,21 +27,26 @@
         </span>
       </div>
       <div class="mc-file-list-item-actions">
-        <mc-icon
-          name="Cross"
-          class="mc-file-list-item-icon"
-          @click="handleCancel(file)"
-        />
-        <mc-icon
-          name="Download"
-          class="mc-file-list-item-icon"
-          @click="handleDownload(file)"
-        />
-        <mc-icon
-          name="Trash"
-          class="mc-file-list-item-icon"
-          @click="handleDelete(file)"
-        />
+        <template v-if="file.status === 'loading'">
+          <mc-icon
+            name="Cross"
+            class="mc-file-list-item-icon"
+            @click="handleCancel(file)"
+          />
+        </template>
+        <template v-else>
+          <mc-icon
+            name="Download"
+            class="mc-file-list-item-icon"
+            @click="handleDownload(file)"
+            v-if="downloadable"
+          />
+          <mc-icon
+            name="Trash"
+            class="mc-file-list-item-icon"
+            @click="handleDelete(file)"
+          />
+        </template>
       </div>
     </li>
   </ul>
@@ -62,6 +67,7 @@ const props = withDefaults(defineProps<FileListV2Props>(), {
   modelValue: () => [],
   theme: "light",
   lang: "en",
+  downloadable: false,
 });
 
 // emits

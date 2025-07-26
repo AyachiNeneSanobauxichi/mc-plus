@@ -4,6 +4,7 @@ export type FileListV2Props = {
   modelValue?: UploadFile[] | undefined;
   theme?: UploadTheme;
   lang?: UploadLang;
+  downloadable?: boolean;
 };
 
 export type FileListV2Emits = {
