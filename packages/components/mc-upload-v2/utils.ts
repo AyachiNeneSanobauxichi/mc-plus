@@ -1,3 +1,5 @@
+import type { UploadFile } from "./types";
+
 enum SIZE_ENUM {
   B = "B",
   KB = "KB",
@@ -7,10 +9,12 @@ enum SIZE_ENUM {
 
 const UNIT = 1024;
 
+// format number
 const formatNumber = (numStr: string) => {
   return parseFloat(numStr).toString();
 };
 
+// get file size
 const getFileSize = (size: number, fraction: number = 2) => {
   if (size < UNIT) {
     return `${size} ${SIZE_ENUM.B}`;
@@ -27,6 +31,7 @@ const getFileSize = (size: number, fraction: number = 2) => {
   }
 };
 
+// change size string to number
 const changeSizeStringToNumber = (size: string) => {
   try {
     if (!size || !size.includes(" ")) throw new Error();
@@ -56,7 +61,8 @@ const changeSizeStringToNumber = (size: string) => {
   }
 };
 
-function formatDate(timestamp?: number | string): string {
+// format date
+const formatDate = (timestamp?: number | string): string => {
   if (!timestamp) return "--";
 
   const date = new Date(timestamp);
@@ -69,6 +75,19 @@ function formatDate(timestamp?: number | string): string {
   const seconds = String(date.getSeconds()).padStart(2, "0");
 
   return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
-}
+};
 
-export { getFileSize, changeSizeStringToNumber, formatDate };
+// update file status
+const updateFileStatus = (
+  uploadFileMap: Map<string, UploadFile>,
+  fileName: string,
+  newFile: UploadFile
+) => {
+  const file = uploadFileMap.get(fileName);
+  uploadFileMap.set(fileName, {
+    ...file,
+    ...newFile,
+  });
+};
+
+export { getFileSize, changeSizeStringToNumber, formatDate, updateFileStatus };

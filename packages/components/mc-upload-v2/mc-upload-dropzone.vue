@@ -45,10 +45,10 @@ import type {
   UploadFile,
 } from "./types";
 import { computed, ref } from "vue";
-import { filter, includes, map } from "lodash-es";
+import { includes, map } from "lodash-es";
 import { useDragover } from "@mc-plus/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { getFileSize } from "./utils";
+import { getFileSize, updateFileStatus } from "./utils";
 import { useLang } from "./hooks";
 import { WILDCARD } from "./constant";
 
@@ -131,23 +131,28 @@ const handleFileChange = (e: Event) => {
 };
 
 // check file type
-const validateFileType = (files: File[]) => {
+const validateFileType = (
+  files: File[],
+  uploadFileMap: Map<string, UploadFile>
+) => {
   const allowTypes = props.allowedFileTypes;
-  if (allowTypes?.length) {
-    const allowedTypes = map(allowTypes, (type: string) => type.toUpperCase());
-    const _files = filter(files, (file: File) => {
-      const fileType = file.name.split(".").pop()?.toUpperCase() ?? "--";
-      if (!includes(allowedTypes, fileType)) {
-        emit("error:type", file.name);
-        return false;
-      } else {
-        return true;
-      }
-    });
-    files = _files;
+  if (!allowTypes?.length) return true;
+  let res = false;
+  const allowedTypes = map(allowTypes, (type: string) => type.toUpperCase());
+  for (let i = 0; i < files.length; i++) {
+    const fileType = files[i].name.split(".").pop()?.toUpperCase() ?? "--";
+    if (!includes(allowedTypes, fileType)) {
+      updateFileStatus(uploadFileMap, files[i].name, {
+        status: "failed",
+        errorMessage: displayFileTypes.value,
+      });
+      emit("error:type", files[i].name);
+    } else {
+      res = true;
+    }
   }
 
-  return files;
+  return res;
 };
 
 // check file size
@@ -161,16 +166,12 @@ const validateFileSize = (
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     if (file.size > maxSize) {
-      uploadFileMap.set(file.name, {
-        name: file.name,
-        size: file.size,
+      updateFileStatus(uploadFileMap, file.name, {
         status: "failed",
         errorMessage: langMap.value.limit_size.replace(
           WILDCARD,
           `${getFileSize(maxSize)}`
         ),
-        uploadBy: props.uploadUser,
-        uploadTime: Date.now(),
       });
       emit("error:size", file.name);
     } else {
@@ -188,15 +189,9 @@ const uploadFiles = async (files: FileList) => {
   // upload files
   const uploadFileMap = new Map<string, UploadFile>();
 
-  // check file type
-  fileArray = validateFileType(fileArray);
-  if (!fileArray.length) {
-    clearUploadInput();
-    return;
-  }
-
+  // init files status
   fileArray.forEach((file: File) => {
-    uploadFileMap.set(file.name, {
+    updateFileStatus(uploadFileMap, file.name, {
       name: file.name,
       size: file.size,
       status: "loading",
@@ -206,53 +201,13 @@ const uploadFiles = async (files: FileList) => {
   });
 
   // check file size
-  if (!validateFileSize(fileArray, uploadFileMap)) {
-    clearUploadInput();
-    return;
-  }
+  validateFileSize(fileArray, uploadFileMap);
 
-  // // upload queue
-  // const uploadQueue = [];
-  // for (const file of fileArray) {
-  //   if (
-  //     allFileMap.has(file.name) &&
-  //     allFileMap.get(file.name)!.status === "loading"
-  //   ) {
-  //     uploadQueue.push(uploadApi(file));
-  //   }
-  // }
-
-  // // upload
-  // const res = await Promise.allSettled(uploadQueue);
-  // for (let i = 0; i < res.length; i++) {
-  //   const currentfile = fileArray[i];
-  //   if (res[i].status === "fulfilled") {
-  //     const fid = (res[i] as { value: { fid: number } })?.value?.fid;
-  //     allFileMap.set(currentfile.name, {
-  //       fid,
-  //       name: currentfile.name,
-  //       size: currentfile.size,
-  //       status: "successed",
-  //       uploadBy: props.uploadUser,
-  //       uploadTime: Date.now(),
-  //     });
-  //   } else {
-  //     const errorMessage =
-  //       (res[i] as { reason: { message: string } })?.reason?.message ||
-  //       "Upload failed";
-  //     console.error(res[i]);
-  //     allFileMap.set(currentfile.name, {
-  //       name: currentfile.name,
-  //       size: currentfile.size,
-  //       status: "failed",
-  //       errorMessage,
-  //       uploadBy: props.uploadUser,
-  //       uploadTime: Date.now(),
-  //     });
-  //   }
-  // }
+  // check files
+  validateFileType(fileArray, uploadFileMap);
 
   emit("upload", uploadFileMap);
+  clearUploadInput();
 };
 
 //
