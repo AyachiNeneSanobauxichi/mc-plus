@@ -172,6 +172,7 @@ $error_color: var(--mc-error);
       @include mixin.reset-li-style;
       @include mixin.flex-center;
       min-height: 40px;
+      background-color: $bg_color;
 
       .mc-select-text {
         color: $text_color_placeholder;

@@ -4,7 +4,7 @@
       <mc-button @click="count++" :use-throttle="false">+1</mc-button>
       <mc-button @click="count--" :use-throttle="false">-1</mc-button>
     </div>
-    <mc-count :value="count" :max="10" type="tiny" theme="red"></mc-count>
+    <mc-count :value="count" :max="10" type="small" theme="red"></mc-count>
   </div>
 </template>
 
