@@ -60,7 +60,6 @@ const fileList = (fileMap: UploadFileMap) => {
 
 // handle upload
 const handleUpload = (fileMap: UploadFileMap) => {
-  console.log("upload: ", fileMap);
   const files = fileList(fileMap);
   emit("update:modelValue", files);
   emit("upload", files);

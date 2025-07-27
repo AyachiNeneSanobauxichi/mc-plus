@@ -1,9 +1,6 @@
 import type { UploadFile, UploadTheme } from "./common";
 import type { FileListV2Emits } from "./mc-file-list";
-import type {
-  UploadDropzoneEmits,
-  UploadDropzoneProps,
-} from "./mc-upload-dropzone";
+import type { UploadDropzoneProps } from "./mc-upload-dropzone";
 
 export interface McUploadProps extends UploadDropzoneProps {
   modelValue?: UploadFile[] | undefined;
@@ -11,8 +8,10 @@ export interface McUploadProps extends UploadDropzoneProps {
   theme?: UploadTheme;
 }
 
-export interface McUploadEmits extends UploadDropzoneEmits, FileListV2Emits {
+export interface McUploadEmits extends FileListV2Emits {
   (e: "download:all", files: UploadFile[]): void;
+  (e: "error:type", fileName: string): void;
+  (e: "error:size", fileName: string): void;
   (e: "clear"): void;
   (e: "upload", files: UploadFile[]): void;
   (e: "change", files: UploadFile[]): void;

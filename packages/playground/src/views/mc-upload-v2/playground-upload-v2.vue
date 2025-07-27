@@ -1,12 +1,6 @@
 <template>
   <div class="playground-upload">
-    <!-- <mc-upload-dropzone
-      ref="uploadDropzoneRef"
-      upload-user="Hirasawa Yui"
-      @upload="handleUpload"
-      @error:type="handleErrorType"
-      @error:size="handleErrorSize"
-    ></mc-upload-dropzone>
+    <!-- 
     <mc-file-list-v2
       v-model="fileList"
       @preview="handlePreview"
@@ -14,71 +8,45 @@
       @download="handleDownload"
       @cancel="handleCancel"
     ></mc-file-list-v2> -->
-    <mc-upload-v2 :allowed-file-types="['png']"></mc-upload-v2>
+    <mc-upload-v2
+      v-model="fileList"
+      :allowed-file-types="['png']"
+      @upload="handleUpload"
+    ></mc-upload-v2>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { UploadFile } from "../../../../components/mc-upload-v2/types";
+import { ref, watchEffect } from "vue";
 import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
-import type {
-  UploadDropzoneInstance,
-  UploadFile,
-  UploadFileMap,
-} from "../../../../components/mc-upload-v2/types";
-import { ref } from "vue";
 // import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
-// import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-dropzone.vue";
 
 // file list
 const fileList = ref<UploadFile[]>([]);
 
-// upload dropzone
-const uploadDropzoneRef = ref<UploadDropzoneInstance>();
+watchEffect(() => {
+  console.log("fileList: ", fileList.value);
+});
 
-const handleUpload = (fileMap: UploadFileMap) => {
-  fileList.value = [...fileList.value, ...Array.from(fileMap.values())];
+const handleUpload = (files: UploadFile[]) => {
+  console.log("Upload Files: ", files);
+  // fileList.value = [...fileList.value, ...Array.from(fileMap.values())];
 
-  setTimeout(() => {
-    fileList.value = fileList.value.map((file) => {
-      return { ...file, progress: 99 };
-    });
-  }, 100);
+  // setTimeout(() => {
+  //   fileList.value = fileList.value.map((file) => {
+  //     return { ...file, progress: 99 };
+  //   });
+  // }, 100);
 
-  setTimeout(() => {
-    fileList.value = fileList.value.map((file) => {
-      if (file.status === "loading") {
-        return { ...file, status: "successed" };
-      }
-      return file;
-    });
-  }, 6000);
-
-  console.log("File Map: ", fileMap);
-};
-
-const handleErrorType = (fileName: string) => {
-  console.log("Error Type: ", fileName);
-};
-
-const handleErrorSize = (fileName: string) => {
-  console.log("Error Size: ", fileName);
-};
-
-const handlePreview = (file: UploadFile) => {
-  console.log("Preview: ", file);
-};
-
-const handleDelete = (file: UploadFile) => {
-  console.log("Delete: ", file);
-  uploadDropzoneRef.value?.clearUploadInput();
-};
-
-const handleDownload = (file: UploadFile) => {
-  console.log("Download: ", file);
-};
-
-const handleCancel = (file: UploadFile) => {
-  console.log("Cancel: ", file);
+  // setTimeout(() => {
+  //   fileList.value = fileList.value.map((file) => {
+  //     if (file.status === "loading") {
+  //       return { ...file, status: "successed" };
+  //     }
+  //     return file;
+  //   });
+  // }, 6000);
 };
 </script>
 
