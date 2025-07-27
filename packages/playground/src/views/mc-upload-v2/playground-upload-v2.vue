@@ -1,6 +1,6 @@
 <template>
   <div class="playground-upload">
-    <mc-upload-dropzone
+    <!-- <mc-upload-dropzone
       ref="uploadDropzoneRef"
       upload-user="Hirasawa Yui"
       @upload="handleUpload"
@@ -13,20 +13,21 @@
       @delete="handleDelete"
       @download="handleDownload"
       @cancel="handleCancel"
-    ></mc-file-list-v2>
+    ></mc-file-list-v2> -->
+    <mc-upload-v2 :allowed-file-types="['png']"></mc-upload-v2>
   </div>
 </template>
 
 <script setup lang="ts">
-// import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
+import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
 import type {
   UploadDropzoneInstance,
   UploadFile,
   UploadFileMap,
 } from "../../../../components/mc-upload-v2/types";
 import { ref } from "vue";
-import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
-import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-dropzone.vue";
+// import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
+// import McUploadDropzone from "../../../../components/mc-upload-v2/mc-upload-dropzone.vue";
 
 // file list
 const fileList = ref<UploadFile[]>([]);

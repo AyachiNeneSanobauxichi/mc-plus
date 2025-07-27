@@ -51,7 +51,7 @@ import { useDragover } from "@mc-plus/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { getFileSize, updateFileStatus } from "./utils";
 import { useLang } from "./hooks";
-import { WILDCARD } from "./constant";
+import { ALLOW_FILE_TYPES, WILDCARD } from "./constant";
 
 // options
 defineOptions({ name: "McUploadDropzone" });
@@ -62,16 +62,7 @@ const props = withDefaults(defineProps<UploadDropzoneProps>(), {
   fileSize: 15 * 1024 * 1024,
   uploadUser: "--",
   lang: "en",
-  allowedFileTypes: () => [
-    "jpg",
-    "jpeg",
-    "png",
-    "doc",
-    "docx",
-    "xls",
-    "xlsx",
-    "pdf",
-  ],
+  allowedFileTypes: () => ALLOW_FILE_TYPES,
 });
 
 // emits
