@@ -15,4 +15,5 @@ export interface UploadFile {
   uploadBy?: string;
   uploadTime?: string | number;
   progress?: number;
+  file?: File;
 }

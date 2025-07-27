@@ -198,6 +198,7 @@ const uploadFiles = async (files: FileList) => {
       status: "loading",
       uploadBy: props.uploadUser,
       uploadTime: Date.now(),
+      file,
     });
   });
 
