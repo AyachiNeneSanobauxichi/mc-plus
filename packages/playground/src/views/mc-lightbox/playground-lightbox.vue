@@ -1,25 +1,29 @@
 <template>
   <div class="playground-lightbox">
-    <mc-lightbox v-model="visible" title="Mc Lightbox" size="large" hide-footer>
+    <mc-lightbox v-model="visible" title="Mc Lightbox" size="large">
       <div class="lightbox-content">
-        <mc-select-plus
-          v-model="currency"
-          placeholder="Please select currency"
-          search
-          clearable
-        >
-          <template v-for="item in currencyList" :key="item.value">
-            <mc-select-group-plus :label="item.label">
-              <mc-select-option-plus
-                v-for="child in item.children"
-                :key="child.value"
-                :label="child.label"
-                :value="child.value"
-              >
-              </mc-select-option-plus>
-            </mc-select-group-plus>
-          </template>
-        </mc-select-plus>
+        <mc-form :model="form">
+          <mc-form-item label="Currency" prop="currency">
+            <mc-select-plus
+              v-model="form.currency"
+              placeholder="Please select currency"
+              search
+              clearable
+            >
+              <template v-for="item in currencyList" :key="item.value">
+                <mc-select-group-plus :label="item.label">
+                  <mc-select-option-plus
+                    v-for="child in item.children"
+                    :key="child.value"
+                    :label="child.label"
+                    :value="child.value"
+                  >
+                  </mc-select-option-plus>
+                </mc-select-group-plus>
+              </template>
+            </mc-select-plus>
+          </mc-form-item>
+        </mc-form>
       </div>
       <template v-if="showExtraContent">
         <div class="lightbox-extra-content"></div>
@@ -38,11 +42,11 @@ import McLightbox from "../../../../components/mc-lightbox/mc-lightbox.vue";
 import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
+import McForm from "../../../../components/mc-form/mc-form.vue";
+import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import { McButton } from "mc-plus";
 
 const visible = ref<boolean>(false);
-
-const currency = ref<string>("");
 
 const currencyList = reactive([
   {
@@ -73,6 +77,10 @@ const currencyList = reactive([
     ],
   },
 ]);
+
+const form = reactive({
+  currency: "",
+});
 
 const showExtraContent = ref<boolean>(true);
 
