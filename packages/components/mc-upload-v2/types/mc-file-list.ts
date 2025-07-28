@@ -5,6 +5,7 @@ export type FileListV2Props = {
   theme?: UploadTheme;
   lang?: UploadLang;
   downloadable?: boolean;
+  allowCancel?: boolean;
 };
 
 export type FileListV2Emits = {

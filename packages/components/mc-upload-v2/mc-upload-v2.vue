@@ -14,22 +14,33 @@
         @error:size="handleErrorSize"
       ></mc-upload-dropzone>
     </div>
-    <div class="mc-upload-file-list-wrapper"></div>
-    <!-- <mc-file-list-v2
-      v-model="fileList"
-      @preview="handlePreview"
-      @delete="handleDelete"
-      @download="handleDownload"
-      @cancel="handleCancel"
-    ></mc-file-list-v2> -->
+    <div class="mc-upload-file-list-wrapper">
+      <mc-file-list-v2
+        :model-value="modelValue"
+        :allow-cancel="allowCancel"
+        :downloadable="downloadable"
+        :lang="lang"
+        :theme="theme"
+        @update:model-value="handleUpdateModelValue"
+        @preview="handlePreview"
+        @delete="handleDelete"
+        @download="handleDownload"
+        @cancel="handleCancel"
+      ></mc-file-list-v2>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { McUploadEmits, McUploadProps } from "./types/mc-upload";
-import type { UploadDropzoneInstance, UploadFileMap } from "./types";
+import type {
+  UploadDropzoneInstance,
+  UploadFile,
+  UploadFileMap,
+} from "./types";
 import { ref } from "vue";
 import McUploadDropzone from "./mc-upload-dropzone.vue";
+import McFileListV2 from "./mc-file-list-v2.vue";
 import { ALLOW_FILE_TYPES } from "./constant";
 
 // options
@@ -39,6 +50,7 @@ defineOptions({ name: "McUploadV2" });
 const props = withDefaults(defineProps<McUploadProps>(), {
   modelValue: () => [],
   downloadable: false,
+  allowCancel: false,
   icon: "Document_Upload",
   fileSize: 15 * 1024 * 1024,
   uploadUser: "--",
@@ -54,16 +66,23 @@ const emit = defineEmits<McUploadEmits>();
 const uploadDropzoneRef = ref<UploadDropzoneInstance>();
 
 // get file list
-const fileList = (fileMap: UploadFileMap) => {
+const getFileList = (fileMap: UploadFileMap) => {
   return Array.from([...fileMap.values()]);
+};
+
+// handle update model value
+const handleUpdateModelValue = (files: UploadFile[]) => {
+  emit("update:modelValue", files);
 };
 
 // handle upload
 const handleUpload = (fileMap: UploadFileMap) => {
-  const files = fileList(fileMap);
-  emit("update:modelValue", files);
-  emit("upload", files);
-  emit("change", files);
+  const files = getFileList(fileMap);
+  const newFileList = [...props.modelValue, ...files];
+  emit("update:modelValue", newFileList);
+  emit("upload", newFileList);
+  emit("change", newFileList);
+  updateProgress();
 };
 
 // handle error type
@@ -76,6 +95,37 @@ const handleErrorType = (fileName: string) => {
 const handleErrorSize = (fileName: string) => {
   console.error("mc-upload: error:size:", fileName);
   emit("error:size", fileName);
+};
+
+// handle preview
+const handlePreview = (file: UploadFile) => {
+  emit("preview", file);
+};
+
+// handle delete
+const handleDelete = (file: UploadFile) => {
+  emit("delete", file);
+};
+
+// handle download
+const handleDownload = (file: UploadFile) => {
+  emit("download", file);
+};
+
+// handle cancel
+const handleCancel = (file: UploadFile) => {
+  emit("cancel", file);
+};
+
+// update progress
+const updateProgress = (progress: number = 99, timeout: number = 100) => {
+  setTimeout(() => {
+    props.modelValue.forEach((file) => {
+      if (file.status === "loading") {
+        file.progress = progress;
+      }
+    });
+  }, timeout);
 };
 </script>
 

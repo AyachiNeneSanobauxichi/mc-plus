@@ -47,6 +47,7 @@
       <div class="mc-file-list-item-actions">
         <template v-if="file.status === 'loading'">
           <mc-icon
+            v-if="allowCancel"
             name="Cross"
             class="mc-file-list-item-icon"
             @click="handleCancel(file)"
@@ -87,6 +88,7 @@ const props = withDefaults(defineProps<FileListV2Props>(), {
   theme: "light",
   lang: "en",
   downloadable: false,
+  allowCancel: false,
 });
 
 // emits

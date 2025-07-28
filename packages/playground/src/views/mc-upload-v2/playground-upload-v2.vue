@@ -1,52 +1,58 @@
 <template>
   <div class="playground-upload">
-    <!-- 
-    <mc-file-list-v2
+    <mc-upload-v2
       v-model="fileList"
+      :allowed-file-types="['png']"
+      upload-user="Hirasawa Yui"
+      @upload="handleUpload"
       @preview="handlePreview"
       @delete="handleDelete"
       @download="handleDownload"
       @cancel="handleCancel"
-    ></mc-file-list-v2> -->
-    <mc-upload-v2
-      v-model="fileList"
-      :allowed-file-types="['png']"
-      @upload="handleUpload"
     ></mc-upload-v2>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { UploadFile } from "../../../../components/mc-upload-v2/types";
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
-// import McFileListV2 from "../../../../components/mc-upload-v2/mc-file-list-v2.vue";
 
 // file list
 const fileList = ref<UploadFile[]>([]);
 
-watchEffect(() => {
-  console.log("fileList: ", fileList.value);
-});
-
 const handleUpload = (files: UploadFile[]) => {
   console.log("Upload Files: ", files);
-  // fileList.value = [...fileList.value, ...Array.from(fileMap.values())];
+  uploadApi(files);
+};
 
-  // setTimeout(() => {
-  //   fileList.value = fileList.value.map((file) => {
-  //     return { ...file, progress: 99 };
-  //   });
-  // }, 100);
+// upload api
+const uploadApi = (files: UploadFile[]) => {
+  setTimeout(() => {
+    fileList.value = files.map((file) => {
+      if (file.status === "loading") {
+        return { ...file, status: "successed", progress: 100 };
+      } else {
+        return file;
+      }
+    });
+  }, 3000);
+};
 
-  // setTimeout(() => {
-  //   fileList.value = fileList.value.map((file) => {
-  //     if (file.status === "loading") {
-  //       return { ...file, status: "successed" };
-  //     }
-  //     return file;
-  //   });
-  // }, 6000);
+const handlePreview = (file: UploadFile) => {
+  console.log("Preview File: ", file);
+};
+
+const handleDelete = (file: UploadFile) => {
+  console.log("Delete File: ", file);
+};
+
+const handleDownload = (file: UploadFile) => {
+  console.log("Download File: ", file);
+};
+
+const handleCancel = (file: UploadFile) => {
+  console.log("Cancel File: ", file);
 };
 </script>
 
