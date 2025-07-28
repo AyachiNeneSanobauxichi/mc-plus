@@ -1,121 +1,176 @@
 <template>
-  <div
+  <ul
     class="mc-file-list"
-    :class="{ 'mc-file-list-grey': isGrey }"
-    ref="fileContainerRef"
+    :class="[`mc-file-list-${theme}`, { 'mc-file-list-compact': isCompact }]"
+    ref="fileListRef"
   >
-    <transition-group name="file-list" tag="ul">
-      <li
-        class="file-item"
-        v-for="file in files"
-        :key="file.name"
-        :class="file.status"
-      >
-        <div class="file-info-container">
-          <!-- file name -->
-          <div class="file-name file-info">
-            <div class="file" @click="handleReview(file)">
-              <template v-if="file.status === 'loading'">
-                <mc-icon name="Loading" class="loading-icon" />
-              </template>
-              <template v-else>
-                <mc-icon name="Document" />
-              </template>
-              <span class="file-name-text">{{ file.name }}</span>
-            </div>
-            <template v-if="file.status === 'failed'">
-              <div class="size error-info">{{ file.errorMessage }}</div>
+    <li v-for="file in modelValue" class="mc-file-list-item" :key="file.name">
+      <div class="mc-file-list-item-content">
+        <div class="mc-file-list-item-file mc-file-list-item-info">
+          <div class="mc-file-list-item-file-name" @click="handlePreview(file)">
+            <mc-icon name="Document" />
+            <span class="mc-file-list-item-file-name-text">{{
+              file.name
+            }}</span>
+          </div>
+          <div class="mc-file-list-item-file-desc">
+            <template v-if="file.status !== 'failed'">
+              <span class="mc-file-list-item-file-size-text">
+                {{ file.size ? getFileSize(file.size) : "--" }}
+              </span>
+              <div
+                class="mc-file-list-item-file-progress-bar"
+                v-if="file.status === 'loading'"
+              >
+                <mc-progress-bar
+                  :percentage="file.progress"
+                  :transition-duration="1000"
+                />
+              </div>
             </template>
             <template v-else>
-              <div class="size">
-                {{ file.size ? getFileSize(file.size) : "" }}
-              </div>
+              <span class="mc-file-list-item-file-error">
+                {{ file.errorMessage || "failed to upload" }}
+              </span>
             </template>
           </div>
-          <template v-if="file.status !== 'loading'">
-            <!-- upload successed -->
-            <template v-if="!isCompact && file.status === 'successed'">
-              <!-- upload by -->
-              <div class="file-info">
-                <div class="label">{{ UPLOAD_TEXT_EH.uploaded_by }}</div>
-                <div class="content">{{ file.uploadBy }}</div>
-              </div>
-              <!-- upload on -->
-              <div class="file-info">
-                <div class="label">{{ UPLOAD_TEXT_EH.uploaded_on }}</div>
-                <div class="content">{{ formatDate(file.uploadTime) }}</div>
-              </div>
-              <!-- delete icon -->
-            </template>
-            <template v-if="deletable">
-              <div class="delete" @click="handleDeleteClick(file)">
-                <mc-icon name="Trash" />
-              </div>
-            </template>
-          </template>
         </div>
-        <template v-if="isCompact && file.status === 'successed'">
-          <!-- compact layout -->
-          <div class="compact-container">
-            <!-- upload by -->
-            <div class="file-info">
-              <div class="label">{{ UPLOAD_TEXT_EH.uploaded_by }}</div>
-              <div class="content">{{ file.uploadBy }}</div>
-            </div>
-            <!-- upload on -->
-            <div class="file-info">
-              <div class="label">{{ UPLOAD_TEXT_EH.uploaded_on }}</div>
-              <div class="content">{{ formatDate(file.uploadTime) }}</div>
-            </div>
+        <template v-if="!isCompact">
+          <div class="mc-file-list-item-info">
+            <span class="mc-file-list-item-label">
+              {{ langMap.uploaded_by }}
+            </span>
+            <span class="mc-file-list-item-value">
+              {{ file.uploadBy || "--" }}
+            </span>
+          </div>
+          <div class="mc-file-list-item-info">
+            <span class="mc-file-list-item-label">
+              {{ langMap.uploaded_on }}
+            </span>
+            <span class="mc-file-list-item-value">
+              {{ formatDate(file.uploadTime) || "--" }}
+            </span>
           </div>
         </template>
-      </li>
-    </transition-group>
-  </div>
+        <div class="mc-file-list-item-actions">
+          <template v-if="file.status === 'loading'">
+            <mc-icon
+              v-if="allowCancel"
+              name="Cross"
+              class="mc-file-list-item-icon"
+              @click="handleCancel(file)"
+            />
+            <div v-else :style="{ width: '24px', height: '24px' }"></div>
+          </template>
+          <template v-else>
+            <mc-icon
+              name="Download"
+              class="mc-file-list-item-icon"
+              @click="handleDownload(file)"
+              v-if="downloadable"
+            />
+            <mc-icon
+              name="Trash"
+              class="mc-file-list-item-icon"
+              @click="handleDelete(file)"
+            />
+          </template>
+        </div>
+      </div>
+      <template v-if="isCompact">
+        <mc-divider />
+        <div class="mc-file-list-item-compact-content">
+          <div class="mc-file-list-item-info">
+            <span class="mc-file-list-item-label">
+              {{ langMap.uploaded_by }}
+            </span>
+            <span class="mc-file-list-item-value">
+              {{ file.uploadBy || "--" }}
+            </span>
+          </div>
+          <div class="mc-file-list-item-info">
+            <span class="mc-file-list-item-label">
+              {{ langMap.uploaded_on }}
+            </span>
+            <span class="mc-file-list-item-value">
+              {{ formatDate(file.uploadTime) || "--" }}
+            </span>
+          </div>
+        </div>
+      </template>
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
-import type { FileListEmits, FileListProps, UploadFile } from "./types";
-import { computed, ref } from "vue";
+import type { FileListEmits, FileListProps } from "./types/mc-file-list";
+import type { UploadFile } from "./types";
+import { ref } from "vue";
+import { useResizeObserver } from "@mc-plus/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { getFileSize, formatDate } from "./utils";
-import { UPLOAD_TEXT_EH } from "./constanst";
-import useResizeObserver from "@mc-plus/hooks/useResizeObserver";
+import McDivider from "../mc-divider/mc-divider.vue";
+import McProgressBar from "../mc-progress-bar/mc-progress-bar.vue";
+import { formatDate, getFileSize } from "./utils";
+import { useLang } from "./hooks";
 
 // options
-defineOptions({ name: "McFileList" });
+defineOptions({ name: "McFileListV2" });
 
 // props
 const props = withDefaults(defineProps<FileListProps>(), {
-  files: () => [],
-  deletable: false,
-  theme: "white",
+  modelValue: () => [],
+  theme: "light",
+  lang: "en",
+  downloadable: false,
+  allowCancel: false,
 });
 
 // emits
-const emits = defineEmits<FileListEmits>();
+const emit = defineEmits<FileListEmits>();
 
-// file container ref
-const fileContainerRef = ref<HTMLDivElement>();
-// compact
+// lang
+const { langMap } = useLang();
+
+// is compact
 const isCompact = ref<boolean>(false);
 
-// grey theme
-const isGrey = computed(() => props.theme === "grey");
+// file list ref
+const fileListRef = ref<HTMLUListElement>();
 
-// observer width
-useResizeObserver(fileContainerRef, ({ width }) => {
+// use observer
+useResizeObserver(fileListRef, ({ width }) => {
   isCompact.value = width <= 600;
 });
 
-// click delete
-const handleDeleteClick = (file: UploadFile) => {
-  emits("delete:file", file);
+// preview
+const handlePreview = (file: UploadFile) => {
+  emit("preview", file);
 };
 
-// click review
-const handleReview = async (file: UploadFile) => {
-  emits("review:file", file);
+// cancel
+const handleCancel = (file: UploadFile) => {
+  emit("cancel", file);
+  removeFile(file);
+};
+
+// download
+const handleDownload = (file: UploadFile) => {
+  emit("download", file);
+};
+
+// delete
+const handleDelete = (file: UploadFile) => {
+  emit("delete", file);
+  removeFile(file);
+};
+
+// remove file
+const removeFile = (file: UploadFile) => {
+  emit(
+    "update:modelValue",
+    props.modelValue.filter((f) => f.name !== file.name)
+  );
 };
 </script>
 

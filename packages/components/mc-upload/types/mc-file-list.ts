@@ -1,13 +1,14 @@
 import type { UploadFile, UploadLang, UploadTheme } from "./common";
 
-export type FileListV2Props = {
+export type FileListProps = {
   modelValue?: UploadFile[] | undefined;
   theme?: UploadTheme;
   lang?: UploadLang;
   downloadable?: boolean;
+  allowCancel?: boolean;
 };
 
-export type FileListV2Emits = {
+export type FileListEmits = {
   (e: "update:modelValue", files: UploadFile[]): void;
   (e: "change", files: UploadFile[]): void;
   (e: "delete", file: UploadFile): void;

@@ -8,8 +8,7 @@
     <!-- <playground-reset></playground-reset> -->
     <!-- <playground-copy></playground-copy> -->
     <!-- <playground-lightbox></playground-lightbox> -->
-    <!-- <playground-upload></playground-upload> -->
-    <playground-upload-v2></playground-upload-v2>
+    <playground-upload></playground-upload>
     <!-- <playground-select-plus></playground-select-plus> -->
     <!-- <playground-form></playground-form> -->
     <!-- <playground-progress-bar></playground-progress-bar> -->
@@ -23,8 +22,7 @@
 // import PlaygroundToast from "./views/mc-toast/playground-toast.vue";
 // import PlaygroundCount from "./views/mc-count/playground-count.vue";
 // import PlaygroundReset from "./views/mc-reset/playground-reset.vue";
-// import PlaygroundUpload from "./views/mc-upload/playground-upload.vue";
-import PlaygroundUploadV2 from "./views/mc-upload-v2/playground-upload-v2.vue";
+import PlaygroundUpload from "./views/mc-upload/playground-upload.vue";
 // import PlaygroundSelectPlus from "./views/mc-select-plus/playground-select-plus.vue";
 // import PlaygroundForm from "./views/mc-form/playground-form.vue";
 // import PlaygroundLightbox from "./views/mc-lightbox/playground-lightbox.vue";

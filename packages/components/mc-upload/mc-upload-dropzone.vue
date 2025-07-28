@@ -6,13 +6,13 @@
     @click="handleUploadClick"
   >
     <div class="mc-upload-dropzone-area">
-      <slot name="area">
+      <slot>
         <div class="mc-upload-dropzone-title">
           <slot name="title">
             <mc-icon :name="icon" />
-            <span class="mc-upload-dropzone-title-text">{{
-              title || langMap.upload_note
-            }}</span>
+            <span class="mc-upload-dropzone-title-text">
+              {{ title || langMap.upload_note }}
+            </span>
           </slot>
         </div>
         <div class="mc-upload-dropzone-desc">
@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<UploadDropzoneProps>(), {
 const emit = defineEmits<UploadDropzoneEmits>();
 
 // use lang
-const { langMap } = useLang(props.lang);
+const { langMap } = useLang();
 
 // cover ref
 const coverRef = ref<HTMLElement>();

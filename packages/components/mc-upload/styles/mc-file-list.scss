@@ -1,192 +1,119 @@
-$primary_color: var(--mc-teal-500);
-$primary_color_hover: var(--mc-teal-900);
-$text_color: var(--mc-black);
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color: var(--mc-teal-500);
+$text_color_hover: var(--mc-teal-900);
 $text_color_label: var(--mc-gray-500);
-$text_collor_error: var(--mc-error);
+$text_color_error: var(--mc-error);
+$text_color_info: var(--mc-black);
 $bg_color: var(--mc-white);
-$bg_color_grey: var(--mc-gray-100);
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-}
+$bg_color_gray: var(--mc-gray-100);
 
 .mc-file-list {
+  @include mixin.reset-ul-style;
+  @include mixin.flex-center(column, flex-start, flex-start, 8px);
   width: 100%;
-  border-radius: 8px;
   background-color: $bg_color;
 
-  &.mc-file-list-grey {
-    background-color: $bg_color_grey;
+  &.mc-file-list-gray {
+    background-color: $bg_color_gray;
   }
 
-  .file-item {
+  &.mc-file-list-compact .mc-file-list-item {
+    @include mixin.flex-center(column, flex-start, stretch, 16px);
+    .mc-file-list-item-compact-content {
+      @include mixin.flex-center(row, flex-start, flex-start, 16px);
+    }
+  }
+
+  .mc-file-list-item {
+    @include mixin.reset-li-style;
+    @include mixin.shadow;
+
+    .mc-file-list-item-content {
+      @include mixin.flex-center(row, flex-start, flex-start, 24px);
+    }
+
+    width: 100%;
+    min-height: 88px;
     padding: 16px;
+    border-radius: 8px;
     box-sizing: border-box;
-    margin-bottom: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: default;
 
-    .file-info-container {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .compact-container {
-      margin-top: 32px;
-      position: relative;
-
-      &::before {
-        content: "";
-        height: 1px;
-        width: 100%;
-        background-color: $bg_color;
-        position: absolute;
-        top: -16px;
-      }
-
-      .file-info {
-        height: 32px;
-        display: flex;
-        align-items: center;
-        gap: 24px;
-
-        .label {
-          margin: 0;
-          min-width: 160px;
-        }
-
-        .content {
-          word-wrap: break-word;
-        }
-      }
-    }
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-
-    &.loading {
-      .loading-icon {
-        transform-origin: center;
-        animation: spin 1.5s ease-in-out 0s infinite;
-      }
-    }
-
-    &.successed {
-      .file-name {
-        .file {
-          color: $primary_color;
-          gap: 4px;
-          cursor: pointer;
-
-          &:hover {
-            color: $primary_color_hover;
-          }
-          .file-name-text {
-            max-width: 500px;
-            word-wrap: break-word;
-          }
-        }
-      }
-    }
-
-    &.failed {
-      .file-name {
-        .file {
-          color: $text_collor_error;
-        }
-        .size {
-          color: $text_collor_error;
-        }
-      }
-      .error-info {
-        color: $text_collor_error;
-        font-size: 12px !important;
-        font-weight: 700;
-      }
-      .delete {
-        color: $text_collor_error;
-      }
-    }
-
-    .file-name {
-      cursor: default;
-      .file {
-        font-size: 12px;
-        font-weight: 400;
-        color: $text_color;
-        display: flex;
-        gap: 8px;
-        transition: transform 0.2s;
-      }
-      .size {
-        margin-top: 8px;
-        margin-left: 24px;
-        font-size: 10px;
-        color: $text_color_label;
-      }
-    }
-
-    .file-info {
-      max-width: 386px;
-      word-break: break-all;
+    .mc-file-list-item-info {
+      @include mixin.flex-center(column, flex-start, flex-start, 8px);
+      height: 100%;
       flex: 1;
-      .label {
-        margin-bottom: 8px;
-        font-size: 12px;
-        min-height: 24px;
-        display: flex;
-        align-items: center;
+
+      .mc-file-list-item-label {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 24px;
         color: $text_color_label;
       }
-      .content {
-        min-height: 24px;
-        display: flex;
-        align-items: center;
+
+      .mc-file-list-item-value {
         font-size: 16px;
         font-weight: 400;
+        line-height: 24px;
+        color: $text_color_info;
       }
     }
 
-    .delete {
-      cursor: pointer;
-      color: $primary_color;
-      &:hover {
-        color: $text_collor_error;
+    .mc-file-list-item-file {
+      .mc-file-list-item-file-name {
+        @include mixin.flex-center(row, flex-start, flex-start, 4px);
+        color: $text_color;
+        cursor: pointer;
+
+        &:hover {
+          color: $text_color_hover;
+        }
+
+        .mc-file-list-item-file-name-text {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 24px;
+        }
+      }
+
+      .mc-file-list-item-file-desc {
+        @include mixin.flex-center(row, flex-start, center, 4px);
+        width: 100%;
+        padding-left: 28px;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+        color: $text_color_label;
+        box-sizing: border-box;
+
+        .mc-file-list-item-file-size-text {
+          flex: 1;
+          max-width: 60px;
+        }
+
+        .mc-file-list-item-file-progress-bar {
+          flex: 1;
+        }
+
+        .mc-file-list-item-file-error {
+          font-size: 14px;
+          color: $text_color_error;
+          line-height: 20px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .mc-file-list-item-actions {
+      @include mixin.flex-center(row, flex-end, flex-start, 4px);
+      .mc-file-list-item-icon {
+        color: $text_color;
+        cursor: pointer;
+        &:hover {
+          color: $text_color_hover;
+        }
       }
     }
   }
-}
-
-.file-list-enter-from,
-.file-list-leave-to {
-  transform: scaleY(0);
-  opacity: 0;
-}
-.file-list-enter-to,
-.file-list-leave-from {
-  transform: scaleY(1);
-  opacity: 1;
-}
-
-.file-list-enter-active,
-.file-list-leave-active {
-  transform-origin: top;
-  transition: transform 0.3s linear 0s, opacity 0.3s linear 0s;
 }

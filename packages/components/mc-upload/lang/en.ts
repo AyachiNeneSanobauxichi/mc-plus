@@ -1,6 +1,6 @@
 import { WILDCARD } from "../constant";
 
-const UPLOAD_TEXT_ZH = {
+const UPLOAD_TEXT_EH = {
   upload_note: "Click to upload or drag and drop your files here",
   max_size: "Max file size:",
   max_count:
@@ -9,7 +9,7 @@ const UPLOAD_TEXT_ZH = {
   uploaded_on: "Uploaded on",
   limit_count: `The number of files cannot exceed ${WILDCARD} .`,
   limit_size: `The file size cannot exceed ${WILDCARD} .`,
-  limit_type: `${WILDCARD} only.`,
+  limit_type: `${WILDCARD} only`,
 };
 
-export default UPLOAD_TEXT_ZH;
+export default UPLOAD_TEXT_EH;
