@@ -27,7 +27,7 @@
 import type { UploadFile } from "../../../../components/mc-upload-v2/types";
 import type { UploadInstance } from "@mc-plus/components/mc-upload-v2/types/mc-upload";
 import { ref } from "vue";
-import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
+import McUploadV2 from "@mc-plus/components/mc-upload-v2/mc-upload.vue";
 import { McButton } from "mc-plus";
 
 // file list

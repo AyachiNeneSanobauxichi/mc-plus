@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FileListV2Emits, FileListV2Props } from "./types/mc-file-list";
+import type { FileListEmits, FileListProps } from "./types/mc-file-list";
 import type { UploadFile } from "./types";
 import { ref } from "vue";
 import { useResizeObserver } from "@mc-plus/hooks";
@@ -118,7 +118,7 @@ import { useLang } from "./hooks";
 defineOptions({ name: "McFileListV2" });
 
 // props
-const props = withDefaults(defineProps<FileListV2Props>(), {
+const props = withDefaults(defineProps<FileListProps>(), {
   modelValue: () => [],
   theme: "light",
   lang: "en",
@@ -127,7 +127,7 @@ const props = withDefaults(defineProps<FileListV2Props>(), {
 });
 
 // emits
-const emit = defineEmits<FileListV2Emits>();
+const emit = defineEmits<FileListEmits>();
 
 // lang
 const { langMap } = useLang(props.lang);

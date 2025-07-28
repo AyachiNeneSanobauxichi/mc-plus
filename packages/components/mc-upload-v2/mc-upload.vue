@@ -75,7 +75,7 @@ import { useWidthHeight } from "@mc-plus/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 import McUploadDropzone from "./mc-upload-dropzone.vue";
-import McFileListV2 from "./mc-file-list-v2.vue";
+import McFileListV2 from "./mc-file-list.vue";
 import { ALLOW_FILE_TYPES } from "./constant";
 
 // options
