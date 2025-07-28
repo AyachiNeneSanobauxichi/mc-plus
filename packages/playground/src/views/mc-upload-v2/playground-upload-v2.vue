@@ -8,13 +8,18 @@
       v-model="fileList"
       :allowed-file-types="['png']"
       upload-user="Hirasawa Yui"
-      lang="zh"
+      lang="en"
       @upload="handleUpload"
       @preview="handlePreview"
       @delete="handleDelete"
       @download="handleDownload"
       @cancel="handleCancel"
-    ></mc-upload-v2>
+    >
+      <template #content>
+        <span>Latest 3 months’ original computerized salary slips; or</span>
+        <span>Latest Notice of Assessment</span>
+      </template>
+    </mc-upload-v2>
   </div>
 </template>
 

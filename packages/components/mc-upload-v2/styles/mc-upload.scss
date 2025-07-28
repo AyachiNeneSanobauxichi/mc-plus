@@ -1,1 +1,44 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
+
+$bg_color: var(--mc-gray-100);
+$bg_color_gray: var(--mc-white);
+$icon_color: var(--mc-gray-400);
+$text_color: var(--mc-gray-800);
+
+.mc-upload {
+  .mc-upload-wrapper {
+    @include mixin.flex-center(row, flex-start, flex-start, 24px);
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+
+    &.mc-upload-wrapper-light {
+      background-color: $bg_color;
+    }
+
+    &.mc-upload-wrapper-dark {
+      background-color: $bg_color_gray;
+    }
+
+    .mc-upload-content {
+      @include mixin.flex-center(row, flex-start, flex-start, 8px);
+      max-width: 400px;
+      .mc-upload-content-icon {
+        width: 24px;
+        color: $icon_color;
+      }
+
+      .mc-upload-content-text {
+        @include mixin.flex-center(column, flex-start, flex-start, 8px);
+        color: $text_color;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    .mc-upload-component {
+      flex: 1;
+    }
+  }
+}

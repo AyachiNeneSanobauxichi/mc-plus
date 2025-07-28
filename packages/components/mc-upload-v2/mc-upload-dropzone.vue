@@ -6,7 +6,7 @@
     @click="handleUploadClick"
   >
     <div class="mc-upload-dropzone-area">
-      <slot name="area">
+      <slot>
         <div class="mc-upload-dropzone-title">
           <slot name="title">
             <mc-icon :name="icon" />

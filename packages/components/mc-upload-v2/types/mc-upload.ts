@@ -7,6 +7,7 @@ export interface McUploadProps extends UploadDropzoneProps {
   allowCancel?: boolean;
   theme?: UploadTheme;
   width?: string | number;
+  succeed?: boolean;
 }
 
 export interface McUploadEmits {

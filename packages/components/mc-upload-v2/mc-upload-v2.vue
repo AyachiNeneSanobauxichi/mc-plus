@@ -1,32 +1,60 @@
 <template>
   <div class="mc-upload" :style="{ width }">
-    <div class="mc-upload-dropzone-wrapper">
-      <mc-upload-dropzone
-        ref="uploadDropzoneRef"
-        :upload-user="uploadUser"
-        :allowed-file-types="allowedFileTypes"
-        :file-size="fileSize"
-        :icon="icon"
-        :lang="lang"
-        :theme="theme"
-        @upload="handleUpload"
-        @error:type="handleErrorType"
-        @error:size="handleErrorSize"
-      ></mc-upload-dropzone>
-    </div>
-    <div class="mc-upload-file-list-wrapper">
-      <mc-file-list-v2
-        :model-value="modelValue"
-        :allow-cancel="allowCancel"
-        :downloadable="downloadable"
-        :lang="lang"
-        :theme="theme"
-        @update:model-value="handleUpdateModelValue"
-        @preview="handlePreview"
-        @delete="handleDelete"
-        @download="handleDownload"
-        @cancel="handleCancel"
-      ></mc-file-list-v2>
+    <div
+      :class="[
+        { 'mc-upload-wrapper': hasWrapper },
+        `mc-upload-wrapper-${theme}`,
+      ]"
+    >
+      <div class="mc-upload-content" v-if="hasWrapper">
+        <div class="mc-upload-content-icon">
+          <mc-icon name="Accept" v-if="!succeed" />
+          <mc-success-icon v-else width="24px" height="24px" />
+        </div>
+        <div class="mc-upload-content-text">
+          <slot name="content"></slot>
+        </div>
+      </div>
+      <div class="mc-upload-component">
+        <div class="mc-upload-dropzone-wrapper">
+          <mc-upload-dropzone
+            ref="uploadDropzoneRef"
+            :upload-user="uploadUser"
+            :allowed-file-types="allowedFileTypes"
+            :file-size="fileSize"
+            :icon="icon"
+            :lang="lang"
+            :theme="theme"
+            @upload="handleUpload"
+            @error:type="handleErrorType"
+            @error:size="handleErrorSize"
+          >
+            <template #default>
+              <slot name="default"></slot>
+            </template>
+            <template #title>
+              <slot name="title"></slot>
+            </template>
+            <template #desc>
+              <slot name="desc"></slot>
+            </template>
+          </mc-upload-dropzone>
+        </div>
+        <div class="mc-upload-file-list-wrapper">
+          <mc-file-list-v2
+            :model-value="modelValue"
+            :allow-cancel="allowCancel"
+            :downloadable="downloadable"
+            :lang="lang"
+            :theme="theme"
+            @update:model-value="handleUpdateModelValue"
+            @preview="handlePreview"
+            @delete="handleDelete"
+            @download="handleDownload"
+            @cancel="handleCancel"
+          ></mc-file-list-v2>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,8 +70,10 @@ import type {
   UploadFile,
   UploadFileMap,
 } from "./types";
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, useSlots, watch } from "vue";
 import { useWidthHeight } from "@mc-plus/hooks";
+import McIcon from "../mc-icon/mc-icon.vue";
+import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 import McUploadDropzone from "./mc-upload-dropzone.vue";
 import McFileListV2 from "./mc-file-list-v2.vue";
 import { ALLOW_FILE_TYPES } from "./constant";
@@ -63,6 +93,7 @@ const props = withDefaults(defineProps<McUploadProps>(), {
   allowedFileTypes: () => ALLOW_FILE_TYPES,
   theme: "light",
   width: "100%",
+  succeed: false,
 });
 
 // emits
@@ -70,6 +101,14 @@ const emit = defineEmits<McUploadEmits>();
 
 // use width height hook
 const { width } = useWidthHeight();
+
+// slots
+const slots = useSlots();
+
+// has wrapper
+const hasWrapper = computed(() => {
+  return !!slots.content;
+});
 
 // upload dropzone ref
 const uploadDropzoneRef = ref<UploadDropzoneInstance>();
