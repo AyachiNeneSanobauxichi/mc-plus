@@ -38,7 +38,7 @@ import type {
   UploadFile,
   UploadFileMap,
 } from "./types";
-import { ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import McUploadDropzone from "./mc-upload-dropzone.vue";
 import McFileListV2 from "./mc-file-list-v2.vue";
 import { ALLOW_FILE_TYPES } from "./constant";
@@ -65,6 +65,27 @@ const emit = defineEmits<McUploadEmits>();
 // upload dropzone ref
 const uploadDropzoneRef = ref<UploadDropzoneInstance>();
 
+// all file map
+const allFileMap = reactive<UploadFileMap>(new Map());
+
+// set all file map
+const setAllFileMap = (files: UploadFile[]) => {
+  files.forEach((file) => {
+    allFileMap.set(file.name!, file);
+  });
+};
+
+// watch model value
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    setAllFileMap(newVal);
+  },
+  {
+    immediate: true,
+  }
+);
+
 // get file list
 const getFileList = (fileMap: UploadFileMap) => {
   return Array.from([...fileMap.values()]);
@@ -78,7 +99,8 @@ const handleUpdateModelValue = (files: UploadFile[]) => {
 // handle upload
 const handleUpload = (fileMap: UploadFileMap) => {
   const files = getFileList(fileMap);
-  const newFileList = [...props.modelValue, ...files];
+  setAllFileMap([...props.modelValue, ...files]);
+  const newFileList = getFileList(allFileMap);
   emit("update:modelValue", newFileList);
   emit("upload", newFileList);
   emit("change", newFileList);

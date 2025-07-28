@@ -23,6 +23,7 @@ const fileList = ref<UploadFile[]>([]);
 
 const handleUpload = (files: UploadFile[]) => {
   console.log("Upload Files: ", files);
+  // use api to upload files
   uploadApi(files);
 };
 
