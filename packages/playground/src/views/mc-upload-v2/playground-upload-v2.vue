@@ -8,6 +8,7 @@
       v-model="fileList"
       :allowed-file-types="['png']"
       upload-user="Hirasawa Yui"
+      lang="zh"
       @upload="handleUpload"
       @preview="handlePreview"
       @delete="handleDelete"

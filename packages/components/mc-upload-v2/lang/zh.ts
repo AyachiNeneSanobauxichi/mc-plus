@@ -1,15 +1,15 @@
 import { WILDCARD } from "../constant";
 
 const UPLOAD_TEXT_ZH = {
-  upload_note: "Click to upload or drag and drop your files here",
-  max_size: "Max file size:",
+  upload_note: "单机即可上传或将文件拖放到此处",
+  max_size: "最大文件大小：",
   max_count:
     "No limit on maximum number of documents but recommend that upload then in pdf if more than 5 files are to be upload.",
-  uploaded_by: "Uploaded by",
-  uploaded_on: "Uploaded on",
-  limit_count: `The number of files cannot exceed ${WILDCARD} .`,
-  limit_size: `The file size cannot exceed ${WILDCARD} .`,
-  limit_type: `${WILDCARD} only.`,
+  uploaded_by: "上传用户",
+  uploaded_on: "上传时间",
+  limit_count: `文件数量不能超过 ${WILDCARD} 。`,
+  limit_size: `最大文件大小：${WILDCARD} 。`,
+  limit_type: `只接受文件格式：${WILDCARD}`,
 };
 
 export default UPLOAD_TEXT_ZH;
