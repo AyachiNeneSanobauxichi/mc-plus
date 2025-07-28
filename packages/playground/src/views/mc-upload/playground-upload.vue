@@ -2,13 +2,14 @@
   <div class="playground-upload">
     <div class="btn-groups">
       <mc-button @click="handleClear">Clear</mc-button>
+      <mc-button @click="handleChangeLang">Change Lang</mc-button>
     </div>
     <mc-upload
       ref="uploadRef"
       v-model="fileList"
       :allowed-file-types="['png']"
       upload-user="Hirasawa Yui"
-      lang="en"
+      :lang="lang"
       @upload="handleUpload"
       @preview="handlePreview"
       @delete="handleDelete"
@@ -24,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UploadFile, UploadInstance } from "mc-plus";
+import type { UploadFile, UploadInstance, UploadLang } from "mc-plus";
 import { ref } from "vue";
 import McUpload from "../../../../components/mc-upload/mc-upload.vue";
 import { McButton } from "mc-plus";
@@ -72,6 +73,12 @@ const uploadRef = ref<UploadInstance>();
 
 const handleClear = () => {
   uploadRef.value?.clearFiles();
+};
+
+const lang = ref<UploadLang>("en");
+
+const handleChangeLang = () => {
+  lang.value = lang.value === "en" ? "zh" : "en";
 };
 </script>
 

@@ -130,7 +130,7 @@ const props = withDefaults(defineProps<FileListProps>(), {
 const emit = defineEmits<FileListEmits>();
 
 // lang
-const { langMap } = useLang(props.lang);
+const { langMap } = useLang();
 
 // is compact
 const isCompact = ref<boolean>(false);

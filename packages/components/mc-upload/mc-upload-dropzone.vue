@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<UploadDropzoneProps>(), {
 const emit = defineEmits<UploadDropzoneEmits>();
 
 // use lang
-const { langMap } = useLang(props.lang);
+const { langMap } = useLang();
 
 // cover ref
 const coverRef = ref<HTMLElement>();
