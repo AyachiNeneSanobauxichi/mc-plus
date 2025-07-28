@@ -1,6 +1,10 @@
 <template>
   <div class="playground-upload">
+    <div class="btn-groups">
+      <mc-button @click="handleClear">Clear</mc-button>
+    </div>
     <mc-upload-v2
+      ref="uploadRef"
       v-model="fileList"
       :allowed-file-types="['png']"
       upload-user="Hirasawa Yui"
@@ -15,8 +19,10 @@
 
 <script setup lang="ts">
 import type { UploadFile } from "../../../../components/mc-upload-v2/types";
+import type { UploadInstance } from "@mc-plus/components/mc-upload-v2/types/mc-upload";
 import { ref } from "vue";
 import McUploadV2 from "../../../../components/mc-upload-v2/mc-upload-v2.vue";
+import { McButton } from "mc-plus";
 
 // file list
 const fileList = ref<UploadFile[]>([]);
@@ -55,6 +61,13 @@ const handleDownload = (file: UploadFile) => {
 const handleCancel = (file: UploadFile) => {
   console.log("Cancel File: ", file);
 };
+
+// upload ref
+const uploadRef = ref<UploadInstance>();
+
+const handleClear = () => {
+  uploadRef.value?.clearFiles();
+};
 </script>
 
 <style scoped lang="scss">
@@ -65,5 +78,12 @@ const handleCancel = (file: UploadFile) => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  .btn-groups {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
 }
 </style>

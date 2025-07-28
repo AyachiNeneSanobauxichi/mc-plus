@@ -11,10 +11,21 @@ $text_color_info: var(--mc-black);
   @include mixin.flex-center(column, flex-start, flex-start, 8px);
   width: 100%;
 
+  &.mc-file-list-compact .mc-file-list-item {
+    @include mixin.flex-center(column, flex-start, stretch, 16px);
+    .mc-file-list-item-compact-content {
+      @include mixin.flex-center(row, flex-start, flex-start, 16px);
+    }
+  }
+
   .mc-file-list-item {
     @include mixin.reset-li-style;
     @include mixin.shadow;
-    @include mixin.flex-center(row, flex-start, flex-start, 24px);
+
+    .mc-file-list-item-content {
+      @include mixin.flex-center(row, flex-start, flex-start, 24px);
+    }
+
     width: 100%;
     min-height: 88px;
     padding: 16px;
