@@ -1,6 +1,11 @@
 <template>
   <div class="playground-lightbox">
-    <mc-lightbox v-model="visible" title="Mc Lightbox" size="large">
+    <mc-lightbox
+      v-model="visible"
+      title="Mc Lightbox"
+      size="large"
+      @close="handleClose"
+    >
       <div class="lightbox-content">
         <mc-form :model="form">
           <mc-form-item label="Currency" prop="currency">
@@ -90,6 +95,10 @@ const handleChangeVisible = () => {
 
 const handleAddContent = () => {
   showExtraContent.value = !showExtraContent.value;
+};
+
+const handleClose = () => {
+  console.log("close");
 };
 </script>
 

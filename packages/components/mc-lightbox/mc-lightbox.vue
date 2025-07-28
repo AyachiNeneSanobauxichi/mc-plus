@@ -145,13 +145,12 @@ watch(
   (val, oldVal) => {
     if (!oldVal && val) {
       open();
-    } else {
+    } else if (oldVal && !val) {
       close();
     }
   },
   {
     immediate: true,
-    flush: "post",
   }
 );
 
