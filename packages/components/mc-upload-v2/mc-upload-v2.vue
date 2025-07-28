@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-upload">
+  <div class="mc-upload" :style="{ width }">
     <div class="mc-upload-dropzone-wrapper">
       <mc-upload-dropzone
         ref="uploadDropzoneRef"
@@ -32,13 +32,18 @@
 </template>
 
 <script setup lang="ts">
-import type { McUploadEmits, McUploadProps } from "./types/mc-upload";
+import type {
+  McUploadEmits,
+  McUploadProps,
+  UploadInstance,
+} from "./types/mc-upload";
 import type {
   UploadDropzoneInstance,
   UploadFile,
   UploadFileMap,
 } from "./types";
 import { reactive, ref, watch } from "vue";
+import { useWidthHeight } from "@mc-plus/hooks";
 import McUploadDropzone from "./mc-upload-dropzone.vue";
 import McFileListV2 from "./mc-file-list-v2.vue";
 import { ALLOW_FILE_TYPES } from "./constant";
@@ -57,10 +62,14 @@ const props = withDefaults(defineProps<McUploadProps>(), {
   lang: "en",
   allowedFileTypes: () => ALLOW_FILE_TYPES,
   theme: "light",
+  width: "100%",
 });
 
 // emits
 const emit = defineEmits<McUploadEmits>();
+
+// use width height hook
+const { width } = useWidthHeight();
 
 // upload dropzone ref
 const uploadDropzoneRef = ref<UploadDropzoneInstance>();
@@ -98,6 +107,7 @@ const handleUpdateModelValue = (files: UploadFile[]) => {
 
 // handle upload
 const handleUpload = (fileMap: UploadFileMap) => {
+  uploadDropzoneRef.value?.clearUploadInput();
   const files = getFileList(fileMap);
   setAllFileMap([...props.modelValue, ...files]);
   const newFileList = getFileList(allFileMap);
@@ -149,6 +159,25 @@ const updateProgress = (progress: number = 99, timeout: number = 100) => {
     });
   }, timeout);
 };
+
+// clear files
+const clearAllFile = () => {
+  allFileMap.clear();
+  emit("clear");
+  emit("update:modelValue", []);
+  emit("change", []);
+};
+
+// download files
+const downloadAllFiles = () => {
+  emit("download:all", getFileList(allFileMap));
+};
+
+// expose
+defineExpose<UploadInstance>({
+  clearFiles: clearAllFile,
+  downloadAllFiles,
+});
 </script>
 
 <style scoped lang="scss">

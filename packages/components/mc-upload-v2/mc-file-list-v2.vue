@@ -52,6 +52,7 @@
             class="mc-file-list-item-icon"
             @click="handleCancel(file)"
           />
+          <div v-else :style="{ width: '24px', height: '24px' }"></div>
         </template>
         <template v-else>
           <mc-icon

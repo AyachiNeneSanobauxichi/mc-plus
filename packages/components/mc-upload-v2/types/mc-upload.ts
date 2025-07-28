@@ -6,6 +6,7 @@ export interface McUploadProps extends UploadDropzoneProps {
   downloadable?: boolean;
   allowCancel?: boolean;
   theme?: UploadTheme;
+  width?: string | number;
 }
 
 export interface McUploadEmits {
@@ -22,7 +23,7 @@ export interface McUploadEmits {
   (e: "cancel", file: UploadFile): void;
 }
 
-export interface UploadDropzoneInstance {
+export interface UploadInstance {
   clearFiles: () => void;
-  downloadAllFiles: (file: UploadFile[]) => void;
+  downloadAllFiles: () => void;
 }
