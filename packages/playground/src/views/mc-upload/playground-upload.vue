@@ -3,7 +3,7 @@
     <div class="btn-groups">
       <mc-button @click="handleClear">Clear</mc-button>
     </div>
-    <mc-upload-v2
+    <mc-upload
       ref="uploadRef"
       v-model="fileList"
       :allowed-file-types="['png']"
@@ -19,15 +19,14 @@
         <span>Latest 3 months’ original computerized salary slips; or</span>
         <span>Latest Notice of Assessment</span>
       </template>
-    </mc-upload-v2>
+    </mc-upload>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { UploadFile } from "../../../../components/mc-upload-v2/types";
-import type { UploadInstance } from "@mc-plus/components/mc-upload-v2/types/mc-upload";
+import type { UploadFile, UploadInstance } from "mc-plus";
 import { ref } from "vue";
-import McUploadV2 from "@mc-plus/components/mc-upload-v2/mc-upload.vue";
+import McUpload from "../../../../components/mc-upload/mc-upload.vue";
 import { McButton } from "mc-plus";
 
 // file list
