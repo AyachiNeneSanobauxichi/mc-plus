@@ -27,8 +27,6 @@ import {
   McReset,
   McDivider,
   McLightbox,
-  McUpload,
-  McFileList,
   McPopper,
   McTooltip,
   McTag,
@@ -48,6 +46,9 @@ import {
   McCount,
   McCopy,
   McProgressBar,
+  McUpload,
+  McFileList,
+  McUploadDropzone,
 } from "@mc-plus/components";
 
 export default [
@@ -78,8 +79,6 @@ export default [
   McReset,
   McDivider,
   McLightbox,
-  McUpload,
-  McFileList,
   McPopper,
   McTooltip,
   McTag,
@@ -99,4 +98,7 @@ export default [
   McCount,
   McCopy,
   McProgressBar,
+  McUpload,
+  McFileList,
+  McUploadDropzone,
 ] as Plugin[];
