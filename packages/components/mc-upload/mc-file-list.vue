@@ -61,7 +61,6 @@
               class="mc-file-list-item-icon"
               @click="handleCancel(file)"
             />
-            <div v-else :style="{ width: '24px', height: '24px' }"></div>
           </template>
           <template v-else>
             <mc-icon
@@ -74,6 +73,7 @@
               name="Trash"
               class="mc-file-list-item-icon"
               @click="handleDelete(file)"
+              v-if="deletable"
             />
           </template>
         </div>
@@ -124,6 +124,7 @@ const props = withDefaults(defineProps<FileListProps>(), {
   lang: "en",
   downloadable: false,
   allowCancel: false,
+  deletable: true,
 });
 
 // emits
