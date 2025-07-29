@@ -1,7 +1,7 @@
 import { WILDCARD } from "../constant";
 
 const UPLOAD_TEXT_ZH = {
-  upload_note: "单机即可上传或将文件拖放到此处",
+  upload_note: "单击即可上传或将文件拖放到此处",
   max_size: "最大文件大小：",
   max_count:
     "No limit on maximum number of documents but recommend that upload then in pdf if more than 5 files are to be upload.",
