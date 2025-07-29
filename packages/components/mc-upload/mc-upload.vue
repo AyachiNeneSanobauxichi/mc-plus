@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="mc-upload-component">
-        <div class="mc-upload-dropzone-wrapper">
+        <div class="mc-upload-dropzone-wrapper" v-if="!disabled">
           <mc-upload-dropzone
             ref="uploadDropzoneRef"
             :upload-user="uploadUser"
@@ -41,18 +41,19 @@
           </mc-upload-dropzone>
         </div>
         <div class="mc-upload-file-list-wrapper">
-          <mc-file-list-v2
+          <mc-file-list
             :model-value="modelValue"
             :allow-cancel="allowCancel"
             :downloadable="downloadable"
             :lang="lang"
             :theme="theme"
+            :deletable="fileListDeletable"
             @update:model-value="handleUpdateModelValue"
             @preview="handlePreview"
             @delete="handleDelete"
             @download="handleDownload"
             @cancel="handleCancel"
-          ></mc-file-list-v2>
+          ></mc-file-list>
         </div>
       </div>
     </div>
@@ -75,11 +76,11 @@ import { useWidthHeight } from "@mc-plus/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 import McUploadDropzone from "./mc-upload-dropzone.vue";
-import McFileListV2 from "./mc-file-list.vue";
+import McFileList from "./mc-file-list.vue";
 import { ALLOW_FILE_TYPES } from "./constant";
 
 // options
-defineOptions({ name: "McUploadV2" });
+defineOptions({ name: "McUpload" });
 
 // props
 const props = withDefaults(defineProps<McUploadProps>(), {
@@ -94,6 +95,8 @@ const props = withDefaults(defineProps<McUploadProps>(), {
   theme: "light",
   width: "100%",
   succeed: false,
+  deletable: true,
+  disabled: false,
 });
 
 // emits
@@ -211,6 +214,11 @@ const clearAllFile = () => {
 const downloadAllFiles = () => {
   emit("download:all", getFileList(allFileMap));
 };
+
+// file list deletable
+const fileListDeletable = computed(() => {
+  return props.deletable && !props.disabled;
+});
 
 // expose
 defineExpose<UploadInstance>({

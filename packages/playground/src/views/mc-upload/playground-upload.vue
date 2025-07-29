@@ -10,6 +10,7 @@
       :allowed-file-types="['png']"
       upload-user="Hirasawa Yui"
       :lang="lang"
+      disabled
       @upload="handleUpload"
       @preview="handlePreview"
       @delete="handleDelete"

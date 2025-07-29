@@ -16,6 +16,7 @@ export interface LightboxProps {
 
 export interface LightboxEmits {
   (e: "update:modelValue", value: boolean): void;
+  (e: "open"): void;
   (e: "close"): void;
 }
 

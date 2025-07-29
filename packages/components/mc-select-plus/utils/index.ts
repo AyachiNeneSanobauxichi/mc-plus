@@ -1,7 +1,7 @@
 import type { Component, VNode, VNodeNormalizedChildren } from "vue";
 import type { _OptionNode } from "../types";
 import { isArray, isFunction, isString } from "lodash-es";
-import { MC_SELECT_OPTION, MC_SELECT_OPTION_GROUP } from "../constant";
+import { MC_SELECT_OPTION, MC_SELECT_GROUP } from "../constant";
 
 // check if two options are the same
 const isSameOptions = (
@@ -26,7 +26,7 @@ const generateOptions = (children?: VNodeNormalizedChildren): _OptionNode[] => {
     (children as VNode[]).forEach((item) => {
       const name = ((item?.type || {}) as Component)?.name;
 
-      if (name === MC_SELECT_OPTION_GROUP) {
+      if (name === MC_SELECT_GROUP) {
         const _children =
           !isString(item.children) &&
           !isArray(item.children) &&

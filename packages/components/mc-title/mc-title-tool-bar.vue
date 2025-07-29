@@ -1,10 +1,16 @@
 <template>
   <div class="mc-title-tool-bar" ref="_ref">
     <div class="mc-title-tool-bar-reset">
-      <mc-reset :rotate="isRotate" @reset="handleReset" :auto-rotate="false" />
+      <mc-reset :rotate="isRotate" @reset="handleReset" :auto-rotate="false">
+        <template #default>
+          <slot name="reset"></slot>
+        </template>
+      </mc-reset>
     </div>
     <div class="mc-title-tool-bar-line"></div>
-    <div class="mc-title-tool-bar-mandatory">Mandatory</div>
+    <div class="mc-title-tool-bar-mandatory">
+      <slot name="mandatory">Mandatory</slot>
+    </div>
   </div>
 </template>
 

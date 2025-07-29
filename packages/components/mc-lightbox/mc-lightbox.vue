@@ -121,22 +121,28 @@ const handleCloseIconClick = () => {
 };
 
 // open
-const open = async () => {
+const open = async (dispatch = true) => {
   showLightbox.value = true;
   showOverlay.value = true;
   await nextTick();
   showLightboxContent.value = true;
+  if (dispatch) {
+    emits("open");
+    emits("update:modelValue", true);
+  }
 };
 
 // close
-const close = async () => {
+const close = async (dispatch = true) => {
   showLightboxContent.value = false;
   await nextTick();
   showOverlay.value = false;
   await nextTick();
   showLightbox.value = false;
-  emits("close");
-  emits("update:modelValue", false);
+  if (dispatch) {
+    emits("close");
+    emits("update:modelValue", false);
+  }
 };
 
 // visible changed
@@ -144,14 +150,13 @@ watch(
   () => props.modelValue,
   (val, oldVal) => {
     if (!oldVal && val) {
-      open();
-    } else {
-      close();
+      open(false);
+    } else if (oldVal && !val) {
+      close(false);
     }
   },
   {
     immediate: true,
-    flush: "post",
   }
 );
 

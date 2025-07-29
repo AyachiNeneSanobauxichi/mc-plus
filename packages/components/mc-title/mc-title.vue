@@ -15,7 +15,14 @@
     <div class="mc-title-tool-bar">
       <slot name="tool-bar">
         <template v-if="showToolBar">
-          <mc-title-tool-bar @reset="emit('reset')" />
+          <mc-title-tool-bar @reset="emit('reset')">
+            <template #reset>
+              <slot name="reset"></slot>
+            </template>
+            <template #mandatory>
+              <slot name="mandatory"></slot>
+            </template>
+          </mc-title-tool-bar>
         </template>
       </slot>
     </div>

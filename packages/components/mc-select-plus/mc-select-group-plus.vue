@@ -15,11 +15,11 @@
 import type { SelectGroupPlusProps } from "./types";
 import { computed, inject } from "vue";
 import { useWidthHeight } from "@mc-plus/hooks";
-import { MC_SELECT_OPTION_GROUP, SELECT_INJECTION_KEY } from "./constant";
+import { MC_SELECT_GROUP, SELECT_INJECTION_KEY } from "./constant";
 import { includes } from "lodash-es";
 
 // options
-defineOptions({ name: MC_SELECT_OPTION_GROUP });
+defineOptions({ name: MC_SELECT_GROUP });
 
 // props
 const props = withDefaults(defineProps<SelectGroupPlusProps>(), {

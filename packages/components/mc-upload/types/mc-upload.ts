@@ -5,6 +5,8 @@ export interface McUploadProps extends UploadDropzoneProps {
   modelValue?: UploadFile[] | undefined;
   downloadable?: boolean;
   allowCancel?: boolean;
+  deletable?: boolean;
+  disabled?: boolean;
   theme?: UploadTheme;
   width?: string | number;
   succeed?: boolean;

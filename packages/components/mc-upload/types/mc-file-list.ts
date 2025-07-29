@@ -6,6 +6,7 @@ export type FileListProps = {
   lang?: UploadLang;
   downloadable?: boolean;
   allowCancel?: boolean;
+  deletable?: boolean;
 };
 
 export type FileListEmits = {
