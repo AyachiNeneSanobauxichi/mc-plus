@@ -80,7 +80,7 @@ import McFileList from "./mc-file-list.vue";
 import { ALLOW_FILE_TYPES } from "./constant";
 
 // options
-defineOptions({ name: "McUploadV2" });
+defineOptions({ name: "McUpload" });
 
 // props
 const props = withDefaults(defineProps<McUploadProps>(), {

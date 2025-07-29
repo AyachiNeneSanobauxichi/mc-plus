@@ -1,6 +1,6 @@
 <template>
   <div class="playground">
-    <!-- <playground-input-group></playground-input-group> -->
+    <playground-input-group></playground-input-group>
     <!-- <playground-select-plus></playground-select-plus> -->
     <!-- <playground-alert-message></playground-alert-message> -->
     <!-- <playground-toast></playground-toast> -->
@@ -12,12 +12,12 @@
     <!-- <playground-select-plus></playground-select-plus> -->
     <!-- <playground-form></playground-form> -->
     <!-- <playground-progress-bar></playground-progress-bar> -->
-    <playground-title></playground-title>
+    <!-- <playground-title></playground-title> -->
   </div>
 </template>
 
 <script setup lang="ts">
-// import PlaygroundInputGroup from "./views/mc-input-group/playground-input-group.vue";
+import PlaygroundInputGroup from "./views/mc-input-group/playground-input-group.vue";
 // import PlaygroundSelectPlus from "./views/mc-select-plus/playground-select-plus.vue";
 // import PlaygroundAlertMessage from "./views/mc-alert-message/playground-alert-message.vue";
 // import PlaygroundToast from "./views/mc-toast/playground-toast.vue";
@@ -28,7 +28,7 @@
 // import PlaygroundForm from "./views/mc-form/playground-form.vue";
 // import PlaygroundLightbox from "./views/mc-lightbox/playground-lightbox.vue";
 // import PlaygroundProgressBar from "./views/mc-progress-bar/playground-progress-bar.vue";
-import PlaygroundTitle from "./views/mc-title/playground-title.vue";
+// import PlaygroundTitle from "./views/mc-title/playground-title.vue";
 </script>
 
 <style scoped lang="scss">

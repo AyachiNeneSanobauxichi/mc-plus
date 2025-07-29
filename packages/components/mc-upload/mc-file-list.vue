@@ -115,7 +115,7 @@ import { formatDate, getFileSize } from "./utils";
 import { useLang } from "./hooks";
 
 // options
-defineOptions({ name: "McFileListV2" });
+defineOptions({ name: "McFileList" });
 
 // props
 const props = withDefaults(defineProps<FileListProps>(), {
