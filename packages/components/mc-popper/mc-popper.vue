@@ -23,7 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import type { PopperProps, PopperEmits, PopperInstance } from "./types";
+import type {
+  PopperProps,
+  PopperEmits,
+  PopperInstance,
+  PopperOptions,
+} from "./types";
 import { computed, onUnmounted, ref, watch, watchEffect } from "vue";
 import { createPopper, type Instance } from "@popperjs/core";
 import { bind, debounce, isNil, type DebouncedFunc } from "lodash-es";
@@ -66,7 +71,7 @@ const setVisible = (val: boolean) => {
 };
 
 // popper options
-const popperOptions = computed(() => ({
+const popperOptions = computed<PopperOptions>(() => ({
   placement: props.placement,
   modifiers: [
     {

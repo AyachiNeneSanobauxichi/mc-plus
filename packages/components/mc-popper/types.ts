@@ -2,12 +2,14 @@ import type { Placement, Options } from "@popperjs/core";
 
 export type PopperTrigger = "hover" | "click" | "manual";
 
+export type PopperOptions = Partial<Options>;
+
 export interface PopperProps {
   content?: string;
   trigger?: PopperTrigger;
   placement?: Placement;
   disabled?: boolean;
-  popperOptions?: Partial<Options>;
+  popperOptions?: PopperOptions;
   showTimeout?: number;
   hideTimeout?: number;
   transitionName?: string;

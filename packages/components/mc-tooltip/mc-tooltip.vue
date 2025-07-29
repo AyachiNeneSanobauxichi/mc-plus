@@ -1,6 +1,10 @@
 <template>
   <div class="mc-tooltip">
-    <mc-popper :placement="placement" :show-arrow="showArrow">
+    <mc-popper
+      :placement="placement"
+      :show-arrow="showArrow"
+      :popper-options="popperOptions"
+    >
       <slot>
         <mc-icon
           class="mc-tooltip-icon"
@@ -22,8 +26,10 @@
 
 <script setup lang="ts">
 import type { TooltipProps } from "./types";
+import type { PopperOptions } from "../mc-popper";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McPopper from "../mc-popper/mc-popper.vue";
+import { computed } from "vue";
 
 // options
 defineOptions({ name: "McTooltip" });
@@ -36,6 +42,11 @@ withDefaults(defineProps<TooltipProps>(), {
   showArrow: true,
   iconSize: 24,
 });
+
+// popper options
+const popperOptions = computed<PopperOptions>(() => ({
+  strategy: "fixed",
+}));
 </script>
 
 <style scoped lang="scss">
