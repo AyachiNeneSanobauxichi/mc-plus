@@ -26,6 +26,13 @@
                   </mc-select-option-plus>
                 </mc-select-group-plus>
               </template>
+              <template #selected-content="{ selectedOption }">
+                <div class="selected-content-wrapper">
+                  <mc-tooltip content="Hiraswa Yui" trigger="click">
+                    <div class="selected-content">{{ selectedOption }}</div>
+                  </mc-tooltip>
+                </div>
+              </template>
             </mc-select-plus>
           </mc-form-item>
         </mc-form>
@@ -50,6 +57,7 @@ import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import { McButton } from "mc-plus";
+import McTooltip from "../../../../components/mc-tooltip/mc-tooltip.vue";
 
 const visible = ref<boolean>(false);
 
@@ -123,5 +131,27 @@ const handleClose = () => {
   width: 100%;
   height: 1000px;
   background-color: lightblue;
+}
+
+.selected-content-wrapper {
+  width: 100%;
+  height: 100%;
+
+  :deep(.mc-popper) {
+    width: 100%;
+    .mc-popper-trigger {
+      width: 100% !important;
+    }
+
+    .mc-popper-popper {
+      width: fit-content !important;
+    }
+  }
+  .selected-content {
+    width: 200px;
+    height: 100%;
+    background-color: pink;
+    color: white;
+  }
 }
 </style>
