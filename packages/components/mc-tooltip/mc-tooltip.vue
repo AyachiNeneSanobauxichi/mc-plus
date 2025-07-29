@@ -4,6 +4,7 @@
       :placement="placement"
       :show-arrow="showArrow"
       :popper-options="popperOptions"
+      :trigger="trigger"
     >
       <slot>
         <mc-icon
@@ -41,6 +42,7 @@ withDefaults(defineProps<TooltipProps>(), {
   placement: "top",
   showArrow: true,
   iconSize: 24,
+  trigger: "hover",
 });
 
 // popper options

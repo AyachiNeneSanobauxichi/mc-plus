@@ -7,13 +7,13 @@
     <!-- <playground-count></playground-count> -->
     <!-- <playground-reset></playground-reset> -->
     <!-- <playground-copy></playground-copy> -->
-    <!-- <playground-lightbox></playground-lightbox> -->
+    <playground-lightbox></playground-lightbox>
     <!-- <playground-upload></playground-upload> -->
     <!-- <playground-select-plus></playground-select-plus> -->
     <!-- <playground-form></playground-form> -->
     <!-- <playground-progress-bar></playground-progress-bar> -->
     <!-- <playground-title></playground-title> -->
-    <playground-tooltip></playground-tooltip>
+    <!-- <playground-tooltip></playground-tooltip> -->
   </div>
 </template>
 
@@ -27,10 +27,10 @@
 // import PlaygroundUpload from "./views/mc-upload/playground-upload.vue";
 // import PlaygroundSelectPlus from "./views/mc-select-plus/playground-select-plus.vue";
 // import PlaygroundForm from "./views/mc-form/playground-form.vue";
-// import PlaygroundLightbox from "./views/mc-lightbox/playground-lightbox.vue";
+import PlaygroundLightbox from "./views/mc-lightbox/playground-lightbox.vue";
 // import PlaygroundProgressBar from "./views/mc-progress-bar/playground-progress-bar.vue";
 // import PlaygroundTitle from "./views/mc-title/playground-title.vue";
-import PlaygroundTooltip from "./views/mc-tooltip/playgroundTooltip.vue";
+// import PlaygroundTooltip from "./views/mc-tooltip/playgroundTooltip.vue";
 </script>
 
 <style scoped lang="scss">
