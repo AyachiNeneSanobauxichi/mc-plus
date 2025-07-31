@@ -57,8 +57,7 @@ export interface FormItemProps {
 }
 
 export interface FormInstance {
-  validate(callback?: FormValidateCallback): FormValidateResult;
-  validateField(
+  validate(
     keys?: string[],
     callback?: FormValidateCallback
   ): FormValidateResult;

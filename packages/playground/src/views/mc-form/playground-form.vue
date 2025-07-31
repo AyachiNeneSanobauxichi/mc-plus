@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FormRules } from "mc-plus";
+import type { FormInstance, FormRules } from "mc-plus";
 import { McButton } from "mc-plus";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
@@ -55,7 +55,7 @@ const formState = reactive<FormState>({
   },
 });
 
-const FormRef = ref<typeof McForm>();
+const FormRef = ref<FormInstance>();
 
 const rules = reactive<FormRules>({
   amount: [{ required: true }],
@@ -75,7 +75,7 @@ const handleSubmit = async () => {
 
 const handleValidateAmount = () => {
   try {
-    FormRef.value?.validateField(["amount"]);
+    FormRef.value?.validate(["amount"]);
   } catch (error) {
     console.log(error);
   }

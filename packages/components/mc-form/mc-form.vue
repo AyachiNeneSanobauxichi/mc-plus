@@ -64,8 +64,8 @@ const handleValidate = async (fields: FormItemContext[] = []) => {
   return Promise.reject(validationErrors);
 };
 
-// validate field
-const validateField = async (
+// validate fields
+const validateFields = async (
   keys: string[] = [],
   callback?: FormValidateCallback
 ) => {
@@ -92,9 +92,12 @@ const validateField = async (
 };
 
 // validate
-const validate = async (callback?: FormValidateCallback) => {
+const validate = async (
+  keys: string[] = [],
+  callback?: FormValidateCallback
+) => {
   try {
-    return await validateField([], callback);
+    return await validateFields(keys, callback);
   } catch (error) {
     if (props.scrollToError) {
       scrollToError(error as ValidateFieldsError[]);
@@ -146,7 +149,6 @@ provide<FormContext>(FORM_CTX_KEY, formContext);
 // expose
 defineExpose<FormInstance>({
   validate,
-  validateField,
   resetFields,
   clearValidate,
 });
