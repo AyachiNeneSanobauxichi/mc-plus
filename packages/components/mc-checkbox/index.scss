@@ -107,7 +107,7 @@ $text-icon: var(--mc-white);
     }
   }
 
-  &.mc-checkbox--error {
+  &.mc-form-validate-error {
     .mc-checkbox__checkbox {
       &.mc-checkbox__checkbox--partial,
       &.mc-checkbox__checkbox--checked {

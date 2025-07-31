@@ -36,13 +36,21 @@
               </template>
             </mc-select-plus>
           </mc-form-item>
+          <mc-form-item prop="confirm" label="Check">
+            <mc-checkbox v-model="formState.confirm" label="Confirm" />
+          </mc-form-item>
         </mc-form>
       </div>
       <div class="tool-bar">
-        <mc-button @click="handleSubmit">Validate</mc-button>
-        <mc-button @click="handleValidateAmount">Validate Amount</mc-button>
-        <mc-button @click="handleClear">Clear</mc-button>
-        <mc-button @click="handleClearAmount">Clear Amount</mc-button>
+        <div>
+          <span> Form State: {{ formState }} </span>
+        </div>
+        <div class="btn-group">
+          <mc-button @click="handleSubmit">Validate</mc-button>
+          <mc-button @click="handleValidateAmount">Validate Item</mc-button>
+          <mc-button @click="handleClear">Clear</mc-button>
+          <mc-button @click="handleClearAmount">Clear Item</mc-button>
+        </div>
       </div>
     </div>
   </div>
@@ -58,24 +66,32 @@ import McInput from "../../../../components/mc-input/mc-input.vue";
 import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
+import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
 
 type FormState = {
   amount: string;
   currency: string;
   address: string;
+  confirm: boolean;
 };
 const formState = reactive<FormState>({
   amount: "3000",
   currency: "USD",
   address: "US",
+  confirm: false,
 });
 
 const FormRef = ref<FormInstance>();
 
+const itemName = ref<string>("confirm");
+
 const rules = reactive<FormRules>({
-  amount: [{ required: true }],
-  currency: [{ required: true }],
-  address: [{ required: true }],
+  amount: [{ required: true, message: "Please input amount" }],
+  currency: [{ required: true, message: "Please select currency" }],
+  address: [{ required: true, message: "Please select address" }],
+  confirm: [
+    { required: true, message: "Please confirm", type: "enum", enum: [true] },
+  ],
 });
 
 const handleSubmit = async () => {
@@ -90,7 +106,7 @@ const handleSubmit = async () => {
 
 const handleValidateAmount = () => {
   try {
-    FormRef.value?.validate(["amount"]);
+    FormRef.value?.validate([itemName.value]);
   } catch (error) {
     console.log(error);
   }
@@ -105,7 +121,7 @@ const handleClear = () => {
 };
 
 const handleClearAmount = () => {
-  FormRef.value?.clearValidate(["amount"]);
+  FormRef.value?.clearValidate([itemName.value]);
 };
 
 const currencyList = reactive([
@@ -153,10 +169,15 @@ const currencyList = reactive([
   position: fixed;
   bottom: 0;
   left: 0;
-  display: flex;
-  align-items: center;
   padding: 16px 24px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
+  .btn-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
 }
 </style>

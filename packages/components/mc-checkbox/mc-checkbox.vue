@@ -3,11 +3,12 @@
     class="mc-checkbox"
     :class="{
       'mc-checkbox--disabled': isDisabled,
-      'mc-checkbox--error': isError,
+      [validateStyle]: validateStyle,
     }"
     :style="{ height: remarks ? '40px' : '24px' }"
   >
     <input
+      :id="formId"
       type="checkbox"
       class="mc-checkbox__input"
       :value="checkboxGroupValue"
@@ -37,8 +38,8 @@ import type {
   CheckboxGroupContext,
 } from "./types";
 import { computed, inject, watch } from "vue";
-import { includes } from "lodash-es";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { includes, isFunction } from "lodash-es";
+import { useFormDisabled, useFormValidate } from "../mc-form/hooks";
 import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
 
 // options
@@ -52,8 +53,8 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 // emits
 const emits = defineEmits<CheckboxEmits>();
 
-// form item
-const { formItem } = useFormItem();
+// use form validate hook
+const { formId, formItem, validateStyle } = useFormValidate();
 
 // form item disable
 const disabled = useFormDisabled();
@@ -69,18 +70,9 @@ const isDisabled = computed(
   () => disabled.value || checkboxGroupCtx?.disabled?.value
 );
 
-// error
-const isError = computed(
-  () =>
-    !isDisabled.value &&
-    formItem?.validateStatus === "error" &&
-    props.formValidate
-);
-
 // checkbox group
 const isCheckboxGroup = computed(
-  () =>
-    !!checkboxGroupCtx && typeof checkboxGroupCtx?.handleSelect === "function"
+  () => !!checkboxGroupCtx && isFunction(checkboxGroupCtx?.handleSelect)
 );
 
 // checkbox group value
