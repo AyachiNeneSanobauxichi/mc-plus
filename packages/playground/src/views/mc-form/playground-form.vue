@@ -39,6 +39,14 @@
           <mc-form-item prop="confirm" label="Check">
             <mc-checkbox v-model="formState.confirm" label="Confirm" />
           </mc-form-item>
+          <mc-form-item prop="gender" label="Gender">
+            <mc-radio-group v-model="formState.gender">
+              <div class="radio-content">
+                <mc-radio :value="0" label="Male" />
+                <mc-radio :value="1" label="Female" />
+              </div>
+            </mc-radio-group>
+          </mc-form-item>
         </mc-form>
       </div>
       <div class="tool-bar">
@@ -67,18 +75,22 @@ import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.v
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
+import McRadio from "../../../../components/mc-radio/mc-radio.vue";
+import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
 
 type FormState = {
   amount: string;
   currency: string;
   address: string;
   confirm: boolean;
+  gender: number;
 };
 const formState = reactive<FormState>({
   amount: "3000",
   currency: "USD",
   address: "US",
   confirm: false,
+  gender: 0,
 });
 
 const FormRef = ref<FormInstance>();
@@ -91,6 +103,14 @@ const rules = reactive<FormRules>({
   address: [{ required: true, message: "Please select address" }],
   confirm: [
     { required: true, message: "Please confirm", type: "enum", enum: [true] },
+  ],
+  gender: [
+    {
+      required: true,
+      message: "You can only select female",
+      type: "enum",
+      enum: [1],
+    },
   ],
 });
 
@@ -163,6 +183,12 @@ const currencyList = reactive([
     margin: 0 auto;
     margin-top: 320px;
   }
+
+  .radio-content {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
 }
 
 .tool-bar {
@@ -174,6 +200,7 @@ const currencyList = reactive([
   display: flex;
   flex-direction: column;
   gap: 16px;
+
   .btn-group {
     display: flex;
     align-items: center;

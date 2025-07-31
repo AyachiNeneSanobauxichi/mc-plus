@@ -195,9 +195,6 @@ const getFormItemValidateFunc = (rules: RuleItem[]) => {
   // validator
   const validator = new Schema({ [modelName]: rules });
 
-  console.log("currentValue", currentValue.value);
-  console.log("rules", rules);
-
   // validate function
   return validator
     .validate({ [modelName]: currentValue.value }, { firstFields: true })

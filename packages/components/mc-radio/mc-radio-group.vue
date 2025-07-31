@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-radio-group">
+  <div class="mc-radio-group" :id="formId">
     <slot></slot>
   </div>
 </template>
@@ -25,7 +25,7 @@ const props = defineProps<RadioGroupProps>();
 const emits = defineEmits<RadioGroupEmits>();
 
 // form item
-const { formItem } = useFormItem();
+const { formId, formItem } = useFormItem();
 
 // select
 const handleSelect = (val?: RadioValue) => {
@@ -43,7 +43,6 @@ watch(
 
 // provide
 provide<RadioGroupContext>(RADIO_INJECTION_KEY, {
-  hasError: computed(() => formItem?.validateStatus === "error"),
   modelValue: computed(() => props.modelValue),
   disabled: computed(() => props.disabled),
   handleSelect,

@@ -5,19 +5,21 @@
       :class="{
         'mc-radio-checked': isSelected,
         'mc-radio-disabled': isDisabled,
-        'mc-radio-error': isError,
+        [validateStyle]: validateStyle,
       }"
       @click="handleSelect"
     >
       <input type="radio" class="mc-radio-input" :disabled="isDisabled" />
-      <span class="mc-radio-circle"></span>
-      <div class="mc-radio-content">
-        <slot>{{ label }}</slot>
-      </div>
-      <div class="mc-radio-help" v-if="help || $slots.help">
-        <slot name="help">
-          <mc-tooltip :content="help" :icon-size="24" />
-        </slot>
+      <div class="mc-radio-wrapper">
+        <span class="mc-radio-circle"></span>
+        <div class="mc-radio-content">
+          <slot>{{ label }}</slot>
+        </div>
+        <div class="mc-radio-help" v-if="help || $slots.help">
+          <slot name="help">
+            <mc-tooltip :content="help" :icon-size="24" />
+          </slot>
+        </div>
       </div>
     </label>
     <div class="mc-radio-remark">
@@ -30,8 +32,8 @@
 import type { RadioGroupContext, RadioProps } from "./types";
 import { computed, inject } from "vue";
 import McTooltip from "../mc-tooltip/mc-tooltip.vue";
+import { useFormDisabled, useFormValidate } from "../mc-form/hooks";
 import { RADIO_INJECTION_KEY } from "./constant";
-import { useFormDisabled } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McRadio" });
@@ -58,10 +60,8 @@ const isDisabled = computed(() => {
   return radioContext?.disabled?.value || disabled.value;
 });
 
-// error
-const isError = computed(() => {
-  return !isDisabled.value && radioContext?.hasError?.value;
-});
+// use form validate hook
+const { validateStyle } = useFormValidate();
 
 // select event
 const handleSelect = () => {
