@@ -136,13 +136,13 @@ $error_color: var(--mc-error);
       }
     }
 
-    &.mc-select-trigger-error {
+    &.mc-form-validate-error {
       .mc-select-status-icon-wrapper {
         color: $error_color;
       }
     }
 
-    &.mc-select-trigger-success {
+    &.mc-form-validate-success {
       .mc-select-status-icon-wrapper {
         color: $success_color;
       }
@@ -150,7 +150,7 @@ $error_color: var(--mc-error);
   }
 
   &:not(.mc-select-expanded) {
-    .mc-select-trigger-error:not(.mc-select-trigger-disabled) {
+    .mc-select-trigger.mc-form-validate-error:not(.mc-select-trigger-disabled) {
       @include error-border;
       &.mc-select-trigger-hovering,
       &.mc-select-trigger-focused {

@@ -21,9 +21,8 @@
           :class="{
             'mc-select-trigger-focused': isFocused,
             'mc-select-trigger-disabled': isDisabled,
-            'mc-select-trigger-error': isError,
-            'mc-select-trigger-success': isSuccess,
             'mc-select-trigger-hovering': isHovering,
+            [validateStyle]: validateStyle,
           }"
           :style="{ width, height }"
           @click="handleTriggerClick"
@@ -31,8 +30,9 @@
           <div class="mc-select-input-wrapper" :style="{ cursor }">
             <input
               v-model="searchValue"
-              class="mc-select-input"
               ref="inputRef"
+              :id="formId"
+              class="mc-select-input"
               :style="{ width: hasSearchValue ? '100%' : '1px' }"
               :placeholder="placeholder"
               :readonly="!isSearch || isDisabled"
@@ -287,7 +287,7 @@ const {
 }, isDisabled);
 
 // use form validate
-const { formItem, validateStatus, isError, isSuccess, statusIcon } =
+const { formId, formItem, validateStatus, validateStyle, statusIcon } =
   useFormValidate();
 
 // watch model value
