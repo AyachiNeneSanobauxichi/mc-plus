@@ -78,12 +78,15 @@ const handleClear = () => {
 <style scoped lang="scss">
 .playground-form {
   .form-container {
-    width: 500px;
+    width: 60%;
+    height: 3500px;
+    margin: 0 auto;
+    margin-top: 320px;
   }
 }
 
 .tool-bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   display: flex;
