@@ -28,11 +28,12 @@
 </template>
 
 <script setup lang="ts">
+import type { FormRules } from "mc-plus";
+import { McButton } from "mc-plus";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import { reactive, ref } from "vue";
 import McInput from "../../../../components/mc-input/mc-input.vue";
-import { McButton, type FormRules } from "mc-plus";
 
 type FormState = {
   amount: string;
@@ -58,8 +59,8 @@ const rules = reactive<FormRules>({
 const handleSubmit = async () => {
   if (!FormRef.value) return;
   try {
-    await FormRef.value.validate();
-    console.log("Validate succeed");
+    const result = await FormRef.value.validate();
+    console.log("Validate succeed", result);
   } catch (error) {
     console.error("Validate failed: ", error);
   }
@@ -91,6 +92,8 @@ const handleClear = () => {
   left: 0;
   display: flex;
   align-items: center;
+  padding: 16px 24px;
+  box-sizing: border-box;
   gap: 16px;
 }
 </style>
