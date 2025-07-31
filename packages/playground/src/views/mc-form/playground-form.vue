@@ -2,7 +2,12 @@
   <div class="playground-form">
     <div>
       <div class="form-container">
-        <mc-form :model="formState" ref="FormRef" :rules="rules">
+        <mc-form
+          :model="formState"
+          ref="FormRef"
+          :rules="rules"
+          scroll-to-error
+        >
           <mc-form-item prop="amount" label="Amount" help="Please Input Amount">
             <template #tool>{{ "Clear" }}</template>
             <mc-input v-model="formState.amount" />

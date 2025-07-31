@@ -16,7 +16,7 @@ import type {
   FormValidateCallback,
 } from "./types";
 import type { ValidateFieldsError } from "async-validator";
-import { each, filter, includes, keys, size } from "lodash-es";
+import { each, filter, first, includes, keys, size } from "lodash-es";
 import { provide, reactive, toRefs, watchEffect } from "vue";
 import { FORM_CTX_KEY } from "./constanst";
 
@@ -27,6 +27,7 @@ defineOptions({ name: "McForm" });
 const props = withDefaults(defineProps<FormProps>(), {
   rules: () => ({}),
   direction: "vertical",
+  scrollToError: false,
 });
 
 // emit
@@ -47,27 +48,19 @@ const removeField = (field: FormItemContext) => {
   fields.splice(fields.indexOf(field), 1);
 };
 
-// text
-watchEffect(() => {
-  console.log("Fields: ", fields);
-});
-
 // handle validate
 const handleValidate = async (fields: FormItemContext[] = []) => {
-  let validationErrors: ValidateFieldsError = {};
+  let validationErrors: ValidateFieldsError[] = [];
 
   for (const field of fields) {
     try {
       await field.validate();
     } catch (error) {
-      validationErrors = {
-        ...validationErrors,
-        ...(error as ValidateFieldsError),
-      };
+      validationErrors.push(error as ValidateFieldsError);
     }
   }
 
-  if (!size(keys(validationErrors))) return true;
+  if (!size(validationErrors)) return true;
   return Promise.reject(validationErrors);
 };
 
@@ -100,9 +93,24 @@ const validateField = async (
 
 // validate
 const validate = async (callback?: FormValidateCallback) => {
-  return await validateField([], callback);
+  try {
+    return await validateField([], callback);
+  } catch (error) {
+    if (props.scrollToError) {
+      scrollToError(error as ValidateFieldsError[]);
+    }
+    return Promise.reject(error);
+  }
 };
 
+// scroll to error
+const scrollToError = (error: ValidateFieldsError[]) => {
+  const firstErrorProp = keys(first(error))[0];
+  const firstErrorField = getFieldsByProps(fields, [firstErrorProp]);
+  const firstErrorFieldId = firstErrorField[0].id;
+  const firstErrorFieldElement = document.getElementById(firstErrorFieldId);
+  firstErrorFieldElement?.scrollIntoView({ behavior: "smooth" });
+};
 // get fields by props
 const getFieldsByProps = (fields: FormItemContext[], props: string[]) => {
   return size(props)
@@ -137,6 +145,11 @@ defineExpose<FormInstance>({
   validateField,
   resetFields,
   clearValidate,
+});
+
+// text
+watchEffect(() => {
+  console.log("Fields: ", fields);
 });
 </script>
 

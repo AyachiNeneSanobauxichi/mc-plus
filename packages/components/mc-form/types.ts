@@ -34,6 +34,7 @@ export interface FormProps {
   rules?: FormRules;
   disabled?: boolean;
   direction?: FormDirection;
+  scrollToError?: boolean;
 }
 
 export interface FormEmits {
