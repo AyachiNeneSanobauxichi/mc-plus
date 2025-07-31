@@ -83,6 +83,7 @@ export interface FormContext extends FormProps {
 }
 
 export interface FormItemContext {
+  id: string;
   prop: string;
   disabled: boolean;
   validateStatus: ValidateStatus;

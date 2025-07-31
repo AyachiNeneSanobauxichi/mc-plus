@@ -1,7 +1,7 @@
 import type { ValidateStatus } from "./types";
-import { computed, inject } from "vue";
+import { computed, inject, onBeforeUnmount, onMounted } from "vue";
 import { isBoolean } from "lodash-es";
-import useProp from "@mc-plus/hooks/useProp";
+import { useId, useProp } from "@mc-plus/hooks";
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
 
 // form item hook
@@ -13,7 +13,24 @@ export function useFormItem() {
       ? void 0
       : inject(FORM_ITEM_CTX_KEY, void 0);
 
-  return { form, formItem };
+  // form id
+  const formId = useId();
+
+  // set form item id
+  onMounted(() => {
+    if (formItem) {
+      formItem.id = formId;
+    }
+  });
+
+  // remove form item id
+  onBeforeUnmount(() => {
+    if (formItem) {
+      formItem.id = "";
+    }
+  });
+
+  return { form, formItem, formId };
 }
 
 // form disabled hook
