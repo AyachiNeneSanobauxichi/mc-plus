@@ -82,7 +82,9 @@ export interface FormContext extends FormProps {
   removeField(field: FormItemContext): void;
 }
 
-export interface FormItemContext extends FormItemProps {
+export interface FormItemContext {
+  prop: string;
+  disabled: boolean;
   validateStatus: ValidateStatus;
   validate(
     trigger?: FormItemTrigger,

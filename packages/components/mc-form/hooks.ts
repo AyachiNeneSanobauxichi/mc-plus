@@ -1,8 +1,8 @@
+import type { ValidateStatus } from "./types";
 import { computed, inject } from "vue";
 import { isBoolean } from "lodash-es";
 import useProp from "@mc-plus/hooks/useProp";
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
-import type { ValidateStatus } from "./types";
 
 // form item hook
 export function useFormItem() {

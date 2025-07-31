@@ -15,9 +15,9 @@ import type {
   FormProps,
   FormValidateCallback,
 } from "./types";
-import { each, filter, includes, keys, size } from "lodash-es";
 import type { ValidateFieldsError } from "async-validator";
-import { provide, reactive, toRefs } from "vue";
+import { each, filter, includes, keys, size } from "lodash-es";
+import { provide, reactive, toRefs, watchEffect } from "vue";
 import { FORM_CTX_KEY } from "./constanst";
 
 // options
@@ -46,6 +46,11 @@ const removeField = (field: FormItemContext) => {
   if (!field.prop) return;
   fields.splice(fields.indexOf(field), 1);
 };
+
+// text
+watchEffect(() => {
+  console.log("Fields: ", fields);
+});
 
 // handle validate
 const handleValidate = async (fields: FormItemContext[] = []) => {

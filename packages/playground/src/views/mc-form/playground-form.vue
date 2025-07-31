@@ -21,7 +21,9 @@
       </div>
       <div class="tool-bar">
         <mc-button @click="handleSubmit">Validate</mc-button>
+        <mc-button @click="handleValidateAmount">Validate Amount</mc-button>
         <mc-button @click="handleClear">Clear</mc-button>
+        <mc-button @click="handleClearAmount">Clear Amount</mc-button>
       </div>
     </div>
   </div>
@@ -66,6 +68,13 @@ const handleSubmit = async () => {
   }
 };
 
+const handleValidateAmount = () => {
+  try {
+    FormRef.value?.validateField(["amount"]);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const handleClear = () => {
   if (!FormRef.value) return;
   try {
@@ -73,6 +82,10 @@ const handleClear = () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const handleClearAmount = () => {
+  FormRef.value?.clearValidate(["amount"]);
 };
 </script>
 

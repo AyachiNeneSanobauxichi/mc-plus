@@ -60,7 +60,6 @@ import {
   onMounted,
   onUnmounted,
   nextTick,
-  toRefs,
 } from "vue";
 import {
   cloneDeep,
@@ -84,6 +83,7 @@ defineOptions({ name: "McFormItem" });
 
 // porps
 const props = withDefaults(defineProps<FormItemProps>(), {
+  prop: "",
   disabled: false,
   required: false,
 });
@@ -285,7 +285,7 @@ const clearValidate = () => {
 
 // form item context
 const formItemCtx = reactive({
-  ...toRefs(props),
+  prop: computed(() => props.prop ?? ""),
   validateStatus: computed(() => validateStatus.value),
   disabled: isDisabled,
   validate: handleValidate,
