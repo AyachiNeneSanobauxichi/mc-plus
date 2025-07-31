@@ -14,6 +14,7 @@ export interface InputProps {
   modelValue?: string | undefined;
   width?: string;
   height?: string;
+  id?: string;
   type?: InputType;
   disabled?: boolean;
   clearable?: boolean;

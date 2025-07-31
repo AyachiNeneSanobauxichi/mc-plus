@@ -24,6 +24,7 @@
     <input
       class="mc-input__inner"
       ref="inputRef"
+      :id="inputId"
       :type="isPassword ? (passwordVisible ? 'text' : 'password') : 'text'"
       :disabled="isDisabled"
       :readonly="readonly"
@@ -75,7 +76,7 @@ import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import { useFocusController, useHover } from "@mc-plus/hooks";
+import { useFocusController, useHover, useId } from "@mc-plus/hooks";
 import { OTP_CTX_KEY } from "../mc-otp/constant";
 import {
   currencyFormatter,
@@ -107,6 +108,9 @@ const emit = defineEmits<InputEmits>();
 
 // input ref
 const inputRef = ref<HTMLInputElement>();
+
+// input id
+const inputId = useId();
 
 // native input value
 const nativeValue = computed(() =>
