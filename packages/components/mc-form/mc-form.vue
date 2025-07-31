@@ -109,7 +109,11 @@ const scrollToError = (error: ValidateFieldsError[]) => {
   const firstErrorField = getFieldsByProps(fields, [firstErrorProp]);
   const firstErrorFieldId = firstErrorField[0].id;
   const firstErrorFieldElement = document.getElementById(firstErrorFieldId);
-  firstErrorFieldElement?.scrollIntoView({ behavior: "smooth" });
+  firstErrorFieldElement?.scrollIntoView({
+    block: "center",
+    inline: "center",
+    behavior: "smooth",
+  });
 };
 // get fields by props
 const getFieldsByProps = (fields: FormItemContext[], props: string[]) => {
