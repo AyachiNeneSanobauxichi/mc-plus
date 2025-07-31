@@ -6,7 +6,7 @@
       'mc-input--focused': isFocused,
       'mc-input--inputed': modelValue,
       'mc-input-hovering': isHovering,
-      [`mc-input--${validateStyle}`]: validateStyle,
+      [validateStyle]: validateStyle,
     }"
     :style="{ width, height }"
     ref="wrapperRef"
@@ -39,14 +39,9 @@
       @keydown.delete="handleDelete"
       @paste="handlePaste"
     />
-    <template v-if="showStatusIcon">
-      <div
-        class="mc-input__status"
-        :class="[
-          isError ? 'mc-input__status--error' : 'mc-input__status--success',
-        ]"
-      >
-        <mc-icon :name="isError ? 'Reject_02' : 'Accept_02'" :size="24" />
+    <template v-if="statusIcon">
+      <div class="mc-input__status" :class="validateStyle">
+        <mc-icon :name="statusIcon" :size="24" />
       </div>
     </template>
     <template v-if="type === 'password'">
@@ -75,7 +70,7 @@ import type { OtpContext } from "../mc-otp/types";
 import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { useFormDisabled, useFormValidate } from "../mc-form/hooks";
 import { useFocusController, useHover } from "@mc-plus/hooks";
 import { OTP_CTX_KEY } from "../mc-otp/constant";
 import {
@@ -184,41 +179,13 @@ const isDisabled = computed(() => {
 // password
 const isPassword = computed(() => props.type === "password");
 
-// form item context
-const { formItem, formId } = useFormItem();
-
-// form item validate status style
-const validateStyle = computed(() => {
-  if (otpContext?.hasError.value) {
-    return "error";
-  }
-
-  switch (formItem?.validateStatus) {
-    case "success":
-      return "success";
-    case "error":
-      return "error";
-    default:
-      return "";
-  }
+// use form validate hook
+const { formItem, formId, validateStyle, statusIcon } = useFormValidate(() => {
+  if (otpContext?.hasError.value) return "error";
 });
 
 // otp context
 const otpContext = inject<OtpContext | undefined>(OTP_CTX_KEY, void 0);
-
-// error
-const isError = computed(() => validateStyle.value === "error");
-
-// success
-const isSuccess = computed(() => validateStyle.value === "success");
-
-// show status icon
-const showStatusIcon = computed(
-  () =>
-    props.formValidate &&
-    !isDisabled.value &&
-    (isError.value || isSuccess.value)
-);
 
 // use focus controller
 const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(

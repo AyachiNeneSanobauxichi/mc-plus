@@ -1,17 +1,14 @@
 import type { ValidateStatus } from "./types";
+import type { Ref } from "vue";
 import { computed, inject, onBeforeUnmount, onMounted } from "vue";
-import { isBoolean } from "lodash-es";
+import { isFunction } from "lodash-es";
 import { useId, useProp } from "@mc-plus/hooks";
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constanst";
 
 // form item hook
 export function useFormItem() {
   const form = inject(FORM_CTX_KEY, void 0);
-  const formItemValidate = useProp<boolean>("formValidate");
-  const formItem =
-    isBoolean(formItemValidate.value) && !formItemValidate.value
-      ? void 0
-      : inject(FORM_ITEM_CTX_KEY, void 0);
+  const formItem = inject(FORM_ITEM_CTX_KEY, void 0);
 
   // form id
   const formId = useId();
@@ -34,45 +31,44 @@ export function useFormItem() {
 }
 
 // form disabled hook
-export function useFormDisabled() {
+export function useFormDisabled(externalDisabled?: Ref<boolean>) {
   const form = inject(FORM_CTX_KEY, void 0);
   const formItem = inject(FORM_ITEM_CTX_KEY, void 0);
-  const disabled = useProp<boolean>("disabled");
+  const disabledProp = useProp<boolean>("disabled");
 
-  return computed(() => disabled.value || form?.disabled || formItem?.disabled);
+  return computed(
+    () =>
+      disabledProp.value ||
+      form?.disabled ||
+      formItem?.disabled ||
+      externalDisabled?.value
+  );
 }
 
 // form validate hook
-export function useFormValidate() {
+export function useFormValidate(validator?: () => ValidateStatus | void) {
   // form item context
-  const { formItem } = useFormItem();
-
-  // form validate style prop
-  const formValidateStyle = useProp<boolean>("formValidateStyle");
+  const { form, formItem, formId } = useFormItem();
 
   // form item validate status
   const validateStatus = computed<ValidateStatus>(() => {
-    if (!formValidateStyle.value) return "init";
-    else return formItem?.validateStatus || "init";
+    if (isFunction(validator)) {
+      const result = validator();
+      if (result === "error") return "error";
+    }
+    return formItem?.validateStatus || "init";
   });
 
-  // form item validate status style
-  const validateStyle = computed<"success" | "error" | "validating">(() => {
-    switch (validateStatus.value) {
-      case "success":
-        return "success";
-      case "error":
-        return "error";
-      default:
-        return "validating";
-    }
-  });
+  // form validate style
+  const validateStyle = computed<string>(
+    () => `mc-form-validate-${validateStatus.value}`
+  );
 
   // error
-  const isError = computed<boolean>(() => validateStyle.value === "error");
+  const isError = computed<boolean>(() => validateStatus.value === "error");
 
   // success
-  const isSuccess = computed<boolean>(() => validateStyle.value === "success");
+  const isSuccess = computed<boolean>(() => validateStatus.value === "success");
 
   // status icon
   const statusIcon = computed<"Accept_02" | "Reject_02" | undefined>(() => {
@@ -82,7 +78,9 @@ export function useFormValidate() {
   });
 
   return {
+    form,
     formItem,
+    formId,
     validateStatus,
     validateStyle,
     isError,
