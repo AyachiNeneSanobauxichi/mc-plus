@@ -10,6 +10,11 @@ $text-color-remarks: var(--mc-gray-500);
 $text-color-disabled: var(--mc-gray-400);
 $text-icon: var(--mc-white);
 
+@mixin border_hover {
+  border-width: 2px;
+  border-color: $border-color-hover;
+}
+
 .mc-checkbox {
   display: flex;
   align-items: start;
@@ -42,7 +47,7 @@ $text-icon: var(--mc-white);
       border: 1px solid $border-color;
 
       &:hover {
-        border: 2px solid $border-color-hover;
+        @include border_hover;
       }
 
       &.mc-checkbox__checkbox--partial::after {
@@ -95,7 +100,7 @@ $text-icon: var(--mc-white);
     }
   }
 
-  &.mc-checkbox--disabled {
+  &.mc-checkbox-disabled {
     .mc-checkbox__checkbox {
       background-color: $bg-color-disabled !important;
       border-color: $bg-color-disabled !important;
@@ -114,6 +119,14 @@ $text-icon: var(--mc-white);
         background-color: $bg-color-error !important;
       }
       border-color: $bg-color-error !important;
+    }
+  }
+
+  &.mc-checkbox-focused:not(.mc-checkbox-disabled):not(
+      .mc-form-validate-error
+    ) {
+    .mc-checkbox__checkbox {
+      @include border_hover;
     }
   }
 }

@@ -39,9 +39,9 @@
             </mc-select-plus>
           </mc-form-item>
           <!-- checkbox -->
-          <!-- <mc-form-item prop="confirm" label="Check">
-            <mc-checkbox v-model="formState.confirm" label="Confirm" />
-          </mc-form-item> -->
+          <mc-form-item prop="checkbox" label="Check">
+            <mc-checkbox v-model="formState.checkbox" label="Confirm" />
+          </mc-form-item>
           <!-- radio -->
           <!-- <mc-form-item prop="gender" label="Gender">
             <mc-radio-group v-model="formState.gender">
@@ -63,7 +63,7 @@
       </div>
       <div class="tool-bar">
         <div>
-          <span> Form State: {{ formState }} </span>
+          <span>Form State: {{ formState }} </span>
           <div>
             <span>Text Field: </span>
             <mc-input v-model="itemName" />
@@ -91,7 +91,7 @@ import McInput from "../../../../components/mc-input/mc-input.vue";
 import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
-// import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
+import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
 // import McRadio from "../../../../components/mc-radio/mc-radio.vue";
 // import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
 import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
@@ -105,7 +105,7 @@ type FormState = {
 };
 const formState = reactive<FormState>({
   input: "1000",
-  select: "",
+  select: "JPY",
   checkbox: false,
   radio: 1,
   switch: false,
@@ -125,7 +125,13 @@ const rules = reactive<FormRules>({
     { required: true, message: "Please select currency", trigger: "input" },
   ],
   checkbox: [
-    { required: true, message: "Do not confirm", type: "enum", enum: [false] },
+    {
+      required: true,
+      message: "Do not confirm",
+      type: "enum",
+      enum: [false],
+      trigger: ["input"],
+    },
   ],
   radio: [
     {
@@ -177,7 +183,7 @@ const handleClearAmount = () => {
 };
 
 const handleChangeValue = () => {
-  formState.select = "";
+  formState.checkbox = !formState.checkbox;
 };
 
 const currencyList = reactive([

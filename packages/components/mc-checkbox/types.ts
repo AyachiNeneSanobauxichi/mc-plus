@@ -13,8 +13,10 @@ export interface CheckboxProps {
 }
 
 export interface CheckboxEmits {
-  (e: "change", val: boolean): void;
   (e: "update:modelValue", val: boolean): void;
+  (e: "change", val: boolean): void;
+  (e: "focus", event: FocusEvent): void;
+  (e: "blur", event: FocusEvent): void;
 }
 
 export interface CheckboxInstance {
@@ -27,8 +29,8 @@ export interface CheckboxGroupProps {
 }
 
 export interface CheckboxGroupEmits {
-  (e: "change", val: CheckboxValue[]): void;
   (e: "update:modelValue", val: CheckboxValue[]): void;
+  (e: "change", val: CheckboxValue[]): void;
 }
 
 export interface CheckboxGroupContext {
