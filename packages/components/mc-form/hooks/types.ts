@@ -9,8 +9,8 @@ export interface McFormIdHookOptions {
 
 // form disabled hook options
 export interface McFormDisabledHookOptions {
-  form: FormContext;
-  formItem: FormItemContext;
+  form?: FormContext;
+  formItem?: FormItemContext;
   externalDisabled?: Ref<boolean>;
 }
 

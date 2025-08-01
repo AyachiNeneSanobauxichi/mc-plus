@@ -8,11 +8,13 @@
           :rules="rules"
           scroll-to-error
         >
-          <mc-form-item prop="amount" label="Amount" help="Please Input Amount">
+          <!-- input -->
+          <!-- <mc-form-item prop="amount" label="Amount" help="Please Input Amount">
             <template #tool>{{ "Clear" }}</template>
             <mc-input v-model="formState.amount" />
-          </mc-form-item>
-          <mc-form-item
+          </mc-form-item> -->
+          <!-- select -->
+          <!-- <mc-form-item
             prop="currency"
             label="Currency"
             desc="Please input currency"
@@ -35,21 +37,24 @@
                 </mc-select-group-plus>
               </template>
             </mc-select-plus>
-          </mc-form-item>
-          <mc-form-item prop="confirm" label="Check">
+          </mc-form-item> -->
+          <!-- checkbox -->
+          <!-- <mc-form-item prop="confirm" label="Check">
             <mc-checkbox v-model="formState.confirm" label="Confirm" />
-          </mc-form-item>
-          <mc-form-item prop="gender" label="Gender">
+          </mc-form-item> -->
+          <!-- radio -->
+          <!-- <mc-form-item prop="gender" label="Gender">
             <mc-radio-group v-model="formState.gender">
               <div class="radio-content">
                 <mc-radio :value="0" label="Male" />
                 <mc-radio :value="1" label="Female" />
               </div>
             </mc-radio-group>
-          </mc-form-item>
-          <mc-form-item prop="open" label="Open">
+          </mc-form-item> -->
+          <!-- switch -->
+          <mc-form-item prop="switch" label="Open">
             <mc-switch
-              v-model="formState.open"
+              v-model="formState.switch"
               active-text="On"
               inactive-text="Off"
             />
@@ -59,6 +64,10 @@
       <div class="tool-bar">
         <div>
           <span> Form State: {{ formState }} </span>
+          <div>
+            <span>Text Field: </span>
+            <mc-input v-model="itemName" />
+          </div>
         </div>
         <div class="btn-group">
           <mc-button @click="handleSubmit">Validate</mc-button>
@@ -73,48 +82,49 @@
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "mc-plus";
-import { reactive, ref } from "vue";
-import { McButton } from "mc-plus";
+import { computed, reactive, ref } from "vue";
+import { McButton, McInput } from "mc-plus";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
-import McInput from "../../../../components/mc-input/mc-input.vue";
-import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
-import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
-import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
-import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
-import McRadio from "../../../../components/mc-radio/mc-radio.vue";
-import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
+// import McInput from "../../../../components/mc-input/mc-input.vue";
+// import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
+// import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
+// import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
+// import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
+// import McRadio from "../../../../components/mc-radio/mc-radio.vue";
+// import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
 import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
 
 type FormState = {
-  amount: string;
-  currency: string;
-  address: string;
-  confirm: boolean;
-  gender: number;
-  open: boolean;
+  input: string;
+  select: string;
+  checkbox: boolean;
+  radio: number;
+  switch: boolean;
 };
 const formState = reactive<FormState>({
-  amount: "3000",
-  currency: "USD",
-  address: "US",
-  confirm: false,
-  gender: 1,
-  open: true,
+  input: "",
+  select: "",
+  checkbox: false,
+  radio: 1,
+  switch: true,
 });
 
 const FormRef = ref<FormInstance>();
 
-const itemName = ref<string>("confirm");
+const itemName = ref<string>();
+
+const textItemName = computed(() => {
+  return itemName.value ? [itemName.value] : [];
+});
 
 const rules = reactive<FormRules>({
-  amount: [{ required: true, message: "Please input amount" }],
-  currency: [{ required: true, message: "Please select currency" }],
-  address: [{ required: true, message: "Please select address" }],
-  confirm: [
+  input: [{ required: true, message: "Please input amount" }],
+  select: [{ required: true, message: "Please select currency" }],
+  checkbox: [
     { required: true, message: "Do not confirm", type: "enum", enum: [false] },
   ],
-  gender: [
+  radio: [
     {
       required: true,
       message: "You can only select female",
@@ -122,7 +132,7 @@ const rules = reactive<FormRules>({
       enum: [1],
     },
   ],
-  open: [
+  switch: [
     {
       required: true,
       message: "Please select open",
@@ -144,7 +154,7 @@ const handleSubmit = async () => {
 
 const handleValidateAmount = () => {
   try {
-    FormRef.value?.validate([itemName.value]);
+    FormRef.value?.validate(textItemName.value);
   } catch (error) {
     console.log(error);
   }
@@ -159,7 +169,7 @@ const handleClear = () => {
 };
 
 const handleClearAmount = () => {
-  FormRef.value?.clearValidate([itemName.value]);
+  FormRef.value?.clearValidate(textItemName.value);
 };
 
 const currencyList = reactive([

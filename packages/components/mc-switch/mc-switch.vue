@@ -64,9 +64,9 @@
 
 <script setup lang="ts">
 import type { SwitchEmits, SwitchProps } from "./types";
-import { computed, useSlots, watch } from "vue";
+import { computed, useSlots } from "vue";
+import { useFormValidate } from "../mc-form/hooks";
 import McSwitchLabel from "./mc-switch-label.vue";
-import { useFormDisabled, useFormValidate } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McSwitch" });
@@ -112,18 +112,7 @@ const isLeft = computed(() => labelPosition.value === "left");
 const isRight = computed(() => labelPosition.value === "right");
 
 // form item
-const { formId, formItem, validateStyle } = useFormValidate();
-
-// form item disable
-const isDisabled = useFormDisabled();
-
-// model value changed
-watch(
-  () => props.modelValue,
-  () => {
-    formItem?.validate("change");
-  }
-);
+const { formId, formDisabled: isDisabled, validateStyle } = useFormValidate();
 </script>
 
 <style scoped lang="scss">

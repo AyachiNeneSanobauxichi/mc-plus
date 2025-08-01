@@ -1,7 +1,8 @@
 import type { ValidateStatus } from "../types";
 import type { McFormValidateHookOptions } from "./types";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { isFunction } from "lodash-es";
+import { useProp } from "@mc-plus/hooks";
 import useFormItem from "./useFormItem";
 
 // form validate hook
@@ -9,7 +10,7 @@ const useFormValidate = ({
   externalId,
   externalDisabled,
   validator,
-}: McFormValidateHookOptions) => {
+}: McFormValidateHookOptions = {}) => {
   // form item context
   const { form, formItem, formId, formDisabled } = useFormItem({
     externalId,
@@ -42,6 +43,17 @@ const useFormValidate = ({
     if (isSuccess.value) return "Accept_02";
     return void 0;
   });
+
+  // model value
+  const modelValue = useProp<any>("modelValue");
+
+  // model value changed
+  watch(
+    () => modelValue.value,
+    () => {
+      formItem?.validate("change");
+    }
+  );
 
   return {
     form,
