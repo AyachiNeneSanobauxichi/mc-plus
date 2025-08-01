@@ -16,6 +16,7 @@ $text-icon: var(--mc-white);
 }
 
 .mc-checkbox {
+  width: fit-content;
   display: flex;
   align-items: start;
   position: relative;

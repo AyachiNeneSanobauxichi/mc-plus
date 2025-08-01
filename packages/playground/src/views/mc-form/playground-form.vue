@@ -38,9 +38,50 @@
               </template>
             </mc-select-plus>
           </mc-form-item>
+          <!-- multi select -->
+          <mc-form-item
+            prop="multiSelect"
+            label="Currency"
+            desc="Please select currency"
+          >
+            <mc-select-plus
+              v-model="formState.multiSelect"
+              placeholder="Please select currency"
+              search
+              clearable
+              multiple
+            >
+              <template v-for="item in currencyList" :key="item.value">
+                <mc-select-group-plus :label="item.label">
+                  <mc-select-option-plus
+                    v-for="child in item.children"
+                    :key="child.value"
+                    :label="child.label"
+                    :value="child.value"
+                  >
+                  </mc-select-option-plus>
+                </mc-select-group-plus>
+              </template>
+            </mc-select-plus>
+          </mc-form-item>
           <!-- checkbox -->
           <mc-form-item prop="checkbox" label="Check">
-            <mc-checkbox v-model="formState.checkbox" label="Confirm" />
+            <mc-checkbox
+              v-model="formState.checkbox"
+              label="Confirm"
+              content="Confirm"
+              remarks="Please confirm"
+            />
+          </mc-form-item>
+          <!-- checkbox group -->
+          <mc-form-item prop="checkboxGroup" label="Currency">
+            <mc-checkbox-group v-model="formState.checkboxGroup">
+              <div class="checkbox-group-content">
+                <mc-checkbox :value="1" label="BTC" />
+                <mc-checkbox :value="2" label="ETH" />
+                <mc-checkbox :value="3" label="JPY" />
+              </div>
+            </mc-checkbox-group>
           </mc-form-item>
           <!-- radio -->
           <mc-form-item prop="radio" label="Gender">
@@ -91,6 +132,7 @@ import McInput from "../../../../components/mc-input/mc-input.vue";
 import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
+import McCheckboxGroup from "../../../../components/mc-checkbox/mc-checkbox-group.vue";
 import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
 import McRadio from "../../../../components/mc-radio/mc-radio.vue";
 import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
@@ -99,14 +141,18 @@ import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
 type FormState = {
   input: string;
   select: string;
+  multiSelect: string[];
   checkbox: boolean;
+  checkboxGroup: number[];
   radio: number;
   switch: boolean;
 };
 const formState = reactive<FormState>({
   input: "1000",
   select: "JPY",
+  multiSelect: ["BTC", "ETH"],
   checkbox: false,
+  checkboxGroup: [1, 2],
   radio: 1,
   switch: false,
 });
@@ -124,13 +170,27 @@ const rules = reactive<FormRules>({
   select: [
     { required: true, message: "Please select currency", trigger: "input" },
   ],
+  multiSelect: [
+    {
+      required: true,
+      message: "Please select currency",
+      trigger: "input",
+    },
+  ],
   checkbox: [
     {
       required: true,
       message: "Do not confirm",
       type: "enum",
       enum: [false],
-      trigger: ["input"],
+      trigger: "input",
+    },
+  ],
+  checkboxGroup: [
+    {
+      required: true,
+      message: "Please select currency",
+      trigger: "input",
     },
   ],
   radio: [
@@ -139,7 +199,7 @@ const rules = reactive<FormRules>({
       message: "You can only select female",
       type: "enum",
       enum: [1],
-      trigger: ["input"],
+      trigger: "input",
     },
   ],
   switch: [
@@ -148,7 +208,7 @@ const rules = reactive<FormRules>({
       message: "You can`t open switch",
       type: "enum",
       enum: [false],
-      trigger: ["input"],
+      trigger: "input",
     },
   ],
 });
@@ -228,6 +288,12 @@ const currencyList = reactive([
   }
 
   .radio-content {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .checkbox-group-content {
     display: flex;
     align-items: center;
     gap: 32px;

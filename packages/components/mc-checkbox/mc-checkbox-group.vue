@@ -5,16 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, watch } from "vue";
-import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
 import type {
   CheckboxGroupContext,
   CheckboxGroupEmits,
   CheckboxGroupProps,
   CheckboxValue,
 } from "./types";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { computed, provide } from "vue";
 import { indexOf } from "lodash-es";
+import { useFormValidate } from "../mc-form/hooks";
+import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
 
 // options
 defineOptions({ name: "McCheckboxGroup" });
@@ -28,12 +28,12 @@ const props = withDefaults(defineProps<CheckboxGroupProps>(), {
 // emits
 const emits = defineEmits<CheckboxGroupEmits>();
 
-// disabled
-const isDisabled = useFormDisabled();
+// form item
+const { formDisabled } = useFormValidate();
 
 // select
 const handleSelect = (val?: CheckboxValue) => {
-  if (isDisabled.value || !val) return;
+  if (formDisabled.value || !val) return;
 
   const newModelValue = [...props.modelValue];
   const index = indexOf(newModelValue, val);
@@ -54,17 +54,6 @@ provide<CheckboxGroupContext>(CHECKBOX_GROUP_INJECTION_KEY, {
   disabled: computed(() => props.disabled),
   handleSelect,
 });
-
-// form item
-const { formItem } = useFormItem();
-
-// model value changed
-watch(
-  () => props.modelValue,
-  () => {
-    formItem?.validate("change");
-  }
-);
 </script>
 
 <style scoped lang="scss"></style>
