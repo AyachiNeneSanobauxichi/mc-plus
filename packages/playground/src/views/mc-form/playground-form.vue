@@ -14,13 +14,13 @@
             <mc-input v-model="formState.input" />
           </mc-form-item>
           <!-- select -->
-          <!-- <mc-form-item
-            prop="currency"
+          <mc-form-item
+            prop="select"
             label="Currency"
             desc="Please input currency"
           >
             <mc-select-plus
-              v-model="formState.currency"
+              v-model="formState.select"
               placeholder="Please select currency"
               search
               clearable
@@ -37,7 +37,7 @@
                 </mc-select-group-plus>
               </template>
             </mc-select-plus>
-          </mc-form-item> -->
+          </mc-form-item>
           <!-- checkbox -->
           <!-- <mc-form-item prop="confirm" label="Check">
             <mc-checkbox v-model="formState.confirm" label="Confirm" />
@@ -88,9 +88,9 @@ import { McButton } from "mc-plus";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import McInput from "../../../../components/mc-input/mc-input.vue";
-// import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
-// import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
-// import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
+import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
+import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
+import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 // import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
 // import McRadio from "../../../../components/mc-radio/mc-radio.vue";
 // import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
@@ -104,7 +104,7 @@ type FormState = {
   switch: boolean;
 };
 const formState = reactive<FormState>({
-  input: "",
+  input: "1000",
   select: "",
   checkbox: false,
   radio: 1,
@@ -121,7 +121,9 @@ const textItemName = computed(() => {
 
 const rules = reactive<FormRules>({
   input: [{ required: true, message: "Please input amount", trigger: "input" }],
-  select: [{ required: true, message: "Please select currency" }],
+  select: [
+    { required: true, message: "Please select currency", trigger: "input" },
+  ],
   checkbox: [
     { required: true, message: "Do not confirm", type: "enum", enum: [false] },
   ],
@@ -175,7 +177,7 @@ const handleClearAmount = () => {
 };
 
 const handleChangeValue = () => {
-  formState.input = "1000";
+  formState.select = "";
 };
 
 const currencyList = reactive([
