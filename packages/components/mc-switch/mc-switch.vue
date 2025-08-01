@@ -20,6 +20,7 @@
         isActive ? 'mc-switch-actived' : 'mc-switch-inactive',
         { 'mc-switch-disabled': isDisabled },
         `mc-switch-${size}`,
+        validateStyle,
       ]"
       :style="{ width, height }"
     >
@@ -65,7 +66,7 @@
 import type { SwitchEmits, SwitchProps } from "./types";
 import { computed, useSlots, watch } from "vue";
 import McSwitchLabel from "./mc-switch-label.vue";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { useFormDisabled, useFormValidate } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McSwitch" });
@@ -111,7 +112,7 @@ const isLeft = computed(() => labelPosition.value === "left");
 const isRight = computed(() => labelPosition.value === "right");
 
 // form item
-const { formId, formItem } = useFormItem();
+const { formId, formItem, validateStyle } = useFormValidate();
 
 // form item disable
 const isDisabled = useFormDisabled();

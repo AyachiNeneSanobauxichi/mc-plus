@@ -98,9 +98,9 @@ const formState = reactive<FormState>({
   amount: "3000",
   currency: "USD",
   address: "US",
-  confirm: true,
+  confirm: false,
   gender: 1,
-  open: false,
+  open: true,
 });
 
 const FormRef = ref<FormInstance>();
@@ -112,7 +112,7 @@ const rules = reactive<FormRules>({
   currency: [{ required: true, message: "Please select currency" }],
   address: [{ required: true, message: "Please select address" }],
   confirm: [
-    { required: true, message: "Please confirm", type: "enum", enum: [true] },
+    { required: true, message: "Do not confirm", type: "enum", enum: [false] },
   ],
   gender: [
     {
