@@ -47,6 +47,13 @@
               </div>
             </mc-radio-group>
           </mc-form-item>
+          <mc-form-item prop="open" label="Open">
+            <mc-switch
+              v-model="formState.open"
+              active-text="On"
+              inactive-text="Off"
+            />
+          </mc-form-item>
         </mc-form>
       </div>
       <div class="tool-bar">
@@ -77,6 +84,7 @@ import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-
 import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
 import McRadio from "../../../../components/mc-radio/mc-radio.vue";
 import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
+import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
 
 type FormState = {
   amount: string;
@@ -84,13 +92,15 @@ type FormState = {
   address: string;
   confirm: boolean;
   gender: number;
+  open: boolean;
 };
 const formState = reactive<FormState>({
   amount: "3000",
   currency: "USD",
   address: "US",
-  confirm: false,
-  gender: 0,
+  confirm: true,
+  gender: 1,
+  open: false,
 });
 
 const FormRef = ref<FormInstance>();
@@ -110,6 +120,14 @@ const rules = reactive<FormRules>({
       message: "You can only select female",
       type: "enum",
       enum: [1],
+    },
+  ],
+  open: [
+    {
+      required: true,
+      message: "Please select open",
+      type: "enum",
+      enum: [true],
     },
   ],
 });

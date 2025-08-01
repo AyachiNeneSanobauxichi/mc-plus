@@ -24,6 +24,7 @@
       :style="{ width, height }"
     >
       <input
+        :id="formId"
         type="checkbox"
         class="mc-switch-input"
         :disabled="disabled"
@@ -110,7 +111,7 @@ const isLeft = computed(() => labelPosition.value === "left");
 const isRight = computed(() => labelPosition.value === "right");
 
 // form item
-const { formItem } = useFormItem();
+const { formId, formItem } = useFormItem();
 
 // form item disable
 const isDisabled = useFormDisabled();
