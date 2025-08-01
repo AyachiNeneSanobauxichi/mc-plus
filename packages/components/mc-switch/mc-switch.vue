@@ -31,6 +31,7 @@
         :disabled="disabled"
         :value="modelValue"
         @change="handleClick"
+        @keypress.enter.prevent.stop="handleClick"
       />
       <div class="mc-switch-inner">
         <template v-if="isActive">
@@ -86,14 +87,23 @@ const emits = defineEmits<SwitchEmits>();
 // slots
 const slots = useSlots();
 
+// form item
+const {
+  formItem,
+  formId,
+  formDisabled: isDisabled,
+  validateStyle,
+} = useFormValidate();
+
 // active
 const isActive = computed(() => props.modelValue);
 
 // click
-const handleClick = () => {
+const handleClick = async () => {
   if (isDisabled.value) return;
   emits("update:modelValue", !props.modelValue);
   emits("change", !props.modelValue);
+  formItem?.validate("input");
 };
 
 // label position
@@ -110,9 +120,6 @@ const isLeft = computed(() => labelPosition.value === "left");
 
 // right
 const isRight = computed(() => labelPosition.value === "right");
-
-// form item
-const { formId, formDisabled: isDisabled, validateStyle } = useFormValidate();
 </script>
 
 <style scoped lang="scss">

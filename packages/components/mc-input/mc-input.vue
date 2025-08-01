@@ -70,7 +70,7 @@ import type { OtpContext } from "../mc-otp/types";
 import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { useFormDisabled, useFormValidate } from "../mc-form/hooks";
+import { useFormValidate } from "../mc-form/hooks";
 import { useFocusController, useHover } from "@mc-plus/hooks";
 import { OTP_CTX_KEY } from "../mc-otp/constant";
 import {
@@ -165,7 +165,8 @@ const passwordVisible = ref<boolean>(false);
 // const showClear = computed(() => props.clearable && !!innerValue.value);
 
 // form item disabled
-const formItemDisabled = useFormDisabled();
+// const formItemDisabled = useFormDisabled();
+const formItemDisabled = ref(false);
 
 // disabled
 const isDisabled = computed(() => {

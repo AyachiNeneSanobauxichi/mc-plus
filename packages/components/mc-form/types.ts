@@ -7,7 +7,7 @@ import type { Ref } from "vue";
 
 export type FormDirection = "horizontal" | "vertical";
 
-export type FormItemTrigger = "change" | "blur";
+export type FormItemTrigger = "change" | "blur" | "input";
 
 export interface FormItemRule extends RuleItem {
   trigger?: FormItemTrigger | FormItemTrigger[];

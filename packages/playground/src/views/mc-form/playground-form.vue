@@ -83,10 +83,10 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "mc-plus";
 import { computed, reactive, ref } from "vue";
-import { McButton, McInput } from "mc-plus";
+import { McButton } from "mc-plus";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
-// import McInput from "../../../../components/mc-input/mc-input.vue";
+import McInput from "../../../../components/mc-input/mc-input.vue";
 // import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 // import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 // import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
@@ -135,9 +135,10 @@ const rules = reactive<FormRules>({
   switch: [
     {
       required: true,
-      message: "Please select open",
+      message: "You can`t open switch",
       type: "enum",
-      enum: [true],
+      enum: [false],
+      trigger: ["input"],
     },
   ],
 });
