@@ -21,6 +21,11 @@ export interface RadioGroupContext {
   handleSelect: (val?: RadioValue) => void;
 }
 
+export interface RadioEmits {
+  (e: "focus", event: FocusEvent): void;
+  (e: "blur", event: FocusEvent): void;
+}
+
 export interface RadioGroupEmits {
   (e: "update:modelValue", val?: RadioValue): void;
   (e: "change", val?: RadioValue): void;

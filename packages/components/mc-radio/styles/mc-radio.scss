@@ -106,6 +106,12 @@ $core-color: var(--mc-white);
         }
       }
     }
+
+    &.mc-radio-focused:not(.mc-radio-disabled):not(.mc-form-validate-error) {
+      .mc-radio-circle {
+        border-width: 2px;
+      }
+    }
   }
 
   .mc-radio-remark {

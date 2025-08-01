@@ -43,14 +43,14 @@
             <mc-checkbox v-model="formState.checkbox" label="Confirm" />
           </mc-form-item>
           <!-- radio -->
-          <!-- <mc-form-item prop="gender" label="Gender">
-            <mc-radio-group v-model="formState.gender">
+          <mc-form-item prop="radio" label="Gender">
+            <mc-radio-group v-model="formState.radio">
               <div class="radio-content">
                 <mc-radio :value="0" label="Male" />
                 <mc-radio :value="1" label="Female" />
               </div>
             </mc-radio-group>
-          </mc-form-item> -->
+          </mc-form-item>
           <!-- switch -->
           <mc-form-item prop="switch" label="Open">
             <mc-switch
@@ -92,8 +92,8 @@ import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.v
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
 import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
-// import McRadio from "../../../../components/mc-radio/mc-radio.vue";
-// import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
+import McRadio from "../../../../components/mc-radio/mc-radio.vue";
+import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
 import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
 
 type FormState = {
@@ -139,6 +139,7 @@ const rules = reactive<FormRules>({
       message: "You can only select female",
       type: "enum",
       enum: [1],
+      trigger: ["input"],
     },
   ],
   switch: [
