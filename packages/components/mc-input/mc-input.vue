@@ -164,14 +164,10 @@ const passwordVisible = ref<boolean>(false);
 // show clear
 // const showClear = computed(() => props.clearable && !!innerValue.value);
 
-// form item disabled
-// const formItemDisabled = useFormDisabled();
-const formItemDisabled = ref(false);
-
 // disabled
 const isDisabled = computed(() => {
   return (
-    formItemDisabled.value ||
+    formDisabled.value ||
     !!otpContext?.disabled.value ||
     !!inputGroupCtx?.inputGroupDisabled.value
   );
@@ -181,9 +177,12 @@ const isDisabled = computed(() => {
 const isPassword = computed(() => props.type === "password");
 
 // use form validate hook
-const { formItem, formId, validateStyle, statusIcon } = useFormValidate(() => {
-  if (otpContext?.hasError.value) return "error";
-});
+const { formItem, formId, formDisabled, validateStyle, statusIcon } =
+  useFormValidate({
+    validator: () => {
+      if (otpContext?.hasError.value) return "error";
+    },
+  });
 
 // otp context
 const otpContext = inject<OtpContext | undefined>(OTP_CTX_KEY, void 0);
@@ -267,6 +266,7 @@ const handleInput = async (e: Event) => {
   await nextTick();
   setNativeValue();
   setCursor();
+  formItem?.validate("input");
 };
 
 // change event
@@ -293,7 +293,6 @@ watch(
 // model value changed
 watch(nativeValue, () => {
   setNativeValue();
-  formItem?.validate("change");
 });
 
 // expose

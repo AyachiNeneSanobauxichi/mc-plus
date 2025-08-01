@@ -9,10 +9,10 @@
           scroll-to-error
         >
           <!-- input -->
-          <!-- <mc-form-item prop="amount" label="Amount" help="Please Input Amount">
+          <mc-form-item prop="input" label="Amount" help="Please Input Amount">
             <template #tool>{{ "Clear" }}</template>
-            <mc-input v-model="formState.amount" />
-          </mc-form-item> -->
+            <mc-input v-model="formState.input" />
+          </mc-form-item>
           <!-- select -->
           <!-- <mc-form-item
             prop="currency"
@@ -74,6 +74,7 @@
           <mc-button @click="handleValidateAmount">Validate Item</mc-button>
           <mc-button @click="handleClear">Clear</mc-button>
           <mc-button @click="handleClearAmount">Clear Item</mc-button>
+          <mc-button @click="handleChangeValue">Change Value</mc-button>
         </div>
       </div>
     </div>
@@ -107,7 +108,7 @@ const formState = reactive<FormState>({
   select: "",
   checkbox: false,
   radio: 1,
-  switch: true,
+  switch: false,
 });
 
 const FormRef = ref<FormInstance>();
@@ -119,7 +120,7 @@ const textItemName = computed(() => {
 });
 
 const rules = reactive<FormRules>({
-  input: [{ required: true, message: "Please input amount" }],
+  input: [{ required: true, message: "Please input amount", trigger: "input" }],
   select: [{ required: true, message: "Please select currency" }],
   checkbox: [
     { required: true, message: "Do not confirm", type: "enum", enum: [false] },
@@ -171,6 +172,10 @@ const handleClear = () => {
 
 const handleClearAmount = () => {
   FormRef.value?.clearValidate(textItemName.value);
+};
+
+const handleChangeValue = () => {
+  formState.input = "1000";
 };
 
 const currencyList = reactive([
