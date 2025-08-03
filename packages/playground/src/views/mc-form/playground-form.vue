@@ -43,6 +43,7 @@
             prop="multiSelect"
             label="Currency"
             desc="Please select currency"
+            :disabled="disable"
           >
             <mc-select-plus
               v-model="formState.multiSelect"
@@ -116,6 +117,7 @@
           <mc-button @click="handleClear">Clear</mc-button>
           <mc-button @click="handleClearAmount">Clear Item</mc-button>
           <mc-button @click="handleChangeValue">Change Value</mc-button>
+          <mc-button @click="handleDisable">Disable</mc-button>
         </div>
       </div>
     </div>
@@ -245,6 +247,12 @@ const handleClearAmount = () => {
 
 const handleChangeValue = () => {
   formState.checkbox = !formState.checkbox;
+};
+
+const disable = ref<boolean>(false);
+
+const handleDisable = () => {
+  disable.value = !disable.value;
 };
 
 const currencyList = reactive([

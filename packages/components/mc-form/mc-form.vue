@@ -17,7 +17,7 @@ import type {
 } from "./types";
 import type { ValidateFieldsError } from "async-validator";
 import { each, filter, first, includes, keys, size } from "lodash-es";
-import { provide, reactive, toRefs, watchEffect } from "vue";
+import { provide, reactive, toRefs } from "vue";
 import { FORM_CTX_KEY } from "./constanst";
 
 // options
@@ -151,11 +151,6 @@ defineExpose<FormInstance>({
   validate,
   resetFields,
   clearValidate,
-});
-
-// text
-watchEffect(() => {
-  console.log("Fields: ", fields);
 });
 </script>
 

@@ -18,6 +18,7 @@ export interface McFormDisabledHookOptions {
 export interface McFormItemHookOptions {
   externalDisabled?: McFormDisabledHookOptions["externalDisabled"];
   externalId?: McFormIdHookOptions["externalId"];
+  disableValidation?: Ref<boolean>;
 }
 
 // form validate hook options

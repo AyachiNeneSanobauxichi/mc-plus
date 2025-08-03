@@ -47,7 +47,7 @@ defineOptions({ name: MC_CHECKBOX });
 
 // props
 const props = withDefaults(defineProps<CheckboxProps>(), {
-  formValidate: true,
+  disableValidation: false,
 });
 
 // emits
