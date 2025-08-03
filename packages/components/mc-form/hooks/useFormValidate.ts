@@ -52,7 +52,7 @@ const useFormValidate = ({
         if (isSuccess && isSuccess.value) return "Accept_02";
         return false;
       })
-    : false;
+    : (false as const);
 
   // enable validation
   if (formItem) {
