@@ -2,9 +2,14 @@
   <div class="playground-checkbox">
     <div class="display">Form State: {{ formState }}</div>
     <div>
-      <mc-form :model="formState" :rules="rules" direction="horizontal">
+      <mc-form
+        :model="formState"
+        :rules="rules"
+        direction="horizontal"
+        :disabled="disabled"
+      >
         <mc-form-item label="Students" prop="students">
-          <mc-checkbox-group v-model="formState.students" :disabled="disabled">
+          <mc-checkbox-group v-model="formState.students">
             <mc-checkbox
               content="Hirasawa Yui"
               remarks="k-on"

@@ -13,11 +13,10 @@ import type {
 } from "./types";
 import { computed, provide } from "vue";
 import { indexOf } from "lodash-es";
-import { useFormValidate } from "../mc-form/hooks";
-import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
+import { CHECKBOX_GROUP_INJECTION_KEY, MC_CHECKBOX_GROUP } from "./constant";
 
 // options
-defineOptions({ name: "McCheckboxGroup" });
+defineOptions({ name: MC_CHECKBOX_GROUP });
 
 // props
 const props = withDefaults(defineProps<CheckboxGroupProps>(), {
@@ -28,12 +27,9 @@ const props = withDefaults(defineProps<CheckboxGroupProps>(), {
 // emits
 const emits = defineEmits<CheckboxGroupEmits>();
 
-// form item
-const { formDisabled } = useFormValidate();
-
 // select
 const handleSelect = (val?: CheckboxValue) => {
-  if (formDisabled.value || !val) return;
+  if (!val) return;
 
   const newModelValue = [...props.modelValue];
   const index = indexOf(newModelValue, val);

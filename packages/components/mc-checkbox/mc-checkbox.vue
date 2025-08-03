@@ -5,7 +5,7 @@
       class="mc-checkbox-wrapper"
       :class="{
         'mc-checkbox-disabled': isDisabled,
-        'mc-checkbox-checked': checkboxGroupValue,
+        'mc-checkbox-checked': isChecked,
         'mc-checkbox-partial': partial,
         'mc-checkbox-focused': isFocused,
         [validateStyle]: validateStyle,
@@ -17,7 +17,7 @@
         :id="formId"
         type="checkbox"
         class="mc-checkbox-input"
-        :value="checkboxGroupValue"
+        :value="isChecked"
         :disabled="isDisabled"
         @keypress.prevent.stop.enter="handleClick"
         @focus="handleFocus"
@@ -35,16 +35,12 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  CheckboxProps,
-  CheckboxEmits,
-  CheckboxGroupContext,
-} from "./types";
-import { computed, inject, nextTick, ref } from "vue";
-import { includes, isFunction } from "lodash-es";
+import type { CheckboxProps, CheckboxEmits } from "./types";
+import { computed, nextTick, ref } from "vue";
 import { useFocusController } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
-import { CHECKBOX_GROUP_INJECTION_KEY, MC_CHECKBOX } from "./constant";
+import { MC_CHECKBOX } from "./constant";
+import { useCheckboxGroup } from "./hooks";
 
 // options
 defineOptions({ name: MC_CHECKBOX });
@@ -57,9 +53,6 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 // emits
 const emits = defineEmits<CheckboxEmits>();
 
-// use form validate hook
-const { formId, formItem, formDisabled, validateStyle } = useFormValidate();
-
 // checkbox input ref
 const checkboxInputRef = ref<HTMLInputElement>();
 
@@ -71,39 +64,36 @@ const {
   handleBlur,
 } = useFocusController(checkboxInputRef);
 
-// checkbox group
-const checkboxGroupCtx = inject<CheckboxGroupContext | undefined>(
-  CHECKBOX_GROUP_INJECTION_KEY,
-  void 0
-);
+// use checkbox group hook
+const {
+  checkboxGroupDisabled,
+  isCheckboxGroup,
+  isCheckboxSelected,
+  handleCheckboxSelect,
+} = useCheckboxGroup();
 
-// disable
-const isDisabled = computed(
-  () => formDisabled.value || checkboxGroupCtx?.disabled?.value
-);
+// use form validate hook
+const {
+  formId,
+  formItem,
+  formDisabled: isDisabled,
+  validateStyle,
+} = useFormValidate({
+  externalDisabled: checkboxGroupDisabled,
+});
 
-// checkbox group
-const isCheckboxGroup = computed(
-  () => !!checkboxGroupCtx && isFunction(checkboxGroupCtx?.handleSelect)
-);
-
-// checkbox group value
-const checkboxGroupValue = computed<boolean>(() => {
-  if (isCheckboxGroup.value) {
-    return (
-      !!props.value &&
-      includes(checkboxGroupCtx?.modelValue?.value, props.value)
-    );
-  } else {
-    return !!props.modelValue;
-  }
+// is checked
+const isChecked = computed<boolean>(() => {
+  return isCheckboxGroup.value
+    ? isCheckboxSelected(props.value)
+    : !!props.modelValue;
 });
 
 // click
 const handleClick = async () => {
   if (isDisabled.value) return;
   if (isCheckboxGroup.value) {
-    checkboxGroupCtx?.handleSelect(props.value);
+    handleCheckboxSelect(props.value);
   } else {
     emits("update:modelValue", !props.modelValue);
     emits("change", !props.modelValue);
