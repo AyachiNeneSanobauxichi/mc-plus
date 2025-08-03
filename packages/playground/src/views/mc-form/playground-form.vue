@@ -43,7 +43,6 @@
             prop="multiSelect"
             label="Currency"
             desc="Please select currency"
-            :disabled="disable"
           >
             <mc-select-plus
               v-model="formState.multiSelect"
@@ -85,7 +84,7 @@
             </mc-checkbox-group>
           </mc-form-item>
           <!-- radio -->
-          <mc-form-item prop="radio" label="Gender">
+          <mc-form-item prop="radio" label="Gender" :disabled="disable">
             <mc-radio-group v-model="formState.radio">
               <div class="radio-content">
                 <mc-radio :value="0" label="Male" />

@@ -33,26 +33,26 @@ const useFormValidate = ({
   // form validate style
   const validateStyle = validateStatus
     ? computed<string>(() => `mc-form-validate-${validateStatus.value}`)
-    : void 0;
+    : "";
 
   // error
   const isError = validateStatus
     ? computed<boolean>(() => validateStatus.value === "error")
-    : void 0;
+    : false;
 
   // success
   const isSuccess = validateStatus
     ? computed<boolean>(() => validateStatus.value === "success")
-    : void 0;
+    : false;
 
   // status icon
   const statusIcon = validateStatus
-    ? computed<"Accept_02" | "Reject_02" | undefined>(() => {
-        if (isError?.value) return "Reject_02";
-        if (isSuccess?.value) return "Accept_02";
-        return void 0;
+    ? computed<"Accept_02" | "Reject_02" | false>(() => {
+        if (isError && isError.value) return "Reject_02";
+        if (isSuccess && isSuccess.value) return "Accept_02";
+        return false;
       })
-    : void 0;
+    : false;
 
   // enable validation
   if (formItem) {

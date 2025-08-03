@@ -12,7 +12,7 @@
         'mc-radio-focused': isFocused,
         [validateStyle]: validateStyle,
       }"
-      @click="handleSelect"
+      @click.prevent="handleSelect"
     >
       <input
         ref="inputRef"
@@ -76,13 +76,14 @@ const isSelected = computed(() => {
   return radioContext?.modelValue?.value === props.value;
 });
 
-// disabled
-const isDisabled = computed(() => {
-  return radioContext?.disabled?.value || formDisabled.value;
-});
-
 // use form validate hook
-const { formItem, formDisabled, validateStyle } = useFormValidate();
+const {
+  formItem,
+  formDisabled: isDisabled,
+  validateStyle,
+} = useFormValidate({
+  externalDisabled: computed(() => !!radioContext?.disabled?.value),
+});
 
 // select event
 const handleSelect = async () => {
