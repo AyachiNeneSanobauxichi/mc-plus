@@ -10,7 +10,7 @@
         'mc-checkbox-focused': isFocused,
         [validateStyle]: validateStyle,
       }"
-      @click.prevent.stop="handleClick"
+      @click.prevent="handleClick"
     >
       <input
         ref="checkboxInputRef"

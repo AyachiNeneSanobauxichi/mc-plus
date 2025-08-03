@@ -10,7 +10,7 @@
     :style="{ height, width }"
     :aria-selected="isSelected"
     @mouseenter="handleHover"
-    @click.stop="handleSelect"
+    @click="handleSelect"
   >
     <slot :is-actived="isActived">
       <template v-if="isMulti">
