@@ -4,6 +4,7 @@ $bg_active_color: var(--mc-teal-500);
 $bg_inactive_color: var(--mc-gray-600);
 $bg_disabled_color: var(--mc-gray-400);
 $bg_ball_color: var(--mc-white);
+$bg_error: var(--mc-error);
 $text_color: var(--mc-white);
 
 .mc-switch {
@@ -99,6 +100,11 @@ $text_color: var(--mc-white);
           right: calc(100% - 24px - 4px);
         }
       }
+    }
+
+    /* error */
+    &.mc-form-validate-error:not(.mc-switch-disabled) {
+      background-color: $bg_error;
     }
 
     /* disabled */

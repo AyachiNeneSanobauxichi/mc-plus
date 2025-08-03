@@ -1,119 +1,106 @@
 <template>
-  <div
-    class="mc-checkbox"
-    :class="{
-      'mc-checkbox--disabled': isDisabled,
-      'mc-checkbox--error': isError,
-    }"
-    :style="{ height: remarks ? '40px' : '24px' }"
-  >
-    <input
-      type="checkbox"
-      class="mc-checkbox__input"
-      :value="checkboxGroupValue"
-      :disabled="isDisabled"
-    />
-    <label class="mc-checkbox__wrapper">
-      <span
-        class="mc-checkbox__checkbox"
-        @click="handleClick"
-        :class="{
-          'mc-checkbox__checkbox--checked': !!checkboxGroupValue,
-          'mc-checkbox__checkbox--partial': partial,
-        }"
-      ></span>
-      <div class="mc-checkbox__content">
-        <span class="mc-checkbox__content-text">{{ content }}</span>
-        <span class="mc-checkbox__content-remarks">{{ remarks }}</span>
+  <div class="mc-checkbox">
+    <label
+      ref="checkboxRef"
+      class="mc-checkbox-wrapper"
+      :class="{
+        'mc-checkbox-disabled': isDisabled,
+        'mc-checkbox-checked': isChecked,
+        'mc-checkbox-partial': partial,
+        'mc-checkbox-focused': isFocused,
+        [validateStyle]: validateStyle,
+      }"
+      @click.prevent="handleClick"
+    >
+      <input
+        ref="checkboxInputRef"
+        :id="formId"
+        type="checkbox"
+        class="mc-checkbox-input"
+        :value="isChecked"
+        :disabled="isDisabled"
+        @keypress.prevent.stop.enter="handleClick"
+        @focus="handleFocus"
+        @blur="handleBlur"
+      />
+      <div class="mc-checkbox-box"></div>
+      <div class="mc-checkbox-content" v-if="content || $slots.default">
+        <slot>{{ content }}</slot>
       </div>
     </label>
+    <div class="mc-checkbox-remarks" v-if="remarks || $slots.remarks">
+      <slot name="remarks">{{ remarks }}</slot>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type {
-  CheckboxProps,
-  CheckboxEmits,
-  CheckboxGroupContext,
-} from "./types";
-import { computed, inject, watch } from "vue";
-import { includes } from "lodash-es";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
+import type { CheckboxProps, CheckboxEmits } from "./types";
+import { computed, nextTick, ref } from "vue";
+import { useFocusController } from "@mc-plus/hooks";
+import { useFormValidate } from "../mc-form/hooks";
+import { MC_CHECKBOX } from "./constant";
+import { useCheckboxGroup } from "./hooks";
 
 // options
-defineOptions({ name: "McCheckbox" });
+defineOptions({ name: MC_CHECKBOX });
 
 // props
 const props = withDefaults(defineProps<CheckboxProps>(), {
-  formValidate: true,
+  disableValidation: false,
 });
 
 // emits
 const emits = defineEmits<CheckboxEmits>();
 
-// form item
-const { formItem } = useFormItem();
+// checkbox input ref
+const checkboxInputRef = ref<HTMLInputElement>();
 
-// form item disable
-const disabled = useFormDisabled();
+// use focus controller
+const {
+  wrapperRef: checkboxRef,
+  isFocused,
+  handleFocus,
+  handleBlur,
+} = useFocusController(checkboxInputRef);
 
-// checkbox group
-const checkboxGroupCtx = inject<CheckboxGroupContext | undefined>(
-  CHECKBOX_GROUP_INJECTION_KEY,
-  void 0
-);
+// use checkbox group hook
+const {
+  checkboxGroupDisabled,
+  isCheckboxGroup,
+  isCheckboxSelected,
+  handleCheckboxSelect,
+} = useCheckboxGroup();
 
-// disable
-const isDisabled = computed(
-  () => disabled.value || checkboxGroupCtx?.disabled?.value
-);
+// use form validate hook
+const {
+  formId,
+  formItem,
+  formDisabled: isDisabled,
+  validateStyle,
+} = useFormValidate({
+  externalDisabled: checkboxGroupDisabled,
+});
 
-// error
-const isError = computed(
-  () =>
-    !isDisabled.value &&
-    formItem?.validateStatus === "error" &&
-    props.formValidate
-);
-
-// checkbox group
-const isCheckboxGroup = computed(
-  () =>
-    !!checkboxGroupCtx && typeof checkboxGroupCtx?.handleSelect === "function"
-);
-
-// checkbox group value
-const checkboxGroupValue = computed(() => {
-  if (isCheckboxGroup.value) {
-    return (
-      props.value && includes(checkboxGroupCtx?.modelValue?.value, props.value)
-    );
-  } else {
-    return props.modelValue;
-  }
+// is checked
+const isChecked = computed<boolean>(() => {
+  return isCheckboxGroup.value
+    ? isCheckboxSelected(props.value)
+    : !!props.modelValue;
 });
 
 // click
-const handleClick = () => {
+const handleClick = async () => {
   if (isDisabled.value) return;
   if (isCheckboxGroup.value) {
-    checkboxGroupCtx?.handleSelect(props.value);
+    handleCheckboxSelect(props.value);
   } else {
     emits("update:modelValue", !props.modelValue);
     emits("change", !props.modelValue);
+    await nextTick();
+    formItem?.validate("input");
   }
 };
-
-// model value changed
-watch(
-  () => checkboxGroupValue.value,
-  () => {
-    if (props.formValidate) {
-      formItem?.validate("change");
-    }
-  }
-);
 </script>
 
 <style scoped lang="scss">

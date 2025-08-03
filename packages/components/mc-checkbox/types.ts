@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref } from "vue";
+import type { ComputedRef } from "vue";
 
 export type CheckboxValue = string | number;
 
@@ -8,17 +8,15 @@ export interface CheckboxProps {
   content?: string;
   remarks?: string;
   partial?: boolean;
-  formValidate?: boolean;
+  disableValidation?: boolean;
   value?: CheckboxValue;
 }
 
 export interface CheckboxEmits {
-  (e: "change", val: boolean): void;
   (e: "update:modelValue", val: boolean): void;
-}
-
-export interface CheckboxInstance {
-  ref: Ref<HTMLButtonElement | void>;
+  (e: "change", val: boolean): void;
+  (e: "focus", event: FocusEvent): void;
+  (e: "blur", event: FocusEvent): void;
 }
 
 export interface CheckboxGroupProps {
@@ -27,8 +25,8 @@ export interface CheckboxGroupProps {
 }
 
 export interface CheckboxGroupEmits {
-  (e: "change", val: CheckboxValue[]): void;
   (e: "update:modelValue", val: CheckboxValue[]): void;
+  (e: "change", val: CheckboxValue[]): void;
 }
 
 export interface CheckboxGroupContext {

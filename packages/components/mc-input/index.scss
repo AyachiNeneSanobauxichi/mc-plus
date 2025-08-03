@@ -85,18 +85,18 @@ $font_size: var(--mc-font-size-base);
   }
 
   // error
-  &.mc-input--error:not(.mc-input--disabled) {
+  &.mc-form-validate-error:not(.mc-input--disabled) {
     border-color: $border_color_error;
     outline-color: $border_color_error;
   }
 
   // status icon
   .mc-input__status {
-    &--error {
+    &.mc-form-validate-error {
       color: $text_color_error;
     }
 
-    &--success {
+    &.mc-form-validate-success {
       color: $text_color_success;
     }
   }

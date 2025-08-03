@@ -21,9 +21,8 @@
           :class="{
             'mc-select-trigger-focused': isFocused,
             'mc-select-trigger-disabled': isDisabled,
-            'mc-select-trigger-error': isError,
-            'mc-select-trigger-success': isSuccess,
             'mc-select-trigger-hovering': isHovering,
+            [validateStyle]: validateStyle,
           }"
           :style="{ width, height }"
           @click="handleTriggerClick"
@@ -31,8 +30,9 @@
           <div class="mc-select-input-wrapper" :style="{ cursor }">
             <input
               v-model="searchValue"
-              class="mc-select-input"
               ref="inputRef"
+              :id="formId"
+              class="mc-select-input"
               :style="{ width: hasSearchValue ? '100%' : '1px' }"
               :placeholder="placeholder"
               :readonly="!isSearch || isDisabled"
@@ -181,7 +181,7 @@ import type {
 } from "./types";
 import type { Component } from "vue";
 import type { TagEmphasis } from "../mc-tag";
-import { computed, h, onMounted, provide, ref, watch } from "vue";
+import { computed, h, nextTick, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
 import { useClickOutside, useFocusController, useHover } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
@@ -259,8 +259,22 @@ const {
   clearSearchValue,
 } = useSearch(selectOptions);
 
+// use hover
+const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
+  useOptionHover(filteredOptions);
+
+// use form validate
+const {
+  formId,
+  formItem,
+  formDisabled,
+  validateStatus,
+  validateStyle,
+  statusIcon,
+} = useFormValidate();
+
 // use select disable
-const { isDisabled } = useSelectDisable(() => {
+const { isDisabled } = useSelectDisable(formDisabled, () => {
   toggleExpand(false);
   clearSearchValue();
 });
@@ -269,35 +283,20 @@ const { isDisabled } = useSelectDisable(() => {
 const { isExpanded, popperRef, popperOptions, toggleExpand } =
   useExpand(isDisabled);
 
-// use hover
-const { hoverOption, setHoverOption, handlePressArrow, clearHoverOption } =
-  useOptionHover(filteredOptions);
-
 // use clear
 const {
   showClearIcon: _showClearIcon,
   mouseOverIcon,
   clear,
-} = useClear(() => {
+} = useClear(async () => {
   if (isDisabled.value) return;
   selectedOption.value = isMulti.value ? [] : void 0;
   clearSearchValue();
   toggleExpand(false);
   dispatchEvents();
+  await nextTick();
+  formItem?.validate("input");
 }, isDisabled);
-
-// use form validate
-const { formItem, validateStatus, isError, isSuccess, statusIcon } =
-  useFormValidate();
-
-// watch model value
-watch(
-  () => props.modelValue,
-  () => {
-    // validate form item
-    formItem?.validate("change");
-  }
-);
 
 // use input group ctx
 useInputGroupCtx({
@@ -341,7 +340,7 @@ const getOptionLabel = (value: SelectPlusValue) => {
 };
 
 // handle select
-const handleSelect = (value: SelectPlusValue) => {
+const handleSelect = async (value: SelectPlusValue) => {
   // clear search value
   clearSearchValue();
 
@@ -367,6 +366,10 @@ const handleSelect = (value: SelectPlusValue) => {
 
   // dispatch events
   dispatchEvents();
+
+  // validate form item input
+  await nextTick();
+  formItem?.validate("input");
 };
 
 // selected content

@@ -4,7 +4,7 @@ import type { ValidateStatus } from "../mc-form";
 export type InputGroupPosition = "prefix" | "suffix";
 
 export type _InputGroupStatus = {
-  validateStatus: Ref<ValidateStatus>;
+  validateStatus?: Ref<ValidateStatus>;
   isExpanded?: Ref<boolean>;
   isFocused: Ref<boolean>;
   isHovering: Ref<boolean>;

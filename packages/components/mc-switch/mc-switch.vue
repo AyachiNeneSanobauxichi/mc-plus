@@ -20,15 +20,18 @@
         isActive ? 'mc-switch-actived' : 'mc-switch-inactive',
         { 'mc-switch-disabled': isDisabled },
         `mc-switch-${size}`,
+        validateStyle,
       ]"
       :style="{ width, height }"
     >
       <input
+        :id="formId"
         type="checkbox"
         class="mc-switch-input"
         :disabled="disabled"
         :value="modelValue"
         @change="handleClick"
+        @keypress.enter.prevent.stop="handleClick"
       />
       <div class="mc-switch-inner">
         <template v-if="isActive">
@@ -62,9 +65,9 @@
 
 <script setup lang="ts">
 import type { SwitchEmits, SwitchProps } from "./types";
-import { computed, useSlots, watch } from "vue";
+import { computed, useSlots } from "vue";
+import { useFormValidate } from "../mc-form/hooks";
 import McSwitchLabel from "./mc-switch-label.vue";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
 
 // options
 defineOptions({ name: "McSwitch" });
@@ -84,14 +87,23 @@ const emits = defineEmits<SwitchEmits>();
 // slots
 const slots = useSlots();
 
+// form item
+const {
+  formItem,
+  formId,
+  formDisabled: isDisabled,
+  validateStyle,
+} = useFormValidate();
+
 // active
 const isActive = computed(() => props.modelValue);
 
 // click
-const handleClick = () => {
+const handleClick = async () => {
   if (isDisabled.value) return;
   emits("update:modelValue", !props.modelValue);
   emits("change", !props.modelValue);
+  formItem?.validate("input");
 };
 
 // label position
@@ -108,20 +120,6 @@ const isLeft = computed(() => labelPosition.value === "left");
 
 // right
 const isRight = computed(() => labelPosition.value === "right");
-
-// form item
-const { formItem } = useFormItem();
-
-// form item disable
-const isDisabled = useFormDisabled();
-
-// model value changed
-watch(
-  () => props.modelValue,
-  () => {
-    formItem?.validate("change");
-  }
-);
 </script>
 
 <style scoped lang="scss">

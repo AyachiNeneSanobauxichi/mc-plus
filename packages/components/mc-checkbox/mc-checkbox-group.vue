@@ -1,23 +1,23 @@
 <template>
-  <div class="mc-checkbox-group">
+  <div class="mc-checkbox-group" :id="formId">
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, provide, watch } from "vue";
-import { CHECKBOX_GROUP_INJECTION_KEY } from "./constant";
 import type {
   CheckboxGroupContext,
   CheckboxGroupEmits,
   CheckboxGroupProps,
   CheckboxValue,
 } from "./types";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { computed, nextTick, provide, watch } from "vue";
 import { indexOf } from "lodash-es";
+import { CHECKBOX_GROUP_INJECTION_KEY, MC_CHECKBOX_GROUP } from "./constant";
+import { useFormItem } from "../mc-form/hooks";
 
 // options
-defineOptions({ name: "McCheckboxGroup" });
+defineOptions({ name: MC_CHECKBOX_GROUP });
 
 // props
 const props = withDefaults(defineProps<CheckboxGroupProps>(), {
@@ -28,12 +28,12 @@ const props = withDefaults(defineProps<CheckboxGroupProps>(), {
 // emits
 const emits = defineEmits<CheckboxGroupEmits>();
 
-// disabled
-const isDisabled = useFormDisabled();
+// use form item hook
+const { formId, formItem } = useFormItem();
 
 // select
-const handleSelect = (val?: CheckboxValue) => {
-  if (isDisabled.value || !val) return;
+const handleSelect = async (val?: CheckboxValue) => {
+  if (!val) return;
 
   const newModelValue = [...props.modelValue];
   const index = indexOf(newModelValue, val);
@@ -46,7 +46,17 @@ const handleSelect = (val?: CheckboxValue) => {
 
   emits("update:modelValue", newModelValue);
   emits("change", newModelValue);
+  await nextTick();
+  formItem?.validate("input");
 };
+
+// model value change
+watch(
+  () => props.modelValue,
+  () => {
+    formItem?.validate("change");
+  }
+);
 
 // provide
 provide<CheckboxGroupContext>(CHECKBOX_GROUP_INJECTION_KEY, {
@@ -54,17 +64,6 @@ provide<CheckboxGroupContext>(CHECKBOX_GROUP_INJECTION_KEY, {
   disabled: computed(() => props.disabled),
   handleSelect,
 });
-
-// form item
-const { formItem } = useFormItem();
-
-// model value changed
-watch(
-  () => props.modelValue,
-  () => {
-    formItem?.validate("change");
-  }
-);
 </script>
 
 <style scoped lang="scss"></style>

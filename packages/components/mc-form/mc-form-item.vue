@@ -60,7 +60,6 @@ import {
   onMounted,
   onUnmounted,
   nextTick,
-  toRefs,
 } from "vue";
 import {
   cloneDeep,
@@ -84,6 +83,7 @@ defineOptions({ name: "McFormItem" });
 
 // porps
 const props = withDefaults(defineProps<FormItemProps>(), {
+  prop: "",
   disabled: false,
   required: false,
 });
@@ -172,15 +172,14 @@ let initialValue: any = null;
 // resetting flag
 let isResetting: boolean = false;
 // get trigger rules
-const getTriggerRules = (trigger?: string) => {
+const getTriggerRules = (trigger?: FormItemTrigger) => {
   const rules = currentRules.value;
   if (rules) {
     return filter(rules, (rule) => {
-      if (!rule.trigger || !trigger) return true;
-      if (isArray(rule.trigger)) {
-        return includes(rule.trigger, trigger);
-      }
-      return rule.trigger === trigger;
+      if (!rule.trigger && trigger !== "change") return false;
+      else if (!rule.trigger || !trigger) return true;
+      else if (isArray(rule.trigger)) return includes(rule.trigger, trigger);
+      else return rule.trigger === trigger;
     }).map(({ trigger, ...rule }) => rule as RuleItem);
   }
 
@@ -285,7 +284,8 @@ const clearValidate = () => {
 
 // form item context
 const formItemCtx = reactive({
-  ...toRefs(props),
+  id: ref(""),
+  prop: computed(() => props.prop ?? ""),
   validateStatus: computed(() => validateStatus.value),
   disabled: isDisabled,
   validate: handleValidate,

@@ -18,8 +18,12 @@ export interface RadioGroupProps {
 export interface RadioGroupContext {
   modelValue?: ComputedRef<RadioValue | undefined>;
   disabled?: ComputedRef<boolean | undefined>;
-  hasError?: ComputedRef<boolean>;
   handleSelect: (val?: RadioValue) => void;
+}
+
+export interface RadioEmits {
+  (e: "focus", event: FocusEvent): void;
+  (e: "blur", event: FocusEvent): void;
 }
 
 export interface RadioGroupEmits {

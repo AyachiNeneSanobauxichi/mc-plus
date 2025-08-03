@@ -30,9 +30,11 @@ const useInputGroupCtx = (status: _InputGroupStatus) => {
   const { validateStatus, isExpanded, isFocused, isHovering } = status;
 
   // watch validate status
-  watch(validateStatus, (val) => {
-    inputGroupCtx.setInputGroupValidate(val);
-  });
+  if (validateStatus) {
+    watch(validateStatus, (val) => {
+      inputGroupCtx.setInputGroupValidate(val);
+    });
+  }
 
   // if expanded is provided watch expanded
   if (isExpanded) {

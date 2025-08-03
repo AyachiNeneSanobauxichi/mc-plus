@@ -7,7 +7,7 @@ import type { Ref } from "vue";
 
 export type FormDirection = "horizontal" | "vertical";
 
-export type FormItemTrigger = "change" | "blur";
+export type FormItemTrigger = "change" | "blur" | "input";
 
 export interface FormItemRule extends RuleItem {
   trigger?: FormItemTrigger | FormItemTrigger[];
@@ -34,6 +34,7 @@ export interface FormProps {
   rules?: FormRules;
   disabled?: boolean;
   direction?: FormDirection;
+  scrollToError?: boolean;
 }
 
 export interface FormEmits {
@@ -56,8 +57,7 @@ export interface FormItemProps {
 }
 
 export interface FormInstance {
-  validate(callback?: FormValidateCallback): FormValidateResult;
-  validateField(
+  validate(
     keys?: string[],
     callback?: FormValidateCallback
   ): FormValidateResult;
@@ -82,7 +82,10 @@ export interface FormContext extends FormProps {
   removeField(field: FormItemContext): void;
 }
 
-export interface FormItemContext extends FormItemProps {
+export interface FormItemContext {
+  id: string;
+  prop: string;
+  disabled: boolean;
   validateStatus: ValidateStatus;
   validate(
     trigger?: FormItemTrigger,
