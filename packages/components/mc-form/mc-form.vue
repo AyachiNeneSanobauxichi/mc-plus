@@ -17,7 +17,7 @@ import type {
 } from "./types";
 import type { ValidateFieldsError } from "async-validator";
 import { each, filter, first, includes, keys, size } from "lodash-es";
-import { nextTick, provide, reactive, toRefs } from "vue";
+import { provide, reactive, toRefs } from "vue";
 import { FORM_CTX_KEY } from "./constanst";
 import { delay } from "@mc-plus/utils";
 
