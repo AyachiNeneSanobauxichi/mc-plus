@@ -78,6 +78,7 @@ const rules: FormRules<FormState> = {
     {
       required: true,
       message: "Please select at least one student",
+      trigger: "input",
     },
   ],
   check: [
