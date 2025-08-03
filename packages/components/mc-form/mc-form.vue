@@ -17,8 +17,9 @@ import type {
 } from "./types";
 import type { ValidateFieldsError } from "async-validator";
 import { each, filter, first, includes, keys, size } from "lodash-es";
-import { provide, reactive, toRefs } from "vue";
+import { nextTick, provide, reactive, toRefs } from "vue";
 import { FORM_CTX_KEY } from "./constanst";
+import { delay } from "@mc-plus/utils";
 
 // options
 defineOptions({ name: "McForm" });
@@ -107,7 +108,7 @@ const validate = async (
 };
 
 // scroll to error
-const scrollToError = (error: ValidateFieldsError[]) => {
+const scrollToError = async (error: ValidateFieldsError[]) => {
   const firstErrorProp = keys(first(error))[0];
   const firstErrorField = getFieldsByProps(fields, [firstErrorProp]);
   const firstErrorFieldId = firstErrorField[0].id;
@@ -117,6 +118,8 @@ const scrollToError = (error: ValidateFieldsError[]) => {
     inline: "center",
     behavior: "smooth",
   });
+  await delay(500);
+  firstErrorFieldElement?.focus();
 };
 // get fields by props
 const getFieldsByProps = (fields: FormItemContext[], props: string[]) => {
