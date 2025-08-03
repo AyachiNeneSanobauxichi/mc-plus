@@ -36,6 +36,8 @@
           <mc-checkbox
             v-model="formState.check"
             content="Mc Checkbox"
+            :disabled="disabled"
+            :partial="partial"
           ></mc-checkbox>
         </mc-form-item>
       </mc-form>
@@ -43,7 +45,7 @@
     <div class="single-checkbox"></div>
     <div class="tool-bar">
       <mc-button @click="handleDisable">Disable</mc-button>
-      <mc-button @click="handleDisable">Disable</mc-button>
+      <mc-button @click="handlePartial">Partial</mc-button>
     </div>
   </div>
 </template>
@@ -73,13 +75,21 @@ const rules: FormRules<FormState> = {
       message: "Please select at least one student",
     },
   ],
-  check: [{ required: true, message: "Please check" }],
+  check: [
+    { required: true, message: "Please check", type: "enum", enum: [true] },
+  ],
 };
 
 const disabled = ref<boolean>(false);
 
 const handleDisable = () => {
   disabled.value = !disabled.value;
+};
+
+const partial = ref<boolean>(false);
+
+const handlePartial = () => {
+  partial.value = !partial.value;
 };
 </script>
 

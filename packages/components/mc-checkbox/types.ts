@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref } from "vue";
+import type { ComputedRef } from "vue";
 
 export type CheckboxValue = string | number;
 
@@ -17,10 +17,6 @@ export interface CheckboxEmits {
   (e: "change", val: boolean): void;
   (e: "focus", event: FocusEvent): void;
   (e: "blur", event: FocusEvent): void;
-}
-
-export interface CheckboxInstance {
-  ref: Ref<HTMLButtonElement | void>;
 }
 
 export interface CheckboxGroupProps {
