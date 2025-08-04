@@ -24,6 +24,9 @@
           @paste="handlePaste($event)"
           @keydown.backspace.prevent.stop="handleBackspace(index - 1)"
           @mousedown.prevent
+          @keydown.left.prevent.stop="setFocus(index - 2)"
+          @keydown.right.prevent.stop="setFocus(index)"
+          @keydown.tab.prevent.stop
         />
       </li>
     </ul>

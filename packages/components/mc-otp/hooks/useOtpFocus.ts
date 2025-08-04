@@ -12,19 +12,22 @@ const useOtpFocus = (inputItemRefs: Ref<HTMLElement[]>) => {
     focusIndex.value = index;
   };
 
+  // length prop
+  const length = useProp<number>("length");
+
   // set focus
   const setFocus = (index: number) => {
+    const _length = length.value ?? 0;
+    if (index < 0) index = 0;
+    if (index > _length - 1) index = _length - 1;
     focusIndex.value = index;
     const itemRef = inputItemRefs.value[index];
-    const inputRef = itemRef.children[0] as HTMLInputElement;
-    inputRef.focus();
+    const inputRef = itemRef?.children?.[0] as HTMLInputElement;
+    inputRef?.focus();
   };
 
   // model value
   const modelValue = useProp<string | undefined>("modelValue");
-
-  // length prop
-  const length = useProp<number>("length");
 
   // next focus
   const nextFocus = () => {
