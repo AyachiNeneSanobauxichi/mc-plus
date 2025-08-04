@@ -1,5 +1,3 @@
-import type { Ref } from "vue";
-
 export interface OtpProps {
   modelValue?: string | undefined;
   disabled?: boolean;
@@ -9,11 +7,4 @@ export interface OtpProps {
 export interface OtpEmits {
   (e: "update:modelValue", value: string): void;
   (e: "change", value: string): void;
-  (e: "focus"): void;
-  (e: "blur"): void;
-}
-
-export interface OtpContext {
-  hasError: Ref<boolean>;
-  disabled: Ref<boolean>;
 }
