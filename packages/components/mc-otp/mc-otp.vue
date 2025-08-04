@@ -38,12 +38,13 @@
 
 <script setup lang="ts">
 import type { OtpProps, OtpEmits } from "./types";
-import { nextTick, onMounted, reactive, ref, watch, watchEffect } from "vue";
+import { onMounted, reactive, ref, watch, watchEffect } from "vue";
 import { isEmpty } from "lodash-es";
 // import McIcon from "../mc-icon/mc-icon.vue";
 // import { useFormItem } from "../mc-form/hooks";
 import { MC_OTP } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
+import { useOtpFocus } from "./hooks";
 
 // options
 defineOptions({ name: MC_OTP });
@@ -68,23 +69,15 @@ const setItemRef = (index: number, el: HTMLElement | null) => {
 
 // use click outside
 useClickOutside(inputItemRefs, () => {
-  console.log("click outside");
-  focusIndex.value = void 0;
+  setFocusIndex(void 0);
 });
 
 // code
 const code = reactive(new Array(props.length));
 
-// focus index
-const focusIndex = ref<number>();
-
-// set focus
-const setFocus = (index: number) => {
-  focusIndex.value = index;
-  const itemRef = inputItemRefs.value[index];
-  const inputRef = itemRef.children[0] as HTMLInputElement;
-  inputRef.focus();
-};
+// use otp focus
+const { focusIndex, setFocusIndex, setFocus, nextFocus, prevFocus } =
+  useOtpFocus(inputItemRefs);
 
 // input
 const handleInput = async (index: number, event: InputEvent) => {
@@ -96,7 +89,6 @@ const handleInput = async (index: number, event: InputEvent) => {
   handleValueChanged();
 
   if (value) {
-    await nextTick();
     nextFocus();
   }
 };
@@ -105,8 +97,6 @@ const handleInput = async (index: number, event: InputEvent) => {
 const handleBackspace = async (index: number) => {
   code[index] = "";
   handleValueChanged();
-
-  await nextTick();
   prevFocus();
 };
 
@@ -117,7 +107,6 @@ const handlePaste = async (event: ClipboardEvent) => {
     event.clipboardData?.getData("text").slice(0, props.length) || "";
   setCode(pasteData);
   handleValueChanged();
-  await nextTick();
   nextFocus();
 };
 
@@ -134,27 +123,9 @@ const handleClick = async (index: number) => {
   //   await nextTick();
   // set focus
   if (isEmpty(code[index])) {
-    await nextTick();
     nextFocus();
   } else {
-    await nextTick();
     setFocus(index);
-  }
-};
-
-// next focus
-const nextFocus = () => {
-  const length = props.modelValue?.length ?? 0;
-  if (length < props.length) {
-    setFocus(length);
-  }
-};
-
-// prev focus
-const prevFocus = () => {
-  const length = props.modelValue?.length ?? 0;
-  if (length - 1 >= 0) {
-    setFocus(length - 1);
   }
 };
 
