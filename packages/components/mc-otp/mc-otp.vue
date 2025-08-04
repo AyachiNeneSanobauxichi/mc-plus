@@ -1,8 +1,10 @@
 <template>
   <div
+    :id="formId"
     class="mc-otp"
     :class="{
       'mc-otp-disabled': false,
+      [validateStyle]: validateStyle,
     }"
   >
     <ul class="mc-otp-input-list">
@@ -30,21 +32,21 @@
         />
       </li>
     </ul>
-    <!-- <mc-icon
+    <mc-icon
+      v-if="statusIcon"
       class="mc-otp-status-icon"
-      :name="isError ? 'Reject_02' : 'Accept_02'"
+      :name="statusIcon"
       :size="24"
-      v-if="showStatusIcon"
-    /> -->
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { OtpProps, OtpEmits } from "./types";
-import { onMounted, reactive, ref, watch, watchEffect } from "vue";
+import { nextTick, onMounted, reactive, ref, watch, watchEffect } from "vue";
 import { isEmpty } from "lodash-es";
-// import McIcon from "../mc-icon/mc-icon.vue";
-// import { useFormItem } from "../mc-form/hooks";
+import McIcon from "../mc-icon/mc-icon.vue";
+import { useFormValidate } from "../mc-form/hooks";
 import { MC_OTP } from "./constant";
 import { useClickOutside } from "@mc-plus/hooks";
 import { useOtpFocus } from "./hooks";
@@ -95,6 +97,9 @@ const handleInput = async (index: number, event: InputEvent) => {
     nextFocus();
   }
 };
+
+// use form validate hook
+const { formId, formItem, validateStyle, statusIcon } = useFormValidate();
 
 // backspace
 const handleBackspace = async (index: number) => {
@@ -153,9 +158,11 @@ watch(
 );
 
 // value changed
-const handleValueChanged = () => {
+const handleValueChanged = async () => {
   emits("change", code.join(""));
   emits("update:modelValue", code.join(""));
+  await nextTick();
+  formItem?.validate("input");
 };
 
 // model value length check

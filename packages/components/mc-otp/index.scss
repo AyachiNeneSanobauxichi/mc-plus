@@ -40,14 +40,6 @@ $text_color: var(--mc-gray-800);
     }
   }
 
-  // :deep(.mc-input__inner) {
-  //   text-align: center;
-  // }
-
-  // .mc-otp-input-container {
-  //   @include mixins.flex-center(row, start, center, 8px);
-  // }
-
   // &.mc-otp-success {
   //   .mc-otp-status-icon {
   //     color: $success_color;
