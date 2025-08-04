@@ -2,27 +2,53 @@
 
 $error_color: var(--mc-error);
 $success_color: var(--mc-success);
+$border_color: var(--mc-gray-400);
+$text_color: var(--mc-gray-800);
 
 .mc-otp {
   @include mixins.flex-center(row, start, center, 8px);
 
-  :deep(.mc-input__inner) {
-    text-align: center;
-  }
-
-  .mc-otp-input-container {
+  .mc-otp-input-list {
+    @include mixins.reset-ul-style;
     @include mixins.flex-center(row, start, center, 8px);
-  }
 
-  &.mc-otp-success {
-    .mc-otp-status-icon {
-      color: $success_color;
+    .mc-otp-input-item {
+      @include mixins.reset-li-style;
+      @include mixins.flex-center;
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid $border_color;
+
+      .mc-otp-input {
+        @include mixins.reset-number-input-style;
+        @include mixins.font-style;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+      }
     }
   }
 
-  &.mc-otp-error {
-    .mc-otp-status-icon {
-      color: $error_color;
-    }
-  }
+  // :deep(.mc-input__inner) {
+  //   text-align: center;
+  // }
+
+  // .mc-otp-input-container {
+  //   @include mixins.flex-center(row, start, center, 8px);
+  // }
+
+  // &.mc-otp-success {
+  //   .mc-otp-status-icon {
+  //     color: $success_color;
+  //   }
+  // }
+
+  // &.mc-otp-error {
+  //   .mc-otp-status-icon {
+  //     color: $error_color;
+  //   }
+  // }
 }

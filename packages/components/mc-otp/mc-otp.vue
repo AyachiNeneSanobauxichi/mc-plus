@@ -2,11 +2,17 @@
   <div
     class="mc-otp"
     :class="{
-      'mc-otp-disabled': isDisabled,
-      [`mc-otp-${validateStyle}`]: validateStyle,
+      'mc-otp-disabled': false,
+      [validateStyle]: validateStyle,
     }"
   >
-    <div class="mc-otp-input-container">
+    <ul class="mc-otp-input-list">
+      <li class="mc-otp-input-item" v-for="index in props.length" :key="index">
+        <input class="mc-otp-input" type="number" />
+      </li>
+    </ul>
+
+    <!-- <div class="mc-otp-input-container">
       <div
         class="mc-otp-input-item"
         v-for="index in props.length"
@@ -27,13 +33,13 @@
           @paste="handlePaste($event)"
         />
       </div>
-    </div>
-    <mc-icon
+    </div> -->
+    <!-- <mc-icon
       class="mc-otp-status-icon"
       :name="isError ? 'Reject_02' : 'Accept_02'"
       :size="24"
       v-if="showStatusIcon"
-    />
+    /> -->
   </div>
 </template>
 
@@ -50,9 +56,9 @@ import {
   watch,
   watchEffect,
 } from "vue";
-import McIcon from "../mc-icon/mc-icon.vue";
-import McInput from "../mc-input/mc-input.vue";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+// import McIcon from "../mc-icon/mc-icon.vue";
+// import McInput from "../mc-input/mc-input.vue";
+import { useFormItem } from "../mc-form/hooks";
 import { OTP_CTX_KEY } from "./constant";
 
 // options
@@ -90,9 +96,6 @@ const isError = computed(() => validateStyle.value === "error");
 
 // is success
 const isSuccess = computed(() => validateStyle.value === "success");
-
-// disabled
-const isDisabled = useFormDisabled();
 
 // show status icon
 const showStatusIcon = computed(() => isError.value || isSuccess.value);
@@ -193,7 +196,7 @@ watchEffect(() => {
 // provide
 provide<OtpContext>(OTP_CTX_KEY, {
   hasError: isError,
-  disabled: computed(() => !!isDisabled.value),
+  disabled: computed(() => false),
 });
 </script>
 

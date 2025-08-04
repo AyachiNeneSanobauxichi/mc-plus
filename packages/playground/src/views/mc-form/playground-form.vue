@@ -13,6 +13,10 @@
             <template #tool>{{ "Clear" }}</template>
             <mc-input v-model="formState.input" />
           </mc-form-item>
+          <!-- otp -->
+          <mc-form-item prop="otp" label="Verify Code">
+            <mc-otp v-model="formState.otp" />
+          </mc-form-item>
           <!-- select -->
           <mc-form-item
             prop="select"
@@ -130,6 +134,7 @@ import { McButton } from "mc-plus";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import McInput from "../../../../components/mc-input/mc-input.vue";
+import McOtp from "../../../../components/mc-otp/mc-otp.vue";
 import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
@@ -141,6 +146,7 @@ import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
 
 type FormState = {
   input: string;
+  otp: string;
   select: string;
   multiSelect: string[];
   checkbox: boolean;
@@ -150,6 +156,7 @@ type FormState = {
 };
 const formState = reactive<FormState>({
   input: "1000",
+  otp: "",
   select: "JPY",
   multiSelect: ["BTC", "ETH"],
   checkbox: false,

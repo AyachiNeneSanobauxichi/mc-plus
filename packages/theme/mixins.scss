@@ -13,6 +13,19 @@
   gap: $gap;
 }
 
+/* font style */
+@mixin font-style(
+  $size: 16px,
+  $weight: 400,
+  $line-height: 24px,
+  $color: var(--mc-gray-800)
+) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+  color: $color;
+}
+
 /* shadow */
 @mixin shadow {
   $shadow-color: var(--mc-gray-200);
@@ -73,4 +86,28 @@
   line-height: inherit;
   margin: 0;
   padding: 0;
+}
+
+/* reset number input style */
+@mixin reset-number-input-style {
+  @include reset-input-style;
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:focus {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  &:focus::-webkit-outer-spin-button,
+  &:focus::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
