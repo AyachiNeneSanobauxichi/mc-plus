@@ -1,4 +1,4 @@
-import { useId as vueUseId } from "vue";
+import { generateId } from "@mc-plus/utils";
 import useProp from "./useProp";
 
 // use id hook
@@ -7,7 +7,7 @@ const useId = (key?: string) => {
   if (componentId.value) {
     return componentId.value;
   } else {
-    const randomId = vueUseId();
+    const randomId = generateId();
     const id = key ? `${key}-${randomId}` : randomId;
     return id;
   }
