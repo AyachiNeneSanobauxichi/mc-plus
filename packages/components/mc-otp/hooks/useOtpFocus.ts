@@ -1,5 +1,6 @@
 import type { Ref } from "vue";
 import { nextTick, ref } from "vue";
+import { isNil } from "lodash-es";
 import { useClickOutside, useProp } from "@mc-plus/hooks";
 
 // otp focus hook
@@ -17,8 +18,10 @@ const useOtpFocus = (
 
   // use click outside
   useClickOutside(inputItemRefs, () => {
+    if (!isNil(focusIndex.value)) {
+      onBlur?.();
+    }
     setFocusIndex(void 0);
-    onBlur?.();
   });
 
   // length prop

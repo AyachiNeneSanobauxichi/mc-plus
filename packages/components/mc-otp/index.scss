@@ -5,9 +5,12 @@ $success_color: var(--mc-success);
 $border_color: var(--mc-gray-400);
 $border_color_focus: var(--mc-gray-800);
 $text_color: var(--mc-gray-800);
+$text_color_disabled: var(--mc-gray-500);
+$bg_color_disabled: var(--mc-gray-200);
 
 .mc-otp {
   @include mixins.flex-center(row, start, center, 8px);
+  width: fit-content;
 
   .mc-otp-input-list {
     @include mixins.reset-ul-style;
@@ -33,23 +36,35 @@ $text_color: var(--mc-gray-800);
         cursor: inherit;
       }
     }
+  }
 
-    .mc-otp-input-item-focus {
-      border-color: $border_color_focus;
-      border-width: 2px;
+  /* focus */
+  &:not(.mc-otp-disabled) .mc-otp-input-item-focus {
+    border-color: $border_color_focus;
+    border-width: 2px;
+  }
+
+  /* disabled */
+  &.mc-otp-disabled .mc-otp-input-item {
+    background-color: $bg_color_disabled;
+    cursor: not-allowed;
+    .mc-otp-input {
+      color: $text_color_disabled;
     }
   }
 
+  /* error */
   &.mc-form-validate-error {
     .mc-otp-status-icon {
       color: $error_color;
     }
 
-    .mc-otp-input-item {
+    &:not(.mc-otp-disabled) .mc-otp-input-item {
       border-color: $error_color;
     }
   }
 
+  /* success */
   &.mc-form-validate-success {
     .mc-otp-status-icon {
       color: $success_color;

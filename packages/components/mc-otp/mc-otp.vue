@@ -3,7 +3,7 @@
     :id="formId"
     class="mc-otp"
     :class="{
-      'mc-otp-disabled': false,
+      'mc-otp-disabled': formDisabled,
       [validateStyle]: validateStyle,
     }"
   >
@@ -22,6 +22,7 @@
           v-model="code[index - 1]"
           class="mc-otp-input"
           type="number"
+          :disabled="formDisabled"
           @input="(e) => handleInput(index - 1, e as InputEvent)"
           @paste="handlePaste($event)"
           @keydown.backspace.prevent.stop="handleBackspace(index - 1)"
@@ -43,12 +44,19 @@
 
 <script setup lang="ts">
 import type { OtpProps, OtpEmits } from "./types";
-import { nextTick, onMounted, reactive, ref, watch, watchEffect } from "vue";
+import {
+  computed,
+  nextTick,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  watchEffect,
+} from "vue";
 import { isEmpty } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormValidate } from "../mc-form/hooks";
 import { MC_OTP } from "./constant";
-import { useClickOutside } from "@mc-plus/hooks";
 import { useOtpFocus } from "./hooks";
 
 // options
@@ -85,6 +93,7 @@ const { focusIndex, setFocus, nextFocus, prevFocus } = useOtpFocus(
 
 // input
 const handleInput = async (index: number, event: InputEvent) => {
+  if (formDisabled.value) return;
   const target = event.target as HTMLInputElement;
   let value = target.value.slice(0, 1);
   target.value = value;
@@ -98,7 +107,10 @@ const handleInput = async (index: number, event: InputEvent) => {
 };
 
 // use form validate hook
-const { formId, formItem, validateStyle, statusIcon } = useFormValidate();
+const { formId, formItem, formDisabled, validateStyle, statusIcon } =
+  useFormValidate({
+    externalDisabled: computed(() => props.disabled),
+  });
 
 // backspace
 const handleBackspace = async (index: number) => {
@@ -110,6 +122,7 @@ const handleBackspace = async (index: number) => {
 // paste
 const handlePaste = async (event: ClipboardEvent) => {
   event.preventDefault();
+  if (formDisabled.value) return;
   const pasteData =
     event.clipboardData?.getData("text").slice(0, props.length) || "";
   setCode(pasteData);
