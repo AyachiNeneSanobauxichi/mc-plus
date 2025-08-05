@@ -72,17 +72,16 @@ const setItemRef = (index: number, el: HTMLElement | null) => {
   inputItemRefs.value[index] = el;
 };
 
-// use click outside
-useClickOutside(inputItemRefs, () => {
-  setFocusIndex(void 0);
-});
-
 // code
 const code = reactive(new Array(props.length));
 
 // use otp focus
-const { focusIndex, setFocusIndex, setFocus, nextFocus, prevFocus } =
-  useOtpFocus(inputItemRefs);
+const { focusIndex, setFocus, nextFocus, prevFocus } = useOtpFocus(
+  inputItemRefs,
+  () => {
+    formItem?.validate("blur");
+  }
+);
 
 // input
 const handleInput = async (index: number, event: InputEvent) => {
@@ -120,15 +119,6 @@ const handlePaste = async (event: ClipboardEvent) => {
 
 // click
 const handleClick = async (index: number) => {
-  //   // clear value when error
-  //   if (isError.value && formItem) {
-  //     setCode();
-  //     handleValueChanged();
-  //     // clear validate
-  //     await nextTick();
-  //     formItem?.clearValidate();
-  //   }
-  //   await nextTick();
   // set focus
   if (isEmpty(code[index])) {
     nextFocus();

@@ -1,9 +1,12 @@
 import type { Ref } from "vue";
 import { nextTick, ref } from "vue";
-import { useProp } from "@mc-plus/hooks";
+import { useClickOutside, useProp } from "@mc-plus/hooks";
 
 // otp focus hook
-const useOtpFocus = (inputItemRefs: Ref<HTMLElement[]>) => {
+const useOtpFocus = (
+  inputItemRefs: Ref<HTMLElement[]>,
+  onBlur?: () => void
+) => {
   // focus index
   const focusIndex = ref<number>();
 
@@ -11,6 +14,12 @@ const useOtpFocus = (inputItemRefs: Ref<HTMLElement[]>) => {
   const setFocusIndex = (index: number | undefined) => {
     focusIndex.value = index;
   };
+
+  // use click outside
+  useClickOutside(inputItemRefs, () => {
+    setFocusIndex(void 0);
+    onBlur?.();
+  });
 
   // length prop
   const length = useProp<number>("length");

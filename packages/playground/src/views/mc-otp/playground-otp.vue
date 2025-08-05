@@ -48,6 +48,7 @@ const rules: FormRules<FormState> = {
           callback();
         }
       },
+      trigger: "blur",
     },
   ],
 };

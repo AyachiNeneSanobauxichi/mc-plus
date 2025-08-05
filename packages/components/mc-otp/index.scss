@@ -32,23 +32,27 @@ $text_color: var(--mc-gray-800);
         text-align: center;
         cursor: inherit;
       }
+    }
 
-      &.mc-otp-input-item-focus {
-        border-color: $border_color_focus;
-        border-width: 2px;
-      }
+    .mc-otp-input-item-focus {
+      border-color: $border_color_focus;
+      border-width: 2px;
     }
   }
 
-  // &.mc-otp-success {
-  //   .mc-otp-status-icon {
-  //     color: $success_color;
-  //   }
-  // }
+  &.mc-form-validate-error {
+    .mc-otp-status-icon {
+      color: $error_color;
+    }
 
-  // &.mc-otp-error {
-  //   .mc-otp-status-icon {
-  //     color: $error_color;
-  //   }
-  // }
+    .mc-otp-input-item {
+      border-color: $error_color;
+    }
+  }
+
+  &.mc-form-validate-success {
+    .mc-otp-status-icon {
+      color: $success_color;
+    }
+  }
 }
