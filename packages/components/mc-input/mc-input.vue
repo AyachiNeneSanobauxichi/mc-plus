@@ -66,13 +66,11 @@
 
 <script setup lang="ts">
 import type { InputEmits, InputProps } from "./types";
-import type { OtpContext } from "../mc-otp/types";
-import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { useFormValidate } from "../mc-form/hooks";
 import { useFocusController, useHover } from "@mc-plus/hooks";
-import { OTP_CTX_KEY } from "../mc-otp/constant";
 import {
   currencyFormatter,
   currencyParser,
@@ -166,11 +164,7 @@ const passwordVisible = ref<boolean>(false);
 
 // disabled
 const isDisabled = computed(() => {
-  return (
-    formDisabled.value ||
-    !!otpContext?.disabled.value ||
-    !!inputGroupCtx?.inputGroupDisabled.value
-  );
+  return formDisabled.value || !!inputGroupCtx?.inputGroupDisabled.value;
 });
 
 // password
@@ -178,14 +172,7 @@ const isPassword = computed(() => props.type === "password");
 
 // use form validate hook
 const { formItem, formId, formDisabled, validateStyle, statusIcon } =
-  useFormValidate({
-    validator: () => {
-      if (otpContext?.hasError.value) return "error";
-    },
-  });
-
-// otp context
-const otpContext = inject<OtpContext | undefined>(OTP_CTX_KEY, void 0);
+  useFormValidate();
 
 // use focus controller
 const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
