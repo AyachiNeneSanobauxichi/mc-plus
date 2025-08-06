@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="mc-input-group"
-    :class="{ 'mc-input-group-disabled': isDisabled }"
-  >
+  <div class="mc-input-group" :class="{ 'mc-input-group-disabled': disabled }">
     <div
       class="mc-input-group-prefix"
       :class="{
@@ -12,7 +9,7 @@
       }"
       :style="{ flex: prefixFlex }"
     >
-      <slot name="prefix">prefix</slot>
+      <slot name="prefix"></slot>
     </div>
     <div class="mc-input-group-divider" v-if="showDivider"></div>
     <div
@@ -24,7 +21,7 @@
       }"
       :style="{ flex: suffixFlex }"
     >
-      <slot name="suffix">suffix</slot>
+      <slot name="suffix"></slot>
     </div>
   </div>
 </template>
@@ -33,7 +30,7 @@
 import type { InputGroupContext, InputGroupProps } from "./types";
 import { computed, provide } from "vue";
 import { INPUT_GROUP_INJECTION_KEY, MC_INPUT_GROUP } from "./constant";
-import { useInputGroupDisabled, useStatus } from "./hooks";
+import { useStatus } from "./hooks";
 
 // options
 defineOptions({ name: MC_INPUT_GROUP });
@@ -56,14 +53,11 @@ const {
   setInputGroupActived,
 } = useStatus();
 
-// use input group disabled
-const { isDisabled } = useInputGroupDisabled();
-
 // show divider
 const showDivider = computed<boolean>(
   () =>
     (!isPrefixActived.value && !isSuffixActived.value && !isExpanded.value) ||
-    isDisabled.value
+    props.disabled
 );
 
 // provide

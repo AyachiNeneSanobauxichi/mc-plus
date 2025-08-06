@@ -92,7 +92,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   disabled: false,
   placeholder: "Please enter",
   readonly: false,
-  formValidate: true,
+  disableValidation: false,
 });
 const { formatter, parser } = props;
 

@@ -28,7 +28,7 @@
               clearable
               placement="bottom-end"
               input-group-position="suffix"
-              :form-validate-style="false"
+              disable-validation
             >
               <template #selected-content="{ selectedOption }">
                 <mc-currency-icon
@@ -71,7 +71,7 @@
               v-model="formState.areaNumber"
               placeholder="Area number"
               input-group-position="prefix"
-              :form-validate-style="false"
+              disable-validation
             >
               <template #selected-content="{ selectedOption }">
                 {{ `+${selectedOption}` }}
