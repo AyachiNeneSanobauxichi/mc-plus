@@ -2,9 +2,9 @@
   <div
     class="mc-select"
     :class="[
-      isExpand && !isDisabled ? 'mc-select-expand' : 'mc-select-collapse',
+      isExpand && !disabled ? 'mc-select-expand' : 'mc-select-collapse',
       {
-        'mc-select-disabled': isDisabled,
+        'mc-select-disabled': disabled,
         'mc-input-focused': isFocused && search,
         [`mc-select--${validateStyle}`]: validateStyle,
         'mc-select--hover': isHover,
@@ -34,7 +34,7 @@
               size="x-small"
               type="selectable"
               :emphasis="tagStyle"
-              :disabled="isDisabled"
+              :disabled="disabled"
               @delete="handleDeleteTag(item)"
             >
               {{ item.label }}
@@ -59,7 +59,7 @@
           @focus="handleFocus"
           @blur="handleBlur"
           :readonly="!search"
-          :disabled="isDisabled"
+          :disabled="disabled"
         />
       </div>
       <template v-if="showStatusIcon">
@@ -74,7 +74,7 @@
       </template>
       <div
         class="mc-select-icon-wrapper"
-        :class="{ 'mc-select-icon-wrapper-expand': isExpand && !isDisabled }"
+        :class="{ 'mc-select-icon-wrapper-expand': isExpand && !disabled }"
       >
         <mc-icon name="Down-Chevron" class="mc-select-icon" />
       </div>
@@ -82,7 +82,7 @@
     <transition name="mc-select-dropdown-transition">
       <div
         class="mc-select-dropdown-wrapper"
-        v-show="isExpand && !isDisabled"
+        v-show="isExpand && !disabled"
         :style="{
           paddingTop: showDropdownHeader ? '40px' : '0',
           paddingBottom: showDropdownFooter ? '48px' : '0',
@@ -140,7 +140,7 @@ import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { filter, includes, isNil, lowerCase, map, toString } from "lodash-es";
 import { useClickOutside, useFocusController } from "@mc-plus/hooks";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
+import { useFormItem } from "../mc-form/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McButton from "../mc-button/mc-button.vue";
 import McTag from "../mc-tag/mc-tag.vue";
@@ -166,9 +166,6 @@ const emits = defineEmits<SelectEmits>();
 const inputRef = ref<HTMLInputElement>();
 const tagsWrapperRef = ref<HTMLDivElement>();
 const triggerRef = ref<HTMLDivElement>();
-
-// disabled
-const isDisabled = useFormDisabled();
 
 // multi
 const isMulti = computed(() => props.multiple);
@@ -306,7 +303,7 @@ const isSuccess = computed(() => validateStyle.value === "success");
 
 // show status icon
 const showStatusIcon = computed(
-  () => !isDisabled.value && (isError.value || isSuccess.value)
+  () => !props.disabled && (isError.value || isSuccess.value)
 );
 
 // select event

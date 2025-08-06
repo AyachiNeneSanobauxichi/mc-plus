@@ -13,12 +13,6 @@
         <mc-form-item label="otp" prop="otp" :disabled="isDisabled">
           <mc-otp v-model="form.otp" :length="6" />
         </mc-form-item>
-        <mc-form-item label="userName" prop="userName" :disabled="isDisabled">
-          <mc-input v-model="form.userName" />
-        </mc-form-item>
-        <mc-form-item label="checkbox" prop="checkbox" :disabled="isDisabled">
-          <mc-checkbox v-model="form.checkbox" />
-        </mc-form-item>
       </mc-form>
     </div>
   </div>
@@ -31,19 +25,13 @@ import { ref } from "vue";
 import McOtp from "../../../../components/mc-otp/mc-otp.vue";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
-import McInput from "../../../../components/mc-input/mc-input.vue";
-import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
 
 type FormState = {
   otp: string;
-  userName: string;
-  checkbox: boolean;
 };
 
 const form = ref<FormState>({
   otp: "123456",
-  userName: "Hirasawa Yui",
-  checkbox: false,
 });
 
 const formRef = ref<FormInstance>();
@@ -60,9 +48,9 @@ const rules: FormRules<FormState> = {
           callback();
         }
       },
+      trigger: "blur",
     },
   ],
-  userName: [{ required: true, message: "Please input user name" }],
 };
 
 const handleValidate = () => {

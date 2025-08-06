@@ -1,62 +1,66 @@
 <template>
   <div
+    :id="formId"
     class="mc-otp"
     :class="{
-      'mc-otp-disabled': isDisabled,
-      [`mc-otp-${validateStyle}`]: validateStyle,
+      'mc-otp-disabled': formDisabled,
+      [validateStyle]: validateStyle,
     }"
   >
-    <div class="mc-otp-input-container">
-      <div
-        class="mc-otp-input-item"
+    <ul class="mc-otp-input-list">
+      <li
         v-for="index in props.length"
         :key="index"
-        @click.stop="handleClick(index - 1)"
+        class="mc-otp-input-item"
+        :class="{
+          'mc-otp-input-item-focus': focusIndex === index - 1,
+        }"
+        :ref="(el) => setItemRef(index - 1, el as HTMLElement)"
+        @click="handleClick(index - 1)"
       >
-        <mc-input
+        <input
           v-model="code[index - 1]"
-          :placeholder="''"
+          class="mc-otp-input"
           type="number"
-          width="40px"
-          height="40px"
-          :maxlength="1"
-          :form-validate="false"
-          :ref="(el) => setRef(index - 1, el as unknown as InputInstance)"
-          @input="handleInput(index - 1, $event)"
-          @delete="handleBackspace(index - 1)"
+          :disabled="formDisabled"
+          @input="(e) => handleInput(index - 1, e as InputEvent)"
           @paste="handlePaste($event)"
+          @keydown.backspace.prevent.stop="handleBackspace(index - 1)"
+          @mousedown.prevent
+          @keydown.left.prevent.stop="setFocus(index - 2)"
+          @keydown.right.prevent.stop="setFocus(index)"
+          @keydown.tab.prevent.stop
         />
-      </div>
-    </div>
+      </li>
+    </ul>
     <mc-icon
+      v-if="statusIcon"
       class="mc-otp-status-icon"
-      :name="isError ? 'Reject_02' : 'Accept_02'"
+      :name="statusIcon"
       :size="24"
-      v-if="showStatusIcon"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { OtpProps, OtpEmits, OtpContext } from "./types";
-import type { InputInstance } from "../mc-input";
+import type { OtpProps, OtpEmits } from "./types";
 import {
   computed,
   nextTick,
   onMounted,
-  provide,
   reactive,
   ref,
   watch,
   watchEffect,
 } from "vue";
+import { isEmpty } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
-import McInput from "../mc-input/mc-input.vue";
-import { useFormDisabled, useFormItem } from "../mc-form/hooks";
-import { OTP_CTX_KEY } from "./constant";
+import { useFormValidate } from "../mc-form/hooks";
+import { MC_OTP } from "./constant";
+import { useOtpFocus } from "./hooks";
 
 // options
-defineOptions({ name: "McOtp" });
+defineOptions({ name: MC_OTP });
 
 // props
 const props = withDefaults(defineProps<OtpProps>(), {
@@ -67,94 +71,73 @@ const props = withDefaults(defineProps<OtpProps>(), {
 // emits
 const emits = defineEmits<OtpEmits>();
 
-// refs
-const inputRefs = ref<InputInstance[]>([]);
-
-// form item
-const { formItem } = useFormItem();
-
-// form item validate status style
-const validateStyle = computed(() => {
-  switch (formItem?.validateStatus) {
-    case "success":
-      return "success";
-    case "error":
-      return "error";
-    default:
-      return "";
-  }
-});
-
-// is error
-const isError = computed(() => validateStyle.value === "error");
-
-// is success
-const isSuccess = computed(() => validateStyle.value === "success");
-
-// disabled
-const isDisabled = useFormDisabled();
-
-// show status icon
-const showStatusIcon = computed(() => isError.value || isSuccess.value);
+// input item refs
+const inputItemRefs = ref<HTMLElement[]>([]);
 
 // set ref
-const setRef = (index: number, el: InputInstance) => {
-  (inputRefs.value as unknown as InputInstance[])[index] = el;
+const setItemRef = (index: number, el: HTMLElement | null) => {
+  if (!el) return;
+  inputItemRefs.value[index] = el;
 };
 
 // code
 const code = reactive(new Array(props.length));
 
+// use otp focus
+const { focusIndex, setFocus, nextFocus, prevFocus } = useOtpFocus(
+  inputItemRefs,
+  () => {
+    formItem?.validate("blur");
+  }
+);
+
 // input
-const handleInput = (index: number, value: string) => {
+const handleInput = async (index: number, event: InputEvent) => {
+  if (formDisabled.value) return;
+  const target = event.target as HTMLInputElement;
+  let value = target.value.slice(0, 1);
+  target.value = value;
   code[index] = value;
 
-  if (value && index < props.length - 1) {
-    setFocus(index + 1);
-  }
-
   handleValueChanged();
+
+  if (value) {
+    nextFocus();
+  }
+};
+
+// use form validate hook
+const { formId, formItem, formDisabled, validateStyle, statusIcon } =
+  useFormValidate({
+    externalDisabled: computed(() => props.disabled),
+  });
+
+// backspace
+const handleBackspace = async (index: number) => {
+  code[index] = "";
+  handleValueChanged();
+  prevFocus();
 };
 
 // paste
-const handlePaste = (event: ClipboardEvent) => {
+const handlePaste = async (event: ClipboardEvent) => {
   event.preventDefault();
+  if (formDisabled.value) return;
   const pasteData =
     event.clipboardData?.getData("text").slice(0, props.length) || "";
   setCode(pasteData);
   handleValueChanged();
-  setFocus(pasteData.length - 1);
-};
-
-// backspace
-const handleBackspace = (index: number) => {
-  if (!code[index] && index > 0) {
-    setFocus(index - 1);
-  }
+  nextFocus();
 };
 
 // click
 const handleClick = async (index: number) => {
-  // clear value when error
-  if (isError.value && formItem) {
-    setCode();
-    handleValueChanged();
-    // clear validate
-    await nextTick();
-    formItem?.clearValidate();
-  }
-
-  await nextTick();
-
   // set focus
-  if (!code[index]) {
-    setFocus(props.modelValue?.length ?? 0);
+  if (isEmpty(code[index])) {
+    nextFocus();
+  } else {
+    setFocus(index);
   }
-};
-
-// set focus
-const setFocus = (index: number) => {
-  inputRefs.value[index]?.focus();
 };
 
 // set code
@@ -178,9 +161,11 @@ watch(
 );
 
 // value changed
-const handleValueChanged = () => {
+const handleValueChanged = async () => {
   emits("change", code.join(""));
   emits("update:modelValue", code.join(""));
+  await nextTick();
+  formItem?.validate("input");
 };
 
 // model value length check
@@ -188,12 +173,6 @@ watchEffect(() => {
   if ((props.modelValue?.length ?? 0) > props.length) {
     throw new Error("modelValue length is greater than length.");
   }
-});
-
-// provide
-provide<OtpContext>(OTP_CTX_KEY, {
-  hasError: isError,
-  disabled: computed(() => !!isDisabled.value),
 });
 </script>
 

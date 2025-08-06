@@ -66,13 +66,12 @@
 
 <script setup lang="ts">
 import type { InputEmits, InputProps } from "./types";
-import type { OtpContext } from "../mc-otp/types";
-import { computed, inject, nextTick, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { useFormValidate } from "../mc-form/hooks";
 import { useFocusController, useHover } from "@mc-plus/hooks";
-import { OTP_CTX_KEY } from "../mc-otp/constant";
+import { useInputGroupCtx } from "../mc-input-group/hooks";
+import { useFormValidate } from "../mc-form/hooks";
 import {
   currencyFormatter,
   currencyParser,
@@ -80,7 +79,6 @@ import {
   numberParser,
 } from "./formatter";
 import { useCursor } from "./hooks";
-import { useInputGroupCtx } from "../mc-input-group/hooks";
 
 // options
 defineOptions({ name: "McInput" });
@@ -94,7 +92,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   disabled: false,
   placeholder: "Please enter",
   readonly: false,
-  formValidate: true,
+  disableValidation: false,
 });
 const { formatter, parser } = props;
 
@@ -164,28 +162,19 @@ const passwordVisible = ref<boolean>(false);
 // show clear
 // const showClear = computed(() => props.clearable && !!innerValue.value);
 
-// disabled
-const isDisabled = computed(() => {
-  return (
-    formDisabled.value ||
-    !!otpContext?.disabled.value ||
-    !!inputGroupCtx?.inputGroupDisabled.value
-  );
-});
-
 // password
 const isPassword = computed(() => props.type === "password");
 
 // use form validate hook
-const { formItem, formId, formDisabled, validateStyle, statusIcon } =
-  useFormValidate({
-    validator: () => {
-      if (otpContext?.hasError.value) return "error";
-    },
-  });
-
-// otp context
-const otpContext = inject<OtpContext | undefined>(OTP_CTX_KEY, void 0);
+const {
+  formItem,
+  formId,
+  formDisabled: isDisabled,
+  validateStyle,
+  statusIcon,
+} = useFormValidate({
+  externalDisabled: computed(() => !!inputGroupCtx?.inputGroupDisabled.value),
+});
 
 // use focus controller
 const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(

@@ -15,6 +15,7 @@
     <!-- <playground-title></playground-title> -->
     <!-- <playground-tooltip></playground-tooltip> -->
     <!-- <playground-checkbox></playground-checkbox> -->
+    <!-- <playground-otp></playground-otp> -->
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import PlaygroundForm from "./views/mc-form/playground-form.vue";
 // import PlaygroundTitle from "./views/mc-title/playground-title.vue";
 // import PlaygroundTooltip from "./views/mc-tooltip/playgroundTooltip.vue";
 // import PlaygroundCheckbox from "./views/mc-checkbox/playground-checkbox.vue";
+// import PlaygroundOtp from "./views/mc-otp/playground-otp.vue";
 </script>
 
 <style scoped lang="scss">

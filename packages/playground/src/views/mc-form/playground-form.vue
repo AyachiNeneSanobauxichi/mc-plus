@@ -13,6 +13,63 @@
             <template #tool>{{ "Clear" }}</template>
             <mc-input v-model="formState.input" />
           </mc-form-item>
+          <!-- input group -->
+          <mc-form-item prop="inputGroup" label="Amount">
+            <mc-input-group :prefix-flex="4" :suffix-flex="1">
+              <template #prefix>
+                <mc-input
+                  width="100%"
+                  height="100%"
+                  type="currency"
+                  v-model="formState.inputGroup"
+                  placeholder="Please enter amount"
+                  input-group-position="prefix"
+                />
+              </template>
+              <template #suffix>
+                <mc-select-plus
+                  width="100%"
+                  height="100%"
+                  v-model="formState.inputGroupCurrency"
+                  placeholder="Select currency"
+                  search
+                  clearable
+                  placement="bottom-end"
+                  input-group-position="suffix"
+                  disable-validation
+                >
+                  <template #selected-content="{ selectedOption }">
+                    <mc-currency-icon
+                      :currency="`${selectedOption}`"
+                      width="100%"
+                      height="100%"
+                    />
+                  </template>
+                  <template v-for="item in currencyList" :key="item.value">
+                    <mc-select-group-plus :label="item.label">
+                      <mc-select-option-plus
+                        v-for="child in item.children"
+                        :key="child.value"
+                        :label="child.label"
+                        :value="child.value"
+                      >
+                        <mc-currency-icon
+                          :currency="child.value"
+                          :desc="child.desc"
+                          width="100%"
+                          height="100%"
+                        />
+                      </mc-select-option-plus>
+                    </mc-select-group-plus>
+                  </template>
+                </mc-select-plus>
+              </template>
+            </mc-input-group>
+          </mc-form-item>
+          <!-- otp -->
+          <mc-form-item prop="otp" label="Verify Code">
+            <mc-otp v-model="formState.otp" />
+          </mc-form-item>
           <!-- select -->
           <mc-form-item
             prop="select"
@@ -130,6 +187,7 @@ import { McButton } from "mc-plus";
 import McForm from "../../../../components/mc-form/mc-form.vue";
 import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
 import McInput from "../../../../components/mc-input/mc-input.vue";
+import McOtp from "../../../../components/mc-otp/mc-otp.vue";
 import McSelectPlus from "../../../../components/mc-select-plus/mc-select-plus.vue";
 import McSelectGroupPlus from "../../../../components/mc-select-plus/mc-select-group-plus.vue";
 import McSelectOptionPlus from "../../../../components/mc-select-plus/mc-select-option-plus.vue";
@@ -138,9 +196,14 @@ import McCheckbox from "../../../../components/mc-checkbox/mc-checkbox.vue";
 import McRadio from "../../../../components/mc-radio/mc-radio.vue";
 import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
 import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
+import McInputGroup from "../../../../components/mc-input-group/mc-input-group.vue";
+import McCurrencyIcon from "../../../../components/mc-currency-icon/mc-currency-icon.vue";
 
 type FormState = {
   input: string;
+  inputGroup: string;
+  inputGroupCurrency: string;
+  otp: string;
   select: string;
   multiSelect: string[];
   checkbox: boolean;
@@ -150,6 +213,9 @@ type FormState = {
 };
 const formState = reactive<FormState>({
   input: "1000",
+  inputGroup: "1000",
+  inputGroupCurrency: "USD",
+  otp: "",
   select: "JPY",
   multiSelect: ["BTC", "ETH"],
   checkbox: false,
@@ -168,6 +234,21 @@ const textItemName = computed(() => {
 
 const rules = reactive<FormRules>({
   input: [{ required: true, message: "Please input amount", trigger: "input" }],
+  inputGroup: [
+    {
+      required: true,
+      message: "Please input amount",
+      trigger: "input",
+    },
+  ],
+  otp: [
+    {
+      required: true,
+      message: "Please input otp",
+      trigger: "blur",
+      len: 6,
+    },
+  ],
   select: [
     { required: true, message: "Please select currency", trigger: "input" },
   ],

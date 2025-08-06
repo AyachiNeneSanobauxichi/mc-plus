@@ -26,8 +26,8 @@ export interface InputProps {
   suffixIcon?: IconType;
   maxlength?: number;
   currencyAccuracy?: number;
-  formValidate?: boolean;
   inputGroupPosition?: InputGroupPosition;
+  disableValidation?: boolean;
   formatter?: InputFormatter;
   parser?: InputParser;
 }

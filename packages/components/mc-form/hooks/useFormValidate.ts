@@ -38,12 +38,12 @@ const useFormValidate = ({
   // error
   const isError = validateStatus
     ? computed<boolean>(() => validateStatus.value === "error")
-    : false;
+    : (false as const);
 
   // success
   const isSuccess = validateStatus
     ? computed<boolean>(() => validateStatus.value === "success")
-    : false;
+    : (false as const);
 
   // status icon
   const statusIcon = validateStatus
