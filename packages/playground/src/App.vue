@@ -1,6 +1,6 @@
 <template>
   <div class="playground">
-    <!-- <playground-form></playground-form> -->
+    <playground-form></playground-form>
     <!-- <playground-input-group></playground-input-group> -->
     <!-- <playground-select-plus></playground-select-plus> -->
     <!-- <playground-alert-message></playground-alert-message> -->
@@ -15,12 +15,12 @@
     <!-- <playground-title></playground-title> -->
     <!-- <playground-tooltip></playground-tooltip> -->
     <!-- <playground-checkbox></playground-checkbox> -->
-    <playground-otp></playground-otp>
+    <!-- <playground-otp></playground-otp> -->
   </div>
 </template>
 
 <script setup lang="ts">
-// import PlaygroundForm from "./views/mc-form/playground-form.vue";
+import PlaygroundForm from "./views/mc-form/playground-form.vue";
 // import PlaygroundInputGroup from "./views/mc-input-group/playground-input-group.vue";
 // import PlaygroundSelectPlus from "./views/mc-select-plus/playground-select-plus.vue";
 // import PlaygroundAlertMessage from "./views/mc-alert-message/playground-alert-message.vue";
@@ -34,7 +34,7 @@
 // import PlaygroundTitle from "./views/mc-title/playground-title.vue";
 // import PlaygroundTooltip from "./views/mc-tooltip/playgroundTooltip.vue";
 // import PlaygroundCheckbox from "./views/mc-checkbox/playground-checkbox.vue";
-import PlaygroundOtp from "./views/mc-otp/playground-otp.vue";
+// import PlaygroundOtp from "./views/mc-otp/playground-otp.vue";
 </script>
 
 <style scoped lang="scss">

@@ -175,6 +175,14 @@ const textItemName = computed(() => {
 
 const rules = reactive<FormRules>({
   input: [{ required: true, message: "Please input amount", trigger: "input" }],
+  otp: [
+    {
+      required: true,
+      message: "Please input otp",
+      trigger: "blur",
+      len: 6,
+    },
+  ],
   select: [
     { required: true, message: "Please select currency", trigger: "input" },
   ],
