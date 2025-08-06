@@ -176,7 +176,7 @@ const getTriggerRules = (trigger?: FormItemTrigger) => {
   const rules = currentRules.value;
   if (rules) {
     return filter(rules, (rule) => {
-      if (!rule.trigger && trigger !== "change") return false;
+      if (!rule.trigger && trigger && trigger !== "change") return false;
       else if (!rule.trigger || !trigger) return true;
       else if (isArray(rule.trigger)) return includes(rule.trigger, trigger);
       else return rule.trigger === trigger;
