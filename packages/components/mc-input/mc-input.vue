@@ -69,8 +69,9 @@ import type { InputEmits, InputProps } from "./types";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { useFormValidate } from "../mc-form/hooks";
 import { useFocusController, useHover } from "@mc-plus/hooks";
+import { useInputGroupCtx } from "../mc-input-group/hooks";
+import { useFormValidate } from "../mc-form/hooks";
 import {
   currencyFormatter,
   currencyParser,
@@ -78,7 +79,6 @@ import {
   numberParser,
 } from "./formatter";
 import { useCursor } from "./hooks";
-import { useInputGroupCtx } from "../mc-input-group/hooks";
 
 // options
 defineOptions({ name: "McInput" });
@@ -162,17 +162,19 @@ const passwordVisible = ref<boolean>(false);
 // show clear
 // const showClear = computed(() => props.clearable && !!innerValue.value);
 
-// disabled
-const isDisabled = computed(() => {
-  return formDisabled.value || !!inputGroupCtx?.inputGroupDisabled.value;
-});
-
 // password
 const isPassword = computed(() => props.type === "password");
 
 // use form validate hook
-const { formItem, formId, formDisabled, validateStyle, statusIcon } =
-  useFormValidate();
+const {
+  formItem,
+  formId,
+  formDisabled: isDisabled,
+  validateStyle,
+  statusIcon,
+} = useFormValidate({
+  externalDisabled: computed(() => !!inputGroupCtx?.inputGroupDisabled.value),
+});
 
 // use focus controller
 const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(

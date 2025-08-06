@@ -101,11 +101,5 @@ $bg_color_disabled: var(--mc-gray-200);
 
   &.mc-input-group-disabled {
     background-color: $bg_color_disabled;
-    .mc-input-group-divider {
-      background-color: $bg_color_disabled;
-      &::before {
-        border-left-color: $bg_color_disabled;
-      }
-    }
   }
 }

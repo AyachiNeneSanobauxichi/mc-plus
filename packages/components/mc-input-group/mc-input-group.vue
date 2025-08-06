@@ -1,5 +1,9 @@
 <template>
-  <div class="mc-input-group" :class="{ 'mc-input-group-disabled': disabled }">
+  <div
+    :id="formId"
+    class="mc-input-group"
+    :class="{ 'mc-input-group-disabled': formDisabled }"
+  >
     <div
       class="mc-input-group-prefix"
       :class="{
@@ -29,6 +33,7 @@
 <script setup lang="ts">
 import type { InputGroupContext, InputGroupProps } from "./types";
 import { computed, provide } from "vue";
+import { useFormItem } from "../mc-form/hooks";
 import { INPUT_GROUP_INJECTION_KEY, MC_INPUT_GROUP } from "./constant";
 import { useStatus } from "./hooks";
 
@@ -36,7 +41,7 @@ import { useStatus } from "./hooks";
 defineOptions({ name: MC_INPUT_GROUP });
 
 // props
-const props = withDefaults(defineProps<InputGroupProps>(), {
+withDefaults(defineProps<InputGroupProps>(), {
   disabled: false,
   suffixFlex: 1,
   prefixFlex: 1,
@@ -53,16 +58,19 @@ const {
   setInputGroupActived,
 } = useStatus();
 
+// use form item hook
+const { formId, formDisabled } = useFormItem();
+
 // show divider
 const showDivider = computed<boolean>(
   () =>
     (!isPrefixActived.value && !isSuffixActived.value && !isExpanded.value) ||
-    props.disabled
+    formDisabled.value
 );
 
 // provide
 provide<InputGroupContext>(INPUT_GROUP_INJECTION_KEY, {
-  disabled: computed(() => props.disabled),
+  disabled: formDisabled,
   setInputGroupExpanded,
   setInputGroupValidate,
   setInputGroupActived,
