@@ -66,6 +66,10 @@
               </template>
             </mc-input-group>
           </mc-form-item>
+          <!-- textarea -->
+          <mc-form-item prop="textarea" label="Description">
+            <mc-textarea v-model="formState.textarea" />
+          </mc-form-item>
           <!-- otp -->
           <mc-form-item prop="otp" label="Verify Code">
             <mc-otp v-model="formState.otp" />
@@ -198,11 +202,13 @@ import McRadioGroup from "../../../../components/mc-radio/mc-radio-group.vue";
 import McSwitch from "../../../../components/mc-switch/mc-switch.vue";
 import McInputGroup from "../../../../components/mc-input-group/mc-input-group.vue";
 import McCurrencyIcon from "../../../../components/mc-currency-icon/mc-currency-icon.vue";
+import McTextarea from "../../../../components/mc-textarea/mc-textarea.vue";
 
 type FormState = {
   input: string;
   inputGroup: string;
   inputGroupCurrency: string;
+  textarea: string;
   otp: string;
   select: string;
   multiSelect: string[];
@@ -215,6 +221,7 @@ const formState = reactive<FormState>({
   input: "1000",
   inputGroup: "1000",
   inputGroupCurrency: "USD",
+  textarea: "",
   otp: "",
   select: "JPY",
   multiSelect: ["BTC", "ETH"],
@@ -238,6 +245,13 @@ const rules = reactive<FormRules>({
     {
       required: true,
       message: "Please input amount",
+      trigger: "input",
+    },
+  ],
+  textarea: [
+    {
+      required: true,
+      message: "Please input description",
       trigger: "input",
     },
   ],

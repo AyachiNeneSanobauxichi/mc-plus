@@ -1,6 +1,7 @@
 <template>
   <div class="playground">
-    <playground-form></playground-form>
+    <playground-textarea></playground-textarea>
+    <!-- <playground-form></playground-form> -->
     <!-- <playground-input-group></playground-input-group> -->
     <!-- <playground-select-plus></playground-select-plus> -->
     <!-- <playground-alert-message></playground-alert-message> -->
@@ -20,7 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import PlaygroundForm from "./views/mc-form/playground-form.vue";
+import PlaygroundTextarea from "./views/mc-textarea/playground-textarea.vue";
+// import PlaygroundForm from "./views/mc-form/playground-form.vue";
 // import PlaygroundInputGroup from "./views/mc-input-group/playground-input-group.vue";
 // import PlaygroundSelectPlus from "./views/mc-select-plus/playground-select-plus.vue";
 // import PlaygroundAlertMessage from "./views/mc-alert-message/playground-alert-message.vue";

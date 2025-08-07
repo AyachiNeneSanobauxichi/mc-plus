@@ -41,3 +41,4 @@ export * from "./mc-count";
 export * from "./mc-copy";
 export * from "./mc-progress-bar";
 export * from "./mc-upload";
+export * from "./mc-textarea";

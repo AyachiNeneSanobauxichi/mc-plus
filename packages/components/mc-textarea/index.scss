@@ -1,0 +1,62 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$border_color: var(--mc-gray-400);
+$border_color_hover: var(--mc-gray-800);
+$border_color_error: var(--mc-error);
+$text_color: var(--mc-gray-800);
+$text_color_placeholder: var(--mc-gray-400);
+$text_color_disabled: var(--mc-gray-500);
+$bg_color_disabled: var(--mc-gray-200);
+
+@mixin border-color($color: $border_color_hover) {
+  border-color: $color;
+  outline-color: $color;
+}
+
+.mc-textarea {
+  .mc-textarea-input {
+    @include mixin.reset-input-style;
+    @include mixin.font-style($color: $text_color);
+    min-height: 40px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid $border_color;
+    box-sizing: border-box;
+    letter-spacing: 0;
+
+    &::placeholder {
+      color: $text_color_placeholder;
+    }
+  }
+
+  /* count */
+  .mc-textarea-count {
+    @include mixin.flex-center($justify: flex-end);
+    @include mixin.font-style(
+      $size: 14px,
+      $line-height: 20px,
+      $color: $text_color_disabled
+    );
+    width: 100%;
+  }
+
+  /* hover and focus */
+  &:hover:not(.mc-textarea-disabled) .mc-textarea-input,
+  &.mc-textarea-focused:not(.mc-textarea-disabled) .mc-textarea-input {
+    @include border-color($border_color_hover);
+    outline-width: 1px;
+    outline-style: solid;
+  }
+
+  /* disabled */
+  &.mc-textarea-disabled .mc-textarea-input {
+    background-color: $bg_color_disabled;
+    color: $text_color_disabled;
+    cursor: not-allowed;
+  }
+
+  /* error */
+  &.mc-form-validate-error:not(.mc-textarea-disabled) .mc-textarea-input {
+    @include border-color($border_color_error);
+  }
+}
