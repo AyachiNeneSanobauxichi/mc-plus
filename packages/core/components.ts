@@ -49,6 +49,7 @@ import {
   McUpload,
   McFileList,
   McUploadDropzone,
+  McTextarea,
 } from "@mc-plus/components";
 
 export default [
@@ -101,4 +102,5 @@ export default [
   McUpload,
   McFileList,
   McUploadDropzone,
+  McTextarea,
 ] as Plugin[];
