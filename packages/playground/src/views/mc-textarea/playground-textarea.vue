@@ -53,5 +53,9 @@ const handleDisabled = () => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  .tool-bar {
+    margin-bottom: 32px;
+  }
 }
 </style>
