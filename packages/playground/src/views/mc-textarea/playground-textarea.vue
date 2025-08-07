@@ -1,6 +1,6 @@
 <template>
   <div class="playground-textarea">
-    <mc-textarea></mc-textarea>
+    <mc-textarea width="100%" height="80px" resize="none"></mc-textarea>
   </div>
 </template>
 
