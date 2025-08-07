@@ -14,19 +14,33 @@
       :value="modelValue"
       :id="formId"
       class="mc-textarea-input"
-      :placeholder="placeholder"
+      :style="{ width, height, resize }"
       :disabled="isDisabled"
+      :maxlength="maxLength"
+      :placeholder="placeholder"
       @focus="handleFocus"
       @blur="handleBlur"
       @input="handleInput"
-      :style="{ width, height, resize }"
     ></textarea>
+    <template v-if="showCount">
+      <slot
+        name="count"
+        :max-length="maxLength"
+        :current-length="currentLength"
+      >
+        <div class="mc-textarea-count">
+          <span>
+            {{ `${currentLength} / ${maxLength} characters` }}
+          </span>
+        </div>
+      </slot>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { McTextareaEmits, McTextareaProps } from "./types";
-import { nextTick, ref } from "vue";
+import { computed, nextTick, ref, useSlots } from "vue";
 import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
 import { MC_TEXTAREA } from "./constanst";
@@ -35,7 +49,7 @@ import { MC_TEXTAREA } from "./constanst";
 defineOptions({ name: MC_TEXTAREA });
 
 // props
-withDefaults(defineProps<McTextareaProps>(), {
+const props = withDefaults(defineProps<McTextareaProps>(), {
   modelValue: "",
   placeholder: "Please input",
   disabled: false,
@@ -43,6 +57,7 @@ withDefaults(defineProps<McTextareaProps>(), {
   width: "100%",
   height: 88,
   resize: "vertical",
+  maxLength: 255,
 });
 
 // emits
@@ -72,12 +87,28 @@ const {
 
 // handle input
 const handleInput = async (e: Event) => {
-  const target = e.target as HTMLTextAreaElement;
-  emit("update:modelValue", target.value);
-  emit("change", target.value);
+  let value = (e.target as HTMLTextAreaElement).value;
+  if (props.maxLength > 0 && value.length > props.maxLength) {
+    value = value.slice(0, props.maxLength);
+  }
+  emit("update:modelValue", value);
+  emit("change", value);
   await nextTick();
   formItem?.validate("input");
 };
+
+// slots
+const slots = useSlots();
+
+// show count
+const showCount = computed<boolean>(() => {
+  return (!!props.showCount && props.maxLength > 0) || !!slots.count;
+});
+
+// current length
+const currentLength = computed<number>(() => {
+  return props.modelValue?.length ?? 0;
+});
 </script>
 
 <style scoped lang="scss">

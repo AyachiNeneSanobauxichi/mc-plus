@@ -8,6 +8,7 @@ export interface McTextareaProps {
   width?: string | number;
   height?: string | number;
   resize?: McTextareaResize;
+  maxLength?: number;
 }
 
 export interface McTextareaEmits {

@@ -19,6 +19,7 @@
             height="80px"
             resize="none"
             v-model="formData.textareaValue"
+            :max-length="10"
           ></mc-textarea>
         </mc-form-item>
       </mc-form>
