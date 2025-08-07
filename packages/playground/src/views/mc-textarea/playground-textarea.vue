@@ -1,11 +1,47 @@
 <template>
   <div class="playground-textarea">
-    <mc-textarea width="100%" height="80px" resize="none"></mc-textarea>
+    <div class="tool-bar">
+      <span>Text Area Value: {{ formData }}</span>
+      <div>
+        <mc-button @click="handleDisabled">Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <mc-form :model="formData">
+        <mc-form-item
+          label="Text Area"
+          prop="textareaValue"
+          required
+          :disabled="isDisabled"
+        >
+          <mc-textarea
+            width="100%"
+            height="80px"
+            resize="none"
+            v-model="formData.textareaValue"
+          ></mc-textarea>
+        </mc-form-item>
+      </mc-form>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { McButton } from "mc-plus";
 import McTextarea from "../../../../components/mc-textarea/mc-textarea.vue";
+import McForm from "../../../../components/mc-form/mc-form.vue";
+import McFormItem from "../../../../components/mc-form/mc-form-item.vue";
+
+const formData = ref({
+  textareaValue: "",
+});
+
+const isDisabled = ref(false);
+
+const handleDisabled = () => {
+  isDisabled.value = !isDisabled.value;
+};
 </script>
 
 <style scoped lang="scss">
@@ -15,6 +51,7 @@ import McTextarea from "../../../../components/mc-textarea/mc-textarea.vue";
   margin: 0 auto;
   margin-top: 30px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

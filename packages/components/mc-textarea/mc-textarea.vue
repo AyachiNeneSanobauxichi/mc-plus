@@ -3,18 +3,22 @@
     ref="textareaWrapperRef"
     class="mc-textarea"
     :class="{
-      'mc-textarea-disabled': disabled,
+      'mc-textarea-disabled': isDisabled,
       'mc-textarea-focused': isFocused,
+      [validateStyle]: validateStyle,
     }"
     :style="{ width }"
   >
     <textarea
       ref="textareaRef"
+      :value="modelValue"
+      :id="formId"
       class="mc-textarea-input"
       :placeholder="placeholder"
-      :disabled="disabled"
+      :disabled="isDisabled"
       @focus="handleFocus"
       @blur="handleBlur"
+      @input="handleInput"
       :style="{ width, height, resize }"
     ></textarea>
   </div>
@@ -22,8 +26,9 @@
 
 <script setup lang="ts">
 import type { McTextareaEmits, McTextareaProps } from "./types";
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
+import { useFormValidate } from "../mc-form/hooks";
 import { MC_TEXTAREA } from "./constanst";
 
 // options
@@ -56,6 +61,23 @@ const {
   handleFocus,
   handleBlur,
 } = useFocusController(textareaRef);
+
+// use form validate hook
+const {
+  formId,
+  formItem,
+  validateStyle,
+  formDisabled: isDisabled,
+} = useFormValidate();
+
+// handle input
+const handleInput = async (e: Event) => {
+  const target = e.target as HTMLTextAreaElement;
+  emit("update:modelValue", target.value);
+  emit("change", target.value);
+  await nextTick();
+  formItem?.validate("input");
+};
 </script>
 
 <style scoped lang="scss">
