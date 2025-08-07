@@ -1,6 +1,6 @@
 {
   "name": "mc-plus",
-  "version": "1.0.55",
+  "version": "1.0.56",
   "description": "Components library for Vue 3.X by Meta Compass",
   "type": "module",
   "files": [
