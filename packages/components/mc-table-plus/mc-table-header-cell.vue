@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-table-header-cell" :style="{ justifyContent: align }">
+  <th class="mc-table-header-cell" :style="{ justifyContent: align }">
     <div class="mc-table-header-cell-wrapper" :style="{ alignItems: align }">
       <div class="mc-table-header-cell-title">
         <div class="mc-table-header-cell-title-text">
@@ -8,7 +8,12 @@
         <div class="mc-table-header-cell-help" v-if="help">
           <mc-tooltip :content="help" icon-name="Help"></mc-tooltip>
         </div>
-        <div class="mc-table-header-cell-sort" v-if="sort"></div>
+        <div class="mc-table-header-cell-sort" v-if="sort">
+          <mc-table-sort
+            :sort="sort"
+            @update:sort="emit('update:sort', $event)"
+          />
+        </div>
       </div>
       <template v-if="desc || $slots.desc">
         <slot name="desc">
@@ -16,14 +21,15 @@
         </slot>
       </template>
     </div>
-  </div>
+  </th>
 </template>
 
 <script setup lang="ts">
-import type { McTableHeaderCellProps } from "./types";
+import type { McTableHeaderCellEmits, McTableHeaderCellProps } from "./types";
 import { computed } from "vue";
 import McTooltip from "../mc-tooltip/mc-tooltip.vue";
 import { MC_TABLE_HEADER_CELL } from "./constant";
+import McTableSort from "./mc-table-sort.vue";
 
 // options
 defineOptions({ name: MC_TABLE_HEADER_CELL });
@@ -33,6 +39,9 @@ const props = withDefaults(defineProps<McTableHeaderCellProps>(), {
   columnAlign: "left",
   sort: undefined,
 });
+
+// emits
+const emit = defineEmits<McTableHeaderCellEmits>();
 
 // align
 const align = computed(() => {
