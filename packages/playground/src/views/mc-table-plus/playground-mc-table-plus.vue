@@ -1,6 +1,7 @@
 <template>
   <div class="playground-mc-table-plus">
     <mc-table-plus></mc-table-plus>
+    <el-button>El Button</el-button>
   </div>
 </template>
 

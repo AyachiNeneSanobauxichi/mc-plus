@@ -21,6 +21,11 @@
     "@storybook/vue3": "^8.0.10",
     "@storybook/vue3-vite": "^8.0.10",
     "chromatic": "^11.3.1",
-    "storybook": "^8.0.10"
+    "storybook": "^8.0.10",
+    "unplugin-auto-import": "^20.0.0",
+    "unplugin-vue-components": "^29.0.0"
+  },
+  "dependencies": {
+    "element-plus": "^2.10.6"
   }
 }
