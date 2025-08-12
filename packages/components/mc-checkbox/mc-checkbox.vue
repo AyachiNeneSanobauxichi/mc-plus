@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import type { CheckboxProps, CheckboxEmits } from "./types";
 import { computed, nextTick, ref } from "vue";
-import { useFocusController } from "@mc-plus/hooks";
+import { useFocus } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
 import { MC_CHECKBOX } from "./constant";
 import { useCheckboxGroup } from "./hooks";
@@ -62,7 +62,7 @@ const {
   isFocused,
   handleFocus,
   handleBlur,
-} = useFocusController(checkboxInputRef);
+} = useFocus(checkboxInputRef);
 
 // use checkbox group hook
 const {

@@ -139,7 +139,7 @@ import type { TagEmphasis } from "../mc-tag";
 import { ref, provide, watch, computed } from "vue";
 import { SELECT_INJECTION_KEY } from "./constant";
 import { filter, includes, isNil, lowerCase, map, toString } from "lodash-es";
-import { useClickOutside, useFocusController } from "@mc-plus/hooks";
+import { useClickOutside, useFocus } from "@mc-plus/hooks";
 import { useFormItem } from "../mc-form/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
 import McButton from "../mc-button/mc-button.vue";
@@ -201,15 +201,12 @@ const filterOptions = computed(() => {
 });
 
 // use focus controller
-const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
-  inputRef,
-  {
-    afterBlur() {
-      // after blur validate
-      formItem?.validate("blur");
-    },
-  }
-);
+const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocus(inputRef, {
+  afterBlur() {
+    // after blur validate
+    formItem?.validate("blur");
+  },
+});
 
 // no data
 const noData = computed(() => {

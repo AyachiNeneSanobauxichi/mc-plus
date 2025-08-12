@@ -3,16 +3,16 @@ import { getCurrentInstance, ref } from "vue";
 import useEventListener from "./useEventListener";
 import { isFunction } from "lodash-es";
 
-interface UseFocusControllerOptions {
+interface UseFocusOptions {
   afterFocus?(): void;
   beforeBlur?(event: FocusEvent): boolean | void;
   afterBlur?(): void;
 }
 
-// focus controller
-function useFocusController<T extends HTMLElement | { focus(): void }>(
+// use focus hook
+function useFocus<T extends HTMLElement | { focus(): void }>(
   target: Ref<T | void>,
-  { afterFocus, beforeBlur, afterBlur }: UseFocusControllerOptions = {}
+  { afterFocus, beforeBlur, afterBlur }: UseFocusOptions = {}
 ) {
   // vue instance
   const instance = getCurrentInstance()!;
@@ -64,4 +64,4 @@ function useFocusController<T extends HTMLElement | { focus(): void }>(
   };
 }
 
-export default useFocusController;
+export default useFocus;

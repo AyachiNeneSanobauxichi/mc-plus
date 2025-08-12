@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import type { McTextareaEmits, McTextareaProps } from "./types";
 import { computed, nextTick, ref, useSlots } from "vue";
-import { useFocusController, useWidthHeight } from "@mc-plus/hooks";
+import { useFocus, useWidthHeight } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
 import { MC_TEXTAREA } from "./constanst";
 
@@ -75,7 +75,7 @@ const {
   isFocused,
   handleFocus,
   handleBlur,
-} = useFocusController(textareaRef);
+} = useFocus(textareaRef);
 
 // use form validate hook
 const {

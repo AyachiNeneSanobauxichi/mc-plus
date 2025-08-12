@@ -68,8 +68,8 @@
 import type { InputEmits, InputProps } from "./types";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { isFunction, isNil, toString } from "lodash-es";
+import { useFocus, useHover } from "@mc-plus/hooks";
 import McIcon from "../mc-icon/mc-icon.vue";
-import { useFocusController, useHover } from "@mc-plus/hooks";
 import { useInputGroupCtx } from "../mc-input-group/hooks";
 import { useFormValidate } from "../mc-form/hooks";
 import {
@@ -177,15 +177,12 @@ const {
 });
 
 // use focus controller
-const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
-  inputRef,
-  {
-    afterBlur() {
-      // after blur validate
-      formItem?.validate("blur");
-    },
-  }
-);
+const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocus(inputRef, {
+  afterBlur() {
+    // after blur validate
+    formItem?.validate("blur");
+  },
+});
 
 // use hover
 const { isHovering } = useHover(wrapperRef);
