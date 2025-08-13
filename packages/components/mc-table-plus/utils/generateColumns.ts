@@ -1,7 +1,7 @@
 import type { Component, VNode, VNodeNormalizedChildren } from "vue";
 import type { McTableColumnProps } from "../types";
 import { isArray } from "lodash-es";
-import { MC_TABLE_COLUMN } from "../constant";
+import { MC_TABLE_COLUMN, MC_TABLE_DEFAULT_PROPS } from "../constant";
 
 // generate columns
 const generateColumns = (
@@ -16,7 +16,10 @@ const generateColumns = (
     (children as VNode[]).forEach((item) => {
       const name = ((item?.type || {}) as Component)?.name;
       if (name === MC_TABLE_COLUMN) {
-        _columns.push(item.props as McTableColumnProps);
+        _columns.push({
+          ...MC_TABLE_DEFAULT_PROPS,
+          ...item.props,
+        } as McTableColumnProps);
       } else if (Array.isArray(item.children)) {
         _flattenNodes(item.children);
       }

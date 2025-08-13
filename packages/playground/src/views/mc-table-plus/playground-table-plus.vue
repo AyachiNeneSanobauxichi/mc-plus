@@ -1,5 +1,5 @@
 <template>
-  <div class="playground-mc-table-plus">
+  <div class="playground-table-plus">
     <section>
       <mc-table-plus>
         <mc-table-column prop="name" label="Name" />
@@ -57,7 +57,7 @@ const tableData: User[] = [
 </script>
 
 <style scoped lang="scss">
-.playground-mc-table-plus {
+.playground-table-plus {
   box-sizing: border-box;
   padding: 200px;
   display: flex;

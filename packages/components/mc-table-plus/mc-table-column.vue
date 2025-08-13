@@ -10,7 +10,7 @@ import { MC_TABLE_COLUMN } from "./constant";
 defineOptions({ name: MC_TABLE_COLUMN });
 
 // props
-const props = withDefaults(defineProps<McTableColumnProps>(), {});
+defineProps<McTableColumnProps>();
 </script>
 
 <style scoped lang="scss">
