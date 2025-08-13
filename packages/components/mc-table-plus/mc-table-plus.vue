@@ -2,6 +2,7 @@
   <div class="mc-table-plus">
     <div>Mc Table Plus</div>
     <div>columns: {{ columns }}</div>
+    <mc-table-header :columns="columns" />
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import type { McTableColumnProps } from "./types";
 import { ref, useSlots, watch } from "vue";
 import { MC_TABLE_PLUS } from "./constant";
 import { generateColumns } from "./utils";
+import McTableHeader from "./mc-table-header.vue";
 
 // options
 defineOptions({ name: MC_TABLE_PLUS });

@@ -112,3 +112,16 @@
     margin: 0;
   }
 }
+
+/* reset table style */
+@mixin reset-table-style {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* reset th style */
+@mixin reset-th-style {
+  @include font-style;
+  padding: 0;
+  margin: 0;
+}

@@ -1,0 +1,11 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$border_color: var(--mc-gray-500);
+
+.mc-table-header {
+  @include mixin.reset-table-style;
+
+  .mc-table-header-thead {
+    border-bottom: 1px solid $border_color;
+  }
+}

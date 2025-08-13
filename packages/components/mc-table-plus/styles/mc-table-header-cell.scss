@@ -1,16 +1,20 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
-$border_color: var(--mc-gray-500);
 $color_text: var(--mc-gray-500);
 $color_text_desc: var(--mc-gray-400);
 
 .mc-table-header-cell {
-  @include mixin.flex-center;
-  padding: 8px;
-  box-sizing: border-box;
-  border-bottom: 1px solid $border_color;
-
+  @include mixin.reset-th-style;
+  
   .mc-table-header-cell-wrapper {
+    @include mixin.flex-center;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .mc-table-header-cell-inner {
     @include mixin.flex-center($direction: column, $gap: 2px);
 
     .mc-table-header-cell-title {
