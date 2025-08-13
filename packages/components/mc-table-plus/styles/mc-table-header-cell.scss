@@ -5,7 +5,7 @@ $color_text_desc: var(--mc-gray-400);
 
 .mc-table-header-cell {
   @include mixin.reset-th-style;
-  
+
   .mc-table-header-cell-wrapper {
     @include mixin.flex-center;
     width: 100%;

@@ -2,9 +2,19 @@
   <div class="playground-table-plus">
     <section>
       <mc-table-plus>
-        <mc-table-column prop="name" label="Name" />
-        <mc-table-column prop="age" label="Age" />
-        <mc-table-column prop="position" label="Position" />
+        <mc-table-column
+          prop="name"
+          label="Name"
+          width="320px"
+          desc="Student Name"
+        />
+        <mc-table-column
+          prop="age"
+          label="Age"
+          :width="180"
+          desc="Student Age"
+        />
+        <mc-table-column prop="position" label="Position" :width="180" />
       </mc-table-plus>
     </section>
     <section>

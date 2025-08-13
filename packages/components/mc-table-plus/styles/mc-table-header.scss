@@ -6,6 +6,7 @@ $border_color: var(--mc-gray-500);
   @include mixin.reset-table-style;
 
   .mc-table-header-thead {
+    @include mixin.reset-thead-style;
     border-bottom: 1px solid $border_color;
   }
 }

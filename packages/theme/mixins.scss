@@ -119,6 +119,11 @@
   border-spacing: 0;
 }
 
+/* reset thead style */
+@mixin reset-thead-style {
+  vertical-align: top;
+}
+
 /* reset th style */
 @mixin reset-th-style {
   @include font-style;
