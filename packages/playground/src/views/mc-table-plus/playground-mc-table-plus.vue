@@ -1,7 +1,11 @@
 <template>
   <div class="playground-mc-table-plus">
     <section>
-      <mc-table-plus></mc-table-plus>
+      <mc-table-plus>
+        <mc-table-column prop="name" label="Name" />
+        <mc-table-column prop="age" label="Age" />
+        <mc-table-column prop="position" label="Position" />
+      </mc-table-plus>
     </section>
     <section>
       <el-table :data="tableData" style="width: 100%">
@@ -15,6 +19,7 @@
 
 <script setup lang="ts">
 import McTablePlus from "../../../../components/mc-table-plus/mc-table-plus.vue";
+import McTableColumn from "../../../../components/mc-table-plus/mc-table-column.vue";
 
 interface User {
   name: string;

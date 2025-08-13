@@ -1,5 +1,5 @@
 <template>
-  <div class="mc-table-column"></div>
+  <div class="mc-table-column">Mc Table Column</div>
 </template>
 
 <script setup lang="ts">
