@@ -7,7 +7,17 @@
             :title="column.label"
             :width="column.width"
             :desc="column.desc"
-          />
+          >
+            <template #header v-if="column.header">
+              <component :is="column.header" />
+            </template>
+            <template #title v-if="column.headerTitle">
+              <component :is="column.headerTitle" />
+            </template>
+            <template #desc v-if="column.headerDesc">
+              <component :is="column.headerDesc" />
+            </template>
+          </mc-table-header-cell>
         </template>
       </tr>
     </thead>

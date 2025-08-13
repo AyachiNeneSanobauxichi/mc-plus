@@ -7,14 +7,27 @@
           label="Name"
           width="320px"
           desc="Student Name"
-        />
+        >
+          <template #header-title>
+            <div>Student Name</div>
+          </template>
+          <template #header-desc>
+            <div>the name of the student</div>
+          </template>
+        </mc-table-column>
         <mc-table-column
           prop="age"
           label="Age"
           :width="180"
           desc="Student Age"
         />
-        <mc-table-column prop="position" label="Position" :width="180" />
+        <mc-table-column prop="position" label="Position" :width="180">
+          <template #header>
+            <div class="position-container">
+              <mc-button type="link">Position</mc-button>
+            </div>
+          </template>
+        </mc-table-column>
       </mc-table-plus>
     </section>
     <section>
@@ -30,6 +43,7 @@
 <script setup lang="ts">
 import McTablePlus from "../../../../components/mc-table-plus/mc-table-plus.vue";
 import McTableColumn from "../../../../components/mc-table-plus/mc-table-column.vue";
+import { McButton } from "mc-plus";
 
 interface User {
   name: string;
@@ -73,5 +87,13 @@ const tableData: User[] = [
   display: flex;
   flex-direction: column;
   gap: 32px;
+
+  .position-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

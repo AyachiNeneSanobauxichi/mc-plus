@@ -8,7 +8,3 @@ export interface McTableHeaderCellProps {
   help?: string;
   sort?: McTableSort;
 }
-
-export interface McTableHeaderCellEmits {
-  (e: "update:sort", sort: McTableSort): void;
-}

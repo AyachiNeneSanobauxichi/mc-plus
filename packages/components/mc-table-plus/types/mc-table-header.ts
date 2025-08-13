@@ -1,5 +1,4 @@
-import type { McTableColumnProps } from "./mc-table-column";
-
+import type { McTableColumn } from "./mc-table";
 export interface McTablePlusHeaderProps {
-  columns: McTableColumnProps[];
+  columns: McTableColumn[];
 }
