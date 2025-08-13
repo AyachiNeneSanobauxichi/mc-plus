@@ -5,8 +5,8 @@
         <mc-table-column
           prop="name"
           label="Name"
-          width="320px"
           desc="Student Name"
+          width="33%"
         >
           <template #header-title>
             <div>Student Name</div>
@@ -18,10 +18,10 @@
         <mc-table-column
           prop="age"
           label="Age"
-          :width="180"
           desc="Student Age"
+          width="33%"
         />
-        <mc-table-column prop="position" label="Position" :width="180">
+        <mc-table-column prop="position" label="Position" width="33%">
           <template #header>
             <div class="position-container">
               <mc-button type="link">Position</mc-button>

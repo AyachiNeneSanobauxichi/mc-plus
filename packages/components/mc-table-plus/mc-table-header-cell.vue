@@ -1,5 +1,5 @@
 <template>
-  <th class="mc-table-header-cell" :style="{ width }">
+  <th class="mc-table-header-cell">
     <slot name="header">
       <div
         class="mc-table-header-cell-wrapper"
@@ -31,7 +31,6 @@
 <script setup lang="ts">
 import type { McTableHeaderCellProps } from "./types";
 import { computed } from "vue";
-import { useWidthHeight } from "@mc-plus/hooks";
 import McTooltip from "../mc-tooltip/mc-tooltip.vue";
 import { MC_TABLE_HEADER_CELL } from "./constant";
 import McTableSort from "./mc-table-sort.vue";
@@ -44,9 +43,6 @@ const props = withDefaults(defineProps<McTableHeaderCellProps>(), {
   columnAlign: "left",
   sort: undefined,
 });
-
-// use size
-const { width } = useWidthHeight();
 
 // align
 const align = computed(() => {

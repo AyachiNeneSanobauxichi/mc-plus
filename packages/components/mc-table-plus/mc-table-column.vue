@@ -3,8 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { McTableColumnProps } from "./types";
-import type { Slot } from "vue";
+import type { McTableColumnProps, McTableColumnSlots } from "./types";
 import { MC_TABLE_COLUMN } from "./constant";
 
 // options
@@ -14,11 +13,7 @@ defineOptions({ name: MC_TABLE_COLUMN });
 defineProps<McTableColumnProps>();
 
 // slots
-defineSlots<{
-  "header-title"?: Slot;
-  "header-desc"?: Slot;
-  header?: Slot;
-}>();
+defineSlots<McTableColumnSlots>();
 </script>
 
 <style scoped lang="scss">

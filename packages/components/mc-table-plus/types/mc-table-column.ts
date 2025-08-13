@@ -1,3 +1,4 @@
+import type { Slot } from "vue";
 import type { McTableAlign, McTableFixed } from "./mc-table";
 
 export interface McTableColumnProps {
@@ -8,4 +9,10 @@ export interface McTableColumnProps {
   fixed?: McTableFixed;
   sortable?: boolean;
   columnAlign?: McTableAlign;
+}
+
+export interface McTableColumnSlots {
+  "header-title"?: Slot;
+  "header-desc"?: Slot;
+  header?: Slot;
 }
