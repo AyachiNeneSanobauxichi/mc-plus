@@ -15,7 +15,13 @@
             <div>the name of the student</div>
           </template>
         </mc-table-column>
-        <mc-table-column prop="age" label="Age" desc="Student Age" width="33%">
+        <mc-table-column
+          prop="age"
+          label="Age"
+          desc="Student Age"
+          width="33%"
+          sortable
+        >
         </mc-table-column>
         <mc-table-column prop="position" label="Position" width="33%">
           <template #value>

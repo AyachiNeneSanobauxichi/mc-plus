@@ -1,6 +1,6 @@
 import type { Component, Slots, VNode, VNodeNormalizedChildren } from "vue";
 import type { McTableColumn, McTableColumnProps } from "../types";
-import { isArray } from "lodash-es";
+import { isArray, isString } from "lodash-es";
 import { MC_TABLE_COLUMN, MC_TABLE_DEFAULT_PROPS } from "../constant";
 
 // generate columns
@@ -24,7 +24,10 @@ const generateColumns = (
           desc: props?.desc,
           width: props?.width,
           fixed: props?.fixed || MC_TABLE_DEFAULT_PROPS.fixed,
-          sortable: props?.sortable || MC_TABLE_DEFAULT_PROPS.sortable,
+          sortable:
+            (isString(props?.sortable) && props.sortable === "") ||
+            props?.sortable ||
+            MC_TABLE_DEFAULT_PROPS.sortable,
           columnAlign:
             props?.columnAlign ||
             (props as any)?.["column-align"] ||

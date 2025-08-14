@@ -18,6 +18,7 @@
             :title="column.label"
             :desc="column.desc"
             :column-align="column.columnAlign"
+            :sort="column.sortable ? 'normal' : undefined"
           >
             <template #header v-if="column.header">
               <component :is="column.header" />
