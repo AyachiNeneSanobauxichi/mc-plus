@@ -1,5 +1,8 @@
 <template>
   <table class="mc-table-body">
+    <colgroup>
+      <col v-for="column in columns" :key="column.prop" :width="column.width" />
+    </colgroup>
     <tbody class="mc-table-body-tbody">
       <tr class="mc-table-body-tr">
         <mc-table-body-cell v-for="column in columns" :key="column.prop">

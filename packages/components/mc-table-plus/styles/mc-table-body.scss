@@ -2,6 +2,7 @@
 
 .mc-table-body {
   @include mixin.reset-table-style;
+  width: 100%;
 
   .mc-table-body-tbody {
     @include mixin.reset-tbody-style;
