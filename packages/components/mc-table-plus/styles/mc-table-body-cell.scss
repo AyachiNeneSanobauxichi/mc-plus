@@ -1,0 +1,5 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-table-body-cell {
+  @include mixin.reset-td-style;
+}

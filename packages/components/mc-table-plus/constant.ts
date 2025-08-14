@@ -10,8 +10,12 @@ export const MC_TABLE_SORT = "McTableSort";
 
 export const MC_TABLE_BODY = "McTableBody";
 
+export const MC_TABLE_BODY_CELL = "McTableBodyCell";
+
 export const MC_TABLE_DEFAULT_PROPS = {
   fixed: "none",
   sortable: false,
   columnAlign: "left",
 };
+
+export const MC_TABLE_DEFAULT_VALUE = "--";
