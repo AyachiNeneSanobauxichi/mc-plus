@@ -124,6 +124,11 @@
   vertical-align: top;
 }
 
+/* reset tbody style */
+@mixin reset-tbody-style {
+  vertical-align: top;
+}
+
 /* reset th style */
 @mixin reset-th-style {
   @include font-style;

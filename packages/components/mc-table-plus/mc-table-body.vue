@@ -1,5 +1,9 @@
 <template>
-  <div class="mc-table-body">Mc Table Body</div>
+  <table class="mc-table-body">
+    <tbody class="mc-table-body-tbody">
+      <tr class="mc-table-body-tr"></tr>
+    </tbody>
+  </table>
 </template>
 
 <script setup lang="ts">

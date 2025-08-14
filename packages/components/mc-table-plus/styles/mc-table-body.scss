@@ -1,1 +1,9 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-table-body {
+  @include mixin.reset-table-style;
+
+  .mc-table-body-tbody {
+    @include mixin.reset-tbody-style;
+  }
+}
