@@ -1,5 +1,5 @@
 import type { Component, Slots, VNode, VNodeNormalizedChildren } from "vue";
-import type { McTableColumn } from "../types";
+import type { McTableColumn, McTableColumnProps } from "../types";
 import { isArray } from "lodash-es";
 import { MC_TABLE_COLUMN, MC_TABLE_DEFAULT_PROPS } from "../constant";
 
@@ -17,9 +17,18 @@ const generateColumns = (
       const name = ((item?.type || {}) as Component)?.name;
       if (name === MC_TABLE_COLUMN) {
         const slots = item.children as Slots;
+        const props = item.props as McTableColumnProps | undefined;
         _columns.push({
-          ...MC_TABLE_DEFAULT_PROPS,
-          ...item.props,
+          prop: props?.prop,
+          label: props?.label,
+          desc: props?.desc,
+          width: props?.width,
+          fixed: props?.fixed || MC_TABLE_DEFAULT_PROPS.fixed,
+          sortable: props?.sortable || MC_TABLE_DEFAULT_PROPS.sortable,
+          columnAlign:
+            props?.columnAlign ||
+            (props as any)?.["column-align"] ||
+            MC_TABLE_DEFAULT_PROPS.columnAlign,
           headerTitle: slots?.["header-title"],
           headerDesc: slots?.["header-desc"],
           header: slots?.["header"],

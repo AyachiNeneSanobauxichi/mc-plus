@@ -18,11 +18,6 @@
         <mc-table-column prop="age" label="Age" desc="Student Age" width="33%">
         </mc-table-column>
         <mc-table-column prop="position" label="Position" width="33%">
-          <template #header>
-            <div class="position-container">
-              <mc-button type="link">Position</mc-button>
-            </div>
-          </template>
           <template #value>
             <div class="position-action">
               <mc-button>Position</mc-button>
@@ -90,11 +85,7 @@ const tableData: User[] = [
   gap: 32px;
 
   .position-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+    color: var(--mc-teal-500);
   }
 
   .position-action {

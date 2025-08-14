@@ -1,12 +1,24 @@
 <template>
   <table class="mc-table-header">
-    <colgroup>
-      <col v-for="column in columns" :key="column.prop" :width="column.width" />
+    <colgroup class="mc-table-header-colgroup">
+      <col
+        v-for="column in columns"
+        :key="column.prop"
+        :width="column.width"
+        :class="[
+          'mc-table-header-col',
+          `mc-table-header-col-${column.columnAlign}`,
+        ]"
+      />
     </colgroup>
     <thead class="mc-table-header-thead">
       <tr class="mc-table-header-tr">
         <template v-for="column in columns" :key="column.prop">
-          <mc-table-header-cell :title="column.label" :desc="column.desc">
+          <mc-table-header-cell
+            :title="column.label"
+            :desc="column.desc"
+            :column-align="column.columnAlign"
+          >
             <template #header v-if="column.header">
               <component :is="column.header" />
             </template>

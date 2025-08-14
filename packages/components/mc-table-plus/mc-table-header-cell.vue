@@ -3,9 +3,12 @@
     <slot name="header">
       <div
         class="mc-table-header-cell-wrapper"
-        :style="{ justifyContent: align }"
+        :style="{ justifyContent: getFlexAlign(columnAlign) }"
       >
-        <div class="mc-table-header-cell-inner" :style="{ alignItems: align }">
+        <div
+          class="mc-table-header-cell-inner"
+          :style="{ alignItems: getFlexAlign(columnAlign) }"
+        >
           <div class="mc-table-header-cell-title">
             <div class="mc-table-header-cell-title-text">
               <slot name="title">{{ title }}</slot>
@@ -30,30 +33,18 @@
 
 <script setup lang="ts">
 import type { McTableHeaderCellProps } from "./types";
-import { computed } from "vue";
 import McTooltip from "../mc-tooltip/mc-tooltip.vue";
 import { MC_TABLE_HEADER_CELL } from "./constant";
 import McTableSort from "./mc-table-sort.vue";
+import { getFlexAlign } from "./utils";
 
 // options
 defineOptions({ name: MC_TABLE_HEADER_CELL });
 
 // props
-const props = withDefaults(defineProps<McTableHeaderCellProps>(), {
-  columnAlign: "left",
+withDefaults(defineProps<McTableHeaderCellProps>(), {
   sort: undefined,
-});
-
-// align
-const align = computed(() => {
-  switch (props.columnAlign) {
-    case "left":
-      return "flex-start";
-    case "center":
-      return "center";
-    case "right":
-      return "flex-end";
-  }
+  columnAlign: "left",
 });
 </script>
 
