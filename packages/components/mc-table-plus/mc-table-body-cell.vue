@@ -1,7 +1,10 @@
 <template>
   <td class="mc-table-body-cell">
     <slot>
-      <div class="mc-table-body-cell-wrapper">
+      <div
+        class="mc-table-body-cell-wrapper"
+        :style="{ justifyContent: getFlexAlign(columnAlign) }"
+      >
         <div class="mc-table-body-cell-inner">
           <slot name="value">
             <div class="mc-table-body-value">{{ "Hirasawa Yui" }}</div>
@@ -15,6 +18,7 @@
 <script setup lang="ts">
 import type { McTablePlusBodyCellProps } from "./types";
 import { MC_TABLE_BODY_CELL, MC_TABLE_DEFAULT_VALUE } from "./constant";
+import { getFlexAlign } from "./utils";
 
 // options
 defineOptions({ name: MC_TABLE_BODY_CELL });
@@ -23,6 +27,7 @@ defineOptions({ name: MC_TABLE_BODY_CELL });
 withDefaults(defineProps<McTablePlusBodyCellProps>(), {
   value: "",
   default: MC_TABLE_DEFAULT_VALUE,
+  columnAlign: "left",
 });
 </script>
 

@@ -1,11 +1,23 @@
 <template>
   <table class="mc-table-body">
-    <colgroup>
-      <col v-for="column in columns" :key="column.prop" :width="column.width" />
+    <colgroup class="mc-table-body-colgroup">
+      <col
+        v-for="column in columns"
+        :key="column.prop"
+        :width="column.width"
+        :class="[
+          'mc-table-body-col',
+          `mc-table-body-col-${column.columnAlign}`,
+        ]"
+      />
     </colgroup>
     <tbody class="mc-table-body-tbody">
       <tr class="mc-table-body-tr">
-        <mc-table-body-cell v-for="column in columns" :key="column.prop">
+        <mc-table-body-cell
+          v-for="column in columns"
+          :key="column.prop"
+          :column-align="column.columnAlign"
+        >
           <template #default v-if="column.tableValue">
             <component :is="column.tableValue" />
           </template>
