@@ -23,6 +23,8 @@ const generateColumns = (
           headerTitle: slots?.["header-title"],
           headerDesc: slots?.["header-desc"],
           header: slots?.["header"],
+          tableValue: slots?.["default"],
+          tableValueContent: slots?.["value"],
         } as McTableColumn);
       } else if (Array.isArray(item.children)) {
         _flattenNodes(item.children);

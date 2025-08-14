@@ -5,5 +5,9 @@
 
   .mc-table-body-tbody {
     @include mixin.reset-tbody-style;
+
+    .mc-table-body-tr {
+      vertical-align: middle;
+    }
   }
 }

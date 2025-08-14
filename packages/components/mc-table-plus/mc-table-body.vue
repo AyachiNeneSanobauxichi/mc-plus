@@ -2,7 +2,14 @@
   <table class="mc-table-body">
     <tbody class="mc-table-body-tbody">
       <tr class="mc-table-body-tr">
-        <mc-table-body-cell v-for="column in columns" :key="column.prop" />
+        <mc-table-body-cell v-for="column in columns" :key="column.prop">
+          <template #default v-if="column.tableValue">
+            <component :is="column.tableValue" />
+          </template>
+          <template #value v-if="column.tableValueContent">
+            <component :is="column.tableValueContent" />
+          </template>
+        </mc-table-body-cell>
       </tr>
     </tbody>
   </table>

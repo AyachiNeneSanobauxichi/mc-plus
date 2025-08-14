@@ -11,4 +11,6 @@ export interface McTableColumn extends McTableColumnProps {
   headerTitle?: VNode;
   headerDesc?: VNode;
   header?: VNode;
+  tableValue?: VNode;
+  tableValueContent?: VNode;
 }

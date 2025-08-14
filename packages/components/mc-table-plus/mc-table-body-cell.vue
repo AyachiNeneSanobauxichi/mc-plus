@@ -1,5 +1,15 @@
 <template>
-  <td class="mc-table-body-cell">Mc Table Body Cell</td>
+  <td class="mc-table-body-cell">
+    <slot>
+      <div class="mc-table-body-cell-wrapper">
+        <div class="mc-table-body-cell-inner">
+          <slot name="value">
+            <div class="mc-table-body-value">{{ "Hirasawa Yui" }}</div>
+          </slot>
+        </div>
+      </div>
+    </slot>
+  </td>
 </template>
 
 <script setup lang="ts">

@@ -2,4 +2,12 @@
 
 .mc-table-body-cell {
   @include mixin.reset-td-style;
+
+  .mc-table-body-cell-wrapper {
+    @include mixin.flex-center;
+    width: 100%;
+    height: 100%;
+    padding: 16px 8px;
+    box-sizing: border-box;
+  }
 }

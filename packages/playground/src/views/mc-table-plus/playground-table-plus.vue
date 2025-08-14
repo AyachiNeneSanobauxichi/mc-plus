@@ -15,16 +15,17 @@
             <div>the name of the student</div>
           </template>
         </mc-table-column>
-        <mc-table-column
-          prop="age"
-          label="Age"
-          desc="Student Age"
-          width="33%"
-        />
+        <mc-table-column prop="age" label="Age" desc="Student Age" width="33%">
+        </mc-table-column>
         <mc-table-column prop="position" label="Position" width="33%">
           <template #header>
             <div class="position-container">
               <mc-button type="link">Position</mc-button>
+            </div>
+          </template>
+          <template #value>
+            <div class="position-action">
+              <mc-button>Position</mc-button>
             </div>
           </template>
         </mc-table-column>
@@ -94,6 +95,14 @@ const tableData: User[] = [
     align-items: center;
     width: 100%;
     height: 100%;
+  }
+
+  .position-action {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

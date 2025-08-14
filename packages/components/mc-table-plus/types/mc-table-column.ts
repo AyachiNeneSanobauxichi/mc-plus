@@ -12,6 +12,8 @@ export interface McTableColumnProps {
 }
 
 export interface McTableColumnSlots {
+  default?: Slot;
+  value?: Slot;
   "header-title"?: Slot;
   "header-desc"?: Slot;
   header?: Slot;
