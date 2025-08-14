@@ -1,14 +1,12 @@
 <template>
   <div class="mc-table-plus">
-    <div>Mc Table Plus</div>
-    <div>columns: {{ columns }}</div>
     <mc-table-header :columns="columns" />
-    <mc-table-body :columns="columns" />
+    <mc-table-body :columns="columns" :data="data" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { McTableColumn } from "./types";
+import type { McTableColumn, McTableProps } from "./types";
 import { ref, useSlots, watch } from "vue";
 import { MC_TABLE_PLUS } from "./constant";
 import { generateColumns } from "./utils";
@@ -17,6 +15,11 @@ import McTableBody from "./mc-table-body.vue";
 
 // options
 defineOptions({ name: MC_TABLE_PLUS });
+
+// props
+withDefaults(defineProps<McTableProps>(), {
+  data: () => [],
+});
 
 // table columns
 const columns = ref<McTableColumn[]>([]);

@@ -1,5 +1,7 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
+$border_color: var(--mc-gray-300);
+
 .mc-table-body {
   @include mixin.reset-table-style;
   width: 100%;
@@ -9,6 +11,8 @@
 
     .mc-table-body-tr {
       vertical-align: middle;
+      box-sizing: border-box;
+      border-bottom: 1px solid $border_color;
     }
   }
 }

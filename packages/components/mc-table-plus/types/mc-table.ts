@@ -14,3 +14,7 @@ export interface McTableColumn extends McTableColumnProps {
   tableValue?: VNode;
   tableValueContent?: VNode;
 }
+
+export interface McTableProps {
+  data: any[];
+}

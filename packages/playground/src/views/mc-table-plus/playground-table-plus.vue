@@ -1,7 +1,7 @@
 <template>
   <div class="playground-table-plus">
     <section>
-      <mc-table-plus>
+      <mc-table-plus :data="tableData">
         <mc-table-column
           prop="name"
           label="Name"

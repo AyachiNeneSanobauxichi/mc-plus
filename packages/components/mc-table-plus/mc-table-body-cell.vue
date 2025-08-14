@@ -7,7 +7,7 @@
       >
         <div class="mc-table-body-cell-inner">
           <slot name="value">
-            <div class="mc-table-body-value">{{ "Hirasawa Yui" }}</div>
+            <div class="mc-table-body-value">{{ displayValue }}</div>
           </slot>
         </div>
       </div>
@@ -17,6 +17,7 @@
 
 <script setup lang="ts">
 import type { McTablePlusBodyCellProps } from "./types";
+import { computed } from "vue";
 import { MC_TABLE_BODY_CELL, MC_TABLE_DEFAULT_VALUE } from "./constant";
 import { getFlexAlign } from "./utils";
 
@@ -24,10 +25,15 @@ import { getFlexAlign } from "./utils";
 defineOptions({ name: MC_TABLE_BODY_CELL });
 
 // props
-withDefaults(defineProps<McTablePlusBodyCellProps>(), {
+const props = withDefaults(defineProps<McTablePlusBodyCellProps>(), {
   value: "",
   default: MC_TABLE_DEFAULT_VALUE,
   columnAlign: "left",
+});
+
+// display value
+const displayValue = computed(() => {
+  return props.value || props.default;
 });
 </script>
 

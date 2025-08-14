@@ -12,11 +12,12 @@
       />
     </colgroup>
     <tbody class="mc-table-body-tbody">
-      <tr class="mc-table-body-tr">
+      <tr class="mc-table-body-tr" v-for="(item, index) in data" :key="index">
         <mc-table-body-cell
           v-for="column in columns"
           :key="column.prop"
           :column-align="column.columnAlign"
+          :value="item?.[column.prop]"
         >
           <template #default v-if="column.tableValue">
             <component :is="column.tableValue" />
@@ -39,7 +40,9 @@ import McTableBodyCell from "./mc-table-body-cell.vue";
 defineOptions({ name: MC_TABLE_BODY });
 
 // props
-defineProps<McTablePlusBodyProps>();
+withDefaults(defineProps<McTablePlusBodyProps>(), {
+  data: () => [],
+});
 </script>
 
 <style scoped lang="scss">
