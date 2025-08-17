@@ -1,6 +1,8 @@
 <template>
   <table class="mc-table-body">
-    <div class="mc-table-body-loading" v-if="loading">Loading...</div>
+    <div class="mc-table-body-loading" v-if="loading">
+      <slot name="loading">Loading...</slot>
+    </div>
     <colgroup class="mc-table-body-colgroup">
       <col
         v-for="column in columns"
@@ -13,21 +15,28 @@
       />
     </colgroup>
     <tbody class="mc-table-body-tbody">
-      <tr class="mc-table-body-tr" v-for="(item, index) in data" :key="index">
-        <mc-table-body-cell
-          v-for="column in columns"
-          :key="column.prop"
-          :column-align="column.columnAlign"
-          :value="item?.[column.prop]"
-        >
-          <template #default v-if="column.tableValue">
-            <component :is="column.tableValue" />
-          </template>
-          <template #value v-if="column.tableValueContent">
-            <component :is="column.tableValueContent" />
-          </template>
-        </mc-table-body-cell>
-      </tr>
+      <template v-if="data?.length">
+        <tr class="mc-table-body-tr" v-for="(item, index) in data" :key="index">
+          <mc-table-body-cell
+            v-for="column in columns"
+            :key="column.prop"
+            :column-align="column.columnAlign"
+            :value="item?.[column.prop]"
+          >
+            <template #default v-if="column.tableValue">
+              <component :is="column.tableValue" />
+            </template>
+            <template #value v-if="column.tableValueContent">
+              <component :is="column.tableValueContent" />
+            </template>
+          </mc-table-body-cell>
+        </tr>
+      </template>
+      <template v-else>
+        <div class="mc-table-body-empty">
+          <slot name="empty">No data</slot>
+        </div>
+      </template>
     </tbody>
   </table>
 </template>

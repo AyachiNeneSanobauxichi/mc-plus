@@ -6,6 +6,12 @@
         :loading="loading"
         @change:sort="handleSort"
       >
+        <template #loading>
+          <div>Data is loading...</div>
+        </template>
+        <template #empty>
+          <div>No Students</div>
+        </template>
         <mc-table-column
           prop="name"
           label="Name"
@@ -47,6 +53,7 @@
     <section class="tool-bar">
       <mc-button @click="handleFetchData">Fetch Data</mc-button>
       <mc-button @click="handleResetData">Reset Data</mc-button>
+      <mc-button @click="handleEmptyData">Empty Data</mc-button>
     </section>
   </div>
 </template>
@@ -116,6 +123,11 @@ const handleFetchData = async () => {
 // handle reset data
 const handleResetData = () => {
   tableData.value = _data;
+};
+
+// handle empty data
+const handleEmptyData = () => {
+  tableData.value = [];
 };
 
 // handle sort

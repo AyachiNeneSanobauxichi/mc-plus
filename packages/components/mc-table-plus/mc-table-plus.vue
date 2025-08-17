@@ -1,7 +1,14 @@
 <template>
   <div class="mc-table-plus">
     <mc-table-header :columns="columns" />
-    <mc-table-body :columns="columns" :data="tableData" :loading="loading" />
+    <mc-table-body :columns="columns" :data="tableData" :loading="loading">
+      <template #loading>
+        <slot name="loading"></slot>
+      </template>
+      <template #empty>
+        <slot name="empty"></slot>
+      </template>
+    </mc-table-body>
   </div>
 </template>
 
