@@ -28,5 +28,5 @@ export interface McTableContext {
 }
 
 export interface McTableEmits {
-  (e: "sort", prop: string, sort: McTableSort): void;
+  (e: "change:sort", prop: string, sort: McTableSort): void;
 }

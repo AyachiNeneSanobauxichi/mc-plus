@@ -36,12 +36,12 @@ import type {
   McTableHeaderCellProps,
   McTableSort as McTableSortType,
 } from "./types";
+import { isFunction, debounce } from "lodash-es";
 import McTooltip from "../mc-tooltip/mc-tooltip.vue";
 import { MC_TABLE_HEADER_CELL } from "./constant";
 import McTableSort from "./mc-table-sort.vue";
 import { getFlexAlign } from "./utils";
 import { useTableContext } from "./hooks";
-import { isFunction } from "lodash-es";
 
 // options
 defineOptions({ name: MC_TABLE_HEADER_CELL });
@@ -70,11 +70,11 @@ const getNextSort = (sort: McTableSortType): McTableSortType => {
 };
 
 // handle cell click
-const handleCellClick = () => {
+const handleCellClick = debounce(() => {
   if (props.sort && isFunction(doSort)) {
     doSort(props.prop, getNextSort(props.sort));
   }
-};
+}, 300);
 </script>
 
 <style scoped lang="scss">

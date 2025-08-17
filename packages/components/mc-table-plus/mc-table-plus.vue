@@ -72,14 +72,14 @@ const handleSort = (prop: string, sort: McTableSort) => {
     }
   });
 
-  emit("sort", prop, sort);
-
   if (props.sortType === "front") {
     if (sort === "normal") {
       tableData.value = props.data;
     } else {
       tableData.value = orderBy(tableData.value, [prop], [sort]);
     }
+  } else {
+    emit("change:sort", prop, sort);
   }
 };
 

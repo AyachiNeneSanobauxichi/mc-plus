@@ -1,7 +1,7 @@
 <template>
   <div class="playground-table-plus">
     <section>
-      <mc-table-plus :data="tableData" sort-type="front" @sort="handleSort">
+      <mc-table-plus :data="tableData" @change:sort="handleSort">
         <mc-table-column
           prop="name"
           label="Name"
@@ -48,11 +48,13 @@
 </template>
 
 <script setup lang="ts">
+import type { McTableSort } from "@mc-plus/components/mc-table-plus/types";
 import McTablePlus from "../../../../components/mc-table-plus/mc-table-plus.vue";
 import McTableColumn from "../../../../components/mc-table-plus/mc-table-column.vue";
 import { onMounted, ref } from "vue";
 import { McButton } from "mc-plus";
 import { delay } from "@mc-plus/utils";
+import { orderBy } from "lodash-es";
 
 interface User {
   name: string;
@@ -109,8 +111,14 @@ const handleResetData = () => {
 };
 
 // handle sort
-const handleSort = (prop: string) => {
-  console.log("handleSort", prop);
+const handleSort = async (prop: string, sort: McTableSort) => {
+  console.log("handleSort", prop, sort);
+  await delay(3000);
+  if (sort === "normal") {
+    tableData.value = _data;
+  } else {
+    tableData.value = orderBy(tableData.value, [prop], [sort]);
+  }
 };
 </script>
 
