@@ -38,6 +38,28 @@ const columns = ref<McTableColumn[]>([]);
 // table data
 const tableData = ref<any[]>(props.data);
 
+// watch data
+watch(
+  () => props.data,
+  () => {
+    tableData.value = props.data;
+    resetSort();
+  }
+);
+
+// reset sort
+const resetSort = () => {
+  if (props.sortType === "front") {
+    columns.value = map(columns.value, (column) => {
+      if (column.sort) {
+        return { ...column, sort: "normal" };
+      } else {
+        return column;
+      }
+    });
+  }
+};
+
 // handle sort
 const handleSort = (prop: string, sort: McTableSort) => {
   columns.value = map(columns.value, (column) => {

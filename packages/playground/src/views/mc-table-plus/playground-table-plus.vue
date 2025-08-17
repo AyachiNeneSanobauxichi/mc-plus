@@ -40,13 +40,19 @@
         <el-table-column prop="position" label="Position" sortable />
       </el-table>
     </section>
+    <section class="tool-bar">
+      <mc-button @click="handleFetchData">Fetch Data</mc-button>
+      <mc-button @click="handleResetData">Reset Data</mc-button>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import McTablePlus from "../../../../components/mc-table-plus/mc-table-plus.vue";
 import McTableColumn from "../../../../components/mc-table-plus/mc-table-column.vue";
+import { onMounted, ref } from "vue";
 import { McButton } from "mc-plus";
+import { delay } from "@mc-plus/utils";
 
 interface User {
   name: string;
@@ -54,7 +60,7 @@ interface User {
   position: "guitarist" | "bassist" | "drummer" | "keyboardist";
 }
 
-const tableData: User[] = [
+const _data: User[] = [
   {
     name: "Hirasawa Yui",
     age: 19,
@@ -82,6 +88,26 @@ const tableData: User[] = [
   },
 ];
 
+const tableData = ref<User[]>([]);
+
+onMounted(async () => {
+  await delay(3000);
+  tableData.value = _data;
+  console.log("tableData: ", tableData.value);
+});
+
+// handle fetch data
+const handleFetchData = async () => {
+  await delay(3000);
+  console.log("fetch data");
+  tableData.value = _data.slice(0, 2);
+};
+
+// handle reset data
+const handleResetData = () => {
+  tableData.value = _data;
+};
+
 // handle sort
 const handleSort = (prop: string) => {
   console.log("handleSort", prop);
@@ -106,6 +132,13 @@ const handleSort = (prop: string) => {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .tool-bar {
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    gap: 16px;
   }
 }
 </style>
