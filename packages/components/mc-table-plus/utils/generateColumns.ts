@@ -18,16 +18,19 @@ const generateColumns = (
       if (name === MC_TABLE_COLUMN) {
         const slots = item.children as Slots;
         const props = item.props as McTableColumnProps | undefined;
+        const sortable =
+          (isString(props?.sortable) && props.sortable === "") ||
+          props?.sortable ||
+          MC_TABLE_DEFAULT_PROPS.sortable;
+
         _columns.push({
           prop: props?.prop,
           label: props?.label,
           desc: props?.desc,
           width: props?.width,
           fixed: props?.fixed || MC_TABLE_DEFAULT_PROPS.fixed,
-          sortable:
-            (isString(props?.sortable) && props.sortable === "") ||
-            props?.sortable ||
-            MC_TABLE_DEFAULT_PROPS.sortable,
+          sortable,
+          sort: sortable ? "normal" : undefined,
           columnAlign:
             props?.columnAlign ||
             (props as any)?.["column-align"] ||

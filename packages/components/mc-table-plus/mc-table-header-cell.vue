@@ -1,5 +1,5 @@
 <template>
-  <th class="mc-table-header-cell">
+  <th class="mc-table-header-cell" @click="handleCellClick">
     <slot name="header">
       <div
         class="mc-table-header-cell-wrapper"
@@ -32,20 +32,49 @@
 </template>
 
 <script setup lang="ts">
-import type { McTableHeaderCellProps } from "./types";
+import type {
+  McTableHeaderCellProps,
+  McTableSort as McTableSortType,
+} from "./types";
 import McTooltip from "../mc-tooltip/mc-tooltip.vue";
 import { MC_TABLE_HEADER_CELL } from "./constant";
 import McTableSort from "./mc-table-sort.vue";
 import { getFlexAlign } from "./utils";
+import { useTableContext } from "./hooks";
+import { isFunction } from "lodash-es";
 
 // options
 defineOptions({ name: MC_TABLE_HEADER_CELL });
 
 // props
-withDefaults(defineProps<McTableHeaderCellProps>(), {
+const props = withDefaults(defineProps<McTableHeaderCellProps>(), {
   sort: undefined,
   columnAlign: "left",
 });
+
+// table context
+const { doSort } = useTableContext();
+
+// get next sort
+const getNextSort = (sort: McTableSortType): McTableSortType => {
+  switch (sort) {
+    case "normal":
+      return "desc";
+    case "desc":
+      return "asc";
+    case "asc":
+      return "normal";
+    default:
+      return "normal";
+  }
+};
+
+// handle cell click
+const handleCellClick = () => {
+  if (props.sort && isFunction(doSort)) {
+    doSort(props.prop, getNextSort(props.sort));
+  }
+};
 </script>
 
 <style scoped lang="scss">

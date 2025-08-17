@@ -1,12 +1,13 @@
 <template>
   <div class="playground-table-plus">
     <section>
-      <mc-table-plus :data="tableData">
+      <mc-table-plus :data="tableData" sort-type="front" @sort="handleSort">
         <mc-table-column
           prop="name"
           label="Name"
           desc="Student Name"
           width="33%"
+          sortable
         >
           <template #header-title>
             <div>Student Name</div>
@@ -80,6 +81,11 @@ const tableData: User[] = [
     position: "keyboardist",
   },
 ];
+
+// handle sort
+const handleSort = (prop: string) => {
+  console.log("handleSort", prop);
+};
 </script>
 
 <style scoped lang="scss">

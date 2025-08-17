@@ -7,6 +7,8 @@ export type McTableSort = "asc" | "desc" | "normal";
 
 export type McTableFixed = "left" | "right" | "none";
 
+export type McTableSideType = "front" | "back";
+
 export interface McTableColumn extends McTableColumnProps {
   headerTitle?: VNode;
   headerDesc?: VNode;
@@ -17,4 +19,14 @@ export interface McTableColumn extends McTableColumnProps {
 
 export interface McTableProps {
   data: any[];
+  sortType?: McTableSideType;
+  paginationType?: McTableSideType;
+}
+
+export interface McTableContext {
+  handleSort: (prop: string, sort: McTableSort) => void;
+}
+
+export interface McTableEmits {
+  (e: "sort", prop: string, sort: McTableSort): void;
 }

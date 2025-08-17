@@ -15,10 +15,11 @@
       <tr class="mc-table-header-tr">
         <template v-for="column in columns" :key="column.prop">
           <mc-table-header-cell
+            :prop="column.prop"
             :title="column.label"
             :desc="column.desc"
             :column-align="column.columnAlign"
-            :sort="column.sortable ? 'normal' : undefined"
+            :sort="column.sort"
           >
             <template #header v-if="column.header">
               <component :is="column.header" />

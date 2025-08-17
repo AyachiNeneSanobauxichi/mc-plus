@@ -1,3 +1,6 @@
+import type { InjectionKey } from "vue";
+import type { McTableContext } from "./types";
+
 export const MC_TABLE_PLUS = "McTablePlus";
 
 export const MC_TABLE_COLUMN = "McTableColumn";
@@ -19,3 +22,6 @@ export const MC_TABLE_DEFAULT_PROPS = {
 };
 
 export const MC_TABLE_DEFAULT_VALUE = "--";
+
+export const MC_TABLE_CTX_KEY: InjectionKey<McTableContext> =
+  Symbol("McTableContext");

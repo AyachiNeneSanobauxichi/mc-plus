@@ -1,5 +1,5 @@
 import type { Slot } from "vue";
-import type { McTableAlign, McTableFixed } from "./mc-table";
+import type { McTableAlign, McTableFixed, McTableSort } from "./mc-table";
 
 export interface McTableColumnProps {
   prop: string;
@@ -8,6 +8,7 @@ export interface McTableColumnProps {
   width?: number | string;
   fixed?: McTableFixed;
   sortable?: boolean;
+  sort?: McTableSort;
   columnAlign?: McTableAlign;
 }
 
