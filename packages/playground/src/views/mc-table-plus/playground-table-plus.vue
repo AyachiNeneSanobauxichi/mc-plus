@@ -1,7 +1,11 @@
 <template>
   <div class="playground-table-plus">
     <section>
-      <mc-table-plus :data="tableData" @change:sort="handleSort">
+      <mc-table-plus
+        :data="tableData"
+        :loading="loading"
+        @change:sort="handleSort"
+      >
         <mc-table-column
           prop="name"
           label="Name"
@@ -92,9 +96,13 @@ const _data: User[] = [
 
 const tableData = ref<User[]>([]);
 
+const loading = ref<boolean>(false);
+
 onMounted(async () => {
-  await delay(3000);
+  loading.value = true;
+  await delay(8000);
   tableData.value = _data;
+  loading.value = false;
   console.log("tableData: ", tableData.value);
 });
 
@@ -113,12 +121,14 @@ const handleResetData = () => {
 // handle sort
 const handleSort = async (prop: string, sort: McTableSort) => {
   console.log("handleSort", prop, sort);
-  await delay(3000);
+  loading.value = true;
+  await delay(8000);
   if (sort === "normal") {
     tableData.value = _data;
   } else {
     tableData.value = orderBy(tableData.value, [prop], [sort]);
   }
+  loading.value = false;
 };
 </script>
 

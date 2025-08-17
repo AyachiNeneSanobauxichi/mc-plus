@@ -5,6 +5,16 @@ $border_color: var(--mc-gray-300);
 .mc-table-body {
   @include mixin.reset-table-style;
   width: 100%;
+  position: relative;
+
+  .mc-table-body-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.03);
+  }
 
   .mc-table-body-tbody {
     @include mixin.reset-tbody-style;

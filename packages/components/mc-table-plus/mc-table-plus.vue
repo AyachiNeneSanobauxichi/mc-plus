@@ -1,7 +1,7 @@
 <template>
   <div class="mc-table-plus">
     <mc-table-header :columns="columns" />
-    <mc-table-body :columns="columns" :data="tableData" />
+    <mc-table-body :columns="columns" :data="tableData" :loading="loading" />
   </div>
 </template>
 
@@ -25,6 +25,7 @@ defineOptions({ name: MC_TABLE_PLUS });
 // props
 const props = withDefaults(defineProps<McTableProps>(), {
   data: () => [],
+  loading: false,
   sortType: "back",
   paginationType: "back",
 });

@@ -1,5 +1,6 @@
 <template>
   <table class="mc-table-body">
+    <div class="mc-table-body-loading" v-if="loading">Loading...</div>
     <colgroup class="mc-table-body-colgroup">
       <col
         v-for="column in columns"

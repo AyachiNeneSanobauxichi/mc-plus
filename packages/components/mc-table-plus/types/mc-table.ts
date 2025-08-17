@@ -19,6 +19,7 @@ export interface McTableColumn extends McTableColumnProps {
 
 export interface McTableProps {
   data: any[];
+  loading?: boolean;
   sortType?: McTableSideType;
   paginationType?: McTableSideType;
 }
