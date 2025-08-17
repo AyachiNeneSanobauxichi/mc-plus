@@ -3,7 +3,7 @@ import type { McTableAlign, McTableFixed, McTableSort } from "./mc-table";
 
 export interface McTableColumnProps {
   prop: string;
-  label: string;
+  label?: string;
   desc?: string;
   width?: number | string;
   fixed?: McTableFixed;

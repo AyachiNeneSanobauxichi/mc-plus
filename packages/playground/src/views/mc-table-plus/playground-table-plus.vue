@@ -34,7 +34,7 @@
           sortable
         >
         </mc-table-column>
-        <mc-table-column prop="position" label="Position" width="33%">
+        <mc-table-column prop="position" width="33%">
           <template #value>
             <div class="position-action">
               <mc-button>Position</mc-button>
