@@ -16,21 +16,30 @@ $border_color: var(--mc-gray-400);
   .mc-table-page-size-group {
     @include mixin.reset-ul-style;
     @include mixin.flex-center;
-    border-radius: 4px;
-    box-sizing: border-box;
-    border: 1px solid $border_color;
 
     .mc-table-page-size-group-item {
       @include mixin.reset-li-style;
       @include mixin.flex-center;
       width: 40px;
       height: 40px;
+      border: 1px solid $border_color;
+      border-right: none;
       box-sizing: border-box;
-      border-right: 1px solid $border_color;
       cursor: pointer;
 
+      &:first-of-type {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+
       &:last-of-type {
-        border-right: none;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-right: 1px solid $border_color;
+      }
+
+      &:hover {
+        font-weight: 600;
       }
 
       &.mc-table-page-size-group-item-active {

@@ -23,6 +23,8 @@ export const MC_TABLE_PAGE_SIZE = "McPageSize";
 
 export const MC_TABLE_PAGINATION = "McTablePagination";
 
+export const MC_TABLE_ELLIPSIS = "McTableEllipsis";
+
 export const MC_TABLE_DEFAULT_PROPS = {
   fixed: "none",
   sortable: false,
