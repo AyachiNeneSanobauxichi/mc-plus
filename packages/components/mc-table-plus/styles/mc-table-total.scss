@@ -1,1 +1,14 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color: var(--mc-gray-500);
+$text_color_number: var(--mc-gray-800);
+
+.mc-table-total {
+  @include mixin.flex-center($gap: 4px);
+  @include mixin.font-style($color: $text_color);
+  height: 24px;
+
+  .mc-table-total-number {
+    @include mixin.font-style($color: $text_color_number, $weight: 600);
+  }
+}
