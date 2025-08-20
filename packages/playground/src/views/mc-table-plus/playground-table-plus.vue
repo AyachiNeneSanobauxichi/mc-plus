@@ -107,7 +107,7 @@ const loading = ref<boolean>(false);
 
 onMounted(async () => {
   loading.value = true;
-  await delay(8000);
+  await delay(3000);
   tableData.value = _data;
   loading.value = false;
   console.log("tableData: ", tableData.value);
@@ -134,7 +134,7 @@ const handleEmptyData = () => {
 const handleSort = async (prop: string, sort: McTableSort) => {
   console.log("handleSort", prop, sort);
   loading.value = true;
-  await delay(8000);
+  await delay(3000);
   if (sort === "normal") {
     tableData.value = _data;
   } else {

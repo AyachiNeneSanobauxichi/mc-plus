@@ -9,6 +9,7 @@
         <slot name="empty"></slot>
       </template>
     </mc-table-body>
+    <mc-table-footer />
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import { MC_TABLE_CTX_KEY, MC_TABLE_PLUS } from "./constant";
 import { generateColumns } from "./utils";
 import McTableHeader from "./mc-table-header.vue";
 import McTableBody from "./mc-table-body.vue";
+import McTableFooter from "./mc-table-footer.vue";
 
 // options
 defineOptions({ name: MC_TABLE_PLUS });
