@@ -1,1 +1,42 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color: var(--mc-gray-500);
+$text_color_active: var(--mc-white);
+$text_color_number: var(--mc-gray-800);
+$bg_color: var(--mc-teal-500);
+$border_color: var(--mc-gray-400);
+
+.mc-table-page-size {
+  @include mixin.flex-center($gap: 8px);
+
+  .mc-table-page-size-text {
+    @include mixin.font-style($color: $text_color, $weight: 600);
+  }
+
+  .mc-table-page-size-group {
+    @include mixin.reset-ul-style;
+    @include mixin.flex-center;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid $border_color;
+
+    .mc-table-page-size-group-item {
+      @include mixin.reset-li-style;
+      @include mixin.flex-center;
+      width: 40px;
+      height: 40px;
+      box-sizing: border-box;
+      border-right: 1px solid $border_color;
+      cursor: pointer;
+
+      &:last-of-type {
+        border-right: none;
+      }
+
+      &.mc-table-page-size-group-item-active {
+        @include mixin.font-style($color: $text_color_active, $weight: 600);
+        background-color: $bg_color;
+      }
+    }
+  }
+}

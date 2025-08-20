@@ -1,5 +1,18 @@
 <template>
-  <div class="mc-table-page-size">Mc table page size</div>
+  <div class="mc-table-page-size">
+    <span class="mc-table-page-size-text">View per page</span>
+    <ul class="mc-table-page-size-group">
+      <li class="mc-table-page-size-group-item">25</li>
+      <li
+        class="mc-table-page-size-group-item"
+        :class="{ 'mc-table-page-size-group-item-active': true }"
+      >
+        50
+      </li>
+      <li class="mc-table-page-size-group-item">75</li>
+      <li class="mc-table-page-size-group-item">100</li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
