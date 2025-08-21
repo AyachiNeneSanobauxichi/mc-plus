@@ -25,8 +25,9 @@ export interface McTableProps {
 }
 
 export interface McTableContext {
-  handleSort: (prop: string, sort: McTableSort) => void;
   pagination: McTablePaginationType;
+  handleSort: (prop: string, sort: McTableSort) => void;
+  setPagination: (pagination: Partial<McTablePaginationType>) => void;
 }
 
 export interface McTableEmits {
@@ -36,6 +37,6 @@ export interface McTableEmits {
 export interface McTablePaginationType {
   pageNum: number;
   pageSize: number;
-  size: number;
   total: number;
+  pageSizes?: number[];
 }

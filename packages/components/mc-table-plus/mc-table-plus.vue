@@ -21,8 +21,8 @@ import type {
   McTableProps,
   McTableSort,
 } from "./types";
-import { provide, reactive, ref, useSlots, watch } from "vue";
-import { map, orderBy } from "lodash-es";
+import { provide, reactive, ref, useSlots, watch, watchEffect } from "vue";
+import { assign, map, orderBy } from "lodash-es";
 import { MC_TABLE_CTX_KEY, MC_TABLE_PLUS } from "./constant";
 import { generateColumns } from "./utils";
 import McTableHeader from "./mc-table-header.vue";
@@ -97,15 +97,28 @@ const handleSort = (prop: string, sort: McTableSort) => {
 // pagination
 const pagination = reactive<McTablePaginationType>({
   pageNum: 1,
-  pageSize: 10,
-  size: 10,
+  pageSize: 25,
   total: 100,
+  pageSizes: [25, 50, 75, 100],
 });
+
+// test
+watchEffect(() => {
+  console.log(
+    `pageNum: ${pagination.pageNum}, pageSize: ${pagination.pageSize}, total: ${pagination.total}`
+  );
+});
+
+// set pagination
+const setPagination = (_pagination: Partial<McTablePaginationType>) => {
+  assign(pagination, { ..._pagination });
+};
 
 // provide
 provide(MC_TABLE_CTX_KEY, {
-  handleSort,
   pagination,
+  handleSort,
+  setPagination,
 });
 
 // slots

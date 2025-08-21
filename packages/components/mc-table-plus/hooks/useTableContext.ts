@@ -7,8 +7,9 @@ const useTableContext = () => {
 
   return {
     tableCtx,
-    doSort: tableCtx?.handleSort,
     pagination: tableCtx?.pagination,
+    doSort: tableCtx?.handleSort,
+    setPagination: tableCtx?.setPagination,
   };
 };
 

@@ -48,9 +48,7 @@ const generateColumns = (
   };
 
   _flattenNodes(children);
-
-  console.log("Columns: ", _columns);
-
+  
   return _columns;
 };
 

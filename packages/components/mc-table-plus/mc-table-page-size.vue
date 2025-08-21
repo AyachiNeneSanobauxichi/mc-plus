@@ -2,24 +2,39 @@
   <div class="mc-table-page-size">
     <span class="mc-table-page-size-text">View per page</span>
     <ul class="mc-table-page-size-group">
-      <li class="mc-table-page-size-group-item">25</li>
       <li
         class="mc-table-page-size-group-item"
-        :class="{ 'mc-table-page-size-group-item-active': true }"
+        :class="{
+          'mc-table-page-size-group-item-active':
+            value === pagination?.pageSize,
+        }"
+        v-for="value in pagination?.pageSizes"
+        :key="value"
+        @click="handlePageSizeChange(value)"
       >
-        50
+        {{ value }}
       </li>
-      <li class="mc-table-page-size-group-item">75</li>
-      <li class="mc-table-page-size-group-item">100</li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
+import { isFunction } from "lodash-es";
 import { MC_TABLE_PAGE_SIZE } from "./constant";
+import { useTableContext } from "./hooks";
 
 // options
 defineOptions({ name: MC_TABLE_PAGE_SIZE });
+
+// use table context
+const { pagination, setPagination } = useTableContext();
+
+// handle page size change
+const handlePageSizeChange = (value: number) => {
+  if (isFunction(setPagination)) {
+    setPagination({ pageSize: value });
+  }
+};
 </script>
 
 <style scoped lang="scss">
