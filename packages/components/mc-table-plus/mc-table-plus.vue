@@ -17,10 +17,11 @@
 import type {
   McTableColumn,
   McTableEmits,
+  McTablePaginationType,
   McTableProps,
   McTableSort,
 } from "./types";
-import { provide, ref, useSlots, watch } from "vue";
+import { provide, reactive, ref, useSlots, watch } from "vue";
 import { map, orderBy } from "lodash-es";
 import { MC_TABLE_CTX_KEY, MC_TABLE_PLUS } from "./constant";
 import { generateColumns } from "./utils";
@@ -93,9 +94,18 @@ const handleSort = (prop: string, sort: McTableSort) => {
   }
 };
 
+// pagination
+const pagination = reactive<McTablePaginationType>({
+  pageNum: 1,
+  pageSize: 10,
+  size: 10,
+  total: 100,
+});
+
 // provide
 provide(MC_TABLE_CTX_KEY, {
   handleSort,
+  pagination,
 });
 
 // slots

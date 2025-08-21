@@ -1,17 +1,32 @@
 <template>
-  <div class="mc-table-total">
+  <div class="mc-table-total" v-if="showNumber">
     <span>Showing</span>
-    <span class="mc-table-total-number">1-10</span>
+    <span class="mc-table-total-number">{{ showNumber.range }}</span>
     <span>of</span>
-    <span class="mc-table-total-number">100</span>
+    <span class="mc-table-total-number">{{ showNumber.total }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { MC_TABLE_TOTAL } from "./constant";
+import { useTableContext } from "./hooks";
 
 // options
 defineOptions({ name: MC_TABLE_TOTAL });
+
+// use table context
+const { pagination } = useTableContext();
+
+// show number
+const showNumber = computed(() => {
+  if (!pagination) return;
+  const { pageNum, pageSize, total } = pagination;
+  return {
+    range: `${(pageNum - 1) * pageSize + 1}-${pageNum * pageSize}`,
+    total,
+  };
+});
 </script>
 
 <style scoped lang="scss">

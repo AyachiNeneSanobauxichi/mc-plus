@@ -26,8 +26,16 @@ export interface McTableProps {
 
 export interface McTableContext {
   handleSort: (prop: string, sort: McTableSort) => void;
+  pagination: McTablePaginationType;
 }
 
 export interface McTableEmits {
   (e: "change:sort", prop: string, sort: McTableSort): void;
+}
+
+export interface McTablePaginationType {
+  pageNum: number;
+  pageSize: number;
+  size: number;
+  total: number;
 }

@@ -35,3 +35,8 @@ export const MC_TABLE_DEFAULT_VALUE = "--";
 
 export const MC_TABLE_CTX_KEY: InjectionKey<McTableContext> =
   Symbol("McTableContext");
+
+// "pageNum": 1,
+// "pageSize": 10,
+// "size": 10,
+// "total": 18,
