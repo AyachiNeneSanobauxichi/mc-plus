@@ -4,9 +4,10 @@ $text_color: var(--mc-gray-500);
 $text_color_number: var(--mc-gray-800);
 
 .mc-table-total {
-  @include mixin.flex-center($gap: 4px);
+  @include mixin.flex-center($justify: flex-start, $gap: 4px);
   @include mixin.font-style($color: $text_color);
   height: 24px;
+  flex: 1;
 
   .mc-table-total-number {
     @include mixin.font-style($color: $text_color_number, $weight: 600);

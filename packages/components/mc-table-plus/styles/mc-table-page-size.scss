@@ -7,7 +7,8 @@ $bg_color: var(--mc-teal-500);
 $border_color: var(--mc-gray-400);
 
 .mc-table-page-size {
-  @include mixin.flex-center($gap: 8px);
+  @include mixin.flex-center($justify: flex-end, $gap: 8px);
+  flex: 1;
 
   .mc-table-page-size-text {
     @include mixin.font-style($color: $text_color, $weight: 600);
