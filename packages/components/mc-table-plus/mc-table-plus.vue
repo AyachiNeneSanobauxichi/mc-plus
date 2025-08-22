@@ -98,7 +98,7 @@ const handleSort = (prop: string, sort: McTableSort) => {
 const pagination = reactive<McTablePaginationType>({
   pageNum: 1,
   pageSize: 25,
-  total: 100,
+  total: 500,
   pageSizes: [25, 50, 75, 100],
 });
 

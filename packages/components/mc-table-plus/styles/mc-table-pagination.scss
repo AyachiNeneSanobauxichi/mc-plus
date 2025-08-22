@@ -2,6 +2,7 @@
 
 $icon_color: var(--mc-teal-500);
 $icon_color_disabled: var(--mc-gray-400);
+$icon_color_hover: var(--mc-teal-900);
 $icon_bg_color_hover: var(--mc-teal-50);
 $text_color_active: var(--mc-white);
 $bg_color_active: var(--mc-purple-500);
@@ -32,6 +33,7 @@ $bg_color_active: var(--mc-purple-500);
 
     &:hover:not(.mc-table-pagination-item-disabled) {
       background-color: $icon_bg_color_hover;
+      color: $icon_color_hover;
     }
   }
 

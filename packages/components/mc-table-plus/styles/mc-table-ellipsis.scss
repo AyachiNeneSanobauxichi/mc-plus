@@ -5,8 +5,8 @@ $dot_color: var(--mc-gray-500);
 .mc-table-ellipsis {
   @include mixin.reset-li-style;
   @include mixin.flex-center($gap: 4px);
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
 
   .mc-table-ellipsis-dot {
     width: 4px;

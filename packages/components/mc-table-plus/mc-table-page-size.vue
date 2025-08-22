@@ -32,7 +32,7 @@ const { pagination, setPagination } = useTableContext();
 // handle page size change
 const handlePageSizeChange = (value: number) => {
   if (isFunction(setPagination)) {
-    setPagination({ pageSize: value });
+    setPagination({ pageSize: value, pageNum: 1 });
   }
 };
 </script>
