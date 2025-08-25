@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { IResponse } from "./types";
 import axios from "axios";
 import { ACCESS_TOKEN_KEY } from "./constant";
 
@@ -70,7 +71,7 @@ request.interceptors.response.use(
 // api request
 export const apiRequest = async <TRequest = any, TResponse = any>(
   config: AxiosRequestConfig<TRequest>
-): Promise<TResponse> => {
+): Promise<IResponse<TResponse>> => {
   try {
     const response = await request(config);
     return response.data;
