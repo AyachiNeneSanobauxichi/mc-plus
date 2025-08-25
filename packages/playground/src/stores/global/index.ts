@@ -1,5 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { useStorage } from "@vueuse/core";
+import { ACCESS_TOKEN_KEY } from "../../apis";
 
 // global store
 const useGlobalStore = defineStore("GlobalStore", () => {
@@ -21,10 +23,31 @@ const useGlobalStore = defineStore("GlobalStore", () => {
     rsaPublicKey.value = "";
   };
 
+  // access token
+  const accessToken = useStorage(ACCESS_TOKEN_KEY, "");
+
+  // set access token
+  const setAccessToken = (token: string) => {
+    accessToken.value = token;
+  };
+
+  // get access token
+  const getAccessToken = () => {
+    return accessToken.value;
+  };
+
+  // clear access token
+  const clearAccessToken = () => {
+    accessToken.value = "";
+  };
+
   return {
     setRsaPublicKey,
     getRsaPublicKey,
     clearRsaPublicKey,
+    setAccessToken,
+    getAccessToken,
+    clearAccessToken,
   };
 });
 

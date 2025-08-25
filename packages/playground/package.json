@@ -26,6 +26,7 @@
     "unplugin-vue-components": "^29.0.0"
   },
   "dependencies": {
+    "@vueuse/core": "^13.7.0",
     "axios": "^1.11.0",
     "element-plus": "^2.10.6",
     "jsencrypt": "^3.5.4",
