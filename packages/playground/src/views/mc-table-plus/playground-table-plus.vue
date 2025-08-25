@@ -66,6 +66,7 @@ import { onMounted, ref } from "vue";
 import { McButton } from "mc-plus";
 import { delay } from "@mc-plus/utils";
 import { orderBy } from "lodash-es";
+import { http } from "../../apis";
 
 interface User {
   name: string;
@@ -110,13 +111,22 @@ onMounted(async () => {
   await delay(3000);
   tableData.value = _data;
   loading.value = false;
-  console.log("tableData: ", tableData.value);
+
+  // fetch date
+  fetchData();
 });
+
+const fetchData = async () => {
+  const res = await http.post("/payment/payment/depositListByPage.do", {
+    pageNum: 1,
+    pageSize: 10,
+  });
+  console.log("tableData: ", res);
+};
 
 // handle fetch data
 const handleFetchData = async () => {
   await delay(3000);
-  console.log("fetch data");
   tableData.value = _data.slice(0, 2);
 };
 
