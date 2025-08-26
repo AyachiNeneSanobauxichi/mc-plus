@@ -61,9 +61,9 @@ const loading = ref<boolean>(false);
 
 const pagination = ref<McTablePaginationType>({
   pageNum: 1,
-  pageSize: 25,
+  pageSize: 10,
   total: 1,
-  pageSizes: [25, 50, 75, 100],
+  pageSizes: [10, 20, 50, 100, 150, 200, 500],
 });
 
 onMounted(() => {
