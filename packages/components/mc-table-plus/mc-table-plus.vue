@@ -20,7 +20,7 @@ import type {
   McTableProps,
   McTableSort,
 } from "./types";
-import { provide, ref, useSlots, watch } from "vue";
+import { computed, provide, ref, useSlots, watch } from "vue";
 import { map, orderBy } from "lodash-es";
 import { MC_TABLE_CTX_KEY, MC_TABLE_PLUS } from "./constant";
 import { generateColumns } from "./utils";
@@ -97,6 +97,7 @@ const { pagination, handlePagination } = usePagination();
 
 // provide
 provide(MC_TABLE_CTX_KEY, {
+  isLoading: computed(() => !!props.loading),
   pagination,
   handleSort,
   handlePagination,

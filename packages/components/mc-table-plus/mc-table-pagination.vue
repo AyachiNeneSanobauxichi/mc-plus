@@ -74,7 +74,7 @@ import { useTableContext } from "./hooks";
 defineOptions({ name: MC_TABLE_PAGINATION });
 
 // use table context
-const { pagination, handlePagination } = useTableContext();
+const { pagination, isLoading, handlePagination } = useTableContext();
 
 // total page
 const totalPage = computed(() => {
@@ -143,7 +143,7 @@ const showNextEllipsis = computed(() => {
 
 // handle click
 const handleClick = (nextPage: McTablePaginationNextPage) => {
-  if (!isFunction(handlePagination)) return;
+  if (!isFunction(handlePagination) || isLoading.value) return;
 
   if (nextPage === "first") {
     if (!prevDisabled.value) {

@@ -1,4 +1,4 @@
-import type { VNode } from "vue";
+import type { Ref, VNode } from "vue";
 import type { McTableColumnProps } from "./mc-table-column";
 
 export type McTableAlign = "left" | "center" | "right";
@@ -25,6 +25,7 @@ export interface McTableProps {
 }
 
 export interface McTableContext {
+  isLoading: Ref<boolean>;
   pagination: McTablePaginationType;
   handleSort: (prop: string, sort: McTableSort) => void;
   handlePagination: (pagination: Partial<McTablePaginationType>) => void;
