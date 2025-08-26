@@ -72,6 +72,7 @@ onMounted(() => {
 
 // fetch data
 const fetchData = async (pageNum: number, pageSize: number) => {
+  loading.value = true;
   const { data } = await getDepositList({
     pageNum,
     pageSize,
@@ -97,6 +98,7 @@ const fetchData = async (pageNum: number, pageSize: number) => {
     amount: item.receiveAmount,
     status: item.status,
   }));
+  loading.value = false;
 };
 
 // handle fetch data

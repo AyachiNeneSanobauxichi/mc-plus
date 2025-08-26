@@ -268,4 +268,12 @@ export const routes: RouteRecordRaw[] = [
       title: "Mc Tag",
     },
   },
+  {
+    path: "/loading",
+    name: "Loading",
+    component: () => import("../views/mc-loading/playground-loading.vue"),
+    meta: {
+      title: "Mc Loading",
+    },
+  },
 ];
