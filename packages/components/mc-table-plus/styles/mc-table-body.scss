@@ -5,6 +5,7 @@ $border_color: var(--mc-gray-300);
 .mc-table-body {
   @include mixin.reset-table-style;
   width: 100%;
+  table-layout: fixed;
   position: relative;
   min-height: 56px;
 

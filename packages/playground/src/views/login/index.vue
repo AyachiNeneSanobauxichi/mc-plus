@@ -21,6 +21,12 @@ const handleLogin = async () => {
     faVerificationCode: "123",
   });
 
-  data ? setAccessToken(data.accessToken) : clearAccessToken();
+  if (data) {
+    setAccessToken(data.accessToken);
+    console.log("login success");
+  } else {
+    clearAccessToken();
+    console.log("login failed");
+  }
 };
 </script>

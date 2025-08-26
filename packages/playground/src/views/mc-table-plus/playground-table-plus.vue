@@ -17,9 +17,12 @@
 
     <section>
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="name" label="Name" />
-        <el-table-column prop="age" label="Age" />
-        <el-table-column prop="position" label="Position" />
+        <el-table-column prop="label" label="Label" />
+        <el-table-column prop="holder" label="Holder" />
+        <el-table-column prop="type" label="Type" />
+        <el-table-column prop="accountNumber" label="Account Number" />
+        <el-table-column prop="swiftCode" label="SWFIT Code" />
+        <el-table-column prop="ation" label="Actions" />
       </el-table>
     </section>
 
@@ -44,7 +47,9 @@ const tableData = ref<any[]>([]);
 const loading = ref<boolean>(false);
 
 onMounted(async () => {
-  await fetchData();
+  const dataList = await fetchData();
+  console.log("dataList: ", dataList);
+  tableData.value = dataList;
 });
 
 const fetchData = async () => {
@@ -52,7 +57,8 @@ const fetchData = async () => {
     pageNum: 1,
     pageSize: 10,
   });
-  console.log("tableData: ", res.data.list);
+
+  return res.data.list;
 };
 
 // handle fetch data
