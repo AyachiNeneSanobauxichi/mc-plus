@@ -3,12 +3,12 @@ import { http } from "../request";
 
 // get encrypt public key
 export const getEncryptPublicKey = async () => {
-  return http.post<void, string>("/auth/file/getPublicKey.do");
+  return await http.post<void, string>("/auth/file/getPublicKey.do");
 };
 
 // login
 export const login = async (params: ILoginRequest) => {
-  return http.post<ILoginRequest, ILoginResponse>(
+  return await http.post<ILoginRequest, ILoginResponse>(
     "/auth/sysUser/login.do",
     params
   );
