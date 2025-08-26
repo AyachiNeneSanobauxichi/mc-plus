@@ -17,17 +17,17 @@
 import type {
   McTableColumn,
   McTableEmits,
-  McTablePaginationType,
   McTableProps,
   McTableSort,
 } from "./types";
-import { onMounted, provide, reactive, ref, useSlots, watch } from "vue";
-import { assign, debounce, map, orderBy } from "lodash-es";
+import { provide, ref, useSlots, watch } from "vue";
+import { map, orderBy } from "lodash-es";
 import { MC_TABLE_CTX_KEY, MC_TABLE_PLUS } from "./constant";
 import { generateColumns } from "./utils";
 import McTableHeader from "./mc-table-header.vue";
 import McTableBody from "./mc-table-body.vue";
 import McTableFooter from "./mc-table-footer.vue";
+import { usePagination } from "./hooks";
 
 // options
 defineOptions({ name: MC_TABLE_PLUS });
@@ -93,48 +93,7 @@ const handleSort = (prop: string, sort: McTableSort) => {
   }
 };
 
-// pagination default
-const PAGINATION_DEFAULT: McTablePaginationType = {
-  pageNum: 1,
-  pageSize: 25,
-  total: 1,
-  pageSizes: [25, 50, 75, 100],
-};
-
-// pagination
-const pagination = reactive<McTablePaginationType>({ ...PAGINATION_DEFAULT });
-
-// init pagination
-onMounted(() => {
-  setPagination(props.pagination || PAGINATION_DEFAULT);
-});
-
-// pagination props change
-watch(
-  () => props.pagination,
-  (_pagination) => {
-    setPagination(_pagination || PAGINATION_DEFAULT);
-  },
-  {
-    deep: true,
-  }
-);
-
-// set pagination
-const setPagination = (_pagination: Partial<McTablePaginationType>) => {
-  assign(pagination, { ..._pagination });
-};
-
-// emit pagination
-const emitPagination = debounce(() => {
-  emit("change:pagination", pagination);
-}, 300);
-
-// handle pagination
-const handlePagination = (_pagination: Partial<McTablePaginationType>) => {
-  assign(pagination, { ..._pagination });
-  emitPagination();
-};
+const { pagination, handlePagination } = usePagination();
 
 // provide
 provide(MC_TABLE_CTX_KEY, {
