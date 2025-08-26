@@ -4,25 +4,33 @@
       <mc-table-plus
         :data="tableData"
         :loading="loading"
+        :pagination="pagination"
         @change:sort="handleSort"
+        @change:pagination="handlePagination"
       >
         <mc-table-column prop="label" label="Label" />
-        <mc-table-column prop="holder" label="Holder" />
+        <mc-table-column prop="name" label="Name" />
+        <mc-table-column prop="updateTime" label="Last Updated Date" />
+        <mc-table-column prop="account" label="Account" />
         <mc-table-column prop="type" label="Type" />
-        <mc-table-column prop="accountNumber" label="Account Number" />
-        <mc-table-column prop="swiftCode" label="SWFIT Code" />
-        <mc-table-column prop="ation" label="Actions" />
+        <mc-table-column prop="currency" label="Currency" />
+        <mc-table-column prop="amount" label="Amount" />
+        <mc-table-column prop="status" label="Status" />
+        <mc-table-column prop="action" label="Actions" />
       </mc-table-plus>
     </section>
 
     <section>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="label" label="Label" />
-        <el-table-column prop="holder" label="Holder" />
+        <el-table-column prop="name" label="Name" />
+        <el-table-column prop="updateTime" label="Last Updated Date" />
+        <el-table-column prop="account" label="Account" />
         <el-table-column prop="type" label="Type" />
-        <el-table-column prop="accountNumber" label="Account Number" />
-        <el-table-column prop="swiftCode" label="SWFIT Code" />
-        <el-table-column prop="ation" label="Actions" />
+        <el-table-column prop="currency" label="Currency" />
+        <el-table-column prop="amount" label="Amount" />
+        <el-table-column prop="status" label="Status" />
+        <el-table-column prop="action" label="Actions" />
       </el-table>
     </section>
 
@@ -35,30 +43,60 @@
 </template>
 
 <script setup lang="ts">
-import type { McTableSort } from "@mc-plus/components/mc-table-plus/types";
+import type {
+  McTablePaginationType,
+  McTableSort,
+} from "@mc-plus/components/mc-table-plus/types";
+import type { DepositTableRow } from "./types";
+import { onMounted, ref } from "vue";
+import { map } from "lodash-es";
+import { McButton } from "mc-plus";
 import McTablePlus from "../../../../components/mc-table-plus/mc-table-plus.vue";
 import McTableColumn from "../../../../components/mc-table-plus/mc-table-column.vue";
-import { onMounted, ref } from "vue";
-import { McButton } from "mc-plus";
 import { getDepositList } from "../../apis";
 
-const tableData = ref<any[]>([]);
+const tableData = ref<DepositTableRow[]>([]);
 
 const loading = ref<boolean>(false);
 
-onMounted(async () => {
-  const dataList = await fetchData();
-  console.log("dataList: ", dataList);
-  tableData.value = dataList;
+const pagination = ref<McTablePaginationType>({
+  pageNum: 1,
+  pageSize: 25,
+  total: 1,
+  pageSizes: [25, 50, 75, 100],
 });
 
-const fetchData = async () => {
-  const res = await getDepositList({
-    pageNum: 1,
-    pageSize: 10,
+onMounted(() => {
+  fetchData(pagination.value.pageNum, pagination.value.pageSize);
+});
+
+// fetch data
+const fetchData = async (pageNum: number, pageSize: number) => {
+  const { data } = await getDepositList({
+    pageNum,
+    pageSize,
   });
 
-  return res.data.list;
+  if (data?.list?.length < 0) {
+    pagination.value.total = 0;
+    tableData.value = [];
+    return;
+  }
+
+  pagination.value.total = data.total;
+  pagination.value.pageNum = data.pageNum;
+  pagination.value.pageSize = data.pageSize;
+
+  tableData.value = map(data.list, (item) => ({
+    label: item.paymentCode,
+    name: item.clientName,
+    updateTime: new Date(item.updateAt).toLocaleString(),
+    account: item.payerAccountType,
+    type: item.paymentType,
+    currency: item.currency,
+    amount: item.receiveAmount,
+    status: item.status,
+  }));
 };
 
 // handle fetch data
@@ -74,7 +112,12 @@ const handleEmptyData = () => {
 
 // handle sort
 const handleSort = (prop: string, sort: McTableSort) => {
-  console.log("handleSort", prop, sort);
+  console.log("handleSort: ", prop, sort);
+};
+
+// handle pagination
+const handlePagination = (pagination: McTablePaginationType) => {
+  fetchData(pagination.pageNum, pagination.pageSize);
 };
 </script>
 

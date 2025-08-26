@@ -21,17 +21,18 @@ export interface McTableProps {
   data: any[];
   loading?: boolean;
   sortType?: McTableSideType;
-  paginationType?: McTableSideType;
+  pagination?: McTablePaginationType;
 }
 
 export interface McTableContext {
   pagination: McTablePaginationType;
   handleSort: (prop: string, sort: McTableSort) => void;
-  setPagination: (pagination: Partial<McTablePaginationType>) => void;
+  handlePagination: (pagination: Partial<McTablePaginationType>) => void;
 }
 
 export interface McTableEmits {
   (e: "change:sort", prop: string, sort: McTableSort): void;
+  (e: "change:pagination", pagination: McTablePaginationType): void;
 }
 
 export interface McTablePaginationType {

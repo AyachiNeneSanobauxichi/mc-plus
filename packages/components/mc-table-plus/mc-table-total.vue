@@ -22,8 +22,11 @@ const { pagination } = useTableContext();
 const showNumber = computed(() => {
   if (!pagination) return;
   const { pageNum, pageSize, total } = pagination;
+  const start = (pageNum - 1) * pageSize + 1;
+  const end = Math.min(pageNum * pageSize, total);
+
   return {
-    range: `${(pageNum - 1) * pageSize + 1}-${pageNum * pageSize}`,
+    range: `${start}-${end}`,
     total,
   };
 });

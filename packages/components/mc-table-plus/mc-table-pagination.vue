@@ -74,7 +74,7 @@ import { useTableContext } from "./hooks";
 defineOptions({ name: MC_TABLE_PAGINATION });
 
 // use table context
-const { pagination, setPagination } = useTableContext();
+const { pagination, handlePagination } = useTableContext();
 
 // total page
 const totalPage = computed(() => {
@@ -143,15 +143,15 @@ const showNextEllipsis = computed(() => {
 
 // handle click
 const handleClick = (nextPage: McTablePaginationNextPage) => {
-  if (!isFunction(setPagination)) return;
+  if (!isFunction(handlePagination)) return;
 
   if (nextPage === "first") {
     if (!prevDisabled.value) {
-      setPagination({ pageNum: 1 });
+      handlePagination({ pageNum: 1 });
     }
   } else if (nextPage === "prev") {
     if (pagination && pagination.pageNum > 1 && !prevDisabled.value) {
-      setPagination({ pageNum: pagination.pageNum - 1 });
+      handlePagination({ pageNum: pagination.pageNum - 1 });
     }
   } else if (nextPage === "next") {
     if (
@@ -159,15 +159,15 @@ const handleClick = (nextPage: McTablePaginationNextPage) => {
       pagination.pageNum < totalPage.value &&
       !nextDisabled.value
     ) {
-      setPagination({ pageNum: pagination.pageNum + 1 });
+      handlePagination({ pageNum: pagination.pageNum + 1 });
     }
   } else if (nextPage === "last") {
     if (!nextDisabled.value) {
-      setPagination({ pageNum: totalPage.value });
+      handlePagination({ pageNum: totalPage.value });
     }
   } else {
     if (nextPage !== pagination?.pageNum) {
-      setPagination({ pageNum: nextPage });
+      handlePagination({ pageNum: nextPage });
     }
   }
 };

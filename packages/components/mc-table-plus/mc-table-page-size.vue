@@ -27,12 +27,12 @@ import { useTableContext } from "./hooks";
 defineOptions({ name: MC_TABLE_PAGE_SIZE });
 
 // use table context
-const { pagination, setPagination } = useTableContext();
+const { pagination, handlePagination } = useTableContext();
 
 // handle page size change
 const handlePageSizeChange = (value: number) => {
-  if (isFunction(setPagination)) {
-    setPagination({ pageSize: value, pageNum: 1 });
+  if (isFunction(handlePagination)) {
+    handlePagination({ pageSize: value, pageNum: 1 });
   }
 };
 </script>

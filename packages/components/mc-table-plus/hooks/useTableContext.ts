@@ -9,7 +9,7 @@ const useTableContext = () => {
     tableCtx,
     pagination: tableCtx?.pagination,
     doSort: tableCtx?.handleSort,
-    setPagination: tableCtx?.setPagination,
+    handlePagination: tableCtx?.handlePagination,
   };
 };
 
