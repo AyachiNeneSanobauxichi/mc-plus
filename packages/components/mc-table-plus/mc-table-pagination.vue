@@ -1,63 +1,44 @@
 <template>
   <ul class="mc-table-pagination" v-if="!isOnePage">
-    <li
-      class="mc-table-pagination-item mc-table-pagination-item-first"
-      :class="{ 'mc-table-pagination-item-disabled': prevDisabled }"
+    <mc-table-pagination-item
+      type="first"
+      :is-disabled="prevDisabled"
       @click="handleClick('first')"
-    >
-      <mc-icon name="First" />
-    </li>
-    <li
-      class="mc-table-pagination-item mc-table-pagination-item-prev"
-      :class="{ 'mc-table-pagination-item-disabled': prevDisabled }"
+    />
+    <mc-table-pagination-item
+      type="prev"
+      :is-disabled="prevDisabled"
       @click="handleClick('prev')"
-    >
-      <mc-icon name="Left-Chevron" />
-    </li>
-    <li
-      class="mc-table-pagination-item mc-table-pagination-item-page"
-      :class="{ 'mc-table-pagination-item-active': pagination?.pageNum === 1 }"
+    />
+    <mc-table-pagination-item
+      :value="1"
+      :is-active="pagination?.pageNum === 1"
       @click="handleClick(1)"
-    >
-      1
-    </li>
-    <mc-table-ellipsis v-if="showPrevEllipsis" />
-    <li
+    />
+    <mc-table-pagination-item type="ellipsis" v-if="showPrevEllipsis" />
+    <mc-table-pagination-item
       v-for="value in pageRange"
       :key="value"
-      class="mc-table-pagination-item mc-table-pagination-item-page"
-      :class="{
-        'mc-table-pagination-item-active': pagination?.pageNum === value,
-      }"
+      :value="value"
+      :is-active="pagination?.pageNum === value"
       @click="handleClick(value)"
-    >
-      {{ value }}
-    </li>
-    <mc-table-ellipsis v-if="showNextEllipsis" />
-    <li
-      class="mc-table-pagination-item mc-table-pagination-item-page"
-      :class="{
-        'mc-table-pagination-item-active': pagination?.pageNum === totalPage,
-      }"
-      v-if="totalPage && totalPage > 1"
+    />
+    <mc-table-pagination-item type="ellipsis" v-if="showNextEllipsis" />
+    <mc-table-pagination-item
+      :value="totalPage"
+      :is-active="pagination?.pageNum === totalPage"
       @click="handleClick(totalPage)"
-    >
-      {{ totalPage }}
-    </li>
-    <li
-      class="mc-table-pagination-item mc-table-pagination-item-next"
-      :class="{ 'mc-table-pagination-item-disabled': nextDisabled }"
+    />
+    <mc-table-pagination-item
+      type="next"
+      :is-disabled="nextDisabled"
       @click="handleClick('next')"
-    >
-      <mc-icon name="Right-Chevron" />
-    </li>
-    <li
-      class="mc-table-pagination-item mc-table-pagination-item-last"
-      :class="{ 'mc-table-pagination-item-disabled': nextDisabled }"
+    />
+    <mc-table-pagination-item
+      type="last"
+      :is-disabled="nextDisabled"
       @click="handleClick('last')"
-    >
-      <mc-icon name="Last" />
-    </li>
+    />
   </ul>
 </template>
 
@@ -66,8 +47,7 @@ import type { McTablePaginationNextPage } from "./types";
 import { computed } from "vue";
 import { isFunction } from "lodash-es";
 import { MC_TABLE_PAGINATION } from "./constant";
-import McIcon from "../mc-icon/mc-icon.vue";
-import McTableEllipsis from "./mc-table-ellipsis.vue";
+import McTablePaginationItem from "./mc-table-pagination-item.vue";
 import { useTableContext } from "./hooks";
 
 // options

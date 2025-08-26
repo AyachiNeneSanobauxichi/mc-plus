@@ -1,53 +1,7 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
-$icon_color: var(--mc-teal-500);
-$icon_color_disabled: var(--mc-gray-400);
-$icon_color_hover: var(--mc-teal-900);
-$icon_bg_color_hover: var(--mc-teal-50);
-$text_color_active: var(--mc-white);
-$bg_color_active: var(--mc-purple-500);
-
 .mc-table-pagination {
   @include mixin.reset-ul-style;
   @include mixin.flex-center($gap: 16px);
   flex: 1;
-
-  .mc-table-pagination-item {
-    @include mixin.reset-li-style;
-    @include mixin.flex-center;
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .mc-table-pagination-item-first,
-  .mc-table-pagination-item-prev,
-  .mc-table-pagination-item-next,
-  .mc-table-pagination-item-last {
-    color: $icon_color;
-
-    &.mc-table-pagination-item-disabled {
-      color: $icon_color_disabled;
-      cursor: not-allowed;
-    }
-
-    &:hover:not(.mc-table-pagination-item-disabled) {
-      background-color: $icon_bg_color_hover;
-      color: $icon_color_hover;
-    }
-  }
-
-  .mc-table-pagination-item-page {
-    @include mixin.font-style;
-
-    &:hover {
-      @include mixin.font-style($weight: 600);
-    }
-
-    &.mc-table-pagination-item-active {
-      @include mixin.font-style($color: $text_color_active, $weight: 600);
-      background-color: $bg_color_active;
-    }
-  }
 }

@@ -25,6 +25,8 @@ export const MC_TABLE_PAGINATION = "McTablePagination";
 
 export const MC_TABLE_ELLIPSIS = "McTableEllipsis";
 
+export const MC_TABLE_PAGINATION_ITEM = "McTablePaginationItem";
+
 export const MC_TABLE_DEFAULT_PROPS = {
   fixed: "none",
   sortable: false,
@@ -35,8 +37,3 @@ export const MC_TABLE_DEFAULT_VALUE = "--";
 
 export const MC_TABLE_CTX_KEY: InjectionKey<McTableContext> =
   Symbol("McTableContext");
-
-// "pageNum": 1,
-// "pageSize": 10,
-// "size": 10,
-// "total": 18,

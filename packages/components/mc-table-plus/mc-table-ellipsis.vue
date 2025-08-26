@@ -1,9 +1,9 @@
 <template>
-  <li class="mc-table-ellipsis">
+  <div class="mc-table-ellipsis">
     <i class="mc-table-ellipsis-dot"></i>
     <i class="mc-table-ellipsis-dot"></i>
     <i class="mc-table-ellipsis-dot"></i>
-  </li>
+  </div>
 </template>
 
 <script setup lang="ts">

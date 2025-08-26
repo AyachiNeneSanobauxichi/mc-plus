@@ -46,7 +46,7 @@ const usePagination = () => {
   // emit pagination
   const emitPagination = debounce(() => {
     instance?.emit("change:pagination", pagination);
-  }, 300);
+  }, 500);
 
   // handle pagination
   const handlePagination = (_pagination: Partial<McTablePaginationType>) => {
