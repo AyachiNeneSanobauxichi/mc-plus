@@ -22,6 +22,8 @@ export interface McTableProps {
   loading?: boolean;
   sortType?: McTableSideType;
   pagination?: McTablePaginationType;
+  width?: number | string;
+  height?: number | string;
 }
 
 export interface McTableContext {

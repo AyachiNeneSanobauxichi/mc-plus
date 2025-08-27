@@ -1,14 +1,18 @@
 <template>
-  <div class="mc-table-plus">
-    <mc-table-header :columns="columns" />
-    <mc-table-body :columns="columns" :data="tableData" :loading="loading">
-      <template #loading>
-        <slot name="loading"></slot>
-      </template>
-      <template #empty>
-        <slot name="empty"></slot>
-      </template>
-    </mc-table-body>
+  <div class="mc-table-plus" :style="{ width, height }">
+    <div class="mc-table-wrapper">
+      <mc-table-header :columns="columns" />
+      <div class="mc-table-body-wrapper">
+        <mc-table-body :columns="columns" :data="tableData" :loading="loading">
+          <template #loading>
+            <slot name="loading"></slot>
+          </template>
+          <template #empty>
+            <slot name="empty"></slot>
+          </template>
+        </mc-table-body>
+      </div>
+    </div>
     <mc-table-footer v-if="tableData?.length" />
   </div>
 </template>
@@ -28,6 +32,7 @@ import McTableHeader from "./mc-table-header.vue";
 import McTableBody from "./mc-table-body.vue";
 import McTableFooter from "./mc-table-footer.vue";
 import { usePagination } from "./hooks";
+import { useWidthHeight } from "@mc-plus/hooks";
 
 // options
 defineOptions({ name: MC_TABLE_PLUS });
@@ -37,10 +42,14 @@ const props = withDefaults(defineProps<McTableProps>(), {
   data: () => [],
   loading: false,
   sortType: "back",
+  width: "100%",
 });
 
 // emits
 const emit = defineEmits<McTableEmits>();
+
+// size
+const { width, height } = useWidthHeight();
 
 // table columns
 const columns = ref<McTableColumn[]>([]);

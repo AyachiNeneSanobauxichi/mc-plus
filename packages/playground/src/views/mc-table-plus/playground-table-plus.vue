@@ -8,13 +8,22 @@
         @change:sort="handleSort"
         @change:pagination="handlePagination"
       >
-        <mc-table-column prop="label" label="Label" />
-        <mc-table-column prop="name" label="Name" />
-        <mc-table-column prop="updateTime" label="Last Updated Date" />
-        <mc-table-column prop="account" label="Account" />
+        <mc-table-column prop="label" label="Label" width="200" />
+        <mc-table-column prop="name" label="Name" width="200" />
+        <mc-table-column
+          prop="updateTime"
+          label="Last Updated Date"
+          width="200"
+        />
+        <mc-table-column prop="account" label="Account" column-align="center" />
         <mc-table-column prop="type" label="Type" />
         <mc-table-column prop="currency" label="Currency" />
-        <mc-table-column prop="amount" label="Amount" />
+        <mc-table-column
+          prop="amount"
+          label="Amount"
+          width="200"
+          column-align="right"
+        />
         <mc-table-column prop="status" label="Status" />
         <mc-table-column prop="action" label="Actions" />
       </mc-table-plus>
@@ -63,7 +72,7 @@ const pagination = ref<McTablePaginationType>({
   pageNum: 1,
   pageSize: 10,
   total: 1,
-  pageSizes: [10, 20, 50, 100, 150, 200, 500],
+  pageSizes: [10, 20, 50, 100],
 });
 
 onMounted(() => {

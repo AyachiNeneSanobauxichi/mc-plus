@@ -2,5 +2,4 @@
 
 .mc-table-footer {
   @include mixin.flex-center($justify: space-between);
-  margin-top: 24px;
 }

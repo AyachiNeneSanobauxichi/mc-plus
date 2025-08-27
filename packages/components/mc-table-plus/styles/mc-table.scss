@@ -1,4 +1,27 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
 .mc-table-plus {
+  @include mixin.flex-center(
+    $direction: column,
+    $justify: flex-start,
+    $align: stretch,
+    $gap: 24px
+  );
+  width: 100%;
+
+  .mc-table-wrapper {
+    @include mixin.flex-center(
+      $direction: column,
+      $justify: flex-start,
+      $align: stretch
+    );
+    width: 100%;
+    flex: 1;
+    overflow-x: auto;
+
+    .mc-table-body-wrapper {
+      width: 100%;
+      overflow-y: auto;
+    }
+  }
 }
