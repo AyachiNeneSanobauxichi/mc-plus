@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import router from "./routers";
+import router from "./router";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import "mc-plus/dist/index.css";
