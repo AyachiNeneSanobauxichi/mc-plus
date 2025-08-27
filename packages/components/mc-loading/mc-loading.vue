@@ -10,7 +10,7 @@
       <i class="mc-loading-pulse-dot"></i>
     </div>
     <div class="mc-loading-spin" v-else-if="type === 'spin'">
-      <mc-icon name="Loading" :size="spinSize"></mc-icon>
+      <mc-icon name="Loading_Line" :size="spinSize"></mc-icon>
     </div>
     <slot v-if="loadingText || $slots.default">
       <p class="mc-loading-text">{{ loadingText }}</p>
@@ -20,9 +20,9 @@
 
 <script setup lang="ts">
 import type { McLoadingProps } from "./types";
+import { computed } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { MC_LOADING } from "./constant";
-import { computed } from "vue";
 
 // options
 defineOptions({ name: MC_LOADING });

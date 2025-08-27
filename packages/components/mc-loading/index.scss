@@ -1,6 +1,6 @@
 @use "@mc-plus/theme/mixins.scss" as mixins;
 
-$dot_color: var(--mc-purple-500);
+$loading_color: var(--mc-purple-500);
 $text_color: var(--mc-gray-500);
 
 @keyframes mc-loading-pulse {
@@ -93,7 +93,12 @@ $text_color: var(--mc-gray-500);
     .mc-loading-pulse-dot {
       display: block;
       border-radius: 50%;
-      background-color: var(--mc-purple-500);
+      background-color: $loading_color;
     }
+  }
+
+  /* spin */
+  .mc-loading-spin {
+    color: $loading_color;
   }
 }
