@@ -1,5 +1,7 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
+$empty_text_color: var(--mc-gray-500);
+
 .mc-table-plus {
   @include mixin.flex-center(
     $direction: column,
@@ -21,7 +23,33 @@
 
     .mc-table-body-wrapper {
       width: 100%;
+      position: relative;
       overflow-y: auto;
+      flex: 1;
+
+      .mc-table-loading {
+        @include mixin.flex-center;
+        min-height: 56px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 999999;
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+
+      .mc-table-empty {
+        @include mixin.flex-center;
+        @include mixin.font-style(
+          $weight: 400,
+          $size: 14px,
+          $color: $empty_text_color
+        );
+        min-height: 56px;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

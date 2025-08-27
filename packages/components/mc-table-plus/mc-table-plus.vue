@@ -3,14 +3,25 @@
     <div class="mc-table-wrapper">
       <mc-table-header :columns="columns" />
       <div class="mc-table-body-wrapper">
-        <mc-table-body :columns="columns" :data="tableData" :loading="loading">
-          <template #loading>
-            <slot name="loading"></slot>
-          </template>
-          <template #empty>
-            <slot name="empty"></slot>
-          </template>
-        </mc-table-body>
+        <template v-if="loading">
+          <div class="mc-table-loading">
+            <slot name="loading">
+              <mc-loading loading size="small" type="pulse" />
+            </slot>
+          </div>
+        </template>
+        <template v-if="isEmpty">
+          <div class="mc-table-empty">
+            <slot name="empty">No available data</slot>
+          </div>
+        </template>
+        <template v-else>
+          <mc-table-body
+            :columns="columns"
+            :data="tableData"
+            :loading="loading"
+          />
+        </template>
       </div>
     </div>
     <mc-table-footer v-if="tableData?.length" />
@@ -26,13 +37,14 @@ import type {
 } from "./types";
 import { computed, provide, ref, useSlots, watch } from "vue";
 import { map, orderBy } from "lodash-es";
-import { MC_TABLE_CTX_KEY, MC_TABLE_PLUS } from "./constant";
-import { generateColumns } from "./utils";
+import McLoading from "../mc-loading/mc-loading.vue";
 import McTableHeader from "./mc-table-header.vue";
 import McTableBody from "./mc-table-body.vue";
 import McTableFooter from "./mc-table-footer.vue";
-import { usePagination } from "./hooks";
 import { useWidthHeight } from "@mc-plus/hooks";
+import { usePagination } from "./hooks";
+import { generateColumns } from "./utils";
+import { MC_TABLE_CTX_KEY, MC_TABLE_PLUS } from "./constant";
 
 // options
 defineOptions({ name: MC_TABLE_PLUS });
@@ -102,15 +114,13 @@ const handleSort = (prop: string, sort: McTableSort) => {
   }
 };
 
-const { pagination, handlePagination } = usePagination();
-
-// provide
-provide(MC_TABLE_CTX_KEY, {
-  isLoading: computed(() => !!props.loading),
-  pagination,
-  handleSort,
-  handlePagination,
+// is empty
+const isEmpty = computed(() => {
+  return !props.loading && !tableData.value?.length;
 });
+
+// pagination
+const { pagination, handlePagination } = usePagination();
 
 // slots
 const slots = useSlots();
@@ -125,6 +135,14 @@ watch(
     immediate: true,
   }
 );
+
+// provide
+provide(MC_TABLE_CTX_KEY, {
+  isLoading: computed(() => !!props.loading),
+  pagination,
+  handleSort,
+  handlePagination,
+});
 </script>
 
 <style scoped lang="scss">
