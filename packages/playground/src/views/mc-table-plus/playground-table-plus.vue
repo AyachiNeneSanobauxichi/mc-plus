@@ -6,6 +6,7 @@
         :loading="loading"
         :pagination="pagination"
         :height="500"
+        sort-type="front"
         @change:sort="handleSort"
         @change:pagination="handlePagination"
       >
@@ -25,7 +26,7 @@
           width="200"
           column-align="right"
         />
-        <mc-table-column prop="status" label="Status" />
+        <mc-table-column prop="status" label="Status" sortable />
         <mc-table-column prop="action" label="Actions" />
       </mc-table-plus>
     </section>

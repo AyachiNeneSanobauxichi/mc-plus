@@ -23,11 +23,11 @@ const props = withDefaults(defineProps<McTableSortProps>(), {
 const iconName = computed<IconType>(() => {
   switch (props.sort) {
     case "normal":
-      return "Down-Chevron02";
+      return "Sort";
     case "asc":
-      return "Up-Chevron02";
+      return "Sort_Asc";
     case "desc":
-      return "Down-Chevron02";
+      return "Sort_Desc";
   }
 });
 </script>
