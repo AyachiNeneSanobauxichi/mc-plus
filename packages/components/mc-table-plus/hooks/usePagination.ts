@@ -1,5 +1,5 @@
 import type { McTablePaginationType } from "../types";
-import { getCurrentInstance, onMounted, reactive, watch } from "vue";
+import { computed, getCurrentInstance, onMounted, reactive, watch } from "vue";
 import { assign, debounce } from "lodash-es";
 import { useProp } from "@mc-plus/hooks";
 
@@ -54,8 +54,14 @@ const usePagination = () => {
     emitPagination();
   };
 
+  // has pagination
+  const hasPagination = computed(() => {
+    return !!paginationProps.value?.pageNum;
+  });
+
   return {
     pagination,
+    hasPagination,
     handlePagination,
   };
 };

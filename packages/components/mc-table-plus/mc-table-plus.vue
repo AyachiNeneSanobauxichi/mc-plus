@@ -24,7 +24,7 @@
         </template>
       </div>
     </div>
-    <mc-table-footer v-if="tableData?.length" />
+    <mc-table-footer v-if="showTableFooter" />
   </div>
 </template>
 
@@ -120,7 +120,12 @@ const isEmpty = computed(() => {
 });
 
 // pagination
-const { pagination, handlePagination } = usePagination();
+const { pagination, hasPagination, handlePagination } = usePagination();
+
+// show table footer
+const showTableFooter = computed(() => {
+  return hasPagination.value && tableData.value?.length;
+});
 
 // slots
 const slots = useSlots();

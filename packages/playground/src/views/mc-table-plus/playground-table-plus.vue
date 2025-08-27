@@ -4,7 +4,6 @@
       <mc-table-plus
         :data="tableData"
         :loading="loading"
-        :pagination="pagination"
         :height="500"
         sort-type="front"
         @change:sort="handleSort"
@@ -72,7 +71,7 @@ const loading = ref<boolean>(false);
 
 const pagination = ref<McTablePaginationType>({
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 300,
   total: 1,
   pageSizes: [10, 20, 50, 100],
 });
