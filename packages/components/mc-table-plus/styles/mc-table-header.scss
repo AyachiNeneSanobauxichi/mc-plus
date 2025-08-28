@@ -14,5 +14,9 @@ $border_color: var(--mc-gray-500);
 
   .mc-table-header-col {
     flex: 1;
+
+    &.mc-table-header-col-expand {
+      width: 40px;
+    }
   }
 }

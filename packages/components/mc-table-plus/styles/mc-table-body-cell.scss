@@ -10,4 +10,10 @@
     padding: 16px 8px;
     box-sizing: border-box;
   }
+
+  &.mc-table-body-cell-expand {
+    .mc-table-body-cell-wrapper {
+      cursor: pointer;
+    }
+  }
 }

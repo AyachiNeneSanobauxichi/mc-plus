@@ -30,6 +30,7 @@ const generateColumns = (
           width: props?.width,
           fixed: props?.fixed || MC_TABLE_DEFAULT_PROPS.fixed,
           sortable,
+          isExpand: props?.prop === "expand",
           sort: sortable ? "normal" : undefined,
           columnAlign:
             props?.columnAlign ||
@@ -48,7 +49,7 @@ const generateColumns = (
   };
 
   _flattenNodes(children);
-  
+
   return _columns;
 };
 

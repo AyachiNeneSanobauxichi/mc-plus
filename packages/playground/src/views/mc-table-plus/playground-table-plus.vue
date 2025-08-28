@@ -28,10 +28,11 @@
         />
         <mc-table-column prop="status" label="Status" sortable />
         <mc-table-column prop="action" label="Actions" />
+        <mc-table-column prop="expand" />
       </mc-table-plus>
     </section>
 
-    <!-- <section>
+    <section>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="label" label="Label" />
         <el-table-column prop="name" label="Name" />
@@ -43,7 +44,7 @@
         <el-table-column prop="status" label="Status" />
         <el-table-column prop="action" label="Actions" />
       </el-table>
-    </section> -->
+    </section>
 
     <section class="tool-bar">
       <mc-button @click="handleFetchData">Fetch Data</mc-button>

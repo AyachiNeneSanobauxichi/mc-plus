@@ -38,9 +38,10 @@ import type {
   McTableColumn,
   McTableEmits,
   McTableProps,
+  McTableRowState,
   McTableSort,
 } from "./types";
-import { computed, provide, ref, useSlots, watch } from "vue";
+import { computed, provide, ref, useSlots, watch, watchEffect } from "vue";
 import { map, orderBy } from "lodash-es";
 import McLoading from "../mc-loading/mc-loading.vue";
 import McTableHeader from "./mc-table-header.vue";
@@ -79,9 +80,25 @@ watch(
   () => props.data,
   () => {
     tableData.value = props.data;
+    setRowState();
     resetSort();
   }
 );
+
+// row state
+const rowState = ref<McTableRowState[]>([]);
+
+// set row state
+const setRowState = () => {
+  rowState.value = new Array(tableData.value.length).fill({
+    isExpand: false,
+  });
+};
+
+// row state change
+watchEffect(() => {
+  console.log("rowState: ", rowState.value);
+});
 
 // reset sort
 const resetSort = () => {

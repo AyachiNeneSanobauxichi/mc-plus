@@ -8,6 +8,7 @@
         :class="[
           'mc-table-header-col',
           `mc-table-header-col-${column.columnAlign}`,
+          { 'mc-table-header-col-expand': column.isExpand },
         ]"
       />
     </colgroup>

@@ -8,6 +8,7 @@
         :class="[
           'mc-table-body-col',
           `mc-table-body-col-${column.columnAlign}`,
+          { 'mc-table-body-col-expand': column.isExpand },
         ]"
       />
     </colgroup>
@@ -18,6 +19,7 @@
           :key="column.prop"
           :column-align="column.columnAlign"
           :value="item?.[column.prop]"
+          :type="column.isExpand ? 'expand' : 'normal'"
         >
           <template #default v-if="column.tableValue">
             <component :is="column.tableValue" />

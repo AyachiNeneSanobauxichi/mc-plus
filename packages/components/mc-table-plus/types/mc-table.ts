@@ -15,6 +15,7 @@ export interface McTableColumn extends McTableColumnProps {
   header?: VNode;
   tableValue?: VNode;
   tableValueContent?: VNode;
+  isExpand?: boolean;
 }
 
 export interface McTableProps {
@@ -43,4 +44,8 @@ export interface McTablePaginationType {
   pageSize: number;
   total: number;
   pageSizes?: number[];
+}
+
+export interface McTableRowState {
+  isExpand: boolean;
 }
