@@ -20,11 +20,7 @@
             class="mc-table-body-inner"
             :class="{ 'mc-table-body-fixed-height': !!props.height }"
           >
-            <mc-table-body
-              :columns="columns"
-              :data="tableData"
-              :loading="loading"
-            />
+            <mc-table-body />
           </div>
         </template>
       </div>
@@ -165,6 +161,9 @@ watch(
 
 // provide
 provide(MC_TABLE_CTX_KEY, {
+  columns,
+  data: tableData,
+  rowState,
   isLoading: computed(() => !!props.loading),
   pagination,
   handleSort,

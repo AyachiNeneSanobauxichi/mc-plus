@@ -34,17 +34,15 @@
 </template>
 
 <script setup lang="ts">
-import type { McTablePlusBodyProps } from "./types";
 import McTableBodyCell from "./mc-table-body-cell.vue";
 import { MC_TABLE_BODY } from "./constant";
+import { useTableContext } from "./hooks";
 
 // options
 defineOptions({ name: MC_TABLE_BODY });
 
-// props
-withDefaults(defineProps<McTablePlusBodyProps>(), {
-  data: () => [],
-});
+// table context
+const { columns, data } = useTableContext();
 </script>
 
 <style scoped lang="scss">

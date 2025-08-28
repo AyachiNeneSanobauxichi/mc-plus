@@ -5,7 +5,6 @@
         :data="tableData"
         :pagination="pagination"
         :loading="loading"
-        :height="500"
         sort-type="front"
         @change:sort="handleSort"
         @change:pagination="handlePagination"

@@ -28,6 +28,9 @@ export interface McTableProps {
 }
 
 export interface McTableContext {
+  columns: Ref<McTableColumn[]>;
+  data: Ref<any[]>;
+  rowState: Ref<McTableRowState[]>;
   isLoading: Ref<boolean>;
   pagination: McTablePaginationType;
   handleSort: (prop: string, sort: McTableSort) => void;

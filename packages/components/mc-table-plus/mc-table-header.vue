@@ -39,15 +39,15 @@
 </template>
 
 <script setup lang="ts">
-import type { McTablePlusHeaderProps } from "./types";
 import { MC_TABLE_HEADER } from "./constant";
+import { useTableContext } from "./hooks";
 import McTableHeaderCell from "./mc-table-header-cell.vue";
 
 // options
 defineOptions({ name: MC_TABLE_HEADER });
 
-// props
-defineProps<McTablePlusHeaderProps>();
+// table context
+const { columns } = useTableContext();
 </script>
 
 <style scoped lang="scss">

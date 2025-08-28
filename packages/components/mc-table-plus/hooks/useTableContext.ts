@@ -7,8 +7,11 @@ const useTableContext = () => {
 
   return {
     tableCtx,
-    isLoading: computed(() => !!tableCtx?.isLoading.value),
+    columns: tableCtx?.columns,
+    data: tableCtx?.data,
+    rowState: tableCtx?.rowState,
     pagination: tableCtx?.pagination,
+    isLoading: computed(() => !!tableCtx?.isLoading.value),
     doSort: tableCtx?.handleSort,
     handlePagination: tableCtx?.handlePagination,
   };
