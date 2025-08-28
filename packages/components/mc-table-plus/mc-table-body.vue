@@ -20,6 +20,7 @@
           :column-align="column.columnAlign"
           :value="item?.[column.prop]"
           :type="column.isExpand ? 'expand' : 'normal'"
+          :row-index="index"
         >
           <template #default v-if="column.tableValue">
             <component :is="column.tableValue" />

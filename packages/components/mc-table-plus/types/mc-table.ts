@@ -35,6 +35,10 @@ export interface McTableContext {
   pagination: McTablePaginationType;
   handleSort: (prop: string, sort: McTableSort) => void;
   handlePagination: (pagination: Partial<McTablePaginationType>) => void;
+  setRowStateByIndex: (
+    index: number,
+    payload: Partial<McTableRowState>
+  ) => void;
 }
 
 export interface McTableEmits {

@@ -7,4 +7,5 @@ export interface McTablePlusBodyCellProps {
   default?: string;
   columnAlign?: McTableAlign;
   type?: McTablePlusBodyCellType;
+  rowIndex: number;
 }

@@ -10,7 +10,11 @@
         :style="{ justifyContent: getFlexAlign(columnAlign) }"
       >
         <template v-if="type === 'expand'">
-          <mc-icon name="Down-Chevron" />
+          <mc-icon
+            :name="
+              rowState?.[rowIndex]?.isExpand ? 'Up-Chevron' : 'Down-Chevron'
+            "
+          />
         </template>
         <template v-else>
           <div class="mc-table-body-cell-inner">
@@ -30,6 +34,8 @@ import { computed } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { MC_TABLE_BODY_CELL, MC_TABLE_DEFAULT_VALUE } from "./constant";
 import { getFlexAlign } from "./utils";
+import { useTableContext } from "./hooks";
+import { isFunction, isNil } from "lodash-es";
 
 // options
 defineOptions({ name: MC_TABLE_BODY_CELL });
@@ -47,9 +53,23 @@ const displayValue = computed(() => {
   return props.value || props.default;
 });
 
+// table context
+const { setRowStateByIndex, rowState } = useTableContext();
+
 // handle expand
 const handleExpand = () => {
-  console.log("handleExpand");
+  if (
+    props.type !== "expand" ||
+    !isFunction(setRowStateByIndex) ||
+    isNil(rowState?.value[props.rowIndex])
+  ) {
+    return;
+  }
+
+  // expand row
+  setRowStateByIndex(props.rowIndex, {
+    isExpand: !rowState.value[props.rowIndex].isExpand,
+  });
 };
 </script>
 

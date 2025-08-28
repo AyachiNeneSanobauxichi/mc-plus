@@ -37,7 +37,7 @@ import type {
   McTableRowState,
   McTableSort,
 } from "./types";
-import { computed, provide, ref, useSlots, watch, watchEffect } from "vue";
+import { computed, provide, ref, useSlots, watch } from "vue";
 import { map, orderBy } from "lodash-es";
 import McLoading from "../mc-loading/mc-loading.vue";
 import McTableHeader from "./mc-table-header.vue";
@@ -76,7 +76,7 @@ watch(
   () => props.data,
   () => {
     tableData.value = props.data;
-    setRowState();
+    resetRowState();
     resetSort();
   }
 );
@@ -84,17 +84,25 @@ watch(
 // row state
 const rowState = ref<McTableRowState[]>([]);
 
-// set row state
-const setRowState = () => {
+// reset row state
+const resetRowState = () => {
   rowState.value = new Array(tableData.value.length).fill({
     isExpand: false,
   });
 };
 
-// row state change
-watchEffect(() => {
-  console.log("rowState: ", rowState.value);
-});
+// set row state by index
+const setRowStateByIndex = (
+  index: number,
+  payload: Partial<McTableRowState>
+) => {
+  rowState.value[index] = {
+    ...rowState.value[index],
+    ...payload,
+  };
+
+  console.log("After set row state: ", rowState.value);
+};
 
 // reset sort
 const resetSort = () => {
@@ -168,6 +176,7 @@ provide(MC_TABLE_CTX_KEY, {
   pagination,
   handleSort,
   handlePagination,
+  setRowStateByIndex,
 });
 </script>
 

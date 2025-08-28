@@ -14,6 +14,7 @@ const useTableContext = () => {
     isLoading: computed(() => !!tableCtx?.isLoading.value),
     doSort: tableCtx?.handleSort,
     handlePagination: tableCtx?.handlePagination,
+    setRowStateByIndex: tableCtx?.setRowStateByIndex,
   };
 };
 
