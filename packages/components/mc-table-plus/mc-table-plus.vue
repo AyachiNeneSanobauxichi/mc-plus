@@ -16,11 +16,13 @@
           </div>
         </template>
         <template v-else>
-          <mc-table-body
-            :columns="columns"
-            :data="tableData"
-            :loading="loading"
-          />
+          <div class="mc-table-body-inner">
+            <mc-table-body
+              :columns="columns"
+              :data="tableData"
+              :loading="loading"
+            />
+          </div>
         </template>
       </div>
     </div>

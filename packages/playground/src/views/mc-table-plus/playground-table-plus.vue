@@ -3,6 +3,7 @@
     <section>
       <mc-table-plus
         :data="tableData"
+        :pagination="pagination"
         :loading="loading"
         :height="500"
         sort-type="front"
@@ -30,7 +31,7 @@
       </mc-table-plus>
     </section>
 
-    <section>
+    <!-- <section>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="label" label="Label" />
         <el-table-column prop="name" label="Name" />
@@ -42,7 +43,7 @@
         <el-table-column prop="status" label="Status" />
         <el-table-column prop="action" label="Actions" />
       </el-table>
-    </section>
+    </section> -->
 
     <section class="tool-bar">
       <mc-button @click="handleFetchData">Fetch Data</mc-button>
@@ -71,7 +72,7 @@ const loading = ref<boolean>(false);
 
 const pagination = ref<McTablePaginationType>({
   pageNum: 1,
-  pageSize: 300,
+  pageSize: 10,
   total: 1,
   pageSizes: [10, 20, 50, 100],
 });
