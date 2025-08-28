@@ -1,7 +1,7 @@
 <template>
   <div class="mc-table-plus" :style="{ width, height }">
     <div class="mc-table-wrapper">
-      <mc-table-header :columns="columns" />
+      <mc-table-header />
       <div class="mc-table-body-wrapper">
         <template v-if="loading">
           <div class="mc-table-loading">
