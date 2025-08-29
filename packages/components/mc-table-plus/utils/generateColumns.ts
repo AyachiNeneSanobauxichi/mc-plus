@@ -29,6 +29,7 @@ const generateColumns = (
           desc: props?.desc,
           width: props?.width,
           fixed: props?.fixed || MC_TABLE_DEFAULT_PROPS.fixed,
+          defaultValue: props?.defaultValue,
           sortable,
           isExpand: props?.prop === "expand",
           sort: sortable ? "normal" : undefined,

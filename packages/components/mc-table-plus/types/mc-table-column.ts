@@ -10,6 +10,7 @@ export interface McTableColumnProps {
   sortable?: boolean;
   sort?: McTableSort;
   columnAlign?: McTableAlign;
+  defaultValue?: string | number | boolean;
 }
 
 export interface McTableColumnSlots {

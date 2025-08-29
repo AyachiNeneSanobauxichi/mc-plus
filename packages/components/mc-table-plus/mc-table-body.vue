@@ -22,12 +22,23 @@
             :value="item?.[column.prop]"
             :type="column.isExpand ? 'expand' : 'normal'"
             :row-index="index"
+            :default="column.defaultValue"
           >
             <template #default v-if="column.tableValue">
-              <component :is="column.tableValue" />
+              <component
+                :is="column.tableValue"
+                :value="item?.[column.prop]"
+                :row="item"
+                :row-index="index"
+              />
             </template>
             <template #value v-if="column.tableValueContent">
-              <component :is="column.tableValueContent" />
+              <component
+                :is="column.tableValueContent"
+                :value="item?.[column.prop]"
+                :row="item"
+                :row-index="index"
+              />
             </template>
           </mc-table-body-cell>
         </tr>

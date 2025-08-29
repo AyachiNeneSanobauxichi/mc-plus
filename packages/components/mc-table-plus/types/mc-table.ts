@@ -1,4 +1,4 @@
-import type { Ref, VNode } from "vue";
+import type { Ref, Slot } from "vue";
 import type { McTableColumnProps } from "./mc-table-column";
 
 export type McTableAlign = "left" | "center" | "right";
@@ -10,12 +10,12 @@ export type McTableFixed = "left" | "right" | "none";
 export type McTableSideType = "front" | "back";
 
 export interface McTableColumn extends McTableColumnProps {
-  headerTitle?: VNode;
-  headerDesc?: VNode;
-  header?: VNode;
-  tableValue?: VNode;
-  tableValueContent?: VNode;
-  expand?: VNode;
+  headerTitle?: Slot;
+  headerDesc?: Slot;
+  header?: Slot;
+  tableValue?: Slot;
+  tableValueContent?: Slot;
+  expand?: Slot;
   isExpand?: boolean;
 }
 

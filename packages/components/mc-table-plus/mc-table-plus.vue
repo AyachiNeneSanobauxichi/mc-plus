@@ -100,8 +100,6 @@ const setRowStateByIndex = (
     ...rowState.value[index],
     ...payload,
   };
-
-  console.log("After set row state: ", rowState.value);
 };
 
 // reset sort

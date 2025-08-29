@@ -10,33 +10,26 @@
         @change:pagination="handlePagination"
       >
         <mc-table-column prop="label" label="Label" width="200">
-          <template #expand>
-            <div>Expand Label</div>
+          <template #value="{ value }">
+            <span class="deposit-lable">{{ value }}</span>
           </template>
         </mc-table-column>
         <mc-table-column prop="name" label="Name" width="200">
-          <template #expand>
-            <div>Expand Name</div>
-          </template>
         </mc-table-column>
         <mc-table-column
           prop="updateTime"
           label="Last Updated Date"
           width="200"
-        />
-        <mc-table-column prop="account" label="Account" column-align="center">
-          <template #expand>
-            <div>Expand Name</div>
-          </template>
+        ></mc-table-column>
+        <mc-table-column prop="account" label="Account">
+          <template #value="{ value }">{{ ACCOUNT_ENUM.get(value) }}</template>
         </mc-table-column>
         <mc-table-column prop="type" label="Type">
-          <template #expand>
-            <div>Expand Type</div>
-          </template>
+          <template #value="{ value }">{{ TYPE_ENUM.get(value) }}</template>
         </mc-table-column>
         <mc-table-column prop="currency" label="Currency">
-          <template #expand>
-            <div>Expand Currency</div>
+          <template #value="{ value }">
+            <mc-currency-icon :cdn-url="CDN_URL" :currency="value" />
           </template>
         </mc-table-column>
         <mc-table-column
@@ -44,11 +37,23 @@
           label="Amount"
           width="200"
           column-align="right"
-        />
-        <mc-table-column prop="status" label="Status" sortable />
+        ></mc-table-column>
+        <mc-table-column
+          prop="status"
+          label="Status"
+          sortable
+        ></mc-table-column>
         <mc-table-column prop="action" label="Actions">
-          <template #expand>
-            <div>Expand Action</div>
+          <template #value="{ row }">
+            <div>
+              <mc-button v-if="row.status === 11" type="link">Review</mc-button>
+              <mc-button v-else-if="row.status === 15" type="link">
+                Sweep
+              </mc-button>
+              <mc-button v-else-if="row.status === 18" type="link">
+                Refund
+              </mc-button>
+            </div>
           </template>
         </mc-table-column>
         <mc-table-column prop="expand" />
@@ -85,10 +90,11 @@ import type {
 import type { DepositTableRow } from "./types";
 import { onMounted, ref } from "vue";
 import { map } from "lodash-es";
-import { McButton } from "mc-plus";
+import { McButton, McCurrencyIcon } from "mc-plus";
 import McTablePlus from "../../../../components/mc-table-plus/mc-table-plus.vue";
 import McTableColumn from "../../../../components/mc-table-plus/mc-table-column.vue";
 import { getDepositList } from "../../apis";
+import { ACCOUNT_ENUM, TYPE_ENUM, CDN_URL } from "./enums";
 
 const tableData = ref<DepositTableRow[]>([]);
 
@@ -168,6 +174,16 @@ const handlePagination = (pagination: McTablePaginationType) => {
 
   .mc-table-plus-section {
     background-color: skyblue;
+
+    .deposit-lable {
+      color: var(--mc-teal-500);
+      font-weight: 600;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+        color: var(--mc-teal-900);
+      }
+    }
   }
 
   .position-container {
