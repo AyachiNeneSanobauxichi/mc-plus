@@ -44,13 +44,20 @@
         </tr>
         <template v-if="isExpand(index)">
           <tr class="mc-table-body-expand-row">
-            <td
-              v-for="column in columns"
-              :key="column.prop"
-              class="mc-table-body-expand-row-cell"
-            >
-              <component :is="column.expand" v-if="column.expand" />
-            </td>
+            <template v-if="$slots.expand">
+              <td>
+                <slot name="expand" :row="item" :row-index="index"></slot>
+              </td>
+            </template>
+            <template v-else>
+              <td
+                v-for="column in columns"
+                :key="column.prop"
+                class="mc-table-body-expand-row-cell"
+              >
+                <component :is="column.expand" v-if="column.expand" />
+              </td>
+            </template>
           </tr>
         </template>
       </template>

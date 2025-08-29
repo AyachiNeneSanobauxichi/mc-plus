@@ -9,6 +9,9 @@
         @change:sort="handleSort"
         @change:pagination="handlePagination"
       >
+        <template #expand="{ row, rowIndex }">
+          <div>row: {{ rowIndex }} {{ row }}</div>
+        </template>
         <mc-table-column prop="label" label="Label" width="200">
           <template #value="{ value }">
             <span class="deposit-lable">{{ value }}</span>
