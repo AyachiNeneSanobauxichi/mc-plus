@@ -39,6 +39,7 @@ const generateColumns = (
           headerTitle: slots?.["header-title"],
           headerDesc: slots?.["header-desc"],
           header: slots?.["header"],
+          expand: slots?.["expand"],
           tableValue: slots?.["default"],
           tableValueContent: slots?.["value"],
         } as McTableColumn);

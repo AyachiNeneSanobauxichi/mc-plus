@@ -32,9 +32,15 @@
           </mc-table-body-cell>
         </tr>
         <template v-if="isExpand(index)">
-          <div class="mc-table-body-expand-row">
-            {{ "Expand Index: " + index }}
-          </div>
+          <tr class="mc-table-body-expand-row">
+            <td
+              v-for="column in columns"
+              :key="column.prop"
+              class="mc-table-body-expand-row-cell"
+            >
+              <component :is="column.expand" v-if="column.expand" />
+            </td>
+          </tr>
         </template>
       </template>
     </tbody>

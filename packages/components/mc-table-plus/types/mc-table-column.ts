@@ -18,4 +18,5 @@ export interface McTableColumnSlots {
   "header-title"?: Slot;
   "header-desc"?: Slot;
   header?: Slot;
+  expand?: Slot;
 }

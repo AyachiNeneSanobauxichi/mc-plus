@@ -9,16 +9,36 @@
         @change:sort="handleSort"
         @change:pagination="handlePagination"
       >
-        <mc-table-column prop="label" label="Label" width="200" />
-        <mc-table-column prop="name" label="Name" width="200" />
+        <mc-table-column prop="label" label="Label" width="200">
+          <template #expand>
+            <div>Expand Label</div>
+          </template>
+        </mc-table-column>
+        <mc-table-column prop="name" label="Name" width="200">
+          <template #expand>
+            <div>Expand Name</div>
+          </template>
+        </mc-table-column>
         <mc-table-column
           prop="updateTime"
           label="Last Updated Date"
           width="200"
         />
-        <mc-table-column prop="account" label="Account" column-align="center" />
-        <mc-table-column prop="type" label="Type" />
-        <mc-table-column prop="currency" label="Currency" />
+        <mc-table-column prop="account" label="Account" column-align="center">
+          <template #expand>
+            <div>Expand Name</div>
+          </template>
+        </mc-table-column>
+        <mc-table-column prop="type" label="Type">
+          <template #expand>
+            <div>Expand Type</div>
+          </template>
+        </mc-table-column>
+        <mc-table-column prop="currency" label="Currency">
+          <template #expand>
+            <div>Expand Currency</div>
+          </template>
+        </mc-table-column>
         <mc-table-column
           prop="amount"
           label="Amount"
@@ -26,7 +46,11 @@
           column-align="right"
         />
         <mc-table-column prop="status" label="Status" sortable />
-        <mc-table-column prop="action" label="Actions" />
+        <mc-table-column prop="action" label="Actions">
+          <template #expand>
+            <div>Expand Action</div>
+          </template>
+        </mc-table-column>
         <mc-table-column prop="expand" />
       </mc-table-plus>
     </section>

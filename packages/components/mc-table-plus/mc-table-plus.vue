@@ -20,7 +20,7 @@
             class="mc-table-body-inner"
             :class="{ 'mc-table-body-fixed-height': !!props.height }"
           >
-            <mc-table-body />
+            <mc-table-body></mc-table-body>
           </div>
         </template>
       </div>
