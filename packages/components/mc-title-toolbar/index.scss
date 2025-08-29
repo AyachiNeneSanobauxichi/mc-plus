@@ -1,0 +1,34 @@
+$text_color_error: var(--mc-error);
+$line_color: var(--mc-gray-200);
+
+.mc-title-toolbar {
+  width: fit-content;
+  height: 24px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: default;
+  user-select: none;
+
+  .mc-title-toolbar-line {
+    width: 1px;
+    height: 100%;
+    background-color: $line_color;
+  }
+
+  .mc-title-toolbar-mandatory {
+    color: $text_color_error;
+    box-sizing: border-box;
+    padding-right: 8px;
+    position: relative;
+    &::after {
+      content: "*";
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}
