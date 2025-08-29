@@ -22,6 +22,7 @@ $bg_color_expand: var(--mc-gray-100);
     .mc-table-body-expand-row {
       width: 100%;
       box-sizing: border-box;
+      background-color: $bg_color_expand;
       border-bottom: 1px solid $border_color;
       .mc-table-body-expand-row-cell {
         width: 100%;

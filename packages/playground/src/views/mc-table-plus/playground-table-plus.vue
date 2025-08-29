@@ -1,6 +1,6 @@
 <template>
   <div class="playground-table-plus">
-    <section>
+    <section class="mc-table-plus-section">
       <mc-table-plus
         :data="tableData"
         :pagination="pagination"
@@ -165,6 +165,10 @@ const handlePagination = (pagination: McTablePaginationType) => {
   display: flex;
   flex-direction: column;
   gap: 32px;
+
+  .mc-table-plus-section {
+    background-color: skyblue;
+  }
 
   .position-container {
     color: var(--mc-teal-500);
