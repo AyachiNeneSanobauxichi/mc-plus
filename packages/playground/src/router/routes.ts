@@ -285,4 +285,12 @@ export const routes: RouteRecordRaw[] = [
       title: "Mc Loading",
     },
   },
+  {
+    path: "/step-plus",
+    name: "StepPlus",
+    component: () => import("../views/mc-step-plus/playground-step-plus.vue"),
+    meta: {
+      title: "Mc Step Plus",
+    },
+  },
 ];
