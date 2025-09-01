@@ -1,9 +1,3 @@
-/*
- * @Author: Tieju yang
- * @Date: 2025-05-23 11:11:34
- * @LastEditors: Tieju yang
- * @LastEditTime: 2025-05-26 17:25:55
- */
 export * from "./mc-table";
 export * from "./mc-collapse";
 // refactor
@@ -43,3 +37,4 @@ export * from "./mc-progress-bar";
 export * from "./mc-upload";
 export * from "./mc-textarea";
 export * from "./mc-loading";
+export * from "./mc-title-toolbar";

@@ -21,8 +21,8 @@ import type {
   McTitleToolbarProps,
 } from "./types";
 import { ref } from "vue";
-import McReset from "../mc-reset/mc-reset.vue";
 import { throttle } from "lodash-es";
+import McReset from "../mc-reset/mc-reset.vue";
 import { MC_TITLE_TOOLBAR } from "./constanst";
 
 // options

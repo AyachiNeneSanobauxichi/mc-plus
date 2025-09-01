@@ -15,14 +15,18 @@
     <div class="mc-title-tool-bar">
       <slot name="tool-bar">
         <template v-if="showToolBar">
-          <mc-title-tool-bar @reset="emit('reset')">
+          <mc-title-toolbar
+            :show-reset="showReset"
+            :show-mandatory="showMandatory"
+            @reset="emit('reset')"
+          >
             <template #reset>
               <slot name="reset"></slot>
             </template>
             <template #mandatory>
               <slot name="mandatory"></slot>
             </template>
-          </mc-title-tool-bar>
+          </mc-title-toolbar>
         </template>
       </slot>
     </div>
@@ -31,8 +35,8 @@
 
 <script setup lang="ts">
 import type { TitleEmits, TitleInstance, TitleProps } from "./types";
-import McTitleToolBar from "./mc-title-tool-bar.vue";
 import { ref } from "vue";
+import McTitleToolbar from "../mc-title-toolbar/mc-title-toolbar.vue";
 
 // options
 defineOptions({ name: "McTitle" });
@@ -43,6 +47,8 @@ withDefaults(defineProps<TitleProps>(), {
   height: "auto",
   showToolBar: true,
   showBorder: false,
+  showReset: true,
+  showMandatory: true,
 });
 
 // emit
