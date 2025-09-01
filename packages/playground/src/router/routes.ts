@@ -131,6 +131,15 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/title-toolbar",
+    name: "TitleToolbar",
+    component: () =>
+      import("../views/mc-title-toolbar/playground-title-toolbar.vue"),
+    meta: {
+      title: "Mc Title Toolbar",
+    },
+  },
+  {
     path: "/tooltip",
     name: "Tooltip",
     component: () => import("../views/mc-tooltip/playgroundTooltip.vue"),

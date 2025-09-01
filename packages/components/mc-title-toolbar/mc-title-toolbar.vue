@@ -1,33 +1,44 @@
 <template>
-  <div class="mc-title-tool-bar" ref="_ref">
-    <div class="mc-title-tool-bar-reset">
+  <div class="mc-title-toolbar" ref="_ref">
+    <div v-if="showReset" class="mc-title-toolbar-reset">
       <mc-reset :rotate="isRotate" @reset="handleReset" :auto-rotate="false">
         <template #default>
           <slot name="reset"></slot>
         </template>
       </mc-reset>
     </div>
-    <div class="mc-title-tool-bar-line"></div>
-    <div class="mc-title-tool-bar-mandatory">
+    <div v-if="showReset && showMandatory" class="mc-title-toolbar-line"></div>
+    <div v-if="showMandatory" class="mc-title-toolbar-mandatory">
       <slot name="mandatory">Mandatory</slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { TitleToolBarEmits, TitleToolBarInstance } from "./types";
+import type {
+  McTitleToolbarEmits,
+  McTitleToolbarInstance,
+  McTitleToolbarProps,
+} from "./types";
 import { ref } from "vue";
-import McReset from "../mc-reset/mc-reset.vue";
 import { throttle } from "lodash-es";
+import McReset from "../mc-reset/mc-reset.vue";
+import { MC_TITLE_TOOLBAR } from "./constanst";
 
 // options
-defineOptions({ name: "McTitleToolBar" });
+defineOptions({ name: MC_TITLE_TOOLBAR });
+
+//props
+withDefaults(defineProps<McTitleToolbarProps>(), {
+  showReset: true,
+  showMandatory: true,
+});
 
 // ref
 const _ref = ref<HTMLDivElement>();
 
 // emit
-const emit = defineEmits<TitleToolBarEmits>();
+const emit = defineEmits<McTitleToolbarEmits>();
 
 // route
 const isRotate = ref<boolean>(false);
@@ -45,11 +56,11 @@ const handleReset = throttle(() => {
 }, 300);
 
 // expose
-defineExpose<TitleToolBarInstance>({
+defineExpose<McTitleToolbarInstance>({
   ref: _ref,
 });
 </script>
 
 <style scoped lang="scss">
-@use "./styles/mc-title-tool-bar.scss";
+@use "./index.scss";
 </style>
