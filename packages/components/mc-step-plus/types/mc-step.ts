@@ -1,8 +1,15 @@
-import type { McStepItemPlusProps } from "./mc-step-item";
+import type { Slot } from "vue";
 
-export type StepKey = string | number | undefined;
+export type McStepKey = string | number | undefined;
+
+export interface McStepItem {
+  step?: McStepKey;
+  label?: string;
+  desc?: string;
+  parentKey?: McStepKey;
+  context?: Slot;
+}
 
 export interface McStepPlusProps {
-  modelValue: StepKey;
-  steps: McStepItemPlusProps[];
+  modelValue?: McStepKey;
 }

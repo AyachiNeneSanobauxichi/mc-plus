@@ -3,9 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import type { McStepPlusProps, McStepItemPlusProps } from "./types";
-import { ref } from "vue";
+import type { McStepPlusProps } from "./types";
 import { MC_STEP_PLUS } from "./constant";
+import { useStepItem } from "./hooks";
+import { watchEffect } from "vue";
 
 // options
 defineOptions({ name: MC_STEP_PLUS });
@@ -15,8 +16,12 @@ withDefaults(defineProps<McStepPlusProps>(), {
   modelValue: undefined,
 });
 
-// step items
-const stepItems = ref<McStepItemPlusProps[]>([]);
+// use step item
+const { stepItems } = useStepItem();
+
+watchEffect(() => {
+  console.log("Step Items: ", stepItems.value);
+});
 </script>
 
 <style scoped lang="scss">
