@@ -183,7 +183,7 @@ import type { Component } from "vue";
 import type { TagEmphasis } from "../mc-tag";
 import { computed, h, nextTick, onMounted, provide, ref, watch } from "vue";
 import { difference, find, includes } from "lodash-es";
-import { useClickOutside, useFocusController, useHover } from "@mc-plus/hooks";
+import { useClickOutside, useFocus, useHover } from "@mc-plus/hooks";
 import { useFormValidate } from "../mc-form/hooks";
 import { useInputGroupCtx } from "../mc-input-group/hooks";
 import {
@@ -238,7 +238,7 @@ const {
   isFocused,
   handleFocus,
   handleBlur,
-} = useFocusController(inputRef);
+} = useFocus(inputRef);
 
 // use hover
 const { isHovering } = useHover(triggerRef);

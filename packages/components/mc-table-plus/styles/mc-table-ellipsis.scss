@@ -1,0 +1,14 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$dot_color: var(--mc-gray-500);
+
+.mc-table-ellipsis {
+  @include mixin.flex-center($gap: 4px);
+
+  .mc-table-ellipsis-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: $dot_color;
+  }
+}

@@ -43,7 +43,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  display: inline-block; // 确保渐变效果生效
+  display: inline-block;
 }
 
 /* mask color */
@@ -110,5 +110,79 @@
   &:focus::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+}
+
+/* reset table style */
+@mixin reset-table-style {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* reset thead style */
+@mixin reset-thead-style {
+  vertical-align: top;
+}
+
+/* reset tbody style */
+@mixin reset-tbody-style {
+  vertical-align: top;
+}
+
+/* reset th style */
+@mixin reset-th-style {
+  @include font-style;
+  padding: 0;
+  margin: 0;
+}
+
+/* reset td style */
+@mixin reset-td-style {
+  @include font-style;
+  padding: 0;
+  margin: 0;
+}
+
+/* skeleton */
+@mixin mc-skeleton {
+  &.mc-skeleton-loading {
+    overflow: hidden;
+
+    @keyframes skip {
+      to {
+        transform: skew(-10deg, 0deg) translateX(550%);
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: -20%;
+      top: 0;
+      z-index: 10;
+      width: 20%;
+      height: 100%;
+      border-radius: 4px;
+      transform: skew(-10deg, 0deg);
+      background: linear-gradient(
+        to right,
+        transparent,
+        var(--mc-white),
+        transparent
+      );
+      animation: skip 2s linear infinite;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      border-radius: 4px;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background-color: var(--mc-gray-100);
+    }
   }
 }

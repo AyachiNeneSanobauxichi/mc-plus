@@ -1,0 +1,22 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$border_color: var(--mc-gray-500);
+
+.mc-table-header {
+  @include mixin.reset-table-style;
+  width: 100%;
+  table-layout: fixed;
+
+  .mc-table-header-thead {
+    @include mixin.reset-thead-style;
+    border-bottom: 1px solid $border_color;
+  }
+
+  .mc-table-header-col {
+    flex: 1;
+
+    &.mc-table-header-col-expand {
+      width: 40px;
+    }
+  }
+}

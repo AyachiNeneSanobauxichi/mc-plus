@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import type { RadioEmits, RadioGroupContext, RadioProps } from "./types";
 import { computed, inject, nextTick, ref } from "vue";
-import { useFocusController } from "@mc-plus/hooks";
+import { useFocus } from "@mc-plus/hooks";
 import McTooltip from "../mc-tooltip/mc-tooltip.vue";
 import { useFormValidate } from "../mc-form/hooks";
 import { RADIO_INJECTION_KEY } from "./constant";
@@ -68,8 +68,7 @@ const radioContext = inject<RadioGroupContext | undefined>(
 const inputRef = ref<HTMLInputElement>();
 
 // use focus controller
-const { wrapperRef, isFocused, handleFocus, handleBlur } =
-  useFocusController(inputRef);
+const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocus(inputRef);
 
 // selected
 const isSelected = computed(() => {

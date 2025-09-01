@@ -7,6 +7,8 @@
     <mc-icon name="Loading" />
     <mc-icon name="Accept_02" />
     <mc-icon name="Accept" />
+    <mc-icon name="Sort_Asc" />
+    <mc-icon name="Sort_Desc" />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 @font-face {
   font-family: "mc-iconfont";
-  src: url("@mc-plus/theme/iconfonts/iconfont.woff2?t=1753686737994")
+  src: url("@mc-plus/theme/iconfonts/iconfont.woff2?t=1756283133415")
     format("woff2");
 }
 
@@ -10,6 +10,22 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.mc-icon--Loading_Line:before {
+  content: "\e8fd";
+}
+
+.mc-icon--Sort:before {
+  content: "\e659";
+}
+
+.mc-icon--Sort_Desc:before {
+  content: "\e65d";
+}
+
+.mc-icon--Sort_Asc:before {
+  content: "\e6b8";
 }
 
 .mc-icon--Indicator:before {

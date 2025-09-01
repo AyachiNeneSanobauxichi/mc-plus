@@ -1,0 +1,5 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-table-footer {
+  @include mixin.flex-center($justify: space-between);
+}

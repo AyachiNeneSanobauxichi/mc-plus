@@ -1,0 +1,70 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$empty_text_color: var(--mc-gray-500);
+$bg_color: var(--mc-white);
+
+.mc-table-plus {
+  @include mixin.flex-center(
+    $direction: column,
+    $justify: flex-start,
+    $align: stretch,
+    $gap: 24px
+  );
+  width: 100%;
+  background-color: $bg_color;
+
+  .mc-table-wrapper {
+    @include mixin.flex-center(
+      $direction: column,
+      $justify: flex-start,
+      $align: stretch
+    );
+    width: 100%;
+    flex: 1;
+    overflow-x: auto;
+
+    .mc-table-body-wrapper {
+      width: 100%;
+      position: relative;
+      flex: 1;
+
+      .mc-table-body-inner {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+
+        &.mc-table-body-fixed-height {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
+      }
+
+      .mc-table-loading {
+        @include mixin.flex-center;
+        width: 100%;
+        height: 100%;
+        min-height: 56px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 999999;
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+
+      .mc-table-empty {
+        @include mixin.flex-center;
+        @include mixin.font-style(
+          $weight: 400,
+          $size: 14px,
+          $color: $empty_text_color
+        );
+        min-height: 56px;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}

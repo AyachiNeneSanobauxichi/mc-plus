@@ -175,7 +175,11 @@ export type IconType =
   | "Youtube"
   | "Unlock"
   | "Indicator"
-  | "Bullet";
+  | "Bullet"
+  | "Loading_Line"
+  | "Sort"
+  | "Sort_Desc"
+  | "Sort_Asc";
 
 export interface IconProps {
   name: IconType;

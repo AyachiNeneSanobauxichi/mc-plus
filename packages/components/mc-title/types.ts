@@ -6,6 +6,8 @@ export interface TitleProps {
   title?: string;
   showToolBar?: boolean;
   showBorder?: boolean;
+  showReset?: boolean;
+  showMandatory?: boolean;
 }
 
 export interface TitleEmits {
