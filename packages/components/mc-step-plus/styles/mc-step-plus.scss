@@ -93,6 +93,10 @@ $text_desc_color: var(--mc-gray-800);
             $color: $text_desc_color
           );
         }
+
+        .mc-step-item-content-display {
+          width: 100%;
+        }
       }
 
       &.mc-step-item-child {

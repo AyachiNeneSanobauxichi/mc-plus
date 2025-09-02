@@ -39,12 +39,16 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
         if (parentStepItem) {
           parentStepItem.content = void 0;
           parentStepItem.hasChildren = true;
+          if (!parentStepItem.children) {
+            parentStepItem.children = [];
+          }
+          parentStepItem.children.push(item.props?.step);
         }
         stepItems.push({
           step: item.props?.step,
           label: item.props?.label,
           desc: item.props?.desc,
-          parentStep: parentStepItem?.step,
+          parentStep: parentStepItem,
           isChild: true,
           content: (item.children as { default?: () => Component })
             ?.default as Slot,

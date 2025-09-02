@@ -7,12 +7,24 @@ export interface McStepItem {
   step: McStepKey;
   label?: string;
   desc?: string;
-  parentStep?: McStepKey;
+  parentStep?: McStepItem;
   isChild?: boolean;
   hasChildren?: boolean;
+  children?: McStepKey[];
   content?: Slot;
 }
 
-export interface McStepPlusProps {
+export interface McStepProps {
   modelValue?: McStepKey;
+}
+
+export interface McStepEmits {
+  (e: "update:modelValue", value: McStepKey): void;
+  (e: "change", value: McStepKey): void;
+}
+
+export interface McStepInstance {
+  goStep(step?: McStepKey): void;
+  goNextStep(): void;
+  goPreviousStep(): void;
 }
