@@ -4,11 +4,13 @@ export type McStepKey = string | number | undefined;
 
 export interface McStepItem {
   index?: number;
-  step?: McStepKey;
+  step: McStepKey;
   label?: string;
   desc?: string;
   parentStep?: McStepKey;
-  context?: Slot;
+  isChild?: boolean;
+  hasChildren?: boolean;
+  content?: Slot;
 }
 
 export interface McStepPlusProps {

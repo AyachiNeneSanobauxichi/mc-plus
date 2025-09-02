@@ -4,7 +4,8 @@
       <div
         class="mc-step-item"
         :class="{
-          'mc-step-item-actived': stepItem.step === modelValue,
+          'mc-step-item-child': stepItem.isChild,
+          'mc-step-item-actived': isActivedStep(stepItem),
         }"
         v-for="stepItem in stepItems"
         :key="stepItem.step"
@@ -18,8 +19,16 @@
           </div>
         </div>
         <div class="mc-step-item-content">
-          <div class="mc-step-item-label">{{ stepItem.label }}</div>
-          <div class="mc-step-item-desc">{{ stepItem.desc }}</div>
+          <div class="mc-step-item-content-title">
+            <div class="mc-step-item-label">{{ stepItem.label }}</div>
+            <div class="mc-step-item-desc">{{ stepItem.desc }}</div>
+          </div>
+          <div
+            class="mc-step-item-content-display"
+            v-if="stepItem.content && isActivedStep(stepItem)"
+          >
+            <component :is="stepItem.content" :key="stepItem.step" />
+          </div>
         </div>
       </div>
     </div>
@@ -42,7 +51,7 @@ withDefaults(defineProps<McStepPlusProps>(), {
 });
 
 // use step item
-const { stepItems } = useStepItem();
+const { stepItems, isActivedStep } = useStepItem();
 
 watchEffect(() => {
   console.log("Step Items: ", stepItems.value);

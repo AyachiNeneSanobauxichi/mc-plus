@@ -8,6 +8,7 @@ $text_title_color: var(--mc-gray-500);
 $text_title_color_active: var(--mc-purple-500);
 $line_color: var(--mc-gray-400);
 $line_color_active: var(--mc-purple-500);
+$text_desc_color: var(--mc-gray-800);
 
 .mc-step-plus {
   .mc-step-container {
@@ -29,6 +30,10 @@ $line_color_active: var(--mc-purple-500);
             border-color: $bg_color_active;
             color: $text_color_active;
           }
+        }
+
+        .mc-step-item-content .mc-step-item-label {
+          color: $text_title_color_active;
         }
 
         &:not(:last-child)::after {
@@ -68,6 +73,35 @@ $line_color_active: var(--mc-purple-500);
             box-sizing: border-box;
             border: 2px solid $border_color;
           }
+        }
+      }
+
+      .mc-step-item-content {
+        @include mixin.flex-center(column, flex-start, flex-start, 16px);
+        flex: 1;
+
+        .mc-step-item-label {
+          padding-top: 8px;
+          box-sizing: border-box;
+          @include mixin.font-style($weight: 600, $color: $text_title_color);
+        }
+
+        .mc-step-item-desc {
+          @include mixin.font-style(
+            $size: 14px,
+            $line-height: 20px,
+            $color: $text_desc_color
+          );
+        }
+      }
+
+      &.mc-step-item-child {
+        .mc-step-item-label {
+          @include mixin.font-style(
+            $line-height: 16px,
+            $color: $text_title_color
+          );
+          padding-top: 0;
         }
       }
 
