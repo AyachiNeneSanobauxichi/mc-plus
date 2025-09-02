@@ -3,10 +3,11 @@ import type { Slot } from "vue";
 export type McStepKey = string | number | undefined;
 
 export interface McStepItem {
+  index?: number;
   step?: McStepKey;
   label?: string;
   desc?: string;
-  parentKey?: McStepKey;
+  parentStep?: McStepKey;
   context?: Slot;
 }
 

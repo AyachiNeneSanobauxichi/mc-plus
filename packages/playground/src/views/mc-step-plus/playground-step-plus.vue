@@ -1,6 +1,6 @@
 <template>
   <div class="playground-step-plus">
-    <mc-step-plus>
+    <mc-step-plus v-model="currentStep">
       <mc-step-item-plus step="1" label="Step 1" desc="Step 1 description">
         Child 1
       </mc-step-item-plus>
@@ -38,9 +38,12 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import McStepPlus from "../../../../components/mc-step-plus/mc-step-plus.vue";
 import McStepItemPlus from "../../../../components/mc-step-plus/mc-step-item-plus.vue";
 import McStepChildItemPlus from "../../../../components/mc-step-plus/mc-step-child-item-plus.vue";
+
+const currentStep = ref<string>("3");
 </script>
 
 <style scoped lang="scss"></style>
