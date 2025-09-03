@@ -2,8 +2,14 @@
   <div class="playground-step-plus">
     <section class="tool-bar">
       <div>Current Step: {{ currentStep }}</div>
-      <mc-button @click="handlePrevious">Previous</mc-button>
-      <mc-button @click="handleNext">Next</mc-button>
+      <div class="btn-group">
+        <mc-button @click="handlePrevious">Previous</mc-button>
+        <mc-button @click="handleNext">Next</mc-button>
+      </div>
+      <div class="btn-group">
+        <mc-input v-model="goStep" placeholder="Please enter step key" />
+        <mc-button @click="handleGoStep" type="link">Go</mc-button>
+      </div>
     </section>
     <section class="mc-step-wrapper">
       <mc-step-plus
@@ -14,8 +20,8 @@
       >
         <mc-step-item-plus
           v-for="step in stepList"
-          :key="step.name"
-          :step="step.name"
+          :key="step.step"
+          :step="step.step"
           :label="step.label"
           :desc="step.desc"
           :icon="step.icon"
@@ -25,8 +31,8 @@
           <component :is="step.component" />
           <mc-step-child-item-plus
             v-for="child in step.children"
-            :key="child.name"
-            :step="child.name"
+            :key="child.step"
+            :step="child.step"
             :label="child.label"
             :desc="child.desc"
             :show-content="child.showContent"
@@ -41,135 +47,20 @@
 </template>
 
 <script setup lang="ts">
-import type { Component } from "vue";
-import type { IconType } from "@mc-plus/components/mc-icon/types";
 import type {
   McStepInstance,
   McStepKey,
 } from "@mc-plus/components/mc-step-plus/types";
-import { ref, shallowRef } from "vue";
-import { McButton } from "mc-plus";
+import { ref } from "vue";
+import { McButton, McInput } from "mc-plus";
 import McStepPlus from "../../../../components/mc-step-plus/mc-step-plus.vue";
 import McStepItemPlus from "../../../../components/mc-step-plus/mc-step-item-plus.vue";
 import McStepChildItemPlus from "../../../../components/mc-step-plus/mc-step-child-item-plus.vue";
-import Step1 from "./steps/step1.vue";
-import Step2 from "./steps/step2.vue";
-import Step3 from "./steps/step3.vue";
-import Step4 from "./steps/step4.vue";
-import Step5 from "./steps/step5.vue";
-import ChildSteps1 from "./child-steps/child-steps1.vue";
-import ChildSteps2 from "./child-steps/child-steps2.vue";
-
-interface Step {
-  name: string;
-  label: string;
-  desc: string;
-  component: Component;
-  children?: Step[];
-  icon?: IconType;
-  showContent?: boolean;
-  success?: boolean;
-}
+import { useSteps } from "./hooks";
 
 const stepPlusRef = ref<McStepInstance>();
 
-const successSteps = ref<string[]>([]);
-
-const stepList = shallowRef<Step[]>([
-  {
-    name: "1",
-    label: "Label 1",
-    desc: "desc1",
-    component: Step1,
-    children: [
-      {
-        name: "1-1",
-        label: "Child 1",
-        desc: "child desc1",
-        component: ChildSteps1,
-      },
-      {
-        name: "1-2",
-        label: "Child 2",
-        desc: "child desc2",
-        component: ChildSteps2,
-      },
-      {
-        name: "1-3",
-        label: "Child 3",
-        desc: "child desc3",
-        component: ChildSteps2,
-      },
-    ],
-  },
-  {
-    name: "2",
-    label: "Label 2",
-    desc: "desc2",
-    // showContent: true,
-    component: Step2,
-    // icon: "Camera",
-  },
-  {
-    name: "3",
-    label: "Label 3",
-    desc: "desc3",
-    component: Step3,
-    // showContent: true,
-    children: [
-      {
-        name: "3-1",
-        label: "Child 1",
-        desc: "child desc1",
-        component: ChildSteps1,
-      },
-      {
-        name: "3-2",
-        label: "Child 2",
-        desc: "child desc2",
-        component: ChildSteps2,
-      },
-      {
-        name: "3-3",
-        label: "Child 3",
-        desc: "child desc3",
-        component: ChildSteps2,
-      },
-    ],
-  },
-  { name: "4", label: "Label 4", desc: "desc4", component: Step4 },
-  {
-    name: "5",
-    label: "Label 5",
-    desc: "desc5",
-    component: Step5,
-    children: [
-      {
-        name: "5-1",
-        label: "Child 1",
-        desc: "child desc1",
-        // showContent: true,
-        component: ChildSteps1,
-      },
-      {
-        name: "5-2",
-        label: "Child 2",
-        desc: "child desc2",
-        // showContent: true,
-        component: ChildSteps2,
-      },
-      {
-        name: "5-3",
-        label: "Child 3",
-        desc: "child desc3",
-        // showContent: true,
-        component: ChildSteps2,
-      },
-    ],
-  },
-]);
-
-const currentStep = ref<string>("1-1");
+const { stepList, successSteps, currentStep } = useSteps();
 
 // handle previous
 const handlePrevious = () => {
@@ -185,17 +76,36 @@ const handleNext = () => {
 const handleClickStep = (step: McStepKey) => {
   currentStep.value = step as string;
 };
+
+const goStep = ref<string>("");
+
+// handle go step
+const handleGoStep = () => {
+  console.log("goStep: ", goStep.value);
+  if (goStep.value) {
+    stepPlusRef.value?.goStep(goStep.value);
+  }
+};
 </script>
 
 <style scoped lang="scss">
 @use "@mc-plus/theme/mixins.scss" as mixin;
 .playground-step-plus {
   .tool-bar {
-    @include mixin.flex-center($justify: flex-start, $gap: 16px);
+    @include mixin.flex-center(
+      $direction: column,
+      $justify: flex-start,
+      $align: flex-start,
+      $gap: 16px
+    );
+
+    .btn-group {
+      @include mixin.flex-center($justify: flex-start, $gap: 8px);
+    }
   }
 
   .mc-step-wrapper {
-    margin-top: 72px;
+    margin-top: 120px;
   }
 }
 </style>

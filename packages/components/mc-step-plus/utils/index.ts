@@ -6,6 +6,7 @@ import { MC_STEP_CHILD_ITEM_PLUS, MC_STEP_ITEM_PLUS } from "../constant";
 // generate step items
 export const generateStepItems = (children?: VNodeNormalizedChildren) => {
   const stepItems: McStepItem[] = [];
+  let parentIndex = 0;
   let index = 0;
 
   const flattenNodes = (
@@ -25,6 +26,7 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
             : item.children;
 
         const currentStep: McStepItem = {
+          parentIndex: parentIndex++,
           index: index++,
           step: item.props?.step || index,
           label: item.props?.label,
@@ -40,6 +42,7 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
         flattenNodes(_children, currentStep);
       } else if (name === MC_STEP_CHILD_ITEM_PLUS) {
         const currentStep: McStepItem = {
+          index: index++,
           step: item.props?.step,
           label: item.props?.label,
           desc: item.props?.desc,
@@ -55,7 +58,7 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
           parentStepItem.content = void 0;
           parentStepItem.hasChildren = true;
           if (!parentStepItem.children) parentStepItem.children = [];
-          currentStep.index = parentStepItem.children.length;
+          currentStep.childIndex = parentStepItem.children.length;
           parentStepItem.children.push(currentStep);
           if (!parentStepItem.childrenSteps) parentStepItem.childrenSteps = [];
           parentStepItem.childrenSteps.push(currentStep.step);

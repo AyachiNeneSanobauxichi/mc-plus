@@ -5,6 +5,8 @@ export type McStepKey = string | number | undefined;
 
 export interface McStepItem {
   index?: number;
+  parentIndex?: number;
+  childIndex?: number;
   step: McStepKey;
   label?: string;
   desc?: string;

@@ -9,7 +9,7 @@
             'mc-step-item-actived': isActivedStep(stepItem),
             'mc-step-item-success': isSuccessStep(stepItem),
           }"
-          v-if="isShowStep(stepItem)"
+          v-if="showStep(stepItem)"
         >
           <div
             class="mc-step-item-indicator"
@@ -18,7 +18,7 @@
             <div class="mc-step-item-icon">
               <div
                 class="mc-step-item-icon-number"
-                v-if="!stepItem.isChild && !isNil(stepItem.index)"
+                v-if="!stepItem.isChild && !isNil(stepItem.parentIndex)"
               >
                 <template v-if="isSuccessStep(stepItem)">
                   <mc-success-icon />
@@ -28,7 +28,7 @@
                     <mc-icon :name="stepItem.icon" />
                   </template>
                   <template v-else>
-                    {{ stepItem.index + 1 }}
+                    {{ stepItem.parentIndex + 1 }}
                   </template>
                 </template>
               </div>
@@ -61,8 +61,8 @@ import type {
   McStepKey,
   McStepProps,
 } from "./types";
-import { computed, watchEffect } from "vue";
-import { findIndex, isNil } from "lodash-es";
+import { watchEffect } from "vue";
+import { isNil } from "lodash-es";
 import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { MC_STEP_PLUS } from "./constant";
@@ -72,7 +72,7 @@ import { useStepItem } from "./hooks";
 defineOptions({ name: MC_STEP_PLUS });
 
 // props
-const props = withDefaults(defineProps<McStepProps>(), {
+withDefaults(defineProps<McStepProps>(), {
   modelValue: undefined,
 });
 
@@ -84,15 +84,10 @@ const {
   stepItems,
   activedStep,
   isActivedStep,
-  isShowStep,
+  showStep,
   isSuccessStep,
   showContent,
 } = useStepItem();
-
-// current step index
-const currentStepIndex = computed(() => {
-  return findIndex(stepItems.value, (item) => item.step === props.modelValue);
-});
 
 // handle click step
 const handleClickStep = (stepItem: McStepItem) => {
@@ -101,7 +96,7 @@ const handleClickStep = (stepItem: McStepItem) => {
 
 // go previous step
 const goPreviousStep = () => {
-  const index = currentStepIndex.value;
+  const index = activedStep.value?.index || -1;
   if (index > 0) {
     let previousIndex = index - 1;
     let previousStep = stepItems.value[previousIndex];
@@ -120,7 +115,7 @@ const goPreviousStep = () => {
 
 // go next step
 const goNextStep = () => {
-  const index = currentStepIndex.value;
+  const index = activedStep.value?.index || -1;
   if (index < stepItems.value.length - 1) {
     let nextIndex = index + 1;
     let nextStep = stepItems.value[nextIndex];

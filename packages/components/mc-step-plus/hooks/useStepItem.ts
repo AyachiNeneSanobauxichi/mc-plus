@@ -1,6 +1,6 @@
 import type { McStepItem, McStepKey } from "../types";
 import { computed, ref, useSlots, watchEffect } from "vue";
-import { includes } from "lodash-es";
+import { includes, isNil } from "lodash-es";
 import { useProp } from "@mc-plus/hooks";
 import { generateStepItems } from "../utils";
 
@@ -26,34 +26,16 @@ const useStepItem = () => {
 
   // is actived step
   const isActivedStep = (stepItem: McStepItem): boolean => {
-    // step is actived
-    if (stepItem.step === modelValue.value) {
-      return true;
+    if (isNil(stepItem.index) || isNil(activedStep.value?.index)) {
+      return false;
+    } else {
+      // step item index is less than actived step index
+      return stepItem.index <= activedStep.value?.index;
     }
-
-    // child step is actived
-    if (
-      stepItem.children &&
-      includes(stepItem.childrenSteps, modelValue.value)
-    ) {
-      return true;
-    }
-
-    // previous borther step is actived
-    if (
-      stepItem.isChild &&
-      activedStep.value?.isChild &&
-      activedStep.value.parentStep === stepItem.parentStep &&
-      (activedStep.value.index || -1) > (stepItem.index || -1)
-    ) {
-      return true;
-    }
-
-    return false;
   };
 
-  // is show step
-  const isShowStep = (stepItem: McStepItem): boolean => {
+  // show step
+  const showStep = (stepItem: McStepItem): boolean => {
     // parent step always show
     if (!stepItem.isChild) return true;
 
@@ -61,7 +43,7 @@ const useStepItem = () => {
     // parent step show content or parent step is actived or borther step is actived
     return (
       !!stepItem.parentStep?.showContent ||
-      (!!stepItem.parentStep && isActivedStep(stepItem.parentStep)) ||
+      (!!stepItem.parentStep && activedStep.value === stepItem.parentStep) ||
       includes(stepItem.parentStep?.childrenSteps, modelValue.value)
     );
   };
@@ -94,7 +76,7 @@ const useStepItem = () => {
     stepItems,
     activedStep,
     isActivedStep,
-    isShowStep,
+    showStep,
     isSuccessStep,
     showContent,
   };

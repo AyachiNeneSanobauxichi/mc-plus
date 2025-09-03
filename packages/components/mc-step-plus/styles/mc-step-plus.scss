@@ -120,6 +120,23 @@ $color_success: var(--mc-success);
         .mc-step-item-content-display {
           width: 100%;
         }
+
+        // .mc-step-plus-component-enter-active,
+        // .mc-step-plus-component-leave-active {
+        //   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        //     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        //   transform-origin: top center;
+        // }
+        // .mc-step-plus-component-enter-from,
+        // .mc-step-plus-component-leave-to {
+        //   opacity: 0;
+        //   transform: scaleY(1);
+        // }
+        // .mc-step-plus-component-enter-to,
+        // .mc-step-plus-component-leave-from {
+        //   opacity: 1;
+        //   transform: scaleY(1);
+        // }
       }
 
       &.mc-step-item-child {
