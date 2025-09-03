@@ -68,6 +68,7 @@ $color_success: var(--mc-success);
         @include mixin.flex-center($align: flex-start);
         width: 48px;
         height: 100%;
+        cursor: pointer;
 
         .mc-step-item-icon {
           @include mixin.flex-center($align: flex-start);

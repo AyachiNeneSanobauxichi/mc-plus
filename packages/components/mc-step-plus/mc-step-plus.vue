@@ -11,7 +11,10 @@
           }"
           v-if="isShowStep(stepItem)"
         >
-          <div class="mc-step-item-indicator">
+          <div
+            class="mc-step-item-indicator"
+            @click="handleClickStep(stepItem)"
+          >
             <div class="mc-step-item-icon">
               <div
                 class="mc-step-item-icon-number"
@@ -21,7 +24,12 @@
                   <mc-success-icon />
                 </template>
                 <template v-else>
-                  {{ stepItem.index + 1 }}
+                  <template v-if="stepItem.icon">
+                    <mc-icon :name="stepItem.icon" />
+                  </template>
+                  <template v-else>
+                    {{ stepItem.index + 1 }}
+                  </template>
                 </template>
               </div>
               <div class="mc-step-item-icon-point" v-else></div>
@@ -34,7 +42,7 @@
             </div>
             <div
               class="mc-step-item-content-display"
-              v-if="stepItem.content && isActivedStep(stepItem)"
+              v-if="showContent(stepItem)"
             >
               <component :is="stepItem.content" :key="stepItem.step" />
             </div>
@@ -49,12 +57,14 @@
 import type {
   McStepEmits,
   McStepInstance,
+  McStepItem,
   McStepKey,
   McStepProps,
 } from "./types";
 import { computed, watchEffect } from "vue";
 import { findIndex, isNil } from "lodash-es";
 import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
+import McIcon from "../mc-icon/mc-icon.vue";
 import { MC_STEP_PLUS } from "./constant";
 import { useStepItem } from "./hooks";
 
@@ -70,13 +80,24 @@ const props = withDefaults(defineProps<McStepProps>(), {
 const emit = defineEmits<McStepEmits>();
 
 // use step item
-const { stepItems, activedStep, isActivedStep, isShowStep, isSuccessStep } =
-  useStepItem();
+const {
+  stepItems,
+  activedStep,
+  isActivedStep,
+  isShowStep,
+  isSuccessStep,
+  showContent,
+} = useStepItem();
 
 // current step index
 const currentStepIndex = computed(() => {
   return findIndex(stepItems.value, (item) => item.step === props.modelValue);
 });
+
+// handle click step
+const handleClickStep = (stepItem: McStepItem) => {
+  emit("click:step", stepItem.step);
+};
 
 // go previous step
 const goPreviousStep = () => {

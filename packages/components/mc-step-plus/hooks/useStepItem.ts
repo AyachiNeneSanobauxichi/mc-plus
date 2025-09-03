@@ -54,18 +54,16 @@ const useStepItem = () => {
 
   // is show step
   const isShowStep = (stepItem: McStepItem): boolean => {
-    // show parent step
+    // parent step always show
     if (!stepItem.isChild) return true;
+
     // child step
-    else {
-      if (stepItem.parentStep && isActivedStep(stepItem.parentStep)) {
-        // parent step is actived
-        return true;
-      } else {
-        // borther step is actived
-        return includes(stepItem.parentStep?.childrenSteps, modelValue.value);
-      }
-    }
+    // parent step show content or parent step is actived or borther step is actived
+    return (
+      !!stepItem.parentStep?.showContent ||
+      (!!stepItem.parentStep && isActivedStep(stepItem.parentStep)) ||
+      includes(stepItem.parentStep?.childrenSteps, modelValue.value)
+    );
   };
 
   // success steps
@@ -74,9 +72,21 @@ const useStepItem = () => {
   // is success step
   const isSuccessStep = (stepItem: McStepItem): boolean => {
     if (!successSteps.value?.length) return false;
+    // success steps includes step or parent step success or step success is true or parent step success is true
     return (
       includes(successSteps.value, stepItem.step) ||
-      includes(successSteps.value, stepItem.parentStep?.step)
+      includes(successSteps.value, stepItem.parentStep?.step) ||
+      !!stepItem.success ||
+      !!stepItem.parentStep?.success
+    );
+  };
+
+  // show content
+  const showContent = (stepItem: McStepItem): boolean => {
+    // step has content && step is current step or show content is true
+    return (
+      !!stepItem.content &&
+      (stepItem.step === modelValue.value || !!stepItem.showContent)
     );
   };
 
@@ -86,6 +96,7 @@ const useStepItem = () => {
     isActivedStep,
     isShowStep,
     isSuccessStep,
+    showContent,
   };
 };
 

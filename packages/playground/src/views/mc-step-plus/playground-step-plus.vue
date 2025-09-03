@@ -10,6 +10,7 @@
         v-model="currentStep"
         v-model:success-steps="successSteps"
         ref="stepPlusRef"
+        @click:step="handleClickStep"
       >
         <mc-step-item-plus
           v-for="step in stepList"
@@ -17,6 +18,9 @@
           :step="step.name"
           :label="step.label"
           :desc="step.desc"
+          :icon="step.icon"
+          :show-content="step.showContent"
+          :success="step.success"
         >
           <component :is="step.component" />
           <mc-step-child-item-plus
@@ -25,6 +29,8 @@
             :step="child.name"
             :label="child.label"
             :desc="child.desc"
+            :show-content="child.showContent"
+            :success="child.success"
           >
             <component :is="child.component" />
           </mc-step-child-item-plus>
@@ -36,7 +42,11 @@
 
 <script setup lang="ts">
 import type { Component } from "vue";
-import type { McStepInstance } from "@mc-plus/components/mc-step-plus/types";
+import type { IconType } from "@mc-plus/components/mc-icon/types";
+import type {
+  McStepInstance,
+  McStepKey,
+} from "@mc-plus/components/mc-step-plus/types";
 import { ref, shallowRef } from "vue";
 import { McButton } from "mc-plus";
 import McStepPlus from "../../../../components/mc-step-plus/mc-step-plus.vue";
@@ -56,11 +66,14 @@ interface Step {
   desc: string;
   component: Component;
   children?: Step[];
+  icon?: IconType;
+  showContent?: boolean;
+  success?: boolean;
 }
 
 const stepPlusRef = ref<McStepInstance>();
 
-const successSteps = ref<string[]>(["2", "3"]);
+const successSteps = ref<string[]>([]);
 
 const stepList = shallowRef<Step[]>([
   {
@@ -89,12 +102,20 @@ const stepList = shallowRef<Step[]>([
       },
     ],
   },
-  { name: "2", label: "Label 2", desc: "desc2", component: Step2 },
+  {
+    name: "2",
+    label: "Label 2",
+    desc: "desc2",
+    // showContent: true,
+    component: Step2,
+    // icon: "Camera",
+  },
   {
     name: "3",
     label: "Label 3",
     desc: "desc3",
     component: Step3,
+    // showContent: true,
     children: [
       {
         name: "3-1",
@@ -127,18 +148,21 @@ const stepList = shallowRef<Step[]>([
         name: "5-1",
         label: "Child 1",
         desc: "child desc1",
+        // showContent: true,
         component: ChildSteps1,
       },
       {
         name: "5-2",
         label: "Child 2",
         desc: "child desc2",
+        // showContent: true,
         component: ChildSteps2,
       },
       {
         name: "5-3",
         label: "Child 3",
         desc: "child desc3",
+        // showContent: true,
         component: ChildSteps2,
       },
     ],
@@ -155,6 +179,11 @@ const handlePrevious = () => {
 // handle next
 const handleNext = () => {
   stepPlusRef.value?.goNextStep();
+};
+
+// handle click step
+const handleClickStep = (step: McStepKey) => {
+  currentStep.value = step as string;
 };
 </script>
 

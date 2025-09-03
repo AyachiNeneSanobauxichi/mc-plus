@@ -29,6 +29,9 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
           step: item.props?.step || index,
           label: item.props?.label,
           desc: item.props?.desc,
+          icon: item.props?.icon,
+          showContent: item.props?.showContent || item.props?.["show-content"],
+          success: item.props?.success,
           content: (item.children as { default?: () => Component })
             ?.default as Slot,
         };
@@ -42,6 +45,8 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
           desc: item.props?.desc,
           parentStep: parentStepItem,
           isChild: true,
+          showContent: item.props?.showContent || item.props?.["show-content"],
+          success: item.props?.success,
           content: (item.children as { default?: () => Component })
             ?.default as Slot,
         };
