@@ -7,6 +7,7 @@
           :class="{
             'mc-step-item-child': stepItem.isChild,
             'mc-step-item-actived': isActivedStep(stepItem),
+            'mc-step-item-success': isSuccessStep(stepItem),
           }"
           v-if="isShowStep(stepItem)"
         >
@@ -16,7 +17,12 @@
                 class="mc-step-item-icon-number"
                 v-if="!stepItem.isChild && !isNil(stepItem.index)"
               >
-                {{ stepItem.index + 1 }}
+                <template v-if="isSuccessStep(stepItem)">
+                  <mc-success-icon />
+                </template>
+                <template v-else>
+                  {{ stepItem.index + 1 }}
+                </template>
               </div>
               <div class="mc-step-item-icon-point" v-else></div>
             </div>
@@ -48,6 +54,7 @@ import type {
 } from "./types";
 import { computed, watchEffect } from "vue";
 import { findIndex, isNil } from "lodash-es";
+import McSuccessIcon from "../mc-success-icon/mc-success-icon.vue";
 import { MC_STEP_PLUS } from "./constant";
 import { useStepItem } from "./hooks";
 
@@ -63,7 +70,8 @@ const props = withDefaults(defineProps<McStepProps>(), {
 const emit = defineEmits<McStepEmits>();
 
 // use step item
-const { stepItems, activedStep, isActivedStep, isShowStep } = useStepItem();
+const { stepItems, activedStep, isActivedStep, isShowStep, isSuccessStep } =
+  useStepItem();
 
 // current step index
 const currentStepIndex = computed(() => {

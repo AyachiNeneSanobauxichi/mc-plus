@@ -17,10 +17,12 @@ export interface McStepItem {
 
 export interface McStepProps {
   modelValue?: McStepKey;
+  successSteps?: McStepKey[];
 }
 
 export interface McStepEmits {
   (e: "update:modelValue", value: McStepKey): void;
+  (e: "update:successSteps", value: McStepKey[]): void;
   (e: "change", value: McStepKey): void;
 }
 

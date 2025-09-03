@@ -1,11 +1,10 @@
-// use step item hook
-
 import type { McStepItem, McStepKey } from "../types";
 import { computed, ref, useSlots, watchEffect } from "vue";
 import { includes } from "lodash-es";
 import { useProp } from "@mc-plus/hooks";
 import { generateStepItems } from "../utils";
 
+// use step item hook
 const useStepItem = () => {
   const stepItems = ref<McStepItem[]>([]);
 
@@ -69,11 +68,24 @@ const useStepItem = () => {
     }
   };
 
+  // success steps
+  const successSteps = useProp<McStepKey[]>("successSteps");
+
+  // is success step
+  const isSuccessStep = (stepItem: McStepItem): boolean => {
+    if (!successSteps.value?.length) return false;
+    return (
+      includes(successSteps.value, stepItem.step) ||
+      includes(successSteps.value, stepItem.parentStep?.step)
+    );
+  };
+
   return {
     stepItems,
     activedStep,
     isActivedStep,
     isShowStep,
+    isSuccessStep,
   };
 };
 

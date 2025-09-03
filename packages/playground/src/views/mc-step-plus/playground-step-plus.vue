@@ -6,7 +6,11 @@
       <mc-button @click="handleNext">Next</mc-button>
     </section>
     <section class="mc-step-wrapper">
-      <mc-step-plus v-model="currentStep" ref="stepPlusRef">
+      <mc-step-plus
+        v-model="currentStep"
+        v-model:success-steps="successSteps"
+        ref="stepPlusRef"
+      >
         <mc-step-item-plus
           v-for="step in stepList"
           :key="step.name"
@@ -55,6 +59,8 @@ interface Step {
 }
 
 const stepPlusRef = ref<McStepInstance>();
+
+const successSteps = ref<string[]>(["2", "3"]);
 
 const stepList = shallowRef<Step[]>([
   {

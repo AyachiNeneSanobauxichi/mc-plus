@@ -9,6 +9,33 @@ $text_title_color_active: var(--mc-purple-500);
 $line_color: var(--mc-gray-400);
 $line_color_active: var(--mc-purple-500);
 $text_desc_color: var(--mc-gray-800);
+$color_success: var(--mc-success);
+
+@mixin step-status-style(
+  $bg_color: $color_success,
+  $border_color: $color_success,
+  $text_color: $color_success,
+  $title_color: $color_success,
+  $line_color: $color_success
+) {
+  .mc-step-item-indicator .mc-step-item-icon {
+    .mc-step-item-icon-number,
+    .mc-step-item-icon-point {
+      background-color: $bg_color;
+      border-color: $border_color;
+      color: $text_color;
+    }
+  }
+
+  .mc-step-item-content .mc-step-item-label {
+    color: $title_color;
+  }
+
+  &:not(:last-child)::after {
+    border-color: $line_color;
+    border-image: none;
+  }
+}
 
 .mc-step-plus {
   .mc-step-container {
@@ -23,23 +50,18 @@ $text_desc_color: var(--mc-gray-800);
 
       /* actived */
       &.mc-step-item-actived {
-        .mc-step-item-indicator .mc-step-item-icon {
-          .mc-step-item-icon-number,
-          .mc-step-item-icon-point {
-            background-color: $bg_color_active;
-            border-color: $bg_color_active;
-            color: $text_color_active;
-          }
-        }
+        @include step-status-style(
+          $bg_color_active,
+          $bg_color_active,
+          $text_color_active,
+          $text_title_color_active,
+          $line_color_active
+        );
+      }
 
-        .mc-step-item-content .mc-step-item-label {
-          color: $text_title_color_active;
-        }
-
-        &:not(:last-child)::after {
-          border-color: $line_color_active;
-          border-image: none;
-        }
+      /* success */
+      &.mc-step-item-success {
+        @include step-status-style;
       }
 
       .mc-step-item-indicator {
