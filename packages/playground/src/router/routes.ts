@@ -293,4 +293,12 @@ export const routes: RouteRecordRaw[] = [
       title: "Mc Step Plus",
     },
   },
+  {
+    path: "/vue-draggable-plus",
+    name: "VueDraggablePlus",
+    component: () => import("../views/vue-draggable/playground-draggable.vue"),
+    meta: {
+      title: "Vue Draggable Plus",
+    },
+  },
 ];
