@@ -4,11 +4,17 @@
     <vue-draggable
       class="draggable-area"
       :model-value="modelValue"
-      :group="title"
+      :group="group"
       @update:modelValue="handleChange"
     >
       <div class="draggable-tag" v-for="tag in modelValue" :key="tag">
-        {{ tag }}
+        <span> {{ tag }}</span>
+        <mc-icon
+          v-if="removable"
+          class="draggable-tab-icon"
+          name="Cross"
+          @click="handleRemove(tag)"
+        />
       </div>
     </vue-draggable>
   </div>
@@ -16,13 +22,18 @@
 
 <script setup lang="ts">
 import type { DraggableAreaEmits, DraggableAreaProps } from "./types";
+import { filter } from "lodash-es";
 import { VueDraggable } from "vue-draggable-plus";
+import { McIcon } from "mc-plus";
 
 // options
 defineOptions({ name: "DraggableArea" });
 
 // props
-defineProps<DraggableAreaProps>();
+const props = withDefaults(defineProps<DraggableAreaProps>(), {
+  modelValue: () => [],
+  removable: false,
+});
 
 // emits
 const emit = defineEmits<DraggableAreaEmits>();
@@ -30,6 +41,15 @@ const emit = defineEmits<DraggableAreaEmits>();
 // handle change
 const handleChange = (newValue: any) => {
   emit("update:modelValue", newValue);
+};
+
+// handle remove
+const handleRemove = (tag: string) => {
+  emit(
+    "update:modelValue",
+    filter(props.modelValue, (item: string) => item !== tag)
+  );
+  emit("remove", tag);
 };
 </script>
 
@@ -42,6 +62,11 @@ $text_color: var(--mc-white);
 
 .draggable-area-container {
   .draggable-area {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 8px;
     width: 500px;
     min-height: 200px;
     padding: 16px;
@@ -50,12 +75,17 @@ $text_color: var(--mc-white);
     border-radius: 4px;
 
     .draggable-tag {
+      @include mixin.flex-center;
       width: fit-content;
       padding: 4px 8px;
       box-sizing: border-box;
       background-color: $bg_color;
       color: $text_color;
       cursor: move;
+
+      .draggable-tab-icon {
+        cursor: pointer;
+      }
     }
   }
 }

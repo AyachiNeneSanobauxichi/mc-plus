@@ -7,9 +7,25 @@
       <div>classB: {{ classB }}</div>
     </div>
     <div class="vue-draggable-wrapper">
-      <draggable-area title="Students" v-model="students"></draggable-area>
-      <draggable-area title="Class A" v-model="classA"></draggable-area>
-      <draggable-area title="Class B" v-model="classB"></draggable-area>
+      <draggable-area
+        v-model="students"
+        group="school"
+        title="Students"
+      ></draggable-area>
+      <draggable-area
+        v-model="classA"
+        group="school"
+        title="Class A"
+        removable
+        @remove="handleRemove"
+      ></draggable-area>
+      <draggable-area
+        v-model="classB"
+        group="school"
+        title="Class B"
+        removable
+        @remove="handleRemove"
+      ></draggable-area>
     </div>
   </div>
 </template>
@@ -17,17 +33,51 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import DraggableArea from "./draggable-area/index.vue";
+
+// all students
 const students = ref<string[]>([
-  "Hirasawa Yui",
-  "Nakano Azusa",
-  "Akiyama Mio",
-  "Tainaka Ritsu",
-  "Kotobuku Tsumugi",
+  "John",
+  "Emma",
+  "Michael",
+  "Sophia",
+  "William",
+  "Olivia",
+  "James",
+  "Ava",
+  "Alexander",
+  "Isabella",
+  "Daniel",
+  "Mia",
+  "David",
+  "Charlotte",
+  "Joseph",
+  "Amelia",
+  "Henry",
+  "Harper",
+  "Samuel",
+  "Evelyn",
+  "Benjamin",
+  "Abigail",
+  "Matthew",
+  "Emily",
+  "Andrew",
+  "Elizabeth",
+  "Christopher",
+  "Sofia",
+  "Joshua",
+  "Victoria",
 ]);
 
+// class a students
 const classA = ref<string[]>([]);
 
+// class b studnets
 const classB = ref<string[]>([]);
+
+// handle remove
+const handleRemove = (tag: string) => {
+  students.value.push(tag);
+};
 </script>
 
 <style scoped lang="scss">
