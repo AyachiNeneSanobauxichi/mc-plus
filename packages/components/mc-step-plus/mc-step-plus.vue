@@ -6,7 +6,7 @@
           class="mc-step-item"
           :class="{
             'mc-step-item-child': stepItem.isChild,
-            'mc-step-item-actived': isActivedStep(stepItem.step),
+            'mc-step-item-actived': isActivedStep(stepItem),
           }"
           v-if="isShowStep(stepItem)"
         >
@@ -14,7 +14,7 @@
             <div class="mc-step-item-icon">
               <div
                 class="mc-step-item-icon-number"
-                v-if="!isNil(stepItem.index)"
+                v-if="!stepItem.isChild && !isNil(stepItem.index)"
               >
                 {{ stepItem.index + 1 }}
               </div>
@@ -28,7 +28,7 @@
             </div>
             <div
               class="mc-step-item-content-display"
-              v-if="stepItem.content && isActivedStep(stepItem.step)"
+              v-if="stepItem.content && isActivedStep(stepItem)"
             >
               <component :is="stepItem.content" :key="stepItem.step" />
             </div>
@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<McStepProps>(), {
 const emit = defineEmits<McStepEmits>();
 
 // use step item
-const { stepItems, isActivedStep, isShowStep } = useStepItem();
+const { stepItems, activedStep, isActivedStep, isShowStep } = useStepItem();
 
 // current step index
 const currentStepIndex = computed(() => {
@@ -74,7 +74,18 @@ const currentStepIndex = computed(() => {
 const goPreviousStep = () => {
   const index = currentStepIndex.value;
   if (index > 0) {
-    emitChange(stepItems.value[index - 1].step);
+    let previousIndex = index - 1;
+    let previousStep = stepItems.value[previousIndex];
+    if (
+      activedStep.value?.isChild &&
+      activedStep.value.parentStep === previousStep
+    ) {
+      previousStep = stepItems.value[previousIndex - 1];
+    }
+
+    if (previousStep?.step) {
+      emitChange(previousStep.step);
+    }
   }
 };
 
@@ -82,7 +93,15 @@ const goPreviousStep = () => {
 const goNextStep = () => {
   const index = currentStepIndex.value;
   if (index < stepItems.value.length - 1) {
-    emitChange(stepItems.value[index + 1].step);
+    let nextIndex = index + 1;
+    let nextStep = stepItems.value[nextIndex];
+    if (nextStep.hasChildren) {
+      nextStep = stepItems.value[nextIndex + 1];
+    }
+
+    if (nextStep?.step) {
+      emitChange(nextStep.step);
+    }
   }
 };
 

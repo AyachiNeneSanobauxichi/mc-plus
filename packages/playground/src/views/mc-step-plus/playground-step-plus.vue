@@ -31,9 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, shallowRef, type Component } from "vue";
-import { McButton } from "mc-plus";
+import type { Component } from "vue";
 import type { McStepInstance } from "@mc-plus/components/mc-step-plus/types";
+import { ref, shallowRef } from "vue";
+import { McButton } from "mc-plus";
 import McStepPlus from "../../../../components/mc-step-plus/mc-step-plus.vue";
 import McStepItemPlus from "../../../../components/mc-step-plus/mc-step-item-plus.vue";
 import McStepChildItemPlus from "../../../../components/mc-step-plus/mc-step-child-item-plus.vue";
@@ -56,13 +57,65 @@ interface Step {
 const stepPlusRef = ref<McStepInstance>();
 
 const stepList = shallowRef<Step[]>([
-  { name: "1", label: "Label 1", desc: "desc1", component: Step1 },
+  {
+    name: "1",
+    label: "Label 1",
+    desc: "desc1",
+    component: Step1,
+    children: [
+      {
+        name: "1-1",
+        label: "Child 1",
+        desc: "child desc1",
+        component: ChildSteps1,
+      },
+      {
+        name: "1-2",
+        label: "Child 2",
+        desc: "child desc2",
+        component: ChildSteps2,
+      },
+      {
+        name: "1-3",
+        label: "Child 3",
+        desc: "child desc3",
+        component: ChildSteps2,
+      },
+    ],
+  },
   { name: "2", label: "Label 2", desc: "desc2", component: Step2 },
   {
     name: "3",
     label: "Label 3",
     desc: "desc3",
     component: Step3,
+    children: [
+      {
+        name: "3-1",
+        label: "Child 1",
+        desc: "child desc1",
+        component: ChildSteps1,
+      },
+      {
+        name: "3-2",
+        label: "Child 2",
+        desc: "child desc2",
+        component: ChildSteps2,
+      },
+      {
+        name: "3-3",
+        label: "Child 3",
+        desc: "child desc3",
+        component: ChildSteps2,
+      },
+    ],
+  },
+  { name: "4", label: "Label 4", desc: "desc4", component: Step4 },
+  {
+    name: "5",
+    label: "Label 5",
+    desc: "desc5",
+    component: Step5,
     children: [
       {
         name: "5-1",
@@ -76,13 +129,17 @@ const stepList = shallowRef<Step[]>([
         desc: "child desc2",
         component: ChildSteps2,
       },
+      {
+        name: "5-3",
+        label: "Child 3",
+        desc: "child desc3",
+        component: ChildSteps2,
+      },
     ],
   },
-  { name: "4", label: "Label 4", desc: "desc4", component: Step4 },
-  { name: "5", label: "Label 5", desc: "desc5", component: Step5 },
 ]);
 
-const currentStep = ref<string>("1");
+const currentStep = ref<string>("1-1");
 
 // handle previous
 const handlePrevious = () => {

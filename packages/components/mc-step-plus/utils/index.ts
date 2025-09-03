@@ -36,15 +36,7 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
         stepItems.push(currentStep);
         flattenNodes(_children, currentStep);
       } else if (name === MC_STEP_CHILD_ITEM_PLUS) {
-        if (parentStepItem) {
-          parentStepItem.content = void 0;
-          parentStepItem.hasChildren = true;
-          if (!parentStepItem.children) {
-            parentStepItem.children = [];
-          }
-          parentStepItem.children.push(item.props?.step);
-        }
-        stepItems.push({
+        const currentStep: McStepItem = {
           step: item.props?.step,
           label: item.props?.label,
           desc: item.props?.desc,
@@ -52,7 +44,19 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
           isChild: true,
           content: (item.children as { default?: () => Component })
             ?.default as Slot,
-        });
+        };
+
+        if (parentStepItem) {
+          parentStepItem.content = void 0;
+          parentStepItem.hasChildren = true;
+          if (!parentStepItem.children) parentStepItem.children = [];
+          currentStep.index = parentStepItem.children.length;
+          parentStepItem.children.push(currentStep);
+          if (!parentStepItem.childrenSteps) parentStepItem.childrenSteps = [];
+          parentStepItem.childrenSteps.push(currentStep.step);
+        }
+
+        stepItems.push(currentStep);
       } else if (Array.isArray(item.children)) {
         flattenNodes(item.children, parentStepItem);
       }

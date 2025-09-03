@@ -10,7 +10,8 @@ export interface McStepItem {
   parentStep?: McStepItem;
   isChild?: boolean;
   hasChildren?: boolean;
-  children?: McStepKey[];
+  children?: McStepItem[];
+  childrenSteps?: McStepKey[];
   content?: Slot;
 }
 
