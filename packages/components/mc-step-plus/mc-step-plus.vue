@@ -72,7 +72,7 @@ import { useStepItem } from "./hooks";
 defineOptions({ name: MC_STEP_PLUS });
 
 // props
-withDefaults(defineProps<McStepProps>(), {
+const props = withDefaults(defineProps<McStepProps>(), {
   modelValue: undefined,
   successBehavior: "manual",
   previousBehavior: "last-child",
@@ -107,6 +107,13 @@ const goPreviousStep = () => {
       activedStep.value.parentStep === previousStep
     ) {
       previousStep = stepItems.value[previousIndex - 1];
+    }
+
+    if (props.previousBehavior === "first-child") {
+      if (previousStep?.isChild && !isNil(previousStep.parentStep?.index)) {
+        previousIndex = previousStep.parentStep.index + 1;
+        previousStep = stepItems.value[previousIndex];
+      }
     }
 
     if (previousStep?.step) {

@@ -16,6 +16,7 @@
         v-model="currentStep"
         v-model:success-steps="successSteps"
         success-behavior="auto"
+        previous-behavior="first-child"
         ref="stepPlusRef"
         @click:step="handleClickStep"
       >
