@@ -1,3 +1,4 @@
+import type { Slot } from "vue";
 import type { McStepKey } from "./mc-step";
 
 export interface McStepChildItemPlusProps {
@@ -6,4 +7,11 @@ export interface McStepChildItemPlusProps {
   desc?: string;
   showContent?: boolean;
   success?: boolean;
+}
+
+export interface McStepChildItemPlusSlots {
+  default?: Slot;
+  icon?: Slot;
+  label?: Slot;
+  desc?: Slot;
 }

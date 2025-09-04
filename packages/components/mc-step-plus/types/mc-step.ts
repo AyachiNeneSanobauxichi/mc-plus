@@ -23,6 +23,9 @@ export interface McStepItem {
   showContent?: boolean;
   success?: boolean;
   content?: Slot;
+  iconContent?: Slot;
+  labelContent?: Slot;
+  descContent?: Slot;
 }
 
 export interface McStepProps {

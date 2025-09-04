@@ -30,18 +30,20 @@
           :show-content="step.showContent"
           :success="step.success"
         >
-          <component :is="step.component" />
-          <mc-step-child-item-plus
-            v-for="child in step.children"
-            :key="child.step"
-            :step="child.step"
-            :label="child.label"
-            :desc="child.desc"
-            :show-content="child.showContent"
-            :success="child.success"
-          >
-            <component :is="child.component" />
-          </mc-step-child-item-plus>
+          <template #default>
+            <component :is="step.component" />
+            <mc-step-child-item-plus
+              v-for="child in step.children"
+              :key="child.step"
+              :step="child.step"
+              :label="child.label"
+              :desc="child.desc"
+              :show-content="child.showContent"
+              :success="child.success"
+            >
+              <component :is="child.component" />
+            </mc-step-child-item-plus>
+          </template>
         </mc-step-item-plus>
       </mc-step-plus>
     </section>

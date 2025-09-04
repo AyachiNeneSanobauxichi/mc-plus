@@ -62,14 +62,15 @@ const useStepItem = () => {
     if (successBehavior.value === "auto") {
       // auto success behavior
 
-      // has children step
       if (stepItem.hasChildren) {
+        // has children step
         return (
           !isNil(stepItem.index) &&
           stepItem.index + (stepItem.children?.length ?? 0) <
             (activedStep.value?.index ?? -1)
         );
       } else {
+        // no children step
         return (
           !isNil(stepItem.index) &&
           stepItem.index < (activedStep.value?.index ?? -1)
