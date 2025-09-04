@@ -1,4 +1,4 @@
-import type { McStepItem, McStepKey } from "../types";
+import type { McStepItem, McStepKey, McStepSuccessBehavior } from "../types";
 import { computed, ref, useSlots, watchEffect } from "vue";
 import { includes, isNil } from "lodash-es";
 import { useProp } from "@mc-plus/hooks";
@@ -51,16 +51,41 @@ const useStepItem = () => {
   // success steps
   const successSteps = useProp<McStepKey[]>("successSteps");
 
+  // success behavior
+  const successBehavior = useProp<McStepSuccessBehavior>("successBehavior");
+
   // is success step
   const isSuccessStep = (stepItem: McStepItem): boolean => {
-    if (!successSteps.value?.length) return false;
-    // success steps includes step or parent step success or step success is true or parent step success is true
-    return (
-      includes(successSteps.value, stepItem.step) ||
-      includes(successSteps.value, stepItem.parentStep?.step) ||
-      !!stepItem.success ||
-      !!stepItem.parentStep?.success
-    );
+    // step success or parent step success
+    if (stepItem.success || stepItem.parentStep?.success) return true;
+
+    if (successBehavior.value === "auto") {
+      // auto success behavior
+
+      // has children step
+      if (stepItem.hasChildren) {
+        return (
+          !isNil(stepItem.index) &&
+          stepItem.index + (stepItem.children?.length ?? 0) <
+            (activedStep.value?.index ?? -1)
+        );
+      } else {
+        return (
+          !isNil(stepItem.index) &&
+          stepItem.index < (activedStep.value?.index ?? -1)
+        );
+      }
+    } else {
+      // manual success behavior
+      // success steps is empty
+      if (!successSteps.value?.length) return false;
+
+      // success steps includes step or parent step success
+      return (
+        includes(successSteps.value, stepItem.step) ||
+        includes(successSteps.value, stepItem.parentStep?.step)
+      );
+    }
   };
 
   // show content

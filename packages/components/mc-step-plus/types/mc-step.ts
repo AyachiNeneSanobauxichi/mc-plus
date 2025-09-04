@@ -3,6 +3,10 @@ import type { IconType } from "../../mc-icon";
 
 export type McStepKey = string | number | undefined;
 
+export type McStepSuccessBehavior = "auto" | "manual";
+
+export type McStepPreviousBehavior = "last-child" | "first-child";
+
 export interface McStepItem {
   index?: number;
   parentIndex?: number;
@@ -24,6 +28,8 @@ export interface McStepItem {
 export interface McStepProps {
   modelValue?: McStepKey;
   successSteps?: McStepKey[];
+  successBehavior?: McStepSuccessBehavior;
+  previousBehavior?: McStepPreviousBehavior;
 }
 
 export interface McStepEmits {

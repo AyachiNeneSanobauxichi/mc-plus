@@ -74,6 +74,8 @@ defineOptions({ name: MC_STEP_PLUS });
 // props
 withDefaults(defineProps<McStepProps>(), {
   modelValue: undefined,
+  successBehavior: "manual",
+  previousBehavior: "last-child",
 });
 
 // emits

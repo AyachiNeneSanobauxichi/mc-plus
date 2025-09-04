@@ -15,6 +15,7 @@
       <mc-step-plus
         v-model="currentStep"
         v-model:success-steps="successSteps"
+        success-behavior="auto"
         ref="stepPlusRef"
         @click:step="handleClickStep"
       >
