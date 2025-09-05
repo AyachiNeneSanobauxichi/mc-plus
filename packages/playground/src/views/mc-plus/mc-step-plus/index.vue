@@ -81,13 +81,10 @@ import {
   McInput,
   McTag,
   McIcon,
-  // McStepPlus,
-  // McStepItemPlus,
-  // McStepChildItemPlus,
+  McStepPlus,
+  McStepItemPlus,
+  McStepChildItemPlus,
 } from "mc-plus";
-import McStepPlus from "../../../../../components/mc-step-plus/mc-step-plus.vue";
-import McStepItemPlus from "../../../../../components/mc-step-plus/mc-step-item-plus.vue";
-import McStepChildItemPlus from "../../../../../components/mc-step-plus/mc-step-child-item-plus.vue";
 
 import { useSteps } from "./hooks";
 

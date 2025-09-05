@@ -1,30 +1,38 @@
 <template>
   <div class="playground-input">
-    <div class="tool-bar">
+    <section class="tool-bar">
       <span>FormState: {{ formState }}</span>
       <div class="btn-group">
         <mc-button @click="handleDisabled">Disabled</mc-button>
         <mc-button @click="handleValidate">Validate</mc-button>
         <mc-button @click="handleClearValidate">Clear Validate</mc-button>
       </div>
-    </div>
-    <mc-form :model="formState" :rules="rules" ref="formRef">
-      <mc-form-item label="User Name" prop="userName">
-        <mc-input
-          v-model="formState.userName"
-          :maxlength="10"
-          prefix-icon="Search"
-          :disabled="disabled"
-        />
-      </mc-form-item>
-    </mc-form>
+    </section>
+    <section class="input-container">
+      <mc-form :model="formState" :rules="rules" ref="formRef">
+        <mc-form-item label="User Name" prop="userName">
+          <mc-input
+            v-model="formState.userName"
+            :disabled="disabled"
+            prefix-icon="Search"
+            type="number"
+            :maxlength="10"
+          >
+            <template #suffix>
+              <div class="input-suffix">bps</div>
+            </template>
+          </mc-input>
+        </mc-form-item>
+      </mc-form>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { FormInstance } from "mc-plus";
 import { reactive, ref } from "vue";
-import { McButton, McForm, McFormItem, McInput } from "mc-plus";
+import { McButton, McForm, McFormItem } from "mc-plus";
+import McInput from "../../../../../components/mc-input/mc-input.vue";
 
 const formState = reactive({
   userName: "",
@@ -52,21 +60,19 @@ const handleClearValidate = () => {
 </script>
 
 <style scoped lang="scss">
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
 .playground-input {
-  width: 100%;
-  margin-top: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include mixin.flex-center(column, flex-start, flex-start, 40px);
 
   .tool-bar {
-    margin-bottom: 32px;
+    @include mixin.flex-center(column, flex-start, flex-start, 16px);
     .btn-group {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      @include mixin.flex-center(row, flex-start, flex-start, 8px);
     }
+  }
+
+  .input-container {
   }
 }
 </style>
