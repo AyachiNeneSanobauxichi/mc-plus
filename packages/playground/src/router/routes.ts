@@ -15,167 +15,49 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/table-plus",
-    name: "TablePlus",
-    component: () => import("../views/mc-table-plus/playground-table-plus.vue"),
-    meta: {
-      title: "Mc Table Plus",
-    },
-  },
-  {
-    path: "/textarea",
-    name: "Textarea",
-    component: () => import("../views/mc-textarea/playground-textarea.vue"),
-    meta: {
-      title: "Mc Textarea",
-    },
-  },
-  {
-    path: "/form",
-    name: "Form",
-    component: () => import("../views/mc-form/playground-form.vue"),
-    meta: {
-      title: "Mc Form",
-    },
-  },
-  {
-    path: "/input-group",
-    name: "InputGroup",
-    component: () =>
-      import("../views/mc-input-group/playground-input-group.vue"),
-    meta: {
-      title: "Mc Input Group",
-    },
-  },
-  {
-    path: "/select-plus",
-    name: "SelectPlus",
-    component: () =>
-      import("../views/mc-select-plus/playground-select-plus.vue"),
-    meta: {
-      title: "Mc Select Plus",
-    },
-  },
-  {
     path: "/alert-message",
     name: "AlertMessage",
-    component: () =>
-      import("../views/mc-alert-message/playground-alert-message.vue"),
+    component: () => import("../views/mc-plus/mc-alert-message/index.vue"),
     meta: {
       title: "Mc Alert Message",
     },
   },
   {
-    path: "/toast",
-    name: "Toast",
-    component: () => import("../views/mc-toast/playground-toast.vue"),
-    meta: {
-      title: "Mc Toast",
-    },
-  },
-  {
-    path: "/count",
-    name: "Count",
-    component: () => import("../views/mc-count/playground-count.vue"),
-    meta: {
-      title: "Mc Count",
-    },
-  },
-  {
-    path: "/reset",
-    name: "Reset",
-    component: () => import("../views/mc-reset/playground-reset.vue"),
-    meta: {
-      title: "Mc Reset",
-    },
-  },
-  {
-    path: "/copy",
-    name: "Copy",
-    component: () => import("../views/mc-copy/playground-copy.vue"),
-    meta: {
-      title: "Mc Copy",
-    },
-  },
-  {
-    path: "/lightbox",
-    name: "Lightbox",
-    component: () => import("../views/mc-lightbox/playground-lightbox.vue"),
-    meta: {
-      title: "Mc Lightbox",
-    },
-  },
-  {
-    path: "/upload",
-    name: "Upload",
-    component: () => import("../views/mc-upload/playground-upload.vue"),
-    meta: {
-      title: "Mc Upload",
-    },
-  },
-  {
-    path: "/progress-bar",
-    name: "ProgressBar",
-    component: () =>
-      import("../views/mc-progress-bar/playground-progress-bar.vue"),
-    meta: {
-      title: "Mc Progress Bar",
-    },
-  },
-  {
-    path: "/title",
-    name: "Title",
-    component: () => import("../views/mc-title/playground-title.vue"),
-    meta: {
-      title: "Mc Title",
-    },
-  },
-  {
-    path: "/title-toolbar",
-    name: "TitleToolbar",
-    component: () =>
-      import("../views/mc-title-toolbar/playground-title-toolbar.vue"),
-    meta: {
-      title: "Mc Title Toolbar",
-    },
-  },
-  {
-    path: "/tooltip",
-    name: "Tooltip",
-    component: () => import("../views/mc-tooltip/playgroundTooltip.vue"),
-    meta: {
-      title: "Mc Tooltip",
-    },
-  },
-  {
-    path: "/checkbox",
-    name: "Checkbox",
-    component: () => import("../views/mc-checkbox/playground-checkbox.vue"),
-    meta: {
-      title: "Mc Checkbox",
-    },
-  },
-  {
-    path: "/otp",
-    name: "Otp",
-    component: () => import("../views/mc-otp/playground-otp.vue"),
-    meta: {
-      title: "Mc OTP",
-    },
-  },
-  {
     path: "/button",
     name: "Button",
-    component: () => import("../views/mc-button/playground-button.vue"),
+    component: () => import("../views/mc-plus/mc-button/index.vue"),
     meta: {
       title: "Mc Button",
     },
   },
   {
+    path: "/checkbox",
+    name: "Checkbox",
+    component: () => import("../views/mc-plus/mc-checkbox/index.vue"),
+    meta: {
+      title: "Mc Checkbox",
+    },
+  },
+  {
+    path: "/copy",
+    name: "Copy",
+    component: () => import("../views/mc-plus/mc-copy/index.vue"),
+    meta: {
+      title: "Mc Copy",
+    },
+  },
+  {
+    path: "/count",
+    name: "Count",
+    component: () => import("../views/mc-plus/mc-count/index.vue"),
+    meta: {
+      title: "Mc Count",
+    },
+  },
+  {
     path: "/currency-icon",
     name: "CurrencyIcon",
-    component: () =>
-      import("../views/mc-currency-icon/playground-currency-icon.vue"),
+    component: () => import("../views/mc-plus/mc-currency-icon/index.vue"),
     meta: {
       title: "Mc Currency Icon",
     },
@@ -183,15 +65,23 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/drawer",
     name: "Drawer",
-    component: () => import("../views/mc-drawer/playground-drawer.vue"),
+    component: () => import("../views/mc-plus/mc-drawer/index.vue"),
     meta: {
       title: "Mc Drawer",
     },
   },
   {
+    path: "/form",
+    name: "Form",
+    component: () => import("../views/mc-plus/mc-form/index.vue"),
+    meta: {
+      title: "Mc Form",
+    },
+  },
+  {
     path: "/icon",
     name: "Icon",
-    component: () => import("../views/mc-icon/playground-icon.vue"),
+    component: () => import("../views/mc-plus/mc-icon/index.vue"),
     meta: {
       title: "Mc Icon",
     },
@@ -199,32 +89,79 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/input",
     name: "Input",
-    component: () => import("../views/mc-input/playground-input.vue"),
+    component: () => import("../views/mc-plus/mc-input/index.vue"),
     meta: {
       title: "Mc Input",
     },
   },
   {
+    path: "/input-group",
+    name: "InputGroup",
+    component: () => import("../views/mc-plus/mc-input-group/index.vue"),
+    meta: {
+      title: "Mc Input Group",
+    },
+  },
+  {
+    path: "/lightbox",
+    name: "Lightbox",
+    component: () => import("../views/mc-plus/mc-lightbox/index.vue"),
+    meta: {
+      title: "Mc Lightbox",
+    },
+  },
+  {
+    path: "/loading",
+    name: "Loading",
+    component: () => import("../views/mc-plus/mc-loading/index.vue"),
+    meta: {
+      title: "Mc Loading",
+    },
+  },
+  {
+    path: "/otp",
+    name: "Otp",
+    component: () => import("../views/mc-plus/mc-otp/index.vue"),
+    meta: {
+      title: "Mc OTP",
+    },
+  },
+  {
+    path: "/progress-bar",
+    name: "ProgressBar",
+    component: () => import("../views/mc-plus/mc-progress-bar/index.vue"),
+    meta: {
+      title: "Mc Progress Bar",
+    },
+  },
+  {
+    path: "/reset",
+    name: "Reset",
+    component: () => import("../views/mc-plus/mc-reset/index.vue"),
+    meta: {
+      title: "Mc Reset",
+    },
+  },
+  {
     path: "/secondary-menu",
     name: "SecondaryMenu",
-    component: () =>
-      import("../views/mc-secondary-menu/playground-secondary-menu.vue"),
+    component: () => import("../views/mc-plus/mc-secondary-menu/index.vue"),
     meta: {
       title: "Mc Secondary Menu",
     },
   },
   {
-    path: "/select",
-    name: "Select",
-    component: () => import("../views/mc-select/playground-select.vue"),
+    path: "/select-plus",
+    name: "SelectPlus",
+    component: () => import("../views/mc-plus/mc-select-plus/index.vue"),
     meta: {
-      title: "Mc Select",
+      title: "Mc Select Plus",
     },
   },
   {
     path: "/status",
     name: "Status",
-    component: () => import("../views/mc-status/playground-status.vue"),
+    component: () => import("../views/mc-plus/mc-status/index.vue"),
     meta: {
       title: "Mc Status",
     },
@@ -232,15 +169,23 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/step",
     name: "Step",
-    component: () => import("../views/mc-step/playground-step.vue"),
+    component: () => import("../views/mc-plus/mc-step/index.vue"),
     meta: {
       title: "Mc Step",
     },
   },
   {
+    path: "/step-plus",
+    name: "StepPlus",
+    component: () => import("../views/mc-plus/mc-step-plus/index.vue"),
+    meta: {
+      title: "Mc Step Plus",
+    },
+  },
+  {
     path: "/switch",
     name: "Switch",
-    component: () => import("../views/mc-switch/playground-switch.vue"),
+    component: () => import("../views/mc-plus/mc-switch/index.vue"),
     meta: {
       title: "Mc Switch",
     },
@@ -248,7 +193,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/tab",
     name: "Tab",
-    component: () => import("../views/mc-tab/playground-tab.vue"),
+    component: () => import("../views/mc-plus/mc-tab/index.vue"),
     meta: {
       title: "Mc Tab",
     },
@@ -256,41 +201,81 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/table",
     name: "Table",
-    component: () => import("../views/mc-table/playground-table.vue"),
+    component: () => import("../views/mc-plus/mc-table/index.vue"),
     meta: {
       title: "Mc Table",
     },
   },
   {
+    path: "/table-plus",
+    name: "TablePlus",
+    component: () => import("../views/mc-plus/mc-table-plus/index.vue"),
+    meta: {
+      title: "Mc Table Plus",
+    },
+  },
+  {
     path: "/tag",
     name: "Tag",
-    component: () => import("../views/mc-tag/playground-tag.vue"),
+    component: () => import("../views/mc-plus/mc-tag/index.vue"),
     meta: {
       title: "Mc Tag",
     },
   },
   {
-    path: "/loading",
-    name: "Loading",
-    component: () => import("../views/mc-loading/playground-loading.vue"),
+    path: "/textarea",
+    name: "Textarea",
+    component: () => import("../views/mc-plus/mc-textarea/index.vue"),
     meta: {
-      title: "Mc Loading",
+      title: "Mc Textarea",
     },
   },
   {
-    path: "/step-plus",
-    name: "StepPlus",
-    component: () => import("../views/mc-step-plus/playground-step-plus.vue"),
+    path: "/title",
+    name: "Title",
+    component: () => import("../views/mc-plus/mc-title/index.vue"),
     meta: {
-      title: "Mc Step Plus",
+      title: "Mc Title",
     },
   },
   {
-    path: "/vue-draggable-plus",
-    name: "VueDraggablePlus",
-    component: () => import("../views/vue-draggable/playground-draggable.vue"),
+    path: "/title-toolbar",
+    name: "TitleToolbar",
+    component: () => import("../views/mc-plus/mc-title-toolbar/index.vue"),
     meta: {
-      title: "Vue Draggable Plus",
+      title: "Mc Title Toolbar",
+    },
+  },
+  {
+    path: "/toast",
+    name: "Toast",
+    component: () => import("../views/mc-plus/mc-toast/index.vue"),
+    meta: {
+      title: "Mc Toast",
+    },
+  },
+  {
+    path: "/tooltip",
+    name: "Tooltip",
+    component: () => import("../views/mc-plus/mc-tooltip/index.vue"),
+    meta: {
+      title: "Mc Tooltip",
+    },
+  },
+  {
+    path: "/upload",
+    name: "Upload",
+    component: () => import("../views/mc-plus/mc-upload/index.vue"),
+    meta: {
+      title: "Mc Upload",
+    },
+  },
+  {
+    path: "/vue-draggable",
+    name: "VueDraggable",
+    component: () => import("../views/vue-draggable/index.vue"),
+    meta: {
+      title: "Vue Draggable",
     },
   },
 ];

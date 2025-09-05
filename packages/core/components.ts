@@ -54,6 +54,7 @@ import {
   McStepPlus,
   McStepItemPlus,
   McStepChildItemPlus,
+  McSecondaryMenu,
 } from "@mc-plus/components";
 
 export default [
@@ -111,4 +112,5 @@ export default [
   McStepPlus,
   McStepItemPlus,
   McStepChildItemPlus,
+  McSecondaryMenu,
 ] as Plugin[];
