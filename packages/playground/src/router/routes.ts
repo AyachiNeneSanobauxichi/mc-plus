@@ -238,14 +238,6 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/step-v2",
-    name: "StepV2",
-    component: () => import("../views/mc-step-v2/playground-step-v2.vue"),
-    meta: {
-      title: "Mc Step V2",
-    },
-  },
-  {
     path: "/switch",
     name: "Switch",
     component: () => import("../views/mc-switch/playground-switch.vue"),

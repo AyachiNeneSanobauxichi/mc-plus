@@ -51,6 +51,9 @@ import {
   McUploadDropzone,
   McTextarea,
   McLoading,
+  McStepPlus,
+  McStepItemPlus,
+  McStepChildItemPlus,
 } from "@mc-plus/components";
 
 export default [
@@ -105,4 +108,7 @@ export default [
   McUploadDropzone,
   McTextarea,
   McLoading,
+  McStepPlus,
+  McStepItemPlus,
+  McStepChildItemPlus,
 ] as Plugin[];

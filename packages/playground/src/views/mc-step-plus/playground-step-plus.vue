@@ -74,15 +74,17 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  McStepInstance,
-  McStepKey,
-} from "@mc-plus/components/mc-step-plus/types";
+import type { McStepInstance, McStepKey } from "mc-plus";
 import { ref } from "vue";
-import { McButton, McInput, McTag, McIcon } from "mc-plus";
-import McStepPlus from "../../../../components/mc-step-plus/mc-step-plus.vue";
-import McStepItemPlus from "../../../../components/mc-step-plus/mc-step-item-plus.vue";
-import McStepChildItemPlus from "../../../../components/mc-step-plus/mc-step-child-item-plus.vue";
+import {
+  McButton,
+  McInput,
+  McTag,
+  McIcon,
+  McStepPlus,
+  McStepItemPlus,
+  McStepChildItemPlus,
+} from "mc-plus";
 import { useSteps } from "./hooks";
 
 const stepPlusRef = ref<McStepInstance>();

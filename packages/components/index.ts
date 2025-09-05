@@ -38,3 +38,4 @@ export * from "./mc-upload";
 export * from "./mc-textarea";
 export * from "./mc-loading";
 export * from "./mc-title-toolbar";
+export * from "./mc-step-plus";
