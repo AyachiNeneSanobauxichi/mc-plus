@@ -24,7 +24,13 @@
                   <mc-success-icon />
                 </template>
                 <template v-else>
-                  <template v-if="stepItem.icon">
+                  <template v-if="stepItem.iconContent">
+                    <component
+                      :is="stepItem.iconContent"
+                      :key="stepItem.step"
+                    />
+                  </template>
+                  <template v-else-if="stepItem.icon">
                     <mc-icon :name="stepItem.icon" />
                   </template>
                   <template v-else>
@@ -37,8 +43,24 @@
           </div>
           <div class="mc-step-item-content">
             <div class="mc-step-item-content-title">
-              <div class="mc-step-item-label">{{ stepItem.label }}</div>
-              <div class="mc-step-item-desc">{{ stepItem.desc }}</div>
+              <div class="mc-step-item-label">
+                <template v-if="stepItem.labelContent">
+                  <component :is="stepItem.labelContent" :key="stepItem.step" />
+                </template>
+                <template v-else>
+                  <div class="mc-step-item-label-title">
+                    {{ stepItem.label }}
+                  </div>
+                </template>
+              </div>
+              <div class="mc-step-item-desc">
+                <template v-if="stepItem.descContent">
+                  <component :is="stepItem.descContent" :key="stepItem.step" />
+                </template>
+                <template v-else>
+                  <div class="mc-step-item-desc-title">{{ stepItem.desc }}</div>
+                </template>
+              </div>
             </div>
             <div
               class="mc-step-item-content-display"

@@ -1,5 +1,9 @@
-import type { Component, Slot, VNode, VNodeNormalizedChildren } from "vue";
-import type { McStepItem } from "../types";
+import type { Component, VNode, VNodeNormalizedChildren } from "vue";
+import type {
+  McStepChildItemPlusSlots,
+  McStepItem,
+  McStepItemPlusSlots,
+} from "../types";
 import { isArray, isFunction, isString } from "lodash-es";
 import { MC_STEP_CHILD_ITEM_PLUS, MC_STEP_ITEM_PLUS } from "../constant";
 
@@ -25,6 +29,8 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
             ? item.children?.default()
             : item.children;
 
+        const _slots = item.children as McStepItemPlusSlots;
+
         const currentStep: McStepItem = {
           parentIndex: parentIndex++,
           index: index++,
@@ -34,13 +40,16 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
           icon: item.props?.icon,
           showContent: item.props?.showContent || item.props?.["show-content"],
           success: item.props?.success,
-          content: (item.children as { default?: () => Component })
-            ?.default as Slot,
+          content: _slots?.default,
+          labelContent: _slots?.label,
+          descContent: _slots?.desc,
         };
 
         stepItems.push(currentStep);
         flattenNodes(_children, currentStep);
       } else if (name === MC_STEP_CHILD_ITEM_PLUS) {
+        const _slots = item.children as McStepChildItemPlusSlots;
+
         const currentStep: McStepItem = {
           index: index++,
           step: item.props?.step,
@@ -50,8 +59,9 @@ export const generateStepItems = (children?: VNodeNormalizedChildren) => {
           isChild: true,
           showContent: item.props?.showContent || item.props?.["show-content"],
           success: item.props?.success,
-          content: (item.children as { default?: () => Component })
-            ?.default as Slot,
+          content: _slots?.default,
+          labelContent: _slots?.label,
+          descContent: _slots?.desc,
         };
 
         if (parentStepItem) {

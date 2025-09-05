@@ -44,6 +44,21 @@
               <component :is="child.component" />
             </mc-step-child-item-plus>
           </template>
+          <template #label v-if="step.step === STEP_KEY.BASIC_INFORMATION">
+            <div class="basic-information-label">
+              <span class="basic-information-label-title">
+                BASIC INFORMATION
+              </span>
+              <div class="basic-information-label-tag">
+                <mc-tag emphasis="bold" content="Individual"></mc-tag>
+                <mc-icon
+                  name="Edit"
+                  class="basic-information-label-edit"
+                  :size="20"
+                />
+              </div>
+            </div>
+          </template>
         </mc-step-item-plus>
       </mc-step-plus>
     </section>
@@ -56,7 +71,7 @@ import type {
   McStepKey,
 } from "@mc-plus/components/mc-step-plus/types";
 import { ref } from "vue";
-import { McButton, McInput } from "mc-plus";
+import { McButton, McInput, McTag, McIcon } from "mc-plus";
 import McStepPlus from "../../../../components/mc-step-plus/mc-step-plus.vue";
 import McStepItemPlus from "../../../../components/mc-step-plus/mc-step-item-plus.vue";
 import McStepChildItemPlus from "../../../../components/mc-step-plus/mc-step-child-item-plus.vue";
@@ -64,7 +79,7 @@ import { useSteps } from "./hooks";
 
 const stepPlusRef = ref<McStepInstance>();
 
-const { stepList, successSteps, currentStep } = useSteps();
+const { stepList, successSteps, currentStep, STEP_KEY } = useSteps();
 
 // handle previous
 const handlePrevious = () => {
@@ -94,6 +109,10 @@ const handleGoStep = () => {
 
 <style scoped lang="scss">
 @use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_title_color: var(--mc-purple-500);
+$text_edit_color: var(--mc-teal-500);
+
 .playground-step-plus {
   .tool-bar {
     @include mixin.flex-center(
@@ -110,6 +129,30 @@ const handleGoStep = () => {
 
   .mc-step-wrapper {
     margin-top: 120px;
+
+    .basic-information-label {
+      @include mixin.flex-center($justify: flex-start, $gap: 16px);
+      transform: translateY(-8px);
+
+      .basic-information-label-title {
+        @include mixin.font-style(
+          $weight: 600,
+          $size: 28px,
+          $line-height: 40px,
+          $color: $text_title_color
+        );
+      }
+
+      .basic-information-label-tag {
+        @include mixin.flex-center($justify: flex-start, $gap: 8px);
+
+        .basic-information-label-edit {
+          cursor: pointer;
+          color: $text_edit_color;
+          font-weight: 400;
+        }
+      }
+    }
   }
 }
 </style>

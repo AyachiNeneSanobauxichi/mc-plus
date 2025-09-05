@@ -100,13 +100,13 @@ $color_success: var(--mc-success);
       }
 
       .mc-step-item-content {
-        @include mixin.flex-center(column, flex-start, flex-start, 16px);
+        @include mixin.flex-center(column, flex-start, stretch, 16px);
         flex: 1;
 
         .mc-step-item-label {
+          @include mixin.font-style($weight: 600, $color: $text_title_color);
           padding-top: 8px;
           box-sizing: border-box;
-          @include mixin.font-style($weight: 600, $color: $text_title_color);
         }
 
         .mc-step-item-desc {

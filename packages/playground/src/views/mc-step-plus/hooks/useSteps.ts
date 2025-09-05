@@ -117,6 +117,7 @@ const useSteps = () => {
     stepList,
     successSteps,
     currentStep,
+    STEP_KEY,
   };
 };
 
