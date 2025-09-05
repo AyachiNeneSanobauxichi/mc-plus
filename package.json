@@ -7,7 +7,6 @@
     "build": "cross-env NODE_ENV=production pnpm --filter mc-plus build",
     "build:dev": "cross-env NODE_ENV=development pnpm --filter mc-plus build:watch",
     "dev": "pnpm --filter @mc-plus/playground dev",
-    "story": "pnpm --filter @mc-plus/playground storybook",
     "test": "cross-env NODE_ENV=test pnpm --filter @mc-plus/components test",
     "release": "cross-env NODE_ENV=production pnpm --filter mc-plus release",
     "docs:dev": "pnpm --filter @mc-plus/docs dev",
