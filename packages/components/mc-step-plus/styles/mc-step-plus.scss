@@ -69,11 +69,14 @@ $color_success: var(--mc-success);
         width: 48px;
         height: 100%;
         cursor: pointer;
+        position: relative;
 
         .mc-step-item-icon {
           @include mixin.flex-center($align: flex-start);
+          position: absolute;
           width: 40px;
           height: 40px;
+          z-index: 999;
 
           .mc-step-item-icon-number {
             @include mixin.flex-center;
@@ -158,7 +161,7 @@ $color_success: var(--mc-success);
           position: absolute;
           box-sizing: border-box;
           border: 1.5px solid transparent;
-          z-index: -1;
+          z-index: 99;
           border-image: repeating-linear-gradient(
               to bottom,
               $line_color 0,
