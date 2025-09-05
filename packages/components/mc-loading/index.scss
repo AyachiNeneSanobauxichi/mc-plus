@@ -1,0 +1,104 @@
+@use "@mc-plus/theme/mixins.scss" as mixins;
+
+$loading_color: var(--mc-purple-500);
+$text_color: var(--mc-gray-500);
+
+@keyframes mc-loading-pulse {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mc-loading-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.mc-loading {
+  @include mixins.flex-center($direction: column, $gap: 16px);
+
+  /* size */
+  &.mc-loading-small {
+    gap: 8px;
+
+    .mc-loading-pulse-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    .mc-loading-text {
+      font-size: 12px;
+    }
+  }
+  &.mc-loading-medium {
+    .mc-loading-pulse-dot {
+      width: 16px;
+      height: 16px;
+    }
+
+    .mc-loading-text {
+      font-size: 14px;
+    }
+  }
+  &.mc-loading-large {
+    .mc-loading-pulse-dot {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  /* text */
+  .mc-loading-text {
+    @include mixins.reset-p-style;
+    @include mixins.font-style($color: $text_color);
+  }
+
+  /*  active */
+  &.mc-loading-active {
+    .mc-loading-pulse .mc-loading-pulse-dot {
+      animation: mc-loading-pulse 1.6s ease-in-out infinite both;
+      &:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+      &:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+      &:nth-child(3) {
+        animation-delay: 0s;
+      }
+      &:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+    }
+
+    .mc-loading-spin {
+      animation: mc-loading-spin 2s ease-in-out infinite;
+    }
+  }
+
+  /* pulse */
+  .mc-loading-pulse {
+    @include mixins.flex-center($gap: 8px);
+    .mc-loading-pulse-dot {
+      display: block;
+      border-radius: 50%;
+      background-color: $loading_color;
+    }
+  }
+
+  /* spin */
+  .mc-loading-spin {
+    color: $loading_color;
+  }
+}

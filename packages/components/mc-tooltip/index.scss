@@ -1,0 +1,94 @@
+$bg_color_light: var(--mc-white);
+$bg_color_dark: var(--mc-gray-600);
+$text_color_light: var(--mc-gray-800);
+$text_color_dark: var(--mc-white);
+$icon_color: var(--mc-gray-400);
+$shadow_color: rgba(4, 20, 124, 0.15);
+
+.mc-tooltip {
+  .mc-tooltip-icon {
+    cursor: pointer;
+    color: $icon_color;
+  }
+
+  :deep(.mc-popper-popper) {
+    & > .mc-popper-arrow {
+      &::before {
+        content: "";
+        width: 16px;
+        height: 12px;
+        position: absolute;
+        z-index: 1;
+      }
+      &::after {
+        box-shadow: 0 0 2px 1px $shadow_color;
+      }
+    }
+
+    // top
+    &[data-popper-placement^="top"] > .mc-popper-arrow::before {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    // bottom
+    &[data-popper-placement^="bottom"] > .mc-popper-arrow::before {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    // left
+    &[data-popper-placement^="left"] > .mc-popper-arrow::before {
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    // right
+    &[data-popper-placement^="right"] > .mc-popper-arrow::before {
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .mc-tooltip-content {
+    width: fit-content;
+    height: fit-content;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px 0px $shadow_color;
+    font-size: 16px;
+    font-weight: 400;
+
+    // light theme
+    &.mc-tooltip-content-light {
+      background-color: $bg_color_light;
+      color: $text_color_light;
+
+      & + :deep(.mc-popper-arrow) {
+        &::before {
+          background-color: $bg_color_light;
+        }
+        &::after {
+          background-color: $bg_color_light;
+        }
+      }
+    }
+
+    // dark theme
+    &.mc-tooltip-content-dark {
+      background-color: $bg_color_dark;
+      color: $text_color_dark;
+
+      & + :deep(.mc-popper-arrow) {
+        &::after {
+          background-color: $bg_color_dark;
+        }
+      }
+    }
+  }
+}

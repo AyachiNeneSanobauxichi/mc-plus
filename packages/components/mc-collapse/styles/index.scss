@@ -1,0 +1,21 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$background_color: var(--mc-white);
+$line_color: var(--mc-gray-200);
+$radius: var(--mc-radius);
+$gap: 24px;
+$border_size: 1px;
+
+.mc-collapse {
+  padding: 0 $gap;
+  background-color: $background_color;
+  border-radius: $radius;
+  @include mixin.shadow();
+  :deep(.mc-collapse-item) {
+    &:last-of-type {
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

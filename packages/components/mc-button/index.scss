@@ -1,16 +1,12 @@
 /* variables */
 $primary_color: var(--mc-teal-500);
 $primary_color_hover: var(--mc-teal-900);
-$disabled_color: var(--mc-gray-300);
+$disabled_color: var(--mc-gray-400);
 $text_white: var(--mc-white);
-$text_disabled: var(--mc-gray-400);
 $gap: var(--mc-gap);
 $radius: var(--mc-radius);
 $transition_duration: var(--mc-transition-duration);
 $transform_distance: var(--mc-transform-distance);
-$large_height: 64px;
-$medium_height: 40px;
-$small_height: 34px;
 
 /* loading animation */
 @keyframes loading {
@@ -34,39 +30,40 @@ $small_height: 34px;
   line-height: inherit;
   appearance: none;
   -webkit-appearance: none;
-  cursor: pointer;
   outline: none;
   box-sizing: border-box;
+  cursor: pointer;
 
   /* common */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: $gap;
-  font-weight: 700;
   border-radius: $radius;
   transition: transform $transition_duration;
   &:active {
     transform: translateY($transform_distance);
   }
 
+  .mc-button-text {
+    white-space: nowrap;
+  }
+
   /* medium */
   &.mc-button--medium {
     width: fit-content;
-    height: $medium_height;
-    padding: 15px 16px;
+    height: 40px;
+    padding: 0 16px;
+    font-weight: 600;
+    font-size: 16px;
   }
   /* small */
   &.mc-button--small {
     width: fit-content;
-    height: $small_height;
-    padding: 12px 16px;
-  }
-  /* large */
-  &.mc-button--large {
-    width: fit-content;
-    height: $large_height;
-    padding: 27px 16px;
+    height: 32px;
+    padding: 0 16px;
+    font-weight: 600;
+    font-size: 14px;
   }
 
   /* primary */
@@ -78,7 +75,7 @@ $small_height: 34px;
     }
     &.is-disabled:hover {
       background-color: $disabled_color;
-      color: $text_disabled;
+      color: $text_white;
       border: none;
     }
   }
@@ -88,7 +85,8 @@ $small_height: 34px;
     border: 1px solid $primary_color;
     color: $primary_color;
     &:hover {
-      border: 1px solid $primary_color_hover;
+      padding: 0 15px;
+      border: 2px solid $primary_color_hover;
       color: $primary_color_hover;
     }
     &.is-disabled {
@@ -100,6 +98,7 @@ $small_height: 34px;
 
   /* link */
   &.mc-button--link {
+    padding: 0;
     color: $primary_color;
     &:hover {
       color: $primary_color_hover;
@@ -126,7 +125,7 @@ $small_height: 34px;
   /* disabled */
   &.is-disabled {
     background-color: $disabled_color;
-    color: $text_disabled;
+    color: $text_white;
     border: none;
     cursor: not-allowed;
     &:hover {

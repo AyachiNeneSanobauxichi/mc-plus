@@ -1,0 +1,174 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$bg_color: var(--mc-gray-200);
+$bg_color_active: var(--mc-purple-500);
+$border_color: var(--mc-white);
+$text_color_active: var(--mc-white);
+$text_title_color: var(--mc-gray-500);
+$text_title_color_active: var(--mc-purple-500);
+$line_color: var(--mc-gray-400);
+$line_color_active: var(--mc-purple-500);
+$text_desc_color: var(--mc-gray-800);
+$color_success: var(--mc-success);
+
+@mixin step-status-style(
+  $bg_color: $color_success,
+  $border_color: $color_success,
+  $text_color: $color_success,
+  $title_color: $color_success,
+  $line_color: $color_success
+) {
+  .mc-step-item-indicator .mc-step-item-icon {
+    .mc-step-item-icon-number,
+    .mc-step-item-icon-point {
+      background-color: $bg_color;
+      border-color: $border_color;
+      color: $text_color;
+    }
+  }
+
+  .mc-step-item-content .mc-step-item-label {
+    color: $title_color;
+  }
+
+  &:not(:last-child)::after {
+    border-color: $line_color;
+    border-image: none;
+  }
+}
+
+.mc-step-plus {
+  .mc-step-container {
+    .mc-step-item {
+      @include mixin.flex-center(
+        $justify: flex-start,
+        $align: flex-start,
+        $gap: 8px
+      );
+      min-height: 76px;
+      position: relative;
+
+      /* actived */
+      &.mc-step-item-actived {
+        @include step-status-style(
+          $bg_color_active,
+          $bg_color_active,
+          $text_color_active,
+          $text_title_color_active,
+          $line_color_active
+        );
+      }
+
+      /* success */
+      &.mc-step-item-success {
+        @include step-status-style;
+      }
+
+      .mc-step-item-indicator {
+        @include mixin.flex-center($align: flex-start);
+        width: 48px;
+        height: 100%;
+        cursor: pointer;
+
+        .mc-step-item-icon {
+          @include mixin.flex-center($align: flex-start);
+          width: 40px;
+          height: 40px;
+
+          .mc-step-item-icon-number {
+            @include mixin.flex-center;
+            @include mixin.font-style($weight: 600);
+            @include mixin.shadow;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            background-color: $bg_color;
+            border-radius: 50%;
+            border: 2px solid $border_color;
+          }
+
+          .mc-step-item-icon-point {
+            @include mixin.shadow;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: $bg_color;
+            box-sizing: border-box;
+            border: 2px solid $border_color;
+          }
+        }
+      }
+
+      .mc-step-item-content {
+        @include mixin.flex-center(column, flex-start, stretch, 16px);
+        flex: 1;
+
+        .mc-step-item-label {
+          @include mixin.font-style($weight: 600, $color: $text_title_color);
+          padding-top: 8px;
+          box-sizing: border-box;
+        }
+
+        .mc-step-item-desc {
+          @include mixin.font-style(
+            $size: 14px,
+            $line-height: 20px,
+            $color: $text_desc_color
+          );
+        }
+
+        .mc-step-item-content-display {
+          width: 100%;
+        }
+
+        // .mc-step-plus-component-enter-active,
+        // .mc-step-plus-component-leave-active {
+        //   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        //     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        //   transform-origin: top center;
+        // }
+        // .mc-step-plus-component-enter-from,
+        // .mc-step-plus-component-leave-to {
+        //   opacity: 0;
+        //   transform: scaleY(1);
+        // }
+        // .mc-step-plus-component-enter-to,
+        // .mc-step-plus-component-leave-from {
+        //   opacity: 1;
+        //   transform: scaleY(1);
+        // }
+      }
+
+      &.mc-step-item-child {
+        .mc-step-item-label {
+          @include mixin.font-style(
+            $line-height: 16px,
+            $color: $text_title_color
+          );
+          padding-top: 0;
+        }
+      }
+
+      &:not(:last-child) {
+        &::after {
+          content: "";
+          height: 99%;
+          top: 0;
+          left: 23px;
+          position: absolute;
+          box-sizing: border-box;
+          border: 1.5px solid transparent;
+          z-index: -1;
+          border-image: repeating-linear-gradient(
+              to bottom,
+              $line_color 0,
+              $line_color 4px,
+              transparent 4px,
+              transparent 8px
+            )
+            1;
+        }
+      }
+    }
+  }
+}

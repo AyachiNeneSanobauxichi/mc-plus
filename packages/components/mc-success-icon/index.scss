@@ -1,0 +1,30 @@
+$bg_color_white: var(--mc-white);
+$bg_color_success: var(--mc-success);
+
+@keyframes tick {
+  from {
+    stroke-dashoffset: 350;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.success-icon {
+  width: 100%;
+  height: 100%;
+  .circle {
+    stroke-dasharray: 1194;
+    stroke: $bg_color_success;
+    stroke-dashoffset: 2388;
+    fill: $bg_color_success;
+  }
+
+  .tick {
+    stroke-dasharray: 350;
+    stroke-dashoffset: 350;
+    stroke: $bg_color_white;
+    animation: tick 0.8s ease-in-out forwards;
+  }
+}

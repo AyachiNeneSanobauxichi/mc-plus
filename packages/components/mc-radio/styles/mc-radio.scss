@@ -1,0 +1,125 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$border-color: var(--mc-gray-400);
+$border-color-hover: var(--mc-gray-500);
+$border-color-error: var(--mc-error);
+$bg-color: var(--mc-teal-500);
+$bg-color-hover: var(--mc-teal-900);
+$bg-color-disabled: var(--mc-gray-300);
+$bg-color-error: var(--mc-error);
+$text-color: var(--mc-gray-800);
+$text-color-disabled: var(--mc-gray-400);
+$text-color-remark: var(--mc-gray-500);
+$core-color: var(--mc-white);
+
+.mc-radio {
+  min-height: 24px;
+
+  &.mc-radio-has-remark {
+    min-height: 40px;
+  }
+
+  .mc-radio-label {
+    width: fit-content;
+    height: 24px;
+    @include mixin.flex-center;
+    cursor: pointer;
+
+    .mc-radio-wrapper {
+      @include mixin.flex-center(row, flex-start, center, 8px);
+    }
+
+    .mc-radio-input {
+      width: 0;
+      height: 0;
+      margin: 0;
+      padding: 0;
+      width: 0;
+      height: 0;
+      border: none;
+      outline: none;
+    }
+
+    .mc-radio-circle {
+      width: 24px;
+      height: 24px;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+
+    &:not(.mc-radio-checked) {
+      .mc-radio-circle {
+        border: 1px solid $border-color;
+      }
+
+      &:hover {
+        .mc-radio-circle {
+          border: 2px solid $border-color-hover;
+        }
+      }
+    }
+
+    &.mc-radio-checked {
+      .mc-radio-circle {
+        border: none;
+        background-color: $bg-color;
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: $core-color;
+        }
+      }
+    }
+
+    .mc-radio-content {
+      color: $text-color;
+      font-size: 16px;
+    }
+
+    &.mc-form-validate-error {
+      .mc-radio-circle {
+        border-color: $bg-color-error !important;
+      }
+
+      &.mc-radio-checked .mc-radio-circle {
+        background-color: $bg-color-error;
+      }
+    }
+
+    &.mc-radio-disabled {
+      cursor: not-allowed;
+      .mc-radio-circle {
+        border: none;
+        background-color: $bg-color-disabled;
+      }
+      &:hover {
+        .mc-radio-circle {
+          border: none;
+        }
+      }
+    }
+
+    &.mc-radio-focused:not(.mc-radio-disabled):not(.mc-form-validate-error) {
+      .mc-radio-circle {
+        border-width: 2px;
+      }
+    }
+  }
+
+  .mc-radio-remark {
+    box-sizing: border-box;
+    padding-left: 32px;
+    color: $text-color-remark;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}

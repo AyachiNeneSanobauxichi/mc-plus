@@ -8,7 +8,7 @@
   --mc-purple-100: #a695d7;
   --mc-purple-50: #e6ddff;
   /* teal */
-  --mc-teal-900: #399e9a; /* hover state */
+  --mc-teal-900: #379e9a; /* hover state */
   --mc-teal-500: #3fb9b5; /* core default */
   --mc-teal-300: #45d4cf;
   --mc-teal-200: #aae1df;
@@ -25,27 +25,42 @@
   --mc-gray-300: #d4d4d4; /* disabled component */
   --mc-gray-200: #e7e7e7;
   --mc-gray-100: #f7f7f7;
-  --mc-camp-background: #f9f7ff;
   /* white */
   --mc-white: #ffffff;
+  /* background */
+  --mc-camp-bg: #fbfafd;
 
   /* alerts & notifications */
   --mc-success: #23b12f;
   --mc-warning: #ffba30;
   --mc-info: #4b82f1;
   --mc-error: #f53d3d;
-  --mc-success-background: #def4e0;
-  --mc-warning-background: #fff5e0;
-  --mc-info-background: #e4edfd;
-  --mc-error-background: #fee2e2;
+  --mc-success-background: #edf9ee;
+  --mc-warning-background: #fff9ee;
+  --mc-info-background: #f1f5fe;
+  --mc-error-background: #feefef;
   --mc-success-light-background: #eff9ef;
   --mc-warning-light-background: #fffaef;
   --mc-info-light-background: #f1f6fe;
   --mc-error-light-background: #fff1f1;
+
+  /* color */
+  --mc-blue: #3270d9;
+  --mc-cyan: #33becc;
+  --mc-mint-green: #32d99f;
+  --mc-apple-green: #32d962;
+  --mc-chartreuse: #c8d932;
+  --mc-lemon-yellow: #f0f404;
+  --mc-brick-red: #cc4133;
+  --mc-tomato-red: #d95232;
+  --mc-orange-brown: #d96d32;
 
   /* common */
   --mc-gap: 4px;
   --mc-radius: 4px;
   --mc-transition-duration: 0.3s;
   --mc-transform-distance: 2px;
+  --mc-base-height: 40px;
+  --mc-font-size-base: 16px;
+  --mc-font-family: "Poppins";
 }

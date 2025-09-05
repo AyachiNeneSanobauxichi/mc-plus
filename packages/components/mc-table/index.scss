@@ -1,0 +1,293 @@
+// 导入变量和mixins
+@use "./_variables.scss" as *;
+@use "./_mixins.scss" as *;
+
+// 主表格样式
+.mc-table {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  background-color: transparent;
+  font-size: $table-font-size;
+  color: var(--mc-gray-800);
+
+  // 表格修饰符
+  &--loading {
+    position: relative;
+
+    .mc-table__header-wrapper,
+    .mc-table__body-wrapper {
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+
+  // 表格基础结构
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  // 通用单元格样式
+  th,
+  td {
+    @include table-cell-base;
+
+    @include table-alignment(center);
+    @include table-alignment(right);
+    @include table-fixed-position(left);
+    @include table-fixed-position(right);
+
+    &.is-display-none {
+      display: none;
+    }
+
+    &.is-display-table-cell {
+      display: table-cell;
+      // 换行
+      white-space: normal;
+      word-break: break-all;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+  }
+
+  // 表头特殊样式
+  th {
+    @include table-header-cell;
+
+    &.is-sortable {
+      @include sortable-header;
+    }
+  }
+
+  // 表格容器
+  &__header-wrapper,
+  &__body-wrapper {
+    width: 100%;
+  }
+
+  &__header-wrapper {
+    overflow: hidden;
+  }
+
+  &__body-wrapper {
+    overflow: auto;
+  }
+
+  // 空数据单元格
+  &__empty-cell {
+    text-align: center;
+    color: var(--mc-gray-500);
+    padding: $table-empty-padding;
+    border-bottom: none !important;
+  }
+
+  // 表头单元格结构
+  &__header-cell {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+
+    &-center {
+      justify-content: center;
+    }
+
+    &-right {
+      justify-content: end;
+    }
+  }
+
+  // 选择列样式
+  &__selection-column {
+    text-align: center;
+    width: 50px;
+    padding: 8px 12px;
+
+    .mc-table__header-cell,
+    .mc-table__cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  // 表格单元格
+  &__cell {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: inherit;
+  }
+
+  // 排序相关样式
+  &__sort-caret {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // 行状态样式
+  tbody tr {
+    // transition: $table-transition;
+    cursor: pointer;
+
+    @include table-row-state(current, --mc-teal-50, --mc-teal-100);
+  }
+
+  // 分页组件样式
+  &__pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $pagination-spacing;
+    font-size: $table-font-size;
+    color: var(--mc-gray-800);
+
+    &-info {
+      color: var(--mc-gray-600);
+      font-size: $table-font-size;
+      font-weight: 400;
+
+      &-number {
+        color: var(--mc-gray-800);
+        font-weight: 600;
+      }
+    }
+
+    &-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--mc-gap);
+
+      .mc-table__icon {
+        cursor: pointer;
+        color: var(--mc-teal-500);
+
+        &:hover {
+          background-color: var(--mc-teal-50);
+          border-radius: var(--mc-radius);
+          // transition: all var(--mc-transition-duration);
+        }
+
+        &.is-disabled {
+          color: var(--mc-gray-400);
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    &-button {
+      @include pagination-button-base;
+      @include pagination-button-hover;
+      @include pagination-button-disabled;
+
+      &--page {
+        @include pagination-button-active;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &-ellipsis {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: $pagination-button-size;
+      height: $pagination-button-size;
+      color: var(--mc-gray-500);
+      font-size: $table-font-size;
+    }
+
+    &-size {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &-label {
+        color: var(--mc-gray-500);
+        font-size: $table-font-size;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .mc-table-pagination-size-group {
+        display: flex;
+        align-items: center;
+        .mc-table-pagination-size-group-item {
+          width: 40px;
+          height: 40px;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: 400;
+          border: 1px solid var(--mc-gray-400);
+
+          &:not(:first-child) {
+            border-left: none;
+          }
+
+          &:first-child {
+            border-top-left-radius: var(--mc-radius);
+            border-bottom-left-radius: var(--mc-radius);
+          }
+
+          &:last-child {
+            border-top-right-radius: var(--mc-radius);
+            border-bottom-right-radius: var(--mc-radius);
+          }
+
+          &:hover {
+            background-color: var(--mc-gray-100);
+          }
+
+          &.is-active {
+            background-color: var(--mc-teal-500);
+            border-color: var(--mc-teal-500);
+            color: var(--mc-white);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    &-select {
+      height: $pagination-select-height;
+      padding: $pagination-select-padding;
+      border: 1px solid var(--mc-gray-300);
+      border-radius: var(--mc-radius);
+      color: var(--mc-gray-800);
+      background-color: var(--mc-white);
+      font-size: $table-font-size;
+      cursor: pointer;
+      // transition: all var(--mc-transition-duration);
+
+      &:hover {
+        border-color: var(--mc-teal-500);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: var(--mc-teal-500);
+        box-shadow: 0 0 0 2px var(--mc-teal-100);
+      }
+    }
+  }
+
+  // Loading 组件样式
+  &__loading {
+    @include loading-overlay;
+  }
+}

@@ -1,0 +1,103 @@
+$border_color: var(--mc-gray-400);
+$border_color_hover: var(--mc-gray-600);
+$border_color_error: var(--mc-error);
+$text_color: var(--mc-gray-400);
+$text_color_active: var(--mc-black);
+$text_color_disabled: var(--mc-gray-500);
+$text_color_error: var(--mc-error);
+$text_color_success: var(--mc-success);
+$icon_color: var(--mc-gray-800);
+$bg_color: var(--mc-white);
+$bg_color_disabled: var(--mc-gray-200);
+$border_radius: var(--mc-radius);
+$font_size: var(--mc-font-size-base);
+
+@mixin actived-border {
+  border-color: $border_color_hover;
+  outline: 1px solid $border_color_hover;
+}
+
+.mc-input {
+  width: 320px;
+  height: 40px;
+  padding: 0 8px;
+  background-color: $bg_color;
+  box-sizing: border-box;
+  border: 1px solid $border_color;
+  border-radius: $border_radius;
+  color: $text_color;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .mc-input__inner {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-size: $font_size;
+    background-color: transparent;
+    color: inherit;
+    cursor: inherit;
+
+    &::placeholder {
+      color: $text_color;
+    }
+  }
+
+  .mc-input-icon {
+    color: $icon_color;
+  }
+
+  // hover
+  &:not(.mc-input--disabled).mc-input-hovering {
+    @include actived-border;
+  }
+
+  // focus
+  &.mc-input--focused {
+    @include actived-border;
+    color: $text_color_active;
+  }
+
+  // input
+  &.mc-input--inputed {
+    color: $text_color_active;
+  }
+
+  // disabled
+  &.mc-input--disabled {
+    color: $text_color_disabled;
+    background-color: $bg_color_disabled;
+    cursor: not-allowed;
+
+    .mc-input__password {
+      cursor: not-allowed;
+    }
+  }
+
+  // password
+  .mc-input__password {
+    cursor: pointer;
+  }
+
+  // error
+  &.mc-form-validate-error:not(.mc-input--disabled) {
+    border-color: $border_color_error;
+    outline-color: $border_color_error;
+  }
+
+  // status icon
+  .mc-input__status {
+    &.mc-form-validate-error {
+      color: $text_color_error;
+    }
+
+    &.mc-form-validate-success {
+      color: $text_color_success;
+    }
+  }
+}

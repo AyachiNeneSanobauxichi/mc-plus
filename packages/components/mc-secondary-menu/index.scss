@@ -1,0 +1,89 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$text_color: var(--mc-gray-500);
+$text_color_actived: var(--mc-teal-500);
+$text_color_hover: var(--mc-teal-900);
+$text_color_disabled: var(--mc-gray-400);
+$line_color_inactive: var(--mc-gray-200);
+$line_color_active: var(--mc-teal-500);
+
+.mc-secondary-menu {
+  height: 100%;
+  overflow-y: auto;
+  .mc-secondary-menu-wrapper {
+    position: relative;
+
+    &::after {
+      content: "";
+      width: 2px;
+      height: 100%;
+      background-color: $line_color_inactive;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .mc-secondary-menu-item {
+      min-width: 115px;
+      width: fit-content;
+      height: 48px;
+      padding: 0 24px;
+      box-sizing: border-box;
+      color: $text_color;
+      cursor: default;
+      @include mixin.flex-center(row, start);
+
+      &:not(.mc-secondary-menu-item-parent) {
+        cursor: pointer;
+
+        &.mc-secondary-menu-item-actived {
+          color: $text_color_actived;
+          .mc-secondary-menu-item-content::before {
+            background-color: $text_color_actived;
+          }
+        }
+        &:hover {
+          color: $text_color_hover;
+          .mc-secondary-menu-item-content::before {
+            background-color: $text_color_hover;
+          }
+        }
+      }
+
+      &.mc-secondary-menu-item-child {
+        .mc-secondary-menu-item-content {
+          box-sizing: border-box;
+          padding-left: 4px;
+          font-size: 16px;
+          font-weight: 400;
+          @include mixin.flex-center(row, start, center, 8px);
+
+          &::before {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: $text_color;
+          }
+        }
+      }
+
+      .mc-secondary-menu-item-content {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+
+    .mc-secondary-menu-success-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 48px;
+      background-color: $line_color_active;
+      z-index: 10;
+    }
+  }
+}

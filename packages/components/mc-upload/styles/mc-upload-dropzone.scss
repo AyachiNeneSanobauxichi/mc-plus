@@ -1,0 +1,73 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$bg_color: #d7eceb80;
+$bg_color_hover: rgba(210, 210, 210, 0.1);
+$border_color: var(--mc-teal-500);
+$border_color_hover: var(--mc-teal-900);
+$text_color: var(--mc-teal-500);
+$text_color_hover: var(--mc-teal-900);
+$desc_color: var(--mc-gray-500);
+
+.mc-upload-dropzone {
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  .mc-upload-dropzone-area {
+    @include mixin.flex-center(column, center, center, 8px);
+    width: 100%;
+    min-height: 100px;
+    padding: 16px 24px;
+    border-radius: 4px;
+    background-color: $bg_color;
+    box-sizing: border-box;
+    border: 1px solid $border_color;
+
+    .mc-upload-dropzone-title {
+      @include mixin.flex-center(row, center, center, 8px);
+      color: $text_color;
+      .mc-upload-dropzone-title-text {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+    }
+
+    &:hover .mc-upload-dropzone-title {
+      color: $text_color_hover;
+      .mc-upload-dropzone-title-text {
+        text-decoration: underline;
+      }
+    }
+
+    .mc-upload-dropzone-desc {
+      @include mixin.flex-center(column);
+      color: $desc_color;
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+
+  &.mc-upload-dropzone-dragover {
+    .mc-upload-dropzone-area {
+      border-color: $border_color_hover;
+      outline: 1px solid $border_color_hover;
+    }
+  }
+
+  .mc-upload-dropzone-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 1;
+  }
+
+  &.mc-upload-dropzone-dragover {
+    .mc-upload-dropzone-cover {
+      background-color: $bg_color_hover;
+    }
+  }
+}

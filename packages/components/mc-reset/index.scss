@@ -1,0 +1,32 @@
+$text_color: var(--mc-teal-500);
+$text_color_hover: var(--mc-teal-900);
+
+@keyframes refresh {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.mc-reset {
+  color: $text_color;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color: $text_color_hover;
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
+
+  .mc-reset-rotate {
+    animation: refresh 0.3s linear infinite;
+  }
+}

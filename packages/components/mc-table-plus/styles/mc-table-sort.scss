@@ -1,0 +1,15 @@
+$color_normal: var(--mc-gray-400);
+$color_actived: var(--mc-teal-800);
+
+.mc-table-sort {
+  cursor: pointer;
+}
+
+.mc-table-sort-normal {
+  color: $color_normal;
+}
+
+.mc-table-sort-asc,
+.mc-table-sort-desc {
+  color: $color_actived;
+}

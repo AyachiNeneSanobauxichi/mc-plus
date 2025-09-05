@@ -1,0 +1,188 @@
+/* flex center */
+@mixin flex-center(
+  $direction: row,
+  $justify: center,
+  $align: center,
+  $gap: 0,
+  $inline: false
+) {
+  display: if($inline, inline-flex, flex);
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+/* font style */
+@mixin font-style(
+  $size: 16px,
+  $weight: 400,
+  $line-height: 24px,
+  $color: var(--mc-gray-800)
+) {
+  font-family: var(--mc-font-family);
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+  color: $color;
+}
+
+/* shadow */
+@mixin shadow {
+  $shadow-color: var(--mc-gray-200);
+  box-shadow: 0 4px 8px $shadow-color;
+}
+
+/* title */
+@mixin title($direction: to right) {
+  background: linear-gradient(
+    $direction,
+    var(--mc-purple-200),
+    var(--mc-teal-900)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* mask color */
+@mixin mask-color {
+  background-color: rgba(#211050, 0.2);
+}
+
+/* reset ul style */
+@mixin reset-ul-style {
+  margin: 0;
+  padding: 0;
+}
+
+/* reset li style */
+@mixin reset-li-style {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* reset input style */
+@mixin reset-input-style {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* reset p style */
+@mixin reset-p-style {
+  margin: 0;
+  padding: 0;
+}
+
+/* reset i style */
+@mixin reset-i-style {
+  font-style: normal;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* reset number input style */
+@mixin reset-number-input-style {
+  @include reset-input-style;
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:focus {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  &:focus::-webkit-outer-spin-button,
+  &:focus::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* reset table style */
+@mixin reset-table-style {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* reset thead style */
+@mixin reset-thead-style {
+  vertical-align: top;
+}
+
+/* reset tbody style */
+@mixin reset-tbody-style {
+  vertical-align: top;
+}
+
+/* reset th style */
+@mixin reset-th-style {
+  @include font-style;
+  padding: 0;
+  margin: 0;
+}
+
+/* reset td style */
+@mixin reset-td-style {
+  @include font-style;
+  padding: 0;
+  margin: 0;
+}
+
+/* skeleton */
+@mixin mc-skeleton {
+  &.mc-skeleton-loading {
+    overflow: hidden;
+
+    @keyframes skip {
+      to {
+        transform: skew(-10deg, 0deg) translateX(550%);
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: -20%;
+      top: 0;
+      z-index: 10;
+      width: 20%;
+      height: 100%;
+      border-radius: 4px;
+      transform: skew(-10deg, 0deg);
+      background: linear-gradient(
+        to right,
+        transparent,
+        var(--mc-white),
+        transparent
+      );
+      animation: skip 2s linear infinite;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      border-radius: 4px;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background-color: var(--mc-gray-100);
+    }
+  }
+}

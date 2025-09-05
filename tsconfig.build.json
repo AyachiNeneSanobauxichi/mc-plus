@@ -25,7 +25,8 @@
     "types": ["node"],
     "baseUrl": "./",
     "paths": {
-      "@mc-plus/components": ["./packages/components"]
+      "@mc-plus/components": ["./packages/components"],
+      "mc-plus": ["./packages/core"]
     }
   },
   "include": [

@@ -1,0 +1,44 @@
+$duration: var(--mc-transition-duration);
+
+.mc-popper {
+  width: max-content;
+  .mc-popper-trigger {
+    width: max-content;
+  }
+
+  .mc-popper-popper {
+    z-index: 9999999;
+    // top && right
+    .mc-popper-arrow {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
+
+    // bottom
+    &[data-popper-placement^="bottom"] > .mc-popper-arrow {
+      top: 0;
+    }
+
+    // left
+    &[data-popper-placement^="left"] > .mc-popper-arrow {
+      right: 0;
+    }
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $duration ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

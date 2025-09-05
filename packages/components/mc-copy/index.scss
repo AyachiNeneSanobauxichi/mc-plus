@@ -1,0 +1,23 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$icon_color: var(--mc-gray-400);
+$text_color: var(--mc-gray-800);
+
+.mc-copy {
+  @include mixin.flex-center(row, start, center, 8px);
+  width: fit-content;
+  .mc-copy-text {
+    font-size: 16px;
+    color: $text_color;
+    font-weight: 400;
+    line-height: 24px;
+  }
+  .mc-copy-icon {
+    cursor: pointer;
+    color: $icon_color;
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

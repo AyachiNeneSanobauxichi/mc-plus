@@ -1,0 +1,116 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+$border_color: var(--mc-gray-400);
+$border_color_hover: var(--mc-gray-500);
+$border_radius: var(--mc-radius);
+$bg_color: var(--mc-teal-500);
+$bg_color_hover: var(--mc-teal-900);
+$bg_color_disabled: var(--mc-gray-300);
+$bg_color_error: var(--mc-error);
+$text_color: var(--mc-gray-800);
+$text_color_remarks: var(--mc-gray-500);
+$text_color_disabled: var(--mc-gray-400);
+$text_icon: var(--mc-white);
+
+@mixin checked_box($icon) {
+  background-color: $bg_color;
+  border: none;
+  &::after {
+    content: $icon;
+    font-family: "mc-iconfont" !important;
+    font-size: 24px;
+    color: $text_icon;
+  }
+}
+
+.mc-checkbox {
+  width: fit-content;
+
+  .mc-checkbox-wrapper {
+    @include mixin.flex-center(row, flex-start, center, 8px);
+    width: fit-content;
+    position: relative;
+    cursor: pointer;
+
+    /* input */
+    .mc-checkbox-input {
+      @include mixin.reset-input-style;
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+
+    /* box */
+    .mc-checkbox-box {
+      @include mixin.flex-center;
+      width: 24px;
+      height: 24px;
+      box-sizing: border-box;
+      border-radius: $border_radius;
+      border: 1px solid $border_color;
+    }
+
+    /* content */
+    .mc-checkbox-content {
+      line-height: 24px;
+      font-size: 16px;
+      color: $text_color;
+    }
+
+    /* checked */
+    &.mc-checkbox-checked .mc-checkbox-box {
+      @include checked_box("\e694");
+    }
+
+    /* partial */
+    &.mc-checkbox-partial .mc-checkbox-box {
+      @include checked_box("\e666");
+    }
+
+    /* hover | focus */
+    &:hover:not(.mc-checkbox-disabled),
+    &.mc-checkbox-focused:not(.mc-checkbox-disabled) {
+      .mc-checkbox-box {
+        border-width: 2px;
+      }
+      &:not(.mc-form-validate-error) .mc-checkbox-box {
+        border-color: $border_color_hover;
+      }
+    }
+
+    /* disabled */
+    &.mc-checkbox-disabled {
+      cursor: not-allowed;
+      .mc-checkbox-content {
+        color: $text_color_disabled;
+      }
+      .mc-checkbox-box {
+        background-color: $bg_color_disabled;
+        color: $text_color_disabled;
+        border: none;
+      }
+    }
+
+    /* error */
+    &.mc-form-validate-error {
+      &.mc-checkbox-checked,
+      &.mc-checkbox-partial {
+        .mc-checkbox-box {
+          background-color: $bg_color_error;
+        }
+      }
+      .mc-checkbox-box {
+        border-color: $bg_color_error;
+      }
+    }
+  }
+
+  /* remarks */
+  .mc-checkbox-remarks {
+    padding-left: 32px;
+    box-sizing: border-box;
+    font-size: 12px;
+    line-height: 18px;
+    color: $text_color_remarks;
+  }
+}

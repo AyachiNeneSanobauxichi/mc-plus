@@ -1,0 +1,10 @@
+@use "@mc-plus/theme/mixins.scss" as mixins;
+
+.mc-overlay {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @include mixins.mask-color();
+  z-index: 9999;
+}
