@@ -44,10 +44,18 @@
               <component :is="child.component" />
             </mc-step-child-item-plus>
           </template>
-          <template #label v-if="step.step === STEP_KEY.BASIC_INFORMATION">
+          <template
+            #label="{ label, isSuccess }"
+            v-if="step.step === STEP_KEY.BASIC_INFORMATION"
+          >
             <div class="basic-information-label">
-              <span class="basic-information-label-title">
-                BASIC INFORMATION
+              <span
+                class="basic-information-label-title"
+                :class="{
+                  'basic-information-label-title-success': isSuccess,
+                }"
+              >
+                {{ label }}
               </span>
               <div class="basic-information-label-tag">
                 <mc-tag emphasis="bold" content="Individual"></mc-tag>
@@ -111,6 +119,7 @@ const handleGoStep = () => {
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
 $text_title_color: var(--mc-purple-500);
+$text_title_color_success: var(--mc-success);
 $text_edit_color: var(--mc-teal-500);
 
 .playground-step-plus {
@@ -141,6 +150,10 @@ $text_edit_color: var(--mc-teal-500);
           $line-height: 40px,
           $color: $text_title_color
         );
+
+        &.basic-information-label-title-success {
+          color: $text_title_color_success;
+        }
       }
 
       .basic-information-label-tag {

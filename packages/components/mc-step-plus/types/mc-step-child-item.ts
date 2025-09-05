@@ -10,8 +10,18 @@ export interface McStepChildItemPlusProps {
 }
 
 export interface McStepChildItemPlusSlots {
-  default?: Slot;
-  icon?: Slot;
-  label?: Slot;
-  desc?: Slot;
+  default?: Slot<{ step: McStepKey; isSuccess: boolean; isActived: boolean }>;
+  icon?: Slot<{ step: McStepKey; isSuccess: boolean; isActived: boolean }>;
+  label?: Slot<{
+    step: McStepKey;
+    label: string;
+    isSuccess: boolean;
+    isActived: boolean;
+  }>;
+  desc?: Slot<{
+    step: McStepKey;
+    desc: string;
+    isSuccess: boolean;
+    isActived: boolean;
+  }>;
 }

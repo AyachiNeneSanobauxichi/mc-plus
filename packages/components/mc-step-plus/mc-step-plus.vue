@@ -28,6 +28,9 @@
                     <component
                       :is="stepItem.iconContent"
                       :key="stepItem.step"
+                      :step="stepItem.step"
+                      :isSuccess="isSuccessStep(stepItem)"
+                      :isActived="isActivedStep(stepItem)"
                     />
                   </template>
                   <template v-else-if="stepItem.icon">
@@ -45,7 +48,14 @@
             <div class="mc-step-item-content-title">
               <div class="mc-step-item-label">
                 <template v-if="stepItem.labelContent">
-                  <component :is="stepItem.labelContent" :key="stepItem.step" />
+                  <component
+                    :is="stepItem.labelContent"
+                    :key="stepItem.step"
+                    :step="stepItem.step"
+                    :label="stepItem.label"
+                    :isSuccess="isSuccessStep(stepItem)"
+                    :isActived="isActivedStep(stepItem)"
+                  />
                 </template>
                 <template v-else>
                   <div class="mc-step-item-label-title">
@@ -55,7 +65,14 @@
               </div>
               <div class="mc-step-item-desc">
                 <template v-if="stepItem.descContent">
-                  <component :is="stepItem.descContent" :key="stepItem.step" />
+                  <component
+                    :is="stepItem.descContent"
+                    :key="stepItem.step"
+                    :step="stepItem.step"
+                    :desc="stepItem.desc"
+                    :isSuccess="isSuccessStep(stepItem)"
+                    :isActived="isActivedStep(stepItem)"
+                  />
                 </template>
                 <template v-else>
                   <div class="mc-step-item-desc-title">{{ stepItem.desc }}</div>
@@ -66,7 +83,13 @@
               class="mc-step-item-content-display"
               v-if="showContent(stepItem)"
             >
-              <component :is="stepItem.content" :key="stepItem.step" />
+              <component
+                :is="stepItem.content"
+                :key="stepItem.step"
+                :step="stepItem.step"
+                :isSuccess="isSuccessStep(stepItem)"
+                :isActived="isActivedStep(stepItem)"
+              />
             </div>
           </div>
         </div>
