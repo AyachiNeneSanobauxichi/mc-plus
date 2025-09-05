@@ -16,6 +16,9 @@
           search
           clearable
         >
+          <template #selected-content="{ selectedOptionLabel }">
+            <div class="selected-content">{{ selectedOptionLabel + ' (test)' }}</div>
+          </template>
           <template v-for="item in currencyList" :key="item.value">
             <mc-select-group-plus :label="item.label">
               <mc-select-option-plus

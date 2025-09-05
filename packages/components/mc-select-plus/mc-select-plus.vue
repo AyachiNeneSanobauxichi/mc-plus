@@ -48,6 +48,7 @@
               <slot
                 name="selected-content"
                 :selected-option="selectedOption"
+                :selected-option-label="selectedOptionLabel"
                 :is-disabled="isDisabled"
               >
                 <template v-if="isMulti">
@@ -327,6 +328,19 @@ watch(
 
 // selected option
 const selectedOption = ref<SelectPlusValue | SelectPlusValue[]>();
+
+// selected opton label
+const selectedOptionLabel = computed<SelectPlusValue[] | SelectPlusValue>(
+  () => {
+    if (isMulti.value) {
+      return (selectedOption.value as SelectPlusValue[])?.map((item) =>
+        getOptionLabel(item)
+      );
+    } else {
+      return getOptionLabel(selectedOption.value as SelectPlusValue);
+    }
+  }
+);
 
 // has filtered options
 const hasFilteredOptions = computed<boolean>(() => {
