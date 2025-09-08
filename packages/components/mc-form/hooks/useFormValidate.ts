@@ -45,9 +45,16 @@ const useFormValidate = ({
     ? computed<boolean>(() => validateStatus.value === "success")
     : (false as const);
 
+  // hide validation icon prop
+  const hideValidationIconProp = useProp<boolean>([
+    "hideValidationIcon",
+    "hide-validation-icon",
+  ]);
+
   // status icon
   const statusIcon = validateStatus
     ? computed<"Accept_02" | "Reject_02" | false>(() => {
+        if (hideValidationIconProp.value) return false;
         if (isError && isError.value) return "Reject_02";
         if (isSuccess && isSuccess.value) return "Accept_02";
         return false;

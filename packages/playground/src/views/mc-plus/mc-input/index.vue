@@ -13,16 +13,48 @@
         <mc-form-item label="User Name" prop="userName">
           <mc-input
             v-model="formState.userName"
+            width="100%"
             :disabled="disabled"
             prefix-icon="Search"
             type="number"
             :maxlength="10"
           >
-            <template #suffix>
-              <div class="input-suffix">bps</div>
-            </template>
           </mc-input>
         </mc-form-item>
+        <div class="markup-container">
+          <mc-form-item label="Bid Markup" prop="bid">
+            <mc-input
+              v-model="formState.bid"
+              width="100%"
+              :disabled="disabled"
+              type="number"
+              :maxlength="10"
+              :placeholder="``"
+              text-align="right"
+              hide-validation-icon
+            >
+              <template #append>
+                <span>bps</span>
+              </template>
+            </mc-input>
+          </mc-form-item>
+          <mc-form-item label="Ask Markup" prop="ask">
+            <mc-input
+              v-model="formState.ask"
+              width="100%"
+              :disabled="disabled"
+              type="number"
+              :maxlength="10"
+              :placeholder="``"
+              text-align="right"
+              hide-validation-icon
+            >
+              <template #append>
+                <span>bps</span>
+              </template>
+            </mc-input>
+          </mc-form-item>
+        </div>
       </mc-form>
     </section>
   </div>
@@ -31,15 +63,21 @@
 <script setup lang="ts">
 import type { FormInstance } from "mc-plus";
 import { reactive, ref } from "vue";
-import { McButton, McForm, McFormItem } from "mc-plus";
+import { McButton } from "mc-plus";
+import McForm from "../../../../../components/mc-form/mc-form.vue";
+import McFormItem from "../../../../../components/mc-form/mc-form-item.vue";
 import McInput from "../../../../../components/mc-input/mc-input.vue";
 
 const formState = reactive({
   userName: "",
+  bid: "",
+  ask: "",
 });
 
 const rules = {
   userName: [{ required: true, message: "Please enter user name" }],
+  bid: [{ required: true, message: "Please enter bid markup" }],
+  ask: [{ required: true, message: "Please enter ask markup" }],
 };
 
 const formRef = ref<FormInstance>();
@@ -73,6 +111,11 @@ const handleClearValidate = () => {
   }
 
   .input-container {
+    width: 400px;
+
+    .markup-container {
+      @include mixin.flex-center(row, flex-start, flex-start, 24px);
+    }
   }
 }
 </style>

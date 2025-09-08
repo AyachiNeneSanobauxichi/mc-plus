@@ -10,6 +10,8 @@ export type InputFormatter = (value: string) => string;
 
 export type InputParser = (value: string) => string;
 
+export type InputTextAlign = "left" | "center" | "right";
+
 export interface InputProps {
   modelValue?: string | undefined;
   width?: string;
@@ -28,6 +30,8 @@ export interface InputProps {
   currencyAccuracy?: number;
   inputGroupPosition?: InputGroupPosition;
   disableValidation?: boolean;
+  hideValidationIcon?: boolean;
+  textAlign?: InputTextAlign;
   formatter?: InputFormatter;
   parser?: InputParser;
 }
