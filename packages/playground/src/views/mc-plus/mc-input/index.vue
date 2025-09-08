@@ -1,23 +1,62 @@
 <template>
   <div class="playground-input">
-    <div class="tool-bar">
+    <section class="tool-bar">
       <span>FormState: {{ formState }}</span>
       <div class="btn-group">
         <mc-button @click="handleDisabled">Disabled</mc-button>
         <mc-button @click="handleValidate">Validate</mc-button>
         <mc-button @click="handleClearValidate">Clear Validate</mc-button>
       </div>
-    </div>
-    <mc-form :model="formState" :rules="rules" ref="formRef">
-      <mc-form-item label="User Name" prop="userName">
-        <mc-input
-          v-model="formState.userName"
-          :maxlength="10"
-          prefix-icon="Search"
-          :disabled="disabled"
-        />
-      </mc-form-item>
-    </mc-form>
+    </section>
+    <section class="input-container">
+      <mc-form :model="formState" :rules="rules" ref="formRef">
+        <mc-form-item label="User Name" prop="userName">
+          <mc-input
+            v-model="formState.userName"
+            width="100%"
+            :disabled="disabled"
+            prefix-icon="Search"
+            type="number"
+            :maxlength="10"
+          >
+          </mc-input>
+        </mc-form-item>
+        <div class="markup-container">
+          <mc-form-item label="Bid Markup" prop="bid">
+            <mc-input
+              v-model="formState.bid"
+              width="100%"
+              :disabled="disabled"
+              type="number"
+              :maxlength="10"
+              :placeholder="``"
+              text-align="right"
+              hide-validation-icon
+            >
+              <template #append>
+                <span>bps</span>
+              </template>
+            </mc-input>
+          </mc-form-item>
+          <mc-form-item label="Ask Markup" prop="ask">
+            <mc-input
+              v-model="formState.ask"
+              width="100%"
+              :disabled="disabled"
+              type="number"
+              :maxlength="10"
+              :placeholder="``"
+              text-align="right"
+              hide-validation-icon
+            >
+              <template #append>
+                <span>bps</span>
+              </template>
+            </mc-input>
+          </mc-form-item>
+        </div>
+      </mc-form>
+    </section>
   </div>
 </template>
 
@@ -28,10 +67,14 @@ import { McButton, McForm, McFormItem, McInput } from "mc-plus";
 
 const formState = reactive({
   userName: "",
+  bid: "",
+  ask: "",
 });
 
 const rules = {
   userName: [{ required: true, message: "Please enter user name" }],
+  bid: [{ required: true, message: "Please enter bid markup" }],
+  ask: [{ required: true, message: "Please enter ask markup" }],
 };
 
 const formRef = ref<FormInstance>();
@@ -52,20 +95,23 @@ const handleClearValidate = () => {
 </script>
 
 <style scoped lang="scss">
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
 .playground-input {
-  width: 100%;
-  margin-top: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include mixin.flex-center(column, flex-start, flex-start, 40px);
 
   .tool-bar {
-    margin-bottom: 32px;
+    @include mixin.flex-center(column, flex-start, flex-start, 16px);
     .btn-group {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      @include mixin.flex-center(row, flex-start, flex-start, 8px);
+    }
+  }
+
+  .input-container {
+    width: 400px;
+
+    .markup-container {
+      @include mixin.flex-center(row, flex-start, flex-start, 24px);
     }
   }
 }

@@ -1,3 +1,5 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
 $border_color: var(--mc-gray-400);
 $border_color_hover: var(--mc-gray-600);
 $border_color_error: var(--mc-error);
@@ -98,6 +100,30 @@ $font_size: var(--mc-font-size-base);
 
     &.mc-form-validate-success {
       color: $text_color_success;
+    }
+  }
+
+  /* append */
+  .mc-input-append {
+    height: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    position: relative;
+
+    .mc-input-append-text {
+      @include mixin.flex-center($justify: flex-start);
+      height: 100%;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      width: 1px;
+      height: 50%;
+      background-color: $border_color;
     }
   }
 }

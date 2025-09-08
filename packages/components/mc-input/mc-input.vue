@@ -23,6 +23,7 @@
     </div>
     <input
       class="mc-input__inner"
+      :style="{ textAlign }"
       ref="inputRef"
       :id="formId"
       :type="isPassword ? (passwordVisible ? 'text' : 'password') : 'text'"
@@ -61,6 +62,13 @@
         </slot>
       </div>
     </template>
+    <template v-if="$slots.append">
+      <div class="mc-input-append">
+        <div class="mc-input-append-text">
+          <slot name="append"></slot>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -93,6 +101,8 @@ const props = withDefaults(defineProps<InputProps>(), {
   placeholder: "Please enter",
   readonly: false,
   disableValidation: false,
+  textAlign: "left",
+  hideValidationIcon: false,
 });
 const { formatter, parser } = props;
 
