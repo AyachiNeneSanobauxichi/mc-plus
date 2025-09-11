@@ -3,3 +3,4 @@ export * from "./constant";
 export * from "./request";
 export * from "./global";
 export * from "./payment";
+export * from "./file";

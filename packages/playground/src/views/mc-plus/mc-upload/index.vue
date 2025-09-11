@@ -7,28 +7,27 @@
     <mc-upload
       ref="uploadRef"
       v-model="fileList"
-      :allowed-file-types="['png']"
       upload-user="Hirasawa Yui"
       :lang="lang"
-      disabled
       @upload="handleUpload"
       @preview="handlePreview"
       @delete="handleDelete"
       @download="handleDownload"
       @cancel="handleCancel"
     >
-      <template #content>
-        <span>Latest 3 months’ original computerized salary slips; or</span>
-        <span>Latest Notice of Assessment</span>
-      </template>
     </mc-upload>
+    <!-- <template #content>
+    <span>Latest 3 months’ original computerized salary slips; or</span>
+    <span>Latest Notice of Assessment</span>
+  </template> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import type { UploadFile, UploadInstance, UploadLang } from "mc-plus";
 import { ref } from "vue";
-import { McUpload, McButton } from "mc-plus";
+import { McButton } from "mc-plus";
+import McUpload from "../../../../../components/mc-upload/mc-upload.vue";
 
 // file list
 const fileList = ref<UploadFile[]>([]);
