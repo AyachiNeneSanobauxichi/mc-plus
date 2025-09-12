@@ -121,6 +121,7 @@ const allFileMap = reactive<UploadFileMap>(new Map());
 
 // set all file map
 const setAllFileMap = (files: UploadFile[]) => {
+  allFileMap.clear();
   files.forEach((file) => {
     allFileMap.set(file.name!, file);
   });
