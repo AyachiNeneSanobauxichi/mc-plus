@@ -1,10 +1,21 @@
 <template>
   <div class="playground-upload">
-    <div class="btn-groups">
-      <mc-button @click="handleClear">Clear</mc-button>
-      <mc-button @click="handleChangeLang">Change Lang</mc-button>
-    </div>
-    <mc-upload
+    <section class="tool-bar">
+      <div class="display">
+        <span>fileIdList: {{ fileIdList }}</span>
+      </div>
+      <div class="btn-group">
+        <mc-button @click="handleClear">Clear</mc-button>
+        <mc-button @click="handleChangeLang">Change Lang</mc-button>
+      </div>
+    </section>
+    <section class="business-upload-wrapper">
+      <mc-business-upload
+        v-model="fileIdList"
+        upload-user="Hirasawa Yui"
+      ></mc-business-upload>
+    </section>
+    <!-- <mc-upload
       ref="uploadRef"
       v-model="fileList"
       upload-user="Hirasawa Yui"
@@ -15,7 +26,7 @@
       @download="handleDownload"
       @cancel="handleCancel"
     >
-    </mc-upload>
+    </mc-upload> -->
     <!-- <template #content>
     <span>Latest 3 months’ original computerized salary slips; or</span>
     <span>Latest Notice of Assessment</span>
@@ -27,7 +38,7 @@
 import type { UploadFile, UploadInstance, UploadLang } from "mc-plus";
 import { ref } from "vue";
 import { McButton } from "mc-plus";
-import McUpload from "../../../../../components/mc-upload/mc-upload.vue";
+import McBusinessUpload from "./mc-business-upload/index.vue";
 
 // file list
 const fileList = ref<UploadFile[]>([]);
@@ -79,23 +90,29 @@ const lang = ref<UploadLang>("en");
 const handleChangeLang = () => {
   lang.value = lang.value === "en" ? "zh" : "en";
 };
+
+// ===========================================================================================
+
+// file id list
+const fileIdList = ref<string[]>([]);
 </script>
 
 <style scoped lang="scss">
-.playground-upload {
-  width: 80%;
-  height: 50vh;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  // background-color: pink;
+@use "@mc-plus/theme/mixins.scss" as mixin;
 
-  .btn-groups {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    margin-bottom: 16px;
+.playground-upload {
+  @include mixin.flex-center($direction: column, $gap: 32px);
+
+  .tool-bar {
+    @include mixin.flex-center(column, flex-start, flex-start, 16px);
+    .btn-group {
+      @include mixin.flex-center($justify: flex-start, $gap: 8px);
+    }
+  }
+
+  .business-upload-wrapper {
+    max-width: 1600px;
+    width: 100%;
   }
 }
 </style>

@@ -12,7 +12,10 @@ import { http } from "../request";
 const uploadFile = async (req: IUploadFileReq) => {
   return await http.post<IUploadFileReq, IUploadFileResp>(
     "/auth/file/upload/1",
-    req
+    req,
+    {
+      requestType: "formData",
+    }
   );
 };
 

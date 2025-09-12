@@ -1,0 +1,109 @@
+<template>
+  <div class="mc-business-upload">
+    <mc-upload
+      ref="uploadRef"
+      v-model="fileList"
+      :upload-user="uploadUser"
+      @upload="handleUpload"
+    >
+    </mc-upload>
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { UploadFile } from "mc-plus";
+import type { McBusinessUploadEmits, McBusinessUploadProps } from "./types";
+import type { IUploadFileResp } from "../../../../apis/file/types";
+import type { IResponse } from "../../../../apis";
+import { ref } from "vue";
+import McUpload from "../../../../../../components/mc-upload/mc-upload.vue";
+import { uploadFile } from "../../../../apis";
+
+// options
+defineOptions({ name: "McBusinessUpload" });
+
+// props
+withDefaults(defineProps<McBusinessUploadProps>(), {
+  modelValue: () => [],
+});
+
+// emit
+const emit = defineEmits<McBusinessUploadEmits>();
+
+// file list
+const fileList = ref<UploadFile[]>([]);
+
+// handle upload
+const handleUpload = async (files: UploadFile[]) => {
+  // upload queue
+  const uploadQueue = [];
+  for (const file of files) {
+    if (file.status === "loading") {
+      uploadQueue.push(uploadApi(file.file));
+    }
+  }
+  // result
+  const res = await Promise.allSettled(uploadQueue);
+  // result index
+  let resIdx = 0;
+
+  // file id list
+  const fileIdList: string[] = [];
+
+  // update file list
+  fileList.value = files.map((file) => {
+    if (file.status === "loading") {
+      // new file
+      let newFile = { ...file };
+      if (res[resIdx].status === "fulfilled") {
+        // success
+        const fulfiledRes = res[resIdx] as PromiseFulfilledResult<
+          IResponse<IUploadFileResp>
+        >;
+        newFile.fid = fulfiledRes.value.data.id;
+        newFile.status = "successed";
+        newFile.progress = 100;
+        // add new file id
+        fileIdList.push(`${fulfiledRes.value.data.id}`);
+      } else {
+        // failed
+        // const rejectedRes = res[resIdx] as PromiseRejectedResult;
+        newFile.status = "failed";
+        // newFile.errorMessage = rejectedRes.reason.message;
+        newFile.errorMessage = "Upload failed";
+        newFile.progress = 100;
+      }
+      resIdx++;
+      return newFile;
+    } else if (file.status === "successed") {
+      // successed
+      file.fid && fileIdList.push(`${file.fid}`);
+      return file;
+    } else {
+      return file;
+    }
+  });
+
+  // update model value
+  emit("update:modelValue", fileIdList);
+};
+
+// upload api
+const uploadApi = async (file?: File) => {
+  if (!file) return Promise.reject(new Error("File is required"));
+
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await uploadFile(formData);
+
+  return res;
+};
+</script>
+
+<style scoped lang="scss">
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-business-upload {
+  width: 100%;
+}
+</style>

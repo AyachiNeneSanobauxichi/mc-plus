@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
-import type { IResponse } from "./types";
+import type { IResponse, RequestConfig } from "./types";
 import axios from "axios";
 import { ACCESS_TOKEN_KEY } from "./constant";
 
@@ -70,10 +70,22 @@ request.interceptors.response.use(
 
 // api request
 export const apiRequest = async <TRequest = any, TResponse = any>(
-  config: AxiosRequestConfig<TRequest>
+  config: RequestConfig<TRequest>
 ): Promise<IResponse<TResponse>> => {
+  const { requestType, ...restConfig } = config;
+
+  // form data request
+  if (requestType === "formData") {
+    restConfig.headers = {
+      ...restConfig.headers,
+      "Content-Type": "multipart/form-data",
+    };
+  }
+
   try {
-    const response = await request(config);
+    const response = await request({
+      ...restConfig,
+    });
     return response.data;
   } catch (error) {
     throw error;
@@ -84,31 +96,31 @@ export const apiRequest = async <TRequest = any, TResponse = any>(
 export const http = {
   get: <TRequest = any, TResponse = any>(
     url: string,
-    config?: AxiosRequestConfig<TRequest>
+    config?: RequestConfig<TRequest>
   ) => apiRequest<TRequest, TResponse>({ ...config, method: "GET", url }),
 
   post: <TRequest = any, TResponse = any>(
     url: string,
     data?: TRequest,
-    config?: AxiosRequestConfig<TRequest>
+    config?: RequestConfig<TRequest>
   ) =>
     apiRequest<TRequest, TResponse>({ ...config, method: "POST", url, data }),
 
   put: <TRequest = any, TResponse = any>(
     url: string,
     data?: TRequest,
-    config?: AxiosRequestConfig<TRequest>
+    config?: RequestConfig<TRequest>
   ) => apiRequest<TRequest, TResponse>({ ...config, method: "PUT", url, data }),
 
   delete: <TRequest = any, TResponse = any>(
     url: string,
-    config?: AxiosRequestConfig<TRequest>
+    config?: RequestConfig<TRequest>
   ) => apiRequest<TRequest, TResponse>({ ...config, method: "DELETE", url }),
 
   patch: <TRequest = any, TResponse = any>(
     url: string,
     data?: TRequest,
-    config?: AxiosRequestConfig<TRequest>
+    config?: RequestConfig<TRequest>
   ) =>
     apiRequest<TRequest, TResponse>({ ...config, method: "PATCH", url, data }),
 };
