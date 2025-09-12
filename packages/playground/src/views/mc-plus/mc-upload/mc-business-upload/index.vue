@@ -1,10 +1,14 @@
 <template>
+  <div>
+    <span>File List: {{ fileList }}</span>
+  </div>
   <div class="mc-business-upload">
     <mc-upload
       ref="uploadRef"
       v-model="fileList"
       :upload-user="uploadUser"
       @upload="handleUpload"
+      @delete="handleDelete"
     >
     </mc-upload>
   </div>
@@ -23,7 +27,7 @@ import { uploadFile } from "../../../../apis";
 defineOptions({ name: "McBusinessUpload" });
 
 // props
-withDefaults(defineProps<McBusinessUploadProps>(), {
+const props = withDefaults(defineProps<McBusinessUploadProps>(), {
   modelValue: () => [],
 });
 
@@ -86,6 +90,12 @@ const handleUpload = async (files: UploadFile[]) => {
 
   // update model value
   emit("update:modelValue", fileIdList);
+};
+
+// handle delete
+const handleDelete = (file: UploadFile) => {
+  const newFileIdList = props.modelValue.filter((f) => f !== `${file.fid}`);
+  emit("update:modelValue", newFileIdList);
 };
 
 // upload api
