@@ -5,6 +5,7 @@
       v-model="fileList"
       :upload-user="uploadUser"
       @upload="handleUpload"
+      @preview="handlePreview"
       @delete="handleDelete"
     >
       <template #content>
@@ -21,9 +22,9 @@ import type { McBusinessUploadEmits, McBusinessUploadProps } from "./types";
 import type { IUploadFileResp } from "../../../../apis/file/types";
 import type { IResponse } from "../../../../apis";
 import { ref, watch } from "vue";
-import McUpload from "../../../../../../components/mc-upload/mc-upload.vue";
-import { getFileList, uploadFile } from "../../../../apis";
 import { debounce } from "lodash-es";
+import { McUpload } from "mc-plus";
+import { downloadFile, getFileList, uploadFile } from "../../../../apis";
 
 // options
 defineOptions({ name: "McBusinessUpload" });
@@ -126,12 +127,6 @@ const handleUpload = async (files: UploadFile[]) => {
   emit("update:modelValue", fileIdList);
 };
 
-// handle delete
-const handleDelete = (file: UploadFile) => {
-  const newFileIdList = props.modelValue.filter((f) => f !== file.fid);
-  emit("update:modelValue", newFileIdList);
-};
-
 // upload api
 const uploadApi = async (file?: File) => {
   if (!file) return Promise.reject(new Error("File is required"));
@@ -141,6 +136,37 @@ const uploadApi = async (file?: File) => {
   const res = await uploadFile(formData);
 
   return res;
+};
+
+// handle delete
+const handleDelete = (file: UploadFile) => {
+  const newFileIdList = props.modelValue.filter((f) => f !== file.fid);
+  emit("update:modelValue", newFileIdList);
+};
+
+// handle preview
+const handlePreview = async (file: UploadFile) => {
+  if (!file.fid || !file.name || file.status !== "successed") return;
+  const fileId = file.fid;
+  const res = await downloadFile({ fileId });
+  const ext = file.name.split(".")[1];
+  if (["pdf", "png", "jpg", "jpeg"].includes(ext)) {
+    // preview
+    const type = ext === "pdf" ? "application/pdf" : "image/jpeg";
+    const blobView = new Blob([res.data], { type: type });
+    const imageUrl = URL.createObjectURL(blobView);
+    window.open(imageUrl, "_blank");
+    URL.revokeObjectURL(imageUrl);
+  } else {
+    // download
+    const blob = new Blob([res.data]);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = file.name;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 };
 </script>
 

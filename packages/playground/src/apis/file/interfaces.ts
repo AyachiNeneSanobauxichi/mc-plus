@@ -22,7 +22,10 @@ const uploadFile = async (req: IUploadFileReq) => {
 // download file
 const downloadFile = async ({ fileId }: IDownloadFileReq) => {
   return await http.get<IDownloadFileReq, IDownloadFileResp>(
-    `/auth/file/download?fileId=${fileId}`
+    `/auth/file/download.do?fileId=${fileId}`,
+    {
+      responseType: "blob",
+    }
   );
 };
 
