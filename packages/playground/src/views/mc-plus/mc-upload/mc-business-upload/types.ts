@@ -1,8 +1,8 @@
 export interface McBusinessUploadProps {
-  modelValue?: string[] | undefined;
+  modelValue?: number[] | undefined;
   uploadUser?: string | undefined;
 }
 
 export interface McBusinessUploadEmits {
-  (e: "update:modelValue", value: string[]): void;
+  (e: "update:modelValue", value: number[]): void;
 }

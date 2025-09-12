@@ -1,7 +1,4 @@
 <template>
-  <div>
-    <span>File List: {{ fileList }}</span>
-  </div>
   <div class="mc-business-upload">
     <mc-upload
       ref="uploadRef"
@@ -10,6 +7,10 @@
       @upload="handleUpload"
       @delete="handleDelete"
     >
+      <template #content>
+        <span>Latest 3 months’ original computerized salary slips; or</span>
+        <span>Latest Notice of Assessment</span>
+      </template>
     </mc-upload>
   </div>
 </template>
@@ -19,9 +20,10 @@ import type { UploadFile } from "mc-plus";
 import type { McBusinessUploadEmits, McBusinessUploadProps } from "./types";
 import type { IUploadFileResp } from "../../../../apis/file/types";
 import type { IResponse } from "../../../../apis";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import McUpload from "../../../../../../components/mc-upload/mc-upload.vue";
-import { uploadFile } from "../../../../apis";
+import { getFileList, uploadFile } from "../../../../apis";
+import { debounce } from "lodash-es";
 
 // options
 defineOptions({ name: "McBusinessUpload" });
@@ -37,6 +39,38 @@ const emit = defineEmits<McBusinessUploadEmits>();
 // file list
 const fileList = ref<UploadFile[]>([]);
 
+// get file detail
+const getFileDetail = debounce(async () => {
+  // model value is empty
+  if (!props.modelValue.length) {
+    fileList.value = [];
+    return;
+  }
+
+  // set files detail
+  const res = await getFileList({ idList: props.modelValue });
+  fileList.value = res.data.fileEntityList.map((file) => ({
+    fid: file.id,
+    name: file.fileName,
+    size: file.fileSize,
+    uploadBy: file.createByUserName,
+    uploadTime: file.createAt,
+    status: "successed",
+    progress: 100,
+  }));
+}, 1000);
+
+// model value change
+watch(
+  () => props.modelValue,
+  () => {
+    getFileDetail();
+  },
+  {
+    immediate: true,
+  }
+);
+
 // handle upload
 const handleUpload = async (files: UploadFile[]) => {
   // upload queue
@@ -48,11 +82,12 @@ const handleUpload = async (files: UploadFile[]) => {
   }
   // result
   const res = await Promise.allSettled(uploadQueue);
+
   // result index
   let resIdx = 0;
 
   // file id list
-  const fileIdList: string[] = [];
+  const fileIdList: number[] = [];
 
   // update file list
   fileList.value = files.map((file) => {
@@ -68,20 +103,19 @@ const handleUpload = async (files: UploadFile[]) => {
         newFile.status = "successed";
         newFile.progress = 100;
         // add new file id
-        fileIdList.push(`${fulfiledRes.value.data.id}`);
+        fileIdList.push(fulfiledRes.value.data.id);
       } else {
         // failed
-        // const rejectedRes = res[resIdx] as PromiseRejectedResult;
+        const rejectedRes = res[resIdx] as PromiseRejectedResult;
         newFile.status = "failed";
-        // newFile.errorMessage = rejectedRes.reason.message;
-        newFile.errorMessage = "Upload failed";
+        newFile.errorMessage = rejectedRes.reason.message || "Upload failed";
         newFile.progress = 100;
       }
       resIdx++;
       return newFile;
     } else if (file.status === "successed") {
       // successed
-      file.fid && fileIdList.push(`${file.fid}`);
+      file.fid && fileIdList.push(file.fid);
       return file;
     } else {
       return file;
@@ -94,7 +128,7 @@ const handleUpload = async (files: UploadFile[]) => {
 
 // handle delete
 const handleDelete = (file: UploadFile) => {
-  const newFileIdList = props.modelValue.filter((f) => f !== `${file.fid}`);
+  const newFileIdList = props.modelValue.filter((f) => f !== file.fid);
   emit("update:modelValue", newFileIdList);
 };
 
