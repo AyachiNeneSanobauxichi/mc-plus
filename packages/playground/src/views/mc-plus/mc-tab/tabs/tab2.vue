@@ -10,8 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import McTab from "../../../../../components/mc-tab/mc-tab.vue";
-import McTabItem from "../../../../../components/mc-tab/mc-tab-item.vue";
+import { McTab, McTabItem } from "mc-plus";
 
 const activeTab = ref<number>(3);
 </script>
