@@ -5,7 +5,6 @@ $border_color: var(--mc-gray-500);
 .mc-table-header {
   @include mixin.reset-table-style;
   width: 100%;
-  table-layout: fixed;
 
   .mc-table-header-thead {
     @include mixin.reset-thead-style;

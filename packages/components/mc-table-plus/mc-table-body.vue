@@ -45,7 +45,7 @@
         <template v-if="isExpand(index)">
           <tr class="mc-table-body-expand-row">
             <template v-if="$slots.expand">
-              <td>
+              <td :colspan="columns?.length">
                 <slot name="expand" :row="item" :row-index="index"></slot>
               </td>
             </template>

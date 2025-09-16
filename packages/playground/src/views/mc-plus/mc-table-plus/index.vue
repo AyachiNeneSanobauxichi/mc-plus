@@ -12,17 +12,15 @@
         <template #expand="{ row, rowIndex }">
           <div>row: {{ rowIndex }} {{ row }}</div>
         </template>
-        <mc-table-column prop="label" label="Label" width="200">
+        <mc-table-column prop="label" label="Label">
           <template #value="{ value }">
             <span class="deposit-lable">{{ value }}</span>
           </template>
         </mc-table-column>
-        <mc-table-column prop="name" label="Name" width="200">
-        </mc-table-column>
+        <mc-table-column prop="name" label="Name"> </mc-table-column>
         <mc-table-column
           prop="updateTime"
           label="Last Updated Date"
-          width="200"
         ></mc-table-column>
         <mc-table-column prop="account" label="Account">
           <template #value="{ value }">{{ ACCOUNT_ENUM.get(value) }}</template>
@@ -35,12 +33,7 @@
             <mc-currency-icon :cdn-url="CDN_URL" :currency="value" />
           </template>
         </mc-table-column>
-        <mc-table-column
-          prop="amount"
-          label="Amount"
-          width="200"
-          column-align="right"
-        ></mc-table-column>
+        <mc-table-column prop="amount" label="Amount"></mc-table-column>
         <mc-table-column
           prop="status"
           label="Status"
