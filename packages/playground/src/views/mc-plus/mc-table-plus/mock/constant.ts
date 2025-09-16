@@ -1,4 +1,6 @@
-const POSITION_DATA = [
+import type { PositionTableRow } from "./types";
+
+const POSITION_DATA: PositionTableRow[] = [
   {
     tokenName: "xAAPL",
     tokenDesc: "Apple Inc",
@@ -18,8 +20,8 @@ const POSITION_DATA = [
     position: "10000",
     unrealizedPnl: "1353.34",
     realizedPnl: "1353.34",
-    isPositive: true,
-    changeRate: "0.25%",
+    isPositive: false,
+    changeRate: "2.12%",
     todayPnl: "1353.34",
     price: "121.14",
     quantity: "12421",

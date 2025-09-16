@@ -4,7 +4,9 @@ import { POSITION_DATA } from "./constant";
 const getPositionList = async () => {
   await delay(300);
   return {
-    list: POSITION_DATA,
+    code: 200,
+    message: "success",
+    data: POSITION_DATA,
   };
 };
 
