@@ -6,6 +6,7 @@ $bg_color_expand: var(--mc-gray-100);
 .mc-table-body {
   @include mixin.reset-table-style;
   width: 100%;
+  table-layout: fixed;
   position: relative;
   min-height: 56px;
 
