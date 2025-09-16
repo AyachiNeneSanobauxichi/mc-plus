@@ -1,13 +1,20 @@
 <template>
   <div class="mc-table-sort" :class="`mc-table-sort-${sort}`">
-    <mc-icon :name="iconName" />
+    <mc-icon
+      name="Up-Chevron02"
+      :class="{ 'mc-table-sort-actived': sort === 'asc' }"
+      :style="{ height: '8px' }"
+    />
+    <mc-icon
+      name="Down-Chevron02"
+      :class="{ 'mc-table-sort-actived': sort === 'desc' }"
+      :style="{ height: '8px' }"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { IconType } from "../mc-icon";
 import type { McTableSortProps } from "./types/mc-table-sort";
-import { computed } from "vue";
 import { MC_TABLE_SORT } from "./constant";
 import McIcon from "../mc-icon/mc-icon.vue";
 
@@ -17,18 +24,6 @@ defineOptions({ name: MC_TABLE_SORT });
 // props
 const props = withDefaults(defineProps<McTableSortProps>(), {
   sort: "normal",
-});
-
-// icon name
-const iconName = computed<IconType>(() => {
-  switch (props.sort) {
-    case "normal":
-      return "Sort";
-    case "asc":
-      return "Sort_Asc";
-    case "desc":
-      return "Sort_Desc";
-  }
 });
 </script>
 

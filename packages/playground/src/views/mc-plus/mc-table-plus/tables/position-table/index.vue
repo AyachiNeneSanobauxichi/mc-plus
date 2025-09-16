@@ -1,6 +1,6 @@
 <template>
   <div class="position-table">
-    <mc-table-plus :data="positionList" :loading="loading">
+    <mc-table-plus :data="positionList" :loading="loading" sort-type="front">
       <mc-table-column prop="tokenName" label="Token Name" sortable>
         <template #value="{ value, row }">
           <link-cell :link="value" :desc="row.tokenDesc" />
@@ -105,13 +105,13 @@
 
 <script setup lang="ts">
 import type { PositionTableRow } from "../../mock/types";
+import { McTooltip } from "mc-plus";
 import { onMounted, ref } from "vue";
 import McTablePlus from "../../../../../../../components/mc-table-plus/mc-table-plus.vue";
 import McTableColumn from "../../../../../../../components/mc-table-plus/mc-table-column.vue";
 import LinkCell from "../components/link-cell/index.vue";
 import PlCell from "../components/pl-cell/index.vue";
 import DescCell from "../components/desc-cell/index.vue";
-import { McTooltip } from "mc-plus";
 import { getPositionList } from "../../mock/apis";
 
 // position list
