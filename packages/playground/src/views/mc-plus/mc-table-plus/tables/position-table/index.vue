@@ -1,7 +1,7 @@
 <template>
   <div class="position-table">
     <mc-table-plus :data="positionList" :loading="loading">
-      <mc-table-column prop="tokenName" label="Token Name">
+      <mc-table-column prop="tokenName" label="Token Name" sortable>
         <template #value="{ value, row }">
           <link-cell :link="value" :desc="row.tokenDesc" />
         </template>
@@ -10,11 +10,13 @@
         prop="position"
         label="Position"
         column-align="right"
+        sortable
       ></mc-table-column>
       <mc-table-column
         prop="unrealizedPnl"
-        label="Unrealized PNL"
+        label="Unrealized P/L"
         column-align="right"
+        sortable
       >
         <template #value="{ value, row }">
           <pl-cell
@@ -22,12 +24,51 @@
             :isPositive="row.isPositive"
             :changeRate="row.changeRate"
           />
+        </template>
+        <template #header-title>
+          <div class="title-tooltip">
+            <div class="title-tooltip-text">Unrealized P/L</div>
+            <div class="title-tooltip-icon">
+              <mc-tooltip
+                content="Unrealized P/L"
+                icon-name="Help"
+                :icon-size="20"
+              />
+            </div>
+          </div>
         </template>
       </mc-table-column>
       <mc-table-column
         prop="realizedPnl"
-        label="Realized PNL"
+        label="Realized P/L"
         column-align="right"
+        sortable
+      >
+        <template #value="{ value, row }">
+          <pl-cell
+            :value="value"
+            :isPositive="row.isPositive"
+            :changeRate="row.changeRate"
+          />
+        </template>
+        <template #header-title>
+          <div class="title-tooltip">
+            <div class="title-tooltip-text">Realized P/L</div>
+            <div class="title-tooltip-icon">
+              <mc-tooltip
+                content="Realized P/L"
+                icon-name="Help"
+                :icon-size="20"
+              />
+            </div>
+          </div>
+        </template>
+      </mc-table-column>
+      <mc-table-column
+        prop="todayPnl"
+        label="Today P/L"
+        column-align="right"
+        sortable
       >
         <template #value="{ value, row }">
           <pl-cell
@@ -37,21 +78,23 @@
           />
         </template>
       </mc-table-column>
-      <mc-table-column prop="todayPnl" label="Today PNL" column-align="right">
-        <template #value="{ value, row }">
-          <pl-cell
-            :value="value"
-            :isPositive="row.isPositive"
-            :changeRate="row.changeRate"
-          />
+      <mc-table-column prop="price" label="Price" column-align="right" sortable>
+        <template #header-title>
+          <div class="title-tooltip">
+            <div class="title-tooltip-text">Price</div>
+            <div class="title-tooltip-icon">
+              <mc-tooltip content="Price" icon-name="Help" :icon-size="20" />
+            </div>
+          </div>
         </template>
       </mc-table-column>
       <mc-table-column
-        prop="price"
-        label="Price"
+        prop="quantity"
+        label="Quantity"
+        desc="Available"
         column-align="right"
-      ></mc-table-column>
-      <mc-table-column prop="quantity" label="Quantity" column-align="right">
+        sortable
+      >
         <template #value="{ value, row }">
           <desc-cell :value="value" :desc="row.availableQuantity" />
         </template>
@@ -68,6 +111,7 @@ import McTableColumn from "../../../../../../../components/mc-table-plus/mc-tabl
 import LinkCell from "../components/link-cell/index.vue";
 import PlCell from "../components/pl-cell/index.vue";
 import DescCell from "../components/desc-cell/index.vue";
+import { McTooltip } from "mc-plus";
 import { getPositionList } from "../../mock/apis";
 
 // position list
@@ -92,8 +136,16 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-// @use "@mc-plus/theme/mixins.scss" as mixin;
+@use "@mc-plus/theme/mixins.scss" as mixin;
 
-// .position-table {
-// }
+.position-table {
+  .title-tooltip {
+    @include mixin.flex-center($justify: flex-start, $gap: 8px);
+
+    .title-tooltip-icon {
+      font-weight: 400;
+      font-size: 16px;
+    }
+  }
+}
 </style>
