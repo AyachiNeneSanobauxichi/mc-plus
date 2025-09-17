@@ -18,6 +18,7 @@
           <mc-table-body-cell
             v-for="column in columns"
             :key="column.prop"
+            :row="item"
             :column-align="column.columnAlign"
             :value="item?.[column.prop]"
             :type="column.isExpand ? 'expand' : 'normal'"
@@ -43,21 +44,23 @@
           </mc-table-body-cell>
         </tr>
         <template v-if="isExpand(index)">
-          <tr class="mc-table-body-expand-row">
-            <template v-if="$slots.expand">
-              <td>
-                <slot name="expand" :row="item" :row-index="index"></slot>
-              </td>
-            </template>
-            <template v-else>
-              <td
-                v-for="column in columns"
-                :key="column.prop"
-                class="mc-table-body-expand-row-cell"
-              >
-                <component :is="column.expand" v-if="column.expand" />
-              </td>
-            </template>
+          <tr
+            class="mc-table-body-expand-row"
+            v-for="(item, expandIndex) in getExpandData(index)"
+            :key="expandIndex"
+          >
+            <td
+              v-for="column in columns"
+              :key="column.prop"
+              class="mc-table-body-expand-row-cell"
+            >
+              <component
+                :is="column.expand"
+                :expandRow="item"
+                :expandRowIndex="expandIndex"
+                v-if="column.expand"
+              />
+            </td>
           </tr>
         </template>
       </template>
@@ -81,6 +84,12 @@ const { columns, data, rowState } = useTableContext();
 const isExpand = (index: number) => {
   if (isNil(rowState?.value[index])) return false;
   return rowState.value[index].isExpand;
+};
+
+// get expand data
+const getExpandData = (index: number) => {
+  if (isNil(rowState?.value[index]?.expandData)) return [];
+  return rowState.value[index].expandData;
 };
 </script>
 

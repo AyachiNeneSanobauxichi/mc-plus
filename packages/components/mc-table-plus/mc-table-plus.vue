@@ -21,7 +21,7 @@
             :class="{ 'mc-table-body-fixed-height': !!props.height }"
           >
             <mc-table-body>
-              <template #expand="{ row, rowIndex }">
+              <template #expand="{ row, rowIndex }" v-if="$slots.expand">
                 <slot name="expand" :row="row" :row-index="rowIndex"></slot>
               </template>
             </mc-table-body>
@@ -92,6 +92,7 @@ const rowState = ref<McTableRowState[]>([]);
 const resetRowState = () => {
   rowState.value = new Array(tableData.value.length).fill({
     isExpand: false,
+    expandData: [],
   });
 };
 
@@ -104,6 +105,8 @@ const setRowStateByIndex = (
     ...rowState.value[index],
     ...payload,
   };
+
+  emit("change:expand", tableData.value[index], !!payload.isExpand);
 };
 
 // reset sort
@@ -121,6 +124,9 @@ const resetSort = () => {
 
 // handle sort
 const handleSort = (prop: string, sort: McTableSort) => {
+  // reset row state
+  resetRowState();
+
   columns.value = map(columns.value, (column) => {
     if (column.prop === prop) {
       return { ...column, sort };
@@ -179,6 +185,8 @@ provide(MC_TABLE_CTX_KEY, {
   handleSort,
   handlePagination,
   setRowStateByIndex,
+  expandCondition: props.expandCondition,
+  fetchExpandData: props.fetchExpandData,
 });
 </script>
 
