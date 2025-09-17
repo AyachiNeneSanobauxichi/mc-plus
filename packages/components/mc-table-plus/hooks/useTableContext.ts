@@ -16,6 +16,7 @@ const useTableContext = () => {
     handlePagination: tableCtx?.handlePagination,
     setRowStateByIndex: tableCtx?.setRowStateByIndex,
     expandCondition: tableCtx?.expandCondition,
+    fetchExpandData: tableCtx?.fetchExpandData,
   };
 };
 

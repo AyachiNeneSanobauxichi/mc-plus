@@ -182,6 +182,7 @@ provide(MC_TABLE_CTX_KEY, {
   handlePagination,
   setRowStateByIndex,
   expandCondition: props.expandCondition,
+  fetchExpandData: props.fetchExpandData,
 });
 </script>
 

@@ -58,7 +58,8 @@ const displayValue = computed(() => {
 });
 
 // table context
-const { setRowStateByIndex, expandCondition, rowState } = useTableContext();
+const { setRowStateByIndex, expandCondition, fetchExpandData, rowState } =
+  useTableContext();
 
 // allow expand
 const allowExpand = () => {
@@ -67,7 +68,7 @@ const allowExpand = () => {
 };
 
 // handle expand
-const handleExpand = () => {
+const handleExpand = async () => {
   if (
     props.type !== "expand" ||
     !isFunction(setRowStateByIndex) ||
@@ -77,9 +78,19 @@ const handleExpand = () => {
     return;
   }
 
+  // is expand
+  const _isExpand = rowState.value[props.rowIndex].isExpand;
+
+  // expand data
+  let expandData: any[] = [];
+  if (isFunction(fetchExpandData) && !_isExpand) {
+    expandData = unref(await fetchExpandData(props.row));
+  }
+
   // expand row
   setRowStateByIndex(props.rowIndex, {
-    isExpand: !rowState.value[props.rowIndex].isExpand,
+    isExpand: !_isExpand,
+    expandData,
   });
 };
 </script>

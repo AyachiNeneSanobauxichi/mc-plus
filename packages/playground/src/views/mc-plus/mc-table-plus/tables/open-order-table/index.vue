@@ -5,7 +5,7 @@
       :loading="loading"
       sort-type="front"
       :expand-condition="expandCondition"
-      @change:expand="handleExpand"
+      :fetch-expand-data="fetchExpandData"
     >
       <mc-table-column prop="tokenName" label="Token Name" sortable>
         <template #value="{ value, row }">
@@ -26,9 +26,8 @@
         <template #value="{ value, row }">
           <desc-cell :value="value" :desc="row.orderPrice" />
         </template>
-        <template #expand>
-          <div class="expand-cell">108.63</div>
-          <div class="expand-cell">108.64</div>
+        <template #expand="{ expandRow }">
+          <div class="expand-cell">{{ expandRow.avgPrice }}</div>
         </template>
       </mc-table-column>
       <mc-table-column
@@ -41,30 +40,30 @@
           <desc-cell :value="value" :desc="row.orderQty" />
         </template>
 
-        <template #expand>
-          <div class="expand-cell">300</div>
-          <div class="expand-cell">400</div>
+        <template #expand="{ expandRow }">
+          <div class="expand-cell">{{ expandRow.fillQty }}</div>
         </template>
       </mc-table-column>
       <mc-table-column prop="status" label="Status" sortable>
         <template #value="{ value }">
           <mc-status :type="getStatusType(value)">{{ value }}</mc-status>
         </template>
-        <template #expand>
-          <div class="expand-cell expand-status-cell">
-            <mc-status :type="getStatusType('Success')">Success</mc-status>
-          </div>
-          <div class="expand-cell expand-status-cell">
-            <mc-status :type="getStatusType('Success')">Success</mc-status>
+        <template #expand="{ expandRow }">
+          <div class="expand-cell expand-left-cell">
+            <mc-status :type="getStatusType(expandRow.status)">
+              {{ expandRow.status }}
+            </mc-status>
           </div>
         </template>
       </mc-table-column>
-      <mc-table-column
-        prop="lastUpdate"
-        label="Last Update"
-        sortable
-      ></mc-table-column>
-      <mc-table-column prop="expand"></mc-table-column>
+      <mc-table-column prop="lastUpdate" label="Last Update" sortable>
+        <template #expand="{ expandRow }">
+          <div class="expand-cell expand-left-cell">
+            {{ expandRow.lastUpdate }}
+          </div>
+        </template>
+      </mc-table-column>
+      <mc-table-column prop="expand"> </mc-table-column>
     </mc-table-plus>
   </div>
 </template>
@@ -109,15 +108,13 @@ const expandCondition = (row: OpenOrderTableRow) => {
   return row.status === "Partially Completed";
 };
 
-// expand data
-const expandData = ref<Partial<OpenOrderTableRow>[]>([]);
-
-// handle expand
-const handleExpand = async (row: OpenOrderTableRow, isExpand: boolean) => {
-  console.log("handleExpand Row: ", row);
-  console.log("handleExpand Is Expand: ", isExpand);
+// fetch expand data
+const fetchExpandData = async (row: OpenOrderTableRow) => {
+  loading.value = true;
   const { data } = await getOpenOrderExpandList(row.tokenName);
-  expandData.value = data;
+  loading.value = false;
+  
+  return data;
 };
 </script>
 
@@ -131,7 +128,7 @@ const handleExpand = async (row: OpenOrderTableRow, isExpand: boolean) => {
     padding: 16px 8px;
     box-sizing: border-box;
 
-    &.expand-status-cell {
+    &.expand-left-cell {
       justify-content: flex-start;
     }
   }

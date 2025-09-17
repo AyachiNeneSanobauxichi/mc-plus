@@ -27,6 +27,7 @@ export interface McTableProps {
   width?: number | string;
   height?: number | string;
   expandCondition?: (row: any) => MaybeRef<boolean>;
+  fetchExpandData?: (row: any) => Promise<any[]> | MaybeRef<any[]>;
 }
 
 export interface McTableContext {
@@ -42,6 +43,7 @@ export interface McTableContext {
     payload: Partial<McTableRowState>
   ) => void;
   expandCondition?: (row: any) => MaybeRef<boolean>;
+  fetchExpandData?: (row: any) => Promise<any[]> | MaybeRef<any[]>;
 }
 
 export interface McTableEmits {
@@ -59,4 +61,5 @@ export interface McTablePaginationType {
 
 export interface McTableRowState {
   isExpand: boolean;
+  expandData?: any[];
 }
