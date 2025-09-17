@@ -18,6 +18,7 @@
           <mc-table-body-cell
             v-for="column in columns"
             :key="column.prop"
+            :row="item"
             :column-align="column.columnAlign"
             :value="item?.[column.prop]"
             :type="column.isExpand ? 'expand' : 'normal'"

@@ -21,7 +21,7 @@
             :class="{ 'mc-table-body-fixed-height': !!props.height }"
           >
             <mc-table-body>
-              <template #expand="{ row, rowIndex }">
+              <template #expand="{ row, rowIndex }" v-if="$slots.expand">
                 <slot name="expand" :row="row" :row-index="rowIndex"></slot>
               </template>
             </mc-table-body>
@@ -41,7 +41,7 @@ import type {
   McTableRowState,
   McTableSort,
 } from "./types";
-import { computed, provide, ref, useSlots, watch } from "vue";
+import { computed, provide, ref, useSlots, watch, watchEffect } from "vue";
 import { map, orderBy } from "lodash-es";
 import McLoading from "../mc-loading/mc-loading.vue";
 import McTableHeader from "./mc-table-header.vue";
@@ -71,6 +71,10 @@ const { width, height } = useWidthHeight();
 
 // table columns
 const columns = ref<McTableColumn[]>([]);
+
+watchEffect(() => {
+  console.log("Columns: ", columns.value);
+});
 
 // table data
 const tableData = ref<any[]>(props.data);
@@ -179,6 +183,7 @@ provide(MC_TABLE_CTX_KEY, {
   handleSort,
   handlePagination,
   setRowStateByIndex,
+  expandCondition: props.expandCondition,
 });
 </script>
 

@@ -15,6 +15,7 @@ const useTableContext = () => {
     doSort: tableCtx?.handleSort,
     handlePagination: tableCtx?.handlePagination,
     setRowStateByIndex: tableCtx?.setRowStateByIndex,
+    expandCondition: tableCtx?.expandCondition,
   };
 };
 

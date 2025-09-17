@@ -1,6 +1,11 @@
 <template>
   <div class="open-order-table">
-    <mc-table-plus :data="openOrderList" :loading="loading" sort-type="front">
+    <mc-table-plus
+      :data="openOrderList"
+      :loading="loading"
+      sort-type="front"
+      :expand-condition="expandCondition"
+    >
       <mc-table-column prop="tokenName" label="Token Name" sortable>
         <template #value="{ value, row }">
           <link-cell :link="value" :desc="row.tokenDesc" />
@@ -20,6 +25,10 @@
         <template #value="{ value, row }">
           <desc-cell :value="value" :desc="row.orderPrice" />
         </template>
+        <template #expand>
+          <div class="expand-cell">108.63</div>
+          <div class="expand-cell">108.64</div>
+        </template>
       </mc-table-column>
       <mc-table-column
         prop="fillQty"
@@ -29,6 +38,11 @@
       >
         <template #value="{ value, row }">
           <desc-cell :value="value" :desc="row.orderQty" />
+        </template>
+
+        <template #expand>
+          <div class="expand-cell">300</div>
+          <div class="expand-cell">400</div>
         </template>
       </mc-table-column>
       <mc-table-column prop="status" label="Status" sortable>
@@ -41,6 +55,7 @@
         label="Last Update"
         sortable
       ></mc-table-column>
+      <mc-table-column prop="expand"></mc-table-column>
     </mc-table-plus>
   </div>
 </template>
@@ -74,6 +89,22 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+// expand condition
+const expandCondition = (row: OpenOrderTableRow) => {
+  return row.status === "Partially Completed";
+};
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.open-order-table {
+  .expand-cell {
+    @include mixin.flex-center($align: flex-start, $justify: flex-end);
+    height: 80px;
+    padding: 16px 8px;
+    box-sizing: border-box;
+  }
+}
+</style>

@@ -11,9 +11,13 @@
       >
         <template v-if="type === 'expand'">
           <mc-icon
-            :name="
-              rowState?.[rowIndex]?.isExpand ? 'Up-Chevron' : 'Down-Chevron'
-            "
+            v-if="allowExpand()"
+            class="mc-table-body-cell-expand-icon"
+            :class="{
+              'mc-table-body-cell-expand-icon-active':
+                rowState?.[rowIndex]?.isExpand,
+            }"
+            name="Down-Chevron"
           />
         </template>
         <template v-else>
@@ -30,7 +34,7 @@
 
 <script setup lang="ts">
 import type { McTablePlusBodyCellProps } from "./types";
-import { computed } from "vue";
+import { computed, unref } from "vue";
 import McIcon from "../mc-icon/mc-icon.vue";
 import { MC_TABLE_BODY_CELL, MC_TABLE_DEFAULT_VALUE } from "./constant";
 import { getFlexAlign } from "./utils";
@@ -54,14 +58,21 @@ const displayValue = computed(() => {
 });
 
 // table context
-const { setRowStateByIndex, rowState } = useTableContext();
+const { setRowStateByIndex, expandCondition, rowState } = useTableContext();
+
+// allow expand
+const allowExpand = () => {
+  if (!isFunction(expandCondition)) return true;
+  return expandCondition(props.row);
+};
 
 // handle expand
 const handleExpand = () => {
   if (
     props.type !== "expand" ||
     !isFunction(setRowStateByIndex) ||
-    isNil(rowState?.value[props.rowIndex])
+    isNil(rowState?.value[props.rowIndex]) ||
+    !unref(allowExpand())
   ) {
     return;
   }

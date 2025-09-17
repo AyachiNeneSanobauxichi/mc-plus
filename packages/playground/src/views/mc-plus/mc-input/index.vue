@@ -16,7 +16,6 @@
             width="100%"
             :disabled="disabled"
             prefix-icon="Search"
-            type="number"
             :maxlength="10"
           >
           </mc-input>

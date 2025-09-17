@@ -13,7 +13,13 @@
 
   &.mc-table-body-cell-expand {
     .mc-table-body-cell-wrapper {
-      cursor: pointer;
+      .mc-table-body-cell-expand-icon {
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+        &.mc-table-body-cell-expand-icon-active {
+          transform: rotate(180deg);
+        }
+      }
     }
   }
 }

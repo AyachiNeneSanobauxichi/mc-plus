@@ -1,4 +1,4 @@
-import type { Ref, Slot } from "vue";
+import type { MaybeRef, Ref, Slot } from "vue";
 import type { McTableColumnProps } from "./mc-table-column";
 
 export type McTableAlign = "left" | "center" | "right";
@@ -26,6 +26,7 @@ export interface McTableProps {
   pagination?: McTablePaginationType;
   width?: number | string;
   height?: number | string;
+  expandCondition?: (row: any) => MaybeRef<boolean>;
 }
 
 export interface McTableContext {
@@ -40,6 +41,7 @@ export interface McTableContext {
     index: number,
     payload: Partial<McTableRowState>
   ) => void;
+  expandCondition?: (row: any) => MaybeRef<boolean>;
 }
 
 export interface McTableEmits {
