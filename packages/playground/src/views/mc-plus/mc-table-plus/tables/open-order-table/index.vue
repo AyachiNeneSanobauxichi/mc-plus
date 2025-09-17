@@ -63,7 +63,14 @@
           </div>
         </template>
       </mc-table-column>
-      <mc-table-column prop="expand"> </mc-table-column>
+      <mc-table-column prop="expand" />
+      <mc-table-column prop="Action" width="40">
+        <template #value>
+          <div class="action-cell">
+            <mc-icon name="Cross" />
+          </div>
+        </template>
+      </mc-table-column>
     </mc-table-plus>
   </div>
 </template>
@@ -71,7 +78,7 @@
 <script setup lang="ts">
 import type { OpenOrderTableRow } from "../../mock/types";
 import { onMounted, ref } from "vue";
-import { McCurrencyIcon, McStatus } from "mc-plus";
+import { McCurrencyIcon, McStatus, McIcon } from "mc-plus";
 import McTablePlus from "../../../../../../../components/mc-table-plus/mc-table-plus.vue";
 import McTableColumn from "../../../../../../../components/mc-table-plus/mc-table-column.vue";
 import LinkCell from "../components/link-cell/index.vue";
@@ -113,13 +120,15 @@ const fetchExpandData = async (row: OpenOrderTableRow) => {
   loading.value = true;
   const { data } = await getOpenOrderExpandList(row.tokenName);
   loading.value = false;
-  
+
   return data;
 };
 </script>
 
 <style scoped lang="scss">
 @use "@mc-plus/theme/mixins.scss" as mixin;
+
+$action_color: var(--mc-teal-500);
 
 .open-order-table {
   .expand-cell {
@@ -131,6 +140,11 @@ const fetchExpandData = async (row: OpenOrderTableRow) => {
     &.expand-left-cell {
       justify-content: flex-start;
     }
+  }
+
+  .action-cell {
+    cursor: pointer;
+    color: $action_color;
   }
 }
 </style>

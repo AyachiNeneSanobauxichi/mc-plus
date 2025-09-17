@@ -1,5 +1,7 @@
 @use "@mc-plus/theme/mixins.scss" as mixin;
 
+$icon_color: var(--mc-teal-500);
+
 .mc-table-body-cell {
   @include mixin.reset-td-style;
 
@@ -15,6 +17,7 @@
     .mc-table-body-cell-wrapper {
       .mc-table-body-cell-expand-icon {
         cursor: pointer;
+        color: $icon_color;
         transition: transform 0.3s ease-in-out;
         &.mc-table-body-cell-expand-icon-active {
           transform: rotate(180deg);
