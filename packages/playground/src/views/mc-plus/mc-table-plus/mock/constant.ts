@@ -91,7 +91,22 @@ const OPEN_ORDER_DATA: OpenOrderTableRow[] = [
   },
 ];
 
+const OPEN_ORDER_EXPAND_DATA: Partial<OpenOrderTableRow>[] = [
+  {
+    avgPrice: "108.63",
+    fillQty: "300",
+    status: "Success",
+    lastUpdate: "02 Jun 2025 11:11:11",
+  },
+  {
+    avgPrice: "108.64",
+    fillQty: "400",
+    status: "Success",
+    lastUpdate: "02 Jun 2025 11:11:11",
+  },
+];
+
 const CDN_URL =
   "https://d1850j7ztm58xd.cloudfront.net/trader-site-v3-static/currency";
 
-export { CDN_URL, POSITION_DATA, OPEN_ORDER_DATA };
+export { CDN_URL, POSITION_DATA, OPEN_ORDER_DATA, OPEN_ORDER_EXPAND_DATA };

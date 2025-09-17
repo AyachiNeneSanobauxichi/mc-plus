@@ -47,6 +47,7 @@ export interface McTableContext {
 export interface McTableEmits {
   (e: "change:sort", prop: string, sort: McTableSort): void;
   (e: "change:pagination", pagination: McTablePaginationType): void;
+  (e: "change:expand", row: any, isExpand: boolean): void;
 }
 
 export interface McTablePaginationType {

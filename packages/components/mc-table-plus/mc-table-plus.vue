@@ -41,7 +41,7 @@ import type {
   McTableRowState,
   McTableSort,
 } from "./types";
-import { computed, provide, ref, useSlots, watch, watchEffect } from "vue";
+import { computed, provide, ref, useSlots, watch } from "vue";
 import { map, orderBy } from "lodash-es";
 import McLoading from "../mc-loading/mc-loading.vue";
 import McTableHeader from "./mc-table-header.vue";
@@ -71,10 +71,6 @@ const { width, height } = useWidthHeight();
 
 // table columns
 const columns = ref<McTableColumn[]>([]);
-
-watchEffect(() => {
-  console.log("Columns: ", columns.value);
-});
 
 // table data
 const tableData = ref<any[]>(props.data);
@@ -108,6 +104,8 @@ const setRowStateByIndex = (
     ...rowState.value[index],
     ...payload,
   };
+
+  emit("change:expand", tableData.value[index], !!payload.isExpand);
 };
 
 // reset sort

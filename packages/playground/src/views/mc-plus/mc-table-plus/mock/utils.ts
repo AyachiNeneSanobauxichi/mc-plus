@@ -7,6 +7,8 @@ const getStatusType = (status: string): StatusType => {
       return "warning";
     case "Partially Completed":
       return "success";
+    case "Success":
+      return "success";
     case "Failed":
       return "error";
     case "Canceled":

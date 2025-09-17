@@ -5,6 +5,7 @@
       :loading="loading"
       sort-type="front"
       :expand-condition="expandCondition"
+      @change:expand="handleExpand"
     >
       <mc-table-column prop="tokenName" label="Token Name" sortable>
         <template #value="{ value, row }">
@@ -49,6 +50,14 @@
         <template #value="{ value }">
           <mc-status :type="getStatusType(value)">{{ value }}</mc-status>
         </template>
+        <template #expand>
+          <div class="expand-cell expand-status-cell">
+            <mc-status :type="getStatusType('Success')">Success</mc-status>
+          </div>
+          <div class="expand-cell expand-status-cell">
+            <mc-status :type="getStatusType('Success')">Success</mc-status>
+          </div>
+        </template>
       </mc-table-column>
       <mc-table-column
         prop="lastUpdate"
@@ -68,7 +77,12 @@ import McTablePlus from "../../../../../../../components/mc-table-plus/mc-table-
 import McTableColumn from "../../../../../../../components/mc-table-plus/mc-table-column.vue";
 import LinkCell from "../components/link-cell/index.vue";
 import DescCell from "../components/desc-cell/index.vue";
-import { CDN_URL, getOpenOrderList, getStatusType } from "../../mock";
+import {
+  CDN_URL,
+  getOpenOrderExpandList,
+  getOpenOrderList,
+  getStatusType,
+} from "../../mock";
 
 // open order list
 const openOrderList = ref<OpenOrderTableRow[]>([]);
@@ -94,6 +108,17 @@ onMounted(async () => {
 const expandCondition = (row: OpenOrderTableRow) => {
   return row.status === "Partially Completed";
 };
+
+// expand data
+const expandData = ref<Partial<OpenOrderTableRow>[]>([]);
+
+// handle expand
+const handleExpand = async (row: OpenOrderTableRow, isExpand: boolean) => {
+  console.log("handleExpand Row: ", row);
+  console.log("handleExpand Is Expand: ", isExpand);
+  const { data } = await getOpenOrderExpandList(row.tokenName);
+  expandData.value = data;
+};
 </script>
 
 <style scoped lang="scss">
@@ -105,6 +130,10 @@ const expandCondition = (row: OpenOrderTableRow) => {
     height: 80px;
     padding: 16px 8px;
     box-sizing: border-box;
+
+    &.expand-status-cell {
+      justify-content: flex-start;
+    }
   }
 }
 </style>
