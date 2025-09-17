@@ -50,6 +50,8 @@ export default [
   components.McTabItem,
   components.McTag,
   components.McTable,
+  components.McTablePlus,
+  components.McTableColumnPlus,
   components.McTextarea,
   components.McTitle,
   components.McTitleToolBar,

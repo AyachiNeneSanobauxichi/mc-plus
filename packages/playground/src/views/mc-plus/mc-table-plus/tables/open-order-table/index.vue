@@ -7,17 +7,17 @@
       :expand-condition="expandCondition"
       :fetch-expand-data="fetchExpandData"
     >
-      <mc-table-column prop="tokenName" label="Token Name" sortable>
+      <mc-table-column-plus prop="tokenName" label="Token Name" sortable>
         <template #value="{ value, row }">
           <link-cell :link="value" :desc="row.tokenDesc" />
         </template>
-      </mc-table-column>
-      <mc-table-column prop="type" label="Type" sortable>
+      </mc-table-column-plus>
+      <mc-table-column-plus prop="type" label="Type" sortable>
         <template #value="{ value }">
           <mc-currency-icon :cdn-url="CDN_URL" :currency="value" />
         </template>
-      </mc-table-column>
-      <mc-table-column
+      </mc-table-column-plus>
+      <mc-table-column-plus
         prop="avgPrice"
         label="Avg Price"
         desc="Order Price"
@@ -29,8 +29,8 @@
         <template #expand="{ expandRow }">
           <div class="expand-cell">{{ expandRow.avgPrice }}</div>
         </template>
-      </mc-table-column>
-      <mc-table-column
+      </mc-table-column-plus>
+      <mc-table-column-plus
         prop="fillQty"
         label="Fill Qty"
         desc="Order Qty"
@@ -43,8 +43,8 @@
         <template #expand="{ expandRow }">
           <div class="expand-cell">{{ expandRow.fillQty }}</div>
         </template>
-      </mc-table-column>
-      <mc-table-column prop="status" label="Status" sortable>
+      </mc-table-column-plus>
+      <mc-table-column-plus prop="status" label="Status" sortable>
         <template #value="{ value }">
           <mc-status :type="getStatusType(value)">{{ value }}</mc-status>
         </template>
@@ -55,22 +55,22 @@
             </mc-status>
           </div>
         </template>
-      </mc-table-column>
-      <mc-table-column prop="lastUpdate" label="Last Update" sortable>
+      </mc-table-column-plus>
+      <mc-table-column-plus prop="lastUpdate" label="Last Update" sortable>
         <template #expand="{ expandRow }">
           <div class="expand-cell expand-left-cell">
             {{ expandRow.lastUpdate }}
           </div>
         </template>
-      </mc-table-column>
-      <mc-table-column prop="expand" />
-      <mc-table-column prop="Action" width="40">
+      </mc-table-column-plus>
+      <mc-table-column-plus prop="expand" />
+      <mc-table-column-plus prop="Action" width="40">
         <template #value>
           <div class="action-cell">
             <mc-icon name="Cross" />
           </div>
         </template>
-      </mc-table-column>
+      </mc-table-column-plus>
     </mc-table-plus>
   </div>
 </template>
@@ -78,9 +78,13 @@
 <script setup lang="ts">
 import type { OpenOrderTableRow } from "../../mock/types";
 import { onMounted, ref } from "vue";
-import { McCurrencyIcon, McStatus, McIcon } from "mc-plus";
-import McTablePlus from "../../../../../../../components/mc-table-plus/mc-table-plus.vue";
-import McTableColumn from "../../../../../../../components/mc-table-plus/mc-table-column.vue";
+import {
+  McCurrencyIcon,
+  McStatus,
+  McIcon,
+  McTablePlus,
+  McTableColumnPlus,
+} from "mc-plus";
 import LinkCell from "../components/link-cell/index.vue";
 import DescCell from "../components/desc-cell/index.vue";
 import {

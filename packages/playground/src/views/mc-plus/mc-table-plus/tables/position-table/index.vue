@@ -1,18 +1,18 @@
 <template>
   <div class="position-table">
     <mc-table-plus :data="positionList" :loading="loading" sort-type="front">
-      <mc-table-column prop="tokenName" label="Token Name" sortable>
+      <mc-table-column-plus prop="tokenName" label="Token Name" sortable>
         <template #value="{ value, row }">
           <link-cell :link="value" :desc="row.tokenDesc" />
         </template>
-      </mc-table-column>
-      <mc-table-column
+      </mc-table-column-plus>
+      <mc-table-column-plus
         prop="position"
         label="Position"
         column-align="right"
         sortable
-      ></mc-table-column>
-      <mc-table-column
+      ></mc-table-column-plus>
+      <mc-table-column-plus
         prop="unrealizedPnl"
         label="Unrealized P/L"
         column-align="right"
@@ -37,8 +37,8 @@
             </div>
           </div>
         </template>
-      </mc-table-column>
-      <mc-table-column
+      </mc-table-column-plus>
+      <mc-table-column-plus
         prop="realizedPnl"
         label="Realized P/L"
         column-align="right"
@@ -63,8 +63,8 @@
             </div>
           </div>
         </template>
-      </mc-table-column>
-      <mc-table-column
+      </mc-table-column-plus>
+      <mc-table-column-plus
         prop="todayPnl"
         label="Today P/L"
         column-align="right"
@@ -77,8 +77,13 @@
             :changeRate="row.changeRate"
           />
         </template>
-      </mc-table-column>
-      <mc-table-column prop="price" label="Price" column-align="right" sortable>
+      </mc-table-column-plus>
+      <mc-table-column-plus
+        prop="price"
+        label="Price"
+        column-align="right"
+        sortable
+      >
         <template #header-title>
           <div class="title-tooltip">
             <div class="title-tooltip-text">Price</div>
@@ -87,8 +92,8 @@
             </div>
           </div>
         </template>
-      </mc-table-column>
-      <mc-table-column
+      </mc-table-column-plus>
+      <mc-table-column-plus
         prop="quantity"
         label="Quantity"
         desc="Available"
@@ -98,17 +103,15 @@
         <template #value="{ value, row }">
           <desc-cell :value="value" :desc="row.availableQuantity" />
         </template>
-      </mc-table-column>
+      </mc-table-column-plus>
     </mc-table-plus>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { PositionTableRow } from "../../mock/types";
-import { McTooltip } from "mc-plus";
 import { onMounted, ref } from "vue";
-import McTablePlus from "../../../../../../../components/mc-table-plus/mc-table-plus.vue";
-import McTableColumn from "../../../../../../../components/mc-table-plus/mc-table-column.vue";
+import { McTooltip, McTablePlus, McTableColumnPlus } from "mc-plus";
 import LinkCell from "../components/link-cell/index.vue";
 import PlCell from "../components/pl-cell/index.vue";
 import DescCell from "../components/desc-cell/index.vue";
