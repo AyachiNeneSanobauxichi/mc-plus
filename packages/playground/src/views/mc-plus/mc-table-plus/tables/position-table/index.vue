@@ -112,7 +112,7 @@ import McTableColumn from "../../../../../../../components/mc-table-plus/mc-tabl
 import LinkCell from "../components/link-cell/index.vue";
 import PlCell from "../components/pl-cell/index.vue";
 import DescCell from "../components/desc-cell/index.vue";
-import { getPositionList } from "../../mock/apis";
+import { getPositionList } from "../../mock";
 
 // position list
 const positionList = ref<PositionTableRow[]>([]);

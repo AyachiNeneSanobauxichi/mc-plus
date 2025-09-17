@@ -22,7 +22,7 @@ import McIcon from "../mc-icon/mc-icon.vue";
 defineOptions({ name: MC_TABLE_SORT });
 
 // props
-const props = withDefaults(defineProps<McTableSortProps>(), {
+withDefaults(defineProps<McTableSortProps>(), {
   sort: "normal",
 });
 </script>

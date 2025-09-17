@@ -11,3 +11,15 @@ export interface PositionTableRow {
   quantity: string;
   availableQuantity: string;
 }
+
+export interface OpenOrderTableRow {
+  tokenName: string;
+  tokenDesc: string;
+  type: string;
+  avgPrice: string;
+  orderPrice: string;
+  fillQty: string;
+  orderQty: string;
+  status: string;
+  lastUpdate: string;
+}
