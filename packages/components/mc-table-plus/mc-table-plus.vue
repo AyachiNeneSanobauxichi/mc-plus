@@ -92,6 +92,7 @@ const rowState = ref<McTableRowState[]>([]);
 const resetRowState = () => {
   rowState.value = new Array(tableData.value.length).fill({
     isExpand: false,
+    expandData: [],
   });
 };
 
@@ -123,6 +124,9 @@ const resetSort = () => {
 
 // handle sort
 const handleSort = (prop: string, sort: McTableSort) => {
+  // reset row state
+  resetRowState();
+
   columns.value = map(columns.value, (column) => {
     if (column.prop === prop) {
       return { ...column, sort };
