@@ -9,3 +9,4 @@ export { default as useWidthHeight } from "./useWidthHeight";
 export { default as useHover } from "./useHover";
 export { default as useDragover } from "./useDragover";
 export { default as useId } from "./useId";
+export { default as usePolling } from "./usePolling";

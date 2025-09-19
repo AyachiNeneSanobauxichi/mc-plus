@@ -9,7 +9,6 @@ import { McButton } from "mc-plus";
 import { useGlobalStore } from "../../stores";
 import { login } from "../../apis";
 import { RSAencrypt } from "../../utils";
-
 // global store
 const { getRsaPublicKey, setAccessToken, clearAccessToken } = useGlobalStore();
 
