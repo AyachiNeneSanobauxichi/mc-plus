@@ -1,0 +1,7 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-richtext {
+  .mc-richtext-toolbar {
+    @include mixin.flex-center($justify: flex-start, $gap: 16px);
+  }
+}

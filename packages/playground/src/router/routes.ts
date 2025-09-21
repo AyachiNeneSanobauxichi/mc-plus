@@ -143,6 +143,14 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/richtext",
+    name: "Richtext",
+    component: () => import("../views/mc-plus/mc-richtext/index.vue"),
+    meta: {
+      title: "Mc Richtext",
+    },
+  },
+  {
     path: "/secondary-menu",
     name: "SecondaryMenu",
     component: () => import("../views/mc-plus/mc-secondary-menu/index.vue"),

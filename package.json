@@ -17,7 +17,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.6.2",
   "devDependencies": {
-    "@popperjs/core": "^2.11.8",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.11.20",
     "@types/shelljs": "^0.8.16",
@@ -40,8 +39,12 @@
     "@mc-plus/theme": "workspace:*",
     "@mc-plus/utils": "workspace:*",
     "@mc-plus/workspace": "link:",
-    "async-validator": "^4.2.5",
     "@popperjs/core": "^2.11.8",
+    "@tiptap/extension-image": "^3.4.4",
+    "@tiptap/pm": "^3.4.4",
+    "@tiptap/starter-kit": "^3.4.4",
+    "@tiptap/vue-3": "^3.4.4",
+    "async-validator": "^4.2.5",
     "lodash-es": "^4.17.21",
     "mc-plus": "workspace:*",
     "vue": "^3.4.19"

@@ -45,6 +45,9 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@tiptap/pm": "^3.4.4",
+    "@tiptap/starter-kit": "^3.4.4",
+    "@tiptap/vue-3": "^3.4.4",
     "async-validator": "^4.2.5"
   },
   "peerDependencies": {
