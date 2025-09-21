@@ -12,8 +12,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import McRichtext from "@mc-plus/components/mc-richtext/mc-richtext.vue";
+import { INIT_CONTENT } from "./constant";
 
-const content = ref<string>("<p>I'm running Tiptap with Vue.js. 🎉</p>");
+const content = ref<string>(INIT_CONTENT);
 </script>
 
 <style scoped lang="scss">

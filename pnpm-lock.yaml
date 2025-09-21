@@ -26,6 +26,9 @@ importers:
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
+      '@tiptap/extension-image':
+        specifier: ^3.4.4
+        version: 3.4.4(@tiptap/core@3.4.4(@tiptap/pm@3.4.4))
       '@tiptap/pm':
         specifier: ^3.4.4
         version: 3.4.4
@@ -111,6 +114,15 @@ importers:
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
+      '@tiptap/pm':
+        specifier: ^3.4.4
+        version: 3.4.4
+      '@tiptap/starter-kit':
+        specifier: ^3.4.4
+        version: 3.4.4
+      '@tiptap/vue-3':
+        specifier: ^3.4.4
+        version: 3.4.4(@floating-ui/dom@1.7.3)(@tiptap/core@3.4.4(@tiptap/pm@3.4.4))(@tiptap/pm@3.4.4)(vue@3.5.14(typescript@5.8.3))
       async-validator:
         specifier: ^4.2.5
         version: 4.2.5
@@ -1161,6 +1173,11 @@ packages:
     peerDependencies:
       '@tiptap/core': ^3.4.4
       '@tiptap/pm': ^3.4.4
+
+  '@tiptap/extension-image@3.4.4':
+    resolution: {integrity: sha512-3OjqzbnrpJfcYb+5xfSnTUxnsyxYudp8ICfX+ENlSy/RkBdiCtZ1g7AI3eu+m95UZF9/p7smacDpYwKkiyNidw==}
+    peerDependencies:
+      '@tiptap/core': ^3.4.4
 
   '@tiptap/extension-italic@3.4.4':
     resolution: {integrity: sha512-zuZE55vW+xBfhOQ12kdvbGmrQ6NtghF96EQwE3mvt7agIIlWyhIsEv+RoAF2ZuPmdN3VmTVzYJfHzHtrzXsuug==}
@@ -4936,6 +4953,10 @@ snapshots:
     dependencies:
       '@tiptap/core': 3.4.4(@tiptap/pm@3.4.4)
       '@tiptap/pm': 3.4.4
+
+  '@tiptap/extension-image@3.4.4(@tiptap/core@3.4.4(@tiptap/pm@3.4.4))':
+    dependencies:
+      '@tiptap/core': 3.4.4(@tiptap/pm@3.4.4)
 
   '@tiptap/extension-italic@3.4.4(@tiptap/core@3.4.4(@tiptap/pm@3.4.4))':
     dependencies:

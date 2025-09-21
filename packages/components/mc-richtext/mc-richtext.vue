@@ -15,15 +15,23 @@
       />
     </section>
     <editor-content :editor="editor" />
+    <input
+      ref="fileInputRef"
+      type="file"
+      accept="image/*"
+      style="display: none"
+      @change="handleFileUpload"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { McRichtextEmits, McRichtextProps } from "./types";
 import type { IconType } from "../mc-icon";
-import { watch } from "vue";
+import { ref, watch } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
 import McRichtextTool from "./mc-richtext-tool.vue";
 import { MC_RICHTEXT, TOOL_ICON } from "./constant";
 
@@ -38,10 +46,19 @@ const props = withDefaults(defineProps<McRichtextProps>(), {
 // emits
 const emit = defineEmits<McRichtextEmits>();
 
+// file input ref
+const fileInputRef = ref<HTMLInputElement>();
+
 // editor
 const editor = useEditor({
   content: `${props.modelValue}`,
-  extensions: [StarterKit],
+  extensions: [
+    StarterKit,
+    Image.configure({
+      inline: true,
+      allowBase64: true,
+    }),
+  ],
   onUpdate: ({ editor }) => {
     emit("update:modelValue", editor.getHTML());
   },
@@ -98,6 +115,7 @@ const toggleOrderedList = () => {
 
 // attach link
 const attachLink = () => {
+  // todo
   const url = prompt("请输入链接地址:");
   if (url) {
     editor.value?.commands.setLink({ href: url });
@@ -105,7 +123,37 @@ const attachLink = () => {
 };
 
 // attach image
-const attachImage = () => {};
+const attachImage = () => {
+  fileInputRef.value?.click();
+};
+
+// handle file upload
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+
+  // check file type
+  if (!file || !file.type.startsWith("image/")) {
+    return;
+  }
+
+  // convert file to data URL
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const dataUrl = e.target?.result as string;
+    if (dataUrl) {
+      // insert image to editor
+      editor.value?.commands.setImage({ src: dataUrl });
+    }
+  };
+  reader.onerror = () => {
+    console.error("mc-richtext: error:read:image:", file.name);
+  };
+  reader.readAsDataURL(file);
+
+  // clear file input
+  target.value = "";
+};
 </script>
 
 <style scoped lang="scss">
