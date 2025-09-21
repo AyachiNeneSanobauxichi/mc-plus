@@ -1,0 +1,9 @@
+@use "@mc-plus/theme/mixins.scss" as mixin;
+
+.mc-richtext-tool {
+  @include mixin.flex-center($justify: flex-start, $gap: 4px);
+
+  .mc-richtext-tool-icon {
+    cursor: pointer;
+  }
+}

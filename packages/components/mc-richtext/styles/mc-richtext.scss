@@ -3,9 +3,5 @@
 .mc-richtext {
   .mc-richtext-toolbar {
     @include mixin.flex-center($justify: flex-start, $gap: 16px);
-    
-    .mc-richtext-toolbar-group {
-      @include mixin.flex-center($justify: flex-start, $gap: 4px);
-    }
   }
 }

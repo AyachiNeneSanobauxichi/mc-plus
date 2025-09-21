@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import McRichtext from "./../../../../../components/mc-richtext/index.vue";
+import McRichtext from "@mc-plus/components/mc-richtext/mc-richtext.vue";
 
 const content = ref<string>("<p>I'm running Tiptap with Vue.js. 🎉</p>");
 </script>
